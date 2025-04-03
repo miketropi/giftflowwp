@@ -469,3 +469,19 @@
     font-size: 16px;
   }
 }
+/**
+ * Campaign Meta Box Styles
+ */
+.campaign-advanced-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.campaign-advanced-toggle:after, .campaign-advanced-toggle:before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #ddd;
+}
