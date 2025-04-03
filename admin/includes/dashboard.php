@@ -60,10 +60,10 @@ function giftflowwp_dashboard_page() {
                class="nav-tab <?php echo $current_tab === 'overview' ? 'nav-tab-active' : ''; ?>">
                 <?php _e('Overview', 'giftflowwp'); ?>
             </a>
-            <a href="<?php echo esc_url(admin_url('admin.php?page=giftflowwp-dashboard&tab=settings')); ?>" 
+            <!-- <a href="<?php echo esc_url(admin_url('admin.php?page=giftflowwp-dashboard&tab=settings')); ?>" 
                class="nav-tab <?php echo $current_tab === 'settings' ? 'nav-tab-active' : ''; ?>">
                 <?php _e('Settings', 'giftflowwp'); ?>
-            </a>
+            </a> -->
             <a href="<?php echo esc_url(admin_url('admin.php?page=giftflowwp-dashboard&tab=help')); ?>" 
                class="nav-tab <?php echo $current_tab === 'help' ? 'nav-tab-active' : ''; ?>">
                 <?php _e('Help', 'giftflowwp'); ?>
@@ -131,6 +131,7 @@ function giftflowwp_dashboard_overview_tab() {
 /**
  * Display the settings tab content
  */
+/*
 function giftflowwp_dashboard_settings_tab() {
     ?>
     <div class="giftflowwp-dashboard-settings">
@@ -145,6 +146,7 @@ function giftflowwp_dashboard_settings_tab() {
     </div>
     <?php
 }
+*/
 
 /**
  * Display the help tab content
@@ -158,24 +160,26 @@ function giftflowwp_dashboard_help_tab() {
             <h3><?php _e('Getting Started', 'giftflowwp'); ?></h3>
             <p><?php _e('To get started with GiftFlowWP, follow these steps:', 'giftflowwp'); ?></p>
             <ol>
-                <li><?php _e('Configure your basic settings in the Settings tab', 'giftflowwp'); ?></li>
-                <li><?php _e('Create your first gift flow', 'giftflowwp'); ?></li>
-                <li><?php _e('Add the gift flow shortcode to your pages or posts', 'giftflowwp'); ?></li>
+                <li><?php _e('Configure your basic settings in the Settings menu', 'giftflowwp'); ?></li>
+                <li><?php _e('Create your first campaign', 'giftflowwp'); ?></li>
+                <li><?php _e('Add the donation form shortcode to your pages or posts', 'giftflowwp'); ?></li>
             </ol>
         </div>
         
         <div class="giftflowwp-help-section">
             <h3><?php _e('Shortcodes', 'giftflowwp'); ?></h3>
-            <p><?php _e('Use the following shortcodes to display gift flows on your site:', 'giftflowwp'); ?></p>
+            <p><?php _e('Use the following shortcodes to display donation forms on your site:', 'giftflowwp'); ?></p>
             <ul>
-                <li><code>[giftflowwp id="1"]</code> - <?php _e('Display a specific gift flow by ID', 'giftflowwp'); ?></li>
-                <li><code>[giftflowwp_list]</code> - <?php _e('Display a list of all gift flows', 'giftflowwp'); ?></li>
+                <li><code>[giftflowwp_donation id="1"]</code> - <?php _e('Display a specific donation form by ID', 'giftflowwp'); ?></li>
+                <li><code>[giftflowwp_campaigns]</code> - <?php _e('Display a list of all campaigns', 'giftflowwp'); ?></li>
+                <li><code>[giftflowwp_donors]</code> - <?php _e('Display a list of recent donors', 'giftflowwp'); ?></li>
             </ul>
         </div>
         
         <div class="giftflowwp-help-section">
-            <h3><?php _e('Need More Help?', 'giftflowwp'); ?></h3>
-            <p><?php _e('If you need additional help, please contact our support team or visit our documentation site.', 'giftflowwp'); ?></p>
+            <h3><?php _e('Documentation', 'giftflowwp'); ?></h3>
+            <p><?php _e('For comprehensive documentation on using GiftFlowWP, including advanced features and customization options, please visit our documentation site.', 'giftflowwp'); ?></p>
+            <p><a href="https://giftflowwp.com/docs/" class="button" target="_blank"><?php _e('View Documentation', 'giftflowwp'); ?></a></p>
         </div>
     </div>
     <?php

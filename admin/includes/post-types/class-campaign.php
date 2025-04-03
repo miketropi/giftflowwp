@@ -88,6 +88,7 @@ class Campaign extends Base_Post_Type {
         // Define custom admin columns
         $this->admin_columns = array(
             'goal_amount' => __( 'Goal Amount', 'giftflowwp' ),
+            'raised_amount' => __( 'Raised Amount', 'giftflowwp' ),
             'start_date'  => __( 'Start Date', 'giftflowwp' ),
             'end_date'    => __( 'End Date', 'giftflowwp' ),
             'status'      => __( 'Status', 'giftflowwp' ),
@@ -96,6 +97,7 @@ class Campaign extends Base_Post_Type {
         // Define sortable columns
         $this->sortable_columns = array(
             'goal_amount',
+            'raised_amount',
             'start_date',
             'end_date',
             'status',
@@ -124,6 +126,11 @@ class Campaign extends Base_Post_Type {
         $meta_key = '_' . $column;
         $meta_value = get_post_meta( $post_id, $meta_key, true );
 
+        // if a raised amount column, get the raised amount
+        if ( $column === 'raised_amount' ) {
+            $meta_value = giftflowwp_get_campaign_raised_amount( $post_id );
+        }
+
         // Default display for empty values
         if ( empty( $meta_value ) ) {
             echo '—';
@@ -134,6 +141,14 @@ class Campaign extends Base_Post_Type {
         switch ( $column ) {
             case 'goal_amount':
                 echo esc_html( '$' . number_format( $meta_value, 2 ) );
+                break;
+                
+            case 'raised_amount':
+                // echo esc_html( '$' . number_format( $meta_value, 2 ) );
+                // echo esc_html( '$' . number_format( giftflowwp_get_campaign_raised_amount( $post_id ), 2 ) );
+                echo esc_html( '$' . number_format( $meta_value, 2 ) );
+                
+                echo sprintf( ' (%s%s)', giftflowwp_get_campaign_progress_percentage( $post_id ), '%' );
                 break;
                 
             case 'start_date':
@@ -153,13 +168,10 @@ class Campaign extends Base_Post_Type {
                         $status_text = __( 'Completed', 'giftflowwp' );
                         $status_class = 'status-completed';
                         break;
-                    case 'scheduled':
-                        $status_text = __( 'Scheduled', 'giftflowwp' );
-                        $status_class = 'status-scheduled';
-                        break;
-                    case 'draft':
-                        $status_text = __( 'Draft', 'giftflowwp' );
-                        $status_class = 'status-draft';
+                    // pending
+                    case 'pending':
+                        $status_text = __( 'Pending', 'giftflowwp' );
+                        $status_class = 'status-pending';
                         break;
                     default:
                         $status_text = __( 'Unknown', 'giftflowwp' );

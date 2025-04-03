@@ -8,7 +8,7 @@ const path = require('path');
 const getJsFiles = (dir) => {
     const jsFiles = {};
     fs.readdirSync(dir)
-        .filter(file => file.endsWith('.js') && file !== 'app.bundle.js')
+        .filter(file => file.endsWith('.js') && !file.includes('.bundle'))
         .forEach(file => {
             const filename = path.basename(file, '.js');
             jsFiles[filename] = path.join(dir, file);

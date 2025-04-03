@@ -35,7 +35,7 @@ class Campaign_Details_Meta extends Base_Meta_Box {
                 'goal_amount' => array(
                     'label' => __( 'Goal Amount', 'giftflowwp' ),
                     'type'  => 'currency',
-                    'step'  => '0.01',
+                    'step'  => '1',
                     'min'   => '0',
                     'currency_symbol' => '$',
                     // description
@@ -59,7 +59,8 @@ class Campaign_Details_Meta extends Base_Meta_Box {
                     'options' => array(
                         'active'   => __( 'Active', 'giftflowwp' ),
                         'completed' => __( 'Completed', 'giftflowwp' ),
-                        'draft'    => __( 'Draft', 'giftflowwp' ),
+                        'pending'   => __( 'Pending', 'giftflowwp' ),
+                        // 'draft'    => __( 'Draft', 'giftflowwp' ),
                     ),
                     'description' => __( 'Select the status for the campaign', 'giftflowwp' ),
                 ),
@@ -67,33 +68,28 @@ class Campaign_Details_Meta extends Base_Meta_Box {
             'advanced' => array(
                 // repeater preset donation amounts ($10, $25, $50, $100, $250)
                 'donation_amounts' => array(
-                    'label' => __( 'Donation Amounts', 'giftflowwp' ),
+                    'label' => __( 'Preset Donation Amounts', 'giftflowwp' ),
                     'type'  => 'repeater',
                     'repeater_settings' => array(
                         'fields' => array(
-                            'amount1' => array(
+                            'amount' => array(
                                 'label' => __( 'Amount', 'giftflowwp' ),
                                 'type'  => 'currency',
                                 'step'  => '1',
                                 'min'   => '0',
-                                'currency_symbol' => '$',
-                            ),
-                            'amount2' => array(
-                                'label' => __( 'Amount', 'giftflowwp' ),
-                                'type'  => 'currency',
-                                'step'  => '1',
-                                'min'   => '0',
-                                'currency_symbol' => '$',
-                            ),
-                            'amount3' => array(
-                                'label' => __( 'Amount', 'giftflowwp' ),
-                                'type'  => 'currency',
-                                'step'  => '1',
-                                'min'   => '0',
+                                'value' => 10,
+                                'description' => __( 'Enter the amount for the donation', 'giftflowwp' ),
                                 'currency_symbol' => '$',
                             ),
                         ),
                     ),
+                ),
+
+                // On / Off switch allow custom donation amounts
+                'allow_custom_donation_amounts' => array(
+                    'label' => __( 'Allow Custom Donation Amounts', 'giftflowwp' ),
+                    'type'  => 'switch',
+                    'description' => __( 'Allow users to enter their own donation amounts', 'giftflowwp' ),
                 ),
 
                 'location' => array(
@@ -160,6 +156,11 @@ class Campaign_Details_Meta extends Base_Meta_Box {
         foreach ( $fields['advanced'] as $field_id => $field_args ) {
             $value = get_post_meta( $post->ID, '_' . $field_id, true );
 
+            // if field type is repeater, then we need to unserialize the value
+            if ( $field_args['type'] == 'repeater' && $value ) {
+                $value = unserialize( $value );
+            }
+
             // Create field instance
             $field = new GiftFlowWP_Field(
                 $field_id,
@@ -220,14 +221,24 @@ class Campaign_Details_Meta extends Base_Meta_Box {
         }
 
         $fields = $this->get_fields();
-        
+        // var_dump(is_array($_POST['allow_custom_donation_amounts']));die;
+
         // Save regular fields
         foreach ( $fields['regular'] as $field_id => $field ) {
             if ( isset( $_POST[ $field_id ] ) ) {
+                $value = $_POST[ $field_id ];
+                $value = sanitize_text_field( wp_unslash( $value ) );
+
                 update_post_meta(
                     $post_id,
                     '_' . $field_id,
-                    sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) )
+                    $value
+                );
+            } else {
+                update_post_meta(
+                    $post_id,
+                    '_' . $field_id,
+                    ''
                 );
             }
         }
@@ -235,10 +246,26 @@ class Campaign_Details_Meta extends Base_Meta_Box {
         // Save advanced fields
         foreach ( $fields['advanced'] as $field_id => $field ) {
             if ( isset( $_POST[ $field_id ] ) ) {
+
+                $value = $_POST[ $field_id ];
+
+                // if value is an array, then we need to save each value as a separate post meta
+                if ( is_array( $value ) ) {
+                    $value = serialize( $value );
+                } else {
+                    $value = sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) );
+                }
+
                 update_post_meta(
                     $post_id,
                     '_' . $field_id,
-                    sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) )
+                    $value
+                );
+            } else {
+                update_post_meta(
+                    $post_id,
+                    '_' . $field_id,
+                    ''
                 );
             }
         }

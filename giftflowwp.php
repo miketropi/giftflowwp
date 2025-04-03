@@ -51,13 +51,16 @@ function giftflowwp_load_files() {
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-loader.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-field.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-ajax.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/common.php';
     
     // Admin files
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/dashboard.php';
+    
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/post-types/class-base-post-type.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/post-types/class-donation.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/post-types/class-donor.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/post-types/class-campaign.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/settings.php';
     
     // Meta boxes
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/meta-boxes/class-base-meta-box.php';

@@ -628,7 +628,7 @@ class GiftFlowWP_Field {
 		$checked = checked( $this->value, true, false );
 
 		$output = '<div class="giftflowwp-switch">';
-		$output .= '<input type="checkbox" ' . $attributes . ' ' . $checked . ' />';
+		$output .= '<input type="checkbox" ' . $attributes . ' ' . $checked . ' value="1" />';
 		$output .= '<span class="giftflowwp-switch-slider"></span>';
 		$output .= '</div>';
 
@@ -1050,206 +1050,153 @@ class GiftFlowWP_Field {
 	private function render_repeater() {
 		// Start output buffering
 		ob_start();
-		
+
+		// Get the repeater settings
+		$repeater_settings = $this->repeater_settings;
+		$fields = $repeater_settings['fields'];
+		$button_text = $repeater_settings['button_text'];
+		$remove_text = $repeater_settings['remove_text'];
+		$min_rows = $repeater_settings['min_rows'];
+		$max_rows = $repeater_settings['max_rows'];
+		$row_label = $repeater_settings['row_label'];
+
 		// Ensure value is an array
-		$rows = is_array($this->value) ? $this->value : array();
-		
+		$values = is_array($this->value) ? $this->value : array();
+		if (empty($values) && $min_rows > 0) {
+			// Initialize with empty rows if minimum rows required
+			$values = array_fill(0, $min_rows, array());
+		}
+
 		// Generate a unique ID for the repeater
 		$repeater_id = 'giftflowwp-repeater-' . $this->id;
-		
-		// Get repeater settings
-		$settings = $this->repeater_settings;
-		$fields = $settings['fields'];
-		$button_text = $settings['button_text'];
-		$remove_text = $settings['remove_text'];
-		$min_rows = intval($settings['min_rows']);
-		$max_rows = intval($settings['max_rows']);
-		$row_label = $settings['row_label'];
 		?>
-		<div class="giftflowwp-repeater-field" id="<?php echo esc_attr( $repeater_id ); ?>">
-			<!-- Hidden input to store repeater data -->
-			<input type="hidden" name="<?php echo esc_attr( $this->name ); ?>" id="<?php echo esc_attr( $this->id ); ?>" value="<?php echo esc_attr( json_encode($rows) ); ?>" />
+		<div class="giftflowwp-repeater-field" id="<?php echo esc_attr($repeater_id); ?>">
+			<!-- Hidden input to store all values -->
+			<input type="hidden" name="<?php echo esc_attr($this->name); ?>" id="<?php echo esc_attr($this->id); ?>" value="<?php echo esc_attr(json_encode($values)); ?>" />
 			
 			<!-- Repeater rows container -->
 			<div class="giftflowwp-repeater-rows">
-				<?php
-				// Display existing rows
-				if ( ! empty( $rows ) ) {
-					foreach ( $rows as $row_index => $row_data ) {
-						$this->render_repeater_row( $row_index, $row_data, $fields, $row_label, $remove_text );
-					}
-				}
-				?>
-			</div><!-- End repeater rows -->
+				<?php foreach ($values as $row_index => $row_values): ?>
+					<div class="giftflowwp-repeater-row" data-index="<?php echo esc_attr($row_index); ?>">
+						<div class="giftflowwp-repeater-row-header">
+							<span class="giftflowwp-repeater-row-title"><?php echo esc_html($row_label . ' ' . ($row_index + 1)); ?></span>
+							<button type="button" class="button giftflowwp-repeater-remove-row"><?php echo esc_html($remove_text); ?></button>
+						</div>
+						<div class="giftflowwp-repeater-row-content">
+							<?php foreach ($fields as $field_id => $field_args): 
+								$field_value = isset($row_values[$field_id]) ? $row_values[$field_id] : '';
+								$field_name = $this->name . '[' . $row_index . '][' . $field_id . ']';
+								$field_id = $this->id . '_' . $row_index . '_' . $field_id;
+								
+								// Create field instance
+								$field = new GiftFlowWP_Field(
+									$field_id,
+									$field_name,
+									$field_args['type'],
+									array_merge(
+										$field_args,
+										array(
+											'value' => $field_value,
+											'wrapper_classes' => array('giftflowwp-repeater-field'),
+										)
+									)
+								);
+								
+								// Render the field
+								echo $field->render();
+							endforeach; ?>
+						</div>
+					</div>
+				<?php endforeach; ?>
+			</div>
 			
-			<!-- Repeater controls -->
-			<div class="giftflowwp-repeater-controls">
-				<button type="button" class="button giftflowwp-repeater-add"><?php echo esc_html( $button_text ); ?></button>
-			</div><!-- End repeater controls -->
+			<!-- Add row button -->
+			<button type="button" class="button giftflowwp-repeater-add-row" <?php echo ($max_rows > 0 && count($values) >= $max_rows) ? 'disabled' : ''; ?>>
+				<?php echo esc_html($button_text); ?>
+			</button>
 			
 			<!-- JavaScript for repeater functionality -->
 			<script type="text/javascript">
 				jQuery(document).ready(function($) {
-					var $repeater = $("#<?php echo esc_js( $repeater_id ); ?>");
-					var $input = $repeater.find("input[type=hidden]");
+					var $repeater = $("#<?php echo esc_js($repeater_id); ?>");
 					var $rows = $repeater.find(".giftflowwp-repeater-rows");
-					var $addButton = $repeater.find(".giftflowwp-repeater-add");
-					var minRows = <?php echo $min_rows; ?>;
-					var maxRows = <?php echo $max_rows; ?>;
-					var rowCount = $rows.children().length;
-					var fields = <?php echo json_encode($fields); ?>;
-					var rowLabel = "<?php echo esc_js($row_label); ?>";
-					var removeText = "<?php echo esc_js($remove_text); ?>";
+					var $addButton = $repeater.find(".giftflowwp-repeater-add-row");
+					var $hiddenInput = $repeater.find("input[type=hidden]");
+					var maxRows = <?php echo intval($max_rows); ?>;
+					var rowTemplate = <?php echo json_encode($this->get_repeater_row_template($fields)); ?>;
 					
 					// Add new row
-					$addButton.on("click", function(e) {
-						e.preventDefault();
-						
-						// Check if max rows limit is reached
-						if (maxRows > 0 && rowCount >= maxRows) {
-							alert("<?php esc_attr_e( 'Maximum number of rows reached', 'giftflowwp' ); ?>");
+					$addButton.on("click", function() {
+						if (maxRows > 0 && $rows.children().length >= maxRows) {
 							return;
 						}
 						
-						// Create new row
-						var $newRow = $("<div class='giftflowwp-repeater-row'></div>");
-						var rowIndex = rowCount;
-						
-						// Add row header
-						var $rowHeader = $("<div class='giftflowwp-repeater-row-header'></div>");
-						$rowHeader.append("<span class='giftflowwp-repeater-row-title'>" + rowLabel + " " + (rowIndex + 1) + "</span>");
-						$rowHeader.append("<button type='button' class='giftflowwp-repeater-remove'>" + removeText + "</button>");
-						$newRow.append($rowHeader);
-						
-						// Add row fields
-						var $rowFields = $("<div class='giftflowwp-repeater-row-fields'></div>");
-						
-						// Add each field
-						$.each(fields, function(fieldKey, fieldData) {
-							var $fieldWrapper = $("<div class='giftflowwp-repeater-field-wrapper'></div>");
-							var $fieldLabel = $("<label>" + fieldData.label + "</label>");
-							var $fieldInput;
-							
-							// Create field input based on type
-							switch (fieldData.type) {
-								case 'textfield':
-									$fieldInput = $("<input type='text' class='giftflowwp-repeater-field-input' />");
-									break;
-								case 'textarea':
-									$fieldInput = $("<textarea class='giftflowwp-repeater-field-input'></textarea>");
-									break;
-								case 'select':
-									$fieldInput = $("<select class='giftflowwp-repeater-field-input'></select>");
-									
-									// Add options
-									if (fieldData.options) {
-										$.each(fieldData.options, function(optionValue, optionLabel) {
-											$fieldInput.append("<option value='" + optionValue + "'>" + optionLabel + "</option>");
-										});
-									}
-									break;
-								case 'checkbox':
-									$fieldInput = $("<input type='checkbox' class='giftflowwp-repeater-field-input' />");
-									break;
-								default:
-									$fieldInput = $("<input type='text' class='giftflowwp-repeater-field-input' />");
-							}
-							
-							// Set field attributes
-							$fieldInput.attr({
-								'name': fieldKey,
-								'data-field-key': fieldKey
-							});
-							
-							// Add field to wrapper
-							$fieldWrapper.append($fieldLabel);
-							$fieldWrapper.append($fieldInput);
-							
-							// Add field wrapper to row fields
-							$rowFields.append($fieldWrapper);
-						});
-						
-						// Add row fields to row
-						$newRow.append($rowFields);
-						
-						// Add row to rows container
-						$rows.append($newRow);
-						
-						// Increment row count
-						rowCount++;
+						var newIndex = $rows.children().length;
+						var newRow = $(rowTemplate.replace(/__INDEX__/g, newIndex));
+						$rows.append(newRow);
 						
 						// Update hidden input
-						updateRepeaterData();
+						updateHiddenInput();
+						
+						// Disable add button if max rows reached
+						if (maxRows > 0 && $rows.children().length >= maxRows) {
+							$addButton.prop("disabled", true);
+						}
 					});
 					
 					// Remove row
-					$repeater.on("click", ".giftflowwp-repeater-remove", function(e) {
+					$repeater.on("click", ".giftflowwp-repeater-remove-row", function(e) {
 						e.preventDefault();
+						var $row = $(this).closest(".giftflowwp-repeater-row");
+						$row.remove();
 						
-						// Check if min rows limit is reached
-						if (minRows > 0 && rowCount <= minRows) {
-							alert("<?php esc_attr_e( 'Minimum number of rows required', 'giftflowwp' ); ?>");
-							return;
-						}
-						
-						// Remove row
-						$(this).closest(".giftflowwp-repeater-row").remove();
-						
-						// Decrement row count
-						rowCount--;
-						
-						// Update row titles
-						updateRowTitles();
-						
-						// Update hidden input
-						updateRepeaterData();
-					});
-					
-					// Update row titles
-					function updateRowTitles() {
-						$repeater.find(".giftflowwp-repeater-row-title").each(function(index) {
-							$(this).text(rowLabel + " " + (index + 1));
-						});
-					}
-					
-					// Update repeater data
-					function updateRepeaterData() {
-						var repeaterData = [];
-						
-						// Get data from each row
-						$repeater.find(".giftflowwp-repeater-row").each(function() {
-							var rowData = {};
-							
-							// Get data from each field
-							$(this).find(".giftflowwp-repeater-field-input").each(function() {
-								var fieldKey = $(this).data("field-key");
-								var fieldValue = $(this).val();
-								
-								// Handle checkbox
-								if ($(this).attr("type") === "checkbox") {
-									fieldValue = $(this).is(":checked");
-								}
-								
-								rowData[fieldKey] = fieldValue;
+						// Update row indices
+						$rows.find(".giftflowwp-repeater-row").each(function(index) {
+							$(this).attr("data-index", index);
+							$(this).find(".giftflowwp-repeater-row-title").text("<?php echo esc_js($row_label); ?> " + (index + 1));
+							$(this).find("input, select, textarea").each(function() {
+								var name = $(this).attr("name");
+								name = name.replace(/\[\d+\]/, "[" + index + "]");
+								$(this).attr("name", name);
 							});
-							
-							repeaterData.push(rowData);
 						});
 						
 						// Update hidden input
-						$input.val(JSON.stringify(repeaterData));
-					}
-					
-					// Update repeater data when field values change
-					$repeater.on("change", ".giftflowwp-repeater-field-input", function() {
-						updateRepeaterData();
+						updateHiddenInput();
+						
+						// Enable add button
+						$addButton.prop("disabled", false);
 					});
 					
-					// Initialize repeater data
-					updateRepeaterData();
+					// Update values when fields change
+					$repeater.on("change", "input, select, textarea", function() {
+						updateHiddenInput();
+					});
+					
+					// Function to update hidden input with all values
+					function updateHiddenInput() {
+						var values = [];
+						$rows.find(".giftflowwp-repeater-row").each(function() {
+							var rowValues = {};
+							$(this).find("input, select, textarea").each(function() {
+								var name = $(this).attr("name");
+								var matches = name.match(/\[(\d+)\]\[([^\]]+)\]/);
+								if (matches) {
+									var fieldId = matches[2];
+									if ($(this).attr("type") === "checkbox" || $(this).attr("type") === "switch") {
+										rowValues[fieldId] = $(this).is(":checked");
+									} else {
+										rowValues[fieldId] = $(this).val();
+									}
+								}
+							});
+							values.push(rowValues);
+						});
+						$hiddenInput.val(JSON.stringify(values));
+					}
 				});
 			</script>
-		</div><!-- End repeater field -->
+		</div>
 		<?php
 		
 		// Return the buffered content
@@ -1257,78 +1204,48 @@ class GiftFlowWP_Field {
 	}
 
 	/**
-	 * Render repeater row
+	 * Get repeater row template
 	 *
-	 * @param int   $row_index Row index.
-	 * @param array $row_data Row data.
 	 * @param array $fields Fields configuration.
-	 * @param string $row_label Row label.
-	 * @param string $remove_text Remove button text.
-	 * @return void
+	 * @return string
 	 */
-	private function render_repeater_row( $row_index, $row_data, $fields, $row_label, $remove_text ) {
+	private function get_repeater_row_template($fields) {
+		ob_start();
 		?>
-		<div class="giftflowwp-repeater-row">
+		<div class="giftflowwp-repeater-row" data-index="__INDEX__">
 			<div class="giftflowwp-repeater-row-header">
-				<span class="giftflowwp-repeater-row-title"><?php echo esc_html( $row_label . ' ' . ( $row_index + 1 ) ); ?></span>
-				<button type="button" class="giftflowwp-repeater-remove"><?php echo esc_html( $remove_text ); ?></button>
+				<span class="giftflowwp-repeater-row-title">
+					<?php echo esc_html($this->repeater_settings['row_label']); ?> 
+					<!-- __INDEX_PLUS_1__ -->
+				</span>
+				<button type="button" class="button giftflowwp-repeater-remove-row"><?php echo esc_html($this->repeater_settings['remove_text']); ?></button>
 			</div>
-			<div class="giftflowwp-repeater-row-fields">
-				<?php
-				// Render each field
-				foreach ( $fields as $field_key => $field_data ) {
-					$field_value = isset( $row_data[ $field_key ] ) ? $row_data[ $field_key ] : '';
-					?>
-					<div class="giftflowwp-repeater-field-wrapper">
-						<label><?php echo esc_html( $field_data['label'] ); ?></label>
-						<?php
-						// Render field based on type
-						switch ( $field_data['type'] ) {
-							case 'textfield':
-								?>
-								<input type="text" class="giftflowwp-repeater-field-input" name="<?php echo esc_attr( $field_key ); ?>" data-field-key="<?php echo esc_attr( $field_key ); ?>" value="<?php echo esc_attr( $field_value ); ?>" />
-								<?php
-								break;
-							case 'textarea':
-								?>
-								<textarea class="giftflowwp-repeater-field-input" name="<?php echo esc_attr( $field_key ); ?>" data-field-key="<?php echo esc_attr( $field_key ); ?>"><?php echo esc_textarea( $field_value ); ?></textarea>
-								<?php
-								break;
-							case 'select':
-								?>
-								<select class="giftflowwp-repeater-field-input" name="<?php echo esc_attr( $field_key ); ?>" data-field-key="<?php echo esc_attr( $field_key ); ?>">
-									<?php
-									if ( isset( $field_data['options'] ) && is_array( $field_data['options'] ) ) {
-										foreach ( $field_data['options'] as $option_value => $option_label ) {
-											$selected = selected( $field_value, $option_value, false );
-											?>
-											<option value="<?php echo esc_attr( $option_value ); ?>" <?php echo $selected; ?>><?php echo esc_html( $option_label ); ?></option>
-											<?php
-										}
-									}
-									?>
-								</select>
-								<?php
-								break;
-							case 'checkbox':
-								$checked = checked( $field_value, true, false );
-								?>
-								<input type="checkbox" class="giftflowwp-repeater-field-input" name="<?php echo esc_attr( $field_key ); ?>" data-field-key="<?php echo esc_attr( $field_key ); ?>" <?php echo $checked; ?> />
-								<?php
-								break;
-							default:
-								?>
-								<input type="text" class="giftflowwp-repeater-field-input" name="<?php echo esc_attr( $field_key ); ?>" data-field-key="<?php echo esc_attr( $field_key ); ?>" value="<?php echo esc_attr( $field_value ); ?>" />
-								<?php
-						}
-						?>
-					</div>
-					<?php
-				}
-				?>
+			<div class="giftflowwp-repeater-row-content">
+				<?php foreach ($fields as $field_id => $field_args): 
+					$field_name = $this->name . '[__INDEX__][' . $field_id . ']';
+					$field_id = $this->id . '___INDEX__' . $field_id;
+					
+					// Create field instance
+					$field = new GiftFlowWP_Field(
+						$field_id,
+						$field_name,
+						$field_args['type'],
+						array_merge(
+							$field_args,
+							array(
+								'value' => '',
+								'wrapper_classes' => array('giftflowwp-repeater-field'),
+							)
+						)
+					);
+					
+					// Render the field
+					echo $field->render();
+				endforeach; ?>
 			</div>
 		</div>
 		<?php
+		return ob_get_clean();
 	}
 
 	/**

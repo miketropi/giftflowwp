@@ -31,8 +31,10 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
         return array(
             'amount' => array(
                 'label' => __( 'Amount', 'giftflowwp' ),
-                'type'  => 'number',
-                'step'  => '0.01',
+                'type'  => 'currency',
+                // 'step'  => '0.01',
+                'currency_symbol' => '$',
+                'description' => __( 'Enter the amount of the donation', 'giftflowwp' ),
             ),
             'payment_method' => array(
                 'label'   => __( 'Payment Method', 'giftflowwp' ),
@@ -42,6 +44,7 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
                     'paypal' => __( 'PayPal', 'giftflowwp' ),
                     'bank'   => __( 'Bank Transfer', 'giftflowwp' ),
                 ),
+                'description' => __( 'Select the payment method used for the donation', 'giftflowwp' ),
             ),
             'status' => array(
                 'label'   => __( 'Status', 'giftflowwp' ),
@@ -52,20 +55,24 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
                     'failed'    => __( 'Failed', 'giftflowwp' ),
                     'refunded'  => __( 'Refunded', 'giftflowwp' ),
                 ),
+                'description' => __( 'Select the status of the donation', 'giftflowwp' ),
             ),
             'transaction_id' => array(
                 'label' => __( 'Transaction ID', 'giftflowwp' ),
                 'type'  => 'textfield',
+                'description' => __( 'Enter the transaction ID of the donation', 'giftflowwp' ),
             ),
             'donor_id' => array(
                 'label' => __( 'Donor', 'giftflowwp' ),
                 'type'  => 'select',
                 'options' => $this->get_donors(),
+                'description' => __( 'Select the donor of the donation', 'giftflowwp' ),
             ),
             'campaign_id' => array(
                 'label' => __( 'Campaign', 'giftflowwp' ),
                 'type'  => 'select',
                 'options' => $this->get_campaigns(),
+                'description' => __( 'Select the campaign of the donation', 'giftflowwp' ),
             ),
         );
     }
@@ -79,26 +86,35 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
         wp_nonce_field( 'donation_transaction_details', 'donation_transaction_details_nonce' );
 
         $fields = $this->get_fields();
-        foreach ( $fields as $field_id => $field ) {
+        foreach ( $fields as $field_id => $field_args ) {
             $value = get_post_meta( $post->ID, '_' . $field_id, true );
             
             // Create field instance
-            $field_args = array(
-                'value' => $value,
-                'label' => $field['label'],
-            );
+            // $field_args = array(
+            //     'value' => $value,
+            //     'label' => $field['label'],
+            // );
             
-            // Add additional field properties based on type
-            if ( isset( $field['options'] ) ) {
-                $field_args['options'] = $field['options'];
-            }
+            // // Add additional field properties based on type
+            // if ( isset( $field['options'] ) ) {
+            //     $field_args['options'] = $field['options'];
+            // }
             
-            if ( isset( $field['step'] ) ) {
-                $field_args['step'] = $field['step'];
-            }
+            // if ( isset( $field['step'] ) ) {
+            //     $field_args['step'] = $field['step'];
+            // }
             
             // Create and render the field
-            $field_instance = new \GiftFlowWP_Field( $field_id, $field_id, $field['type'], $field_args );
+            $field_instance = new \GiftFlowWP_Field( 
+                $field_id, 
+                $field_id, 
+                $field_args['type'], 
+                array_merge( 
+                    $field_args, 
+                    array( 
+                        'value' => $value,
+                        
+                    ) ) );
             echo $field_instance->render();
         }
     }

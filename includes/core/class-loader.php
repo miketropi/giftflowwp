@@ -72,4 +72,13 @@ class Loader extends Base {
         new \GiftFlowWp\Admin\MetaBoxes\Donor_Contact_Meta();
         new \GiftFlowWp\Admin\MetaBoxes\Campaign_Details_Meta();
     }
+
+    public function activate() {
+        // reset permalinks
+        flush_rewrite_rules();
+    }
+
+    public function deactivate() {
+
+    }
 } 

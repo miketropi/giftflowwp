@@ -130,7 +130,7 @@
   margin-bottom: 1.5em;
   position: relative;
   display: grid;
-  grid-template-columns: 1fr calc(100% - 150px - 1em);
+  grid-template-columns: calc(100px + 1em) 1fr;
   align-items: flex-start;
 }
 .giftflowwp-field label {
@@ -140,7 +140,7 @@
   font-weight: 500;
   color: #333;
   font-size: 1em;
-  min-width: 150px;
+  min-width: 100px;
   padding-top: 1em;
 }
 .giftflowwp-field label .required {
@@ -186,6 +186,9 @@
 }
 .giftflowwp-field .giftflowwp-field-input::placeholder {
   color: #aaa;
+}
+.giftflowwp-field-switch .giftflowwp-field-wrapper {
+  padding-top: 1em;
 }
 
 .giftflowwp-field-number .giftflowwp-field-input::-webkit-outer-spin-button, .giftflowwp-field-number .giftflowwp-field-input::-webkit-inner-spin-button {
@@ -285,8 +288,15 @@
 }
 .giftflowwp-switch input {
   opacity: 0;
-  width: 0;
-  height: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 9;
+  min-width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 .giftflowwp-switch input:checked + .giftflowwp-switch-slider {
   background-color: #4a6cf7;
@@ -469,6 +479,124 @@
     font-size: 16px;
   }
 }
+.giftflowwp-repeater-field {
+  margin-bottom: 1.5em;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-rows {
+  margin-bottom: 1em;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 1em;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row:last-child {
+  margin-bottom: 0;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em 1em;
+  background: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+  border-radius: 4px 4px 0 0;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-header .giftflowwp-repeater-row-title {
+  font-weight: 600;
+  color: #333;
+  font-size: 1em;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-header .giftflowwp-repeater-remove-row {
+  color: #e53935;
+  background: transparent;
+  border: 1px solid #e53935;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-header .giftflowwp-repeater-remove-row:hover {
+  background: #e53935;
+  color: #fff;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-content {
+  padding: 1em;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-content .giftflowwp-repeater-field {
+  margin-bottom: 1em;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-content .giftflowwp-repeater-field:last-child {
+  margin-bottom: 0;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-content .giftflowwp-repeater-field .giftflowwp-field {
+  margin-bottom: 0;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-content .giftflowwp-repeater-field label {
+  display: block;
+  margin-bottom: 0.25em;
+  font-weight: 500;
+  color: #333;
+  font-size: 0.875em;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-content .giftflowwp-repeater-field .giftflowwp-currency-field {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-content .giftflowwp-repeater-field .giftflowwp-currency-field .giftflowwp-currency-symbol {
+  font-weight: 600;
+  color: #333;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-content .giftflowwp-repeater-field .giftflowwp-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-content .giftflowwp-repeater-field .giftflowwp-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-content .giftflowwp-repeater-field .giftflowwp-switch input:checked + .giftflowwp-switch-slider {
+  background-color: #4a6cf7;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-content .giftflowwp-repeater-field .giftflowwp-switch input:checked + .giftflowwp-switch-slider:before {
+  transform: translateX(26px);
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-content .giftflowwp-repeater-field .giftflowwp-switch .giftflowwp-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ddd;
+  transition: 0.2s;
+  border-radius: 24px;
+}
+.giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-content .giftflowwp-repeater-field .giftflowwp-switch .giftflowwp-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.2s;
+  border-radius: 50%;
+}
+@media screen and (max-width: 782px) {
+  .giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-header {
+    flex-direction: column;
+    gap: 0.5em;
+    align-items: flex-start;
+  }
+  .giftflowwp-repeater-field .giftflowwp-repeater-row .giftflowwp-repeater-row-content {
+    padding: 0.5em;
+  }
+}
+
 /**
  * Campaign Meta Box Styles
  */
@@ -484,4 +612,196 @@
   width: 100%;
   height: 1px;
   background-color: #ddd;
+}
+.giftflowwp-dashboard-help {
+  margin: 20px 0;
+}
+.giftflowwp-dashboard-help h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #23282d;
+}
+.giftflowwp-dashboard-help .giftflowwp-help-section {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 3px;
+}
+.giftflowwp-dashboard-help .giftflowwp-help-section h3 {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+.giftflowwp-dashboard-help .giftflowwp-help-section p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+.giftflowwp-dashboard-help .giftflowwp-help-section ul, .giftflowwp-dashboard-help .giftflowwp-help-section ol {
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+.giftflowwp-dashboard-help .giftflowwp-help-section ul li, .giftflowwp-dashboard-help .giftflowwp-help-section ol li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+.giftflowwp-dashboard-help .giftflowwp-help-section code {
+  background: #f5f5f5;
+  padding: 3px 5px;
+  border-radius: 3px;
+  font-size: 13px;
+  color: #23282d;
+}
+.giftflowwp-dashboard-help .giftflowwp-help-section .button {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+}
+
+.campaign-progress {
+  margin: 0.5em 0;
+}
+.campaign-progress .progress-bar {
+  background-color: #f1f1f1;
+  height: 10px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.25em;
+}
+.campaign-progress .progress-bar .progress {
+  background-color: #4a6cf7;
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.2s ease;
+}
+.campaign-progress .progress-stats {
+  font-size: 0.875em;
+  color: #666;
+}
+.campaign-progress .progress-stats .raised, .campaign-progress .progress-stats .goal {
+  font-weight: 600;
+}
+
+.campaign-status {
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.campaign-status.status-active {
+  background-color: #e6f7e6;
+  color: #2e7d32;
+}
+.campaign-status.status-completed {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+.campaign-status.status-pending {
+  background-color: #fff8e1;
+  color: #f57c00;
+}
+.campaign-status.status-unknown {
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.giftflow_page_giftflowwp-settings .wrap {
+  margin: 20px 0;
+}
+.giftflow_page_giftflowwp-settings .wrap h2.nav-tab-wrapper {
+  border-bottom: none;
+}
+.giftflow_page_giftflowwp-settings h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #23282d;
+}
+.giftflow_page_giftflowwp-settings .nav-tab-wrapper {
+  margin-bottom: 20px;
+  border-bottom: none;
+}
+.giftflow_page_giftflowwp-settings .nav-tab-wrapper .nav-tab {
+  margin-left: 0;
+  margin-right: 5px;
+  padding: 10px 15px;
+  font-size: 14px;
+  line-height: 1.71428571;
+  font-weight: 600;
+  background: #f1f1f1;
+  color: #555;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid #ccc;
+  border-bottom: none;
+}
+.giftflow_page_giftflowwp-settings .nav-tab-wrapper .nav-tab:hover {
+  background-color: #fff;
+  color: #444;
+}
+.giftflow_page_giftflowwp-settings .nav-tab-wrapper .nav-tab.nav-tab-active {
+  background: #fff;
+  color: #000;
+  border-bottom: 1px solid #fff;
+  margin-bottom: -1px;
+}
+.giftflow_page_giftflowwp-settings form {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 3px;
+}
+.giftflow_page_giftflowwp-settings form h2 {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+.giftflow_page_giftflowwp-settings form p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+.giftflow_page_giftflowwp-settings form .form-table {
+  margin-top: 0;
+}
+.giftflow_page_giftflowwp-settings form .form-table th {
+  padding: 15px 10px 15px 0;
+  width: 200px;
+  font-weight: 600;
+}
+.giftflow_page_giftflowwp-settings form .form-table td {
+  padding: 15px 10px;
+}
+.giftflow_page_giftflowwp-settings form .form-table td input[type=text],
+.giftflow_page_giftflowwp-settings form .form-table td input[type=email],
+.giftflow_page_giftflowwp-settings form .form-table td input[type=url],
+.giftflow_page_giftflowwp-settings form .form-table td input[type=password],
+.giftflow_page_giftflowwp-settings form .form-table td input[type=number],
+.giftflow_page_giftflowwp-settings form .form-table td textarea,
+.giftflow_page_giftflowwp-settings form .form-table td select {
+  width: 400px;
+  max-width: 100%;
+}
+.giftflow_page_giftflowwp-settings form .form-table td textarea {
+  min-height: 100px;
+}
+.giftflow_page_giftflowwp-settings form .form-table td .description {
+  color: #666;
+  font-style: italic;
+  margin-top: 5px;
+  display: block;
+}
+.giftflow_page_giftflowwp-settings form .submit {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
 }

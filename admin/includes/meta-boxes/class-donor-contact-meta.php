@@ -29,33 +29,59 @@ class Donor_Contact_Meta extends Base_Meta_Box {
      */
     protected function get_fields() {
         return array(
+            // first name
+            'first_name' => array(
+                'label' => __( 'First Name', 'giftflowwp' ),
+                'type'  => 'textfield',
+                'description' => __( 'Enter the first name of the donor', 'giftflowwp' ),
+            ),
+            // last name
+            'last_name' => array(
+                'label' => __( 'Last Name', 'giftflowwp' ),
+                'type'  => 'textfield',
+                'description' => __( 'Enter the last name of the donor', 'giftflowwp' ),
+            ),
+            // email
             'email' => array(
                 'label' => __( 'Email', 'giftflowwp' ),
                 'type'  => 'email',
+                'description' => __( 'Enter the email of the donor', 'giftflowwp' ),
             ),
+            // phone
             'phone' => array(
                 'label' => __( 'Phone', 'giftflowwp' ),
                 'type'  => 'tel',
+                'description' => __( 'Enter the phone number of the donor', 'giftflowwp' ),
             ),
+            // address
             'address' => array(
                 'label' => __( 'Address', 'giftflowwp' ),
                 'type'  => 'textarea',
+                'description' => __( 'Enter the address of the donor', 'giftflowwp' ),
             ),
+            // city
             'city' => array(
                 'label' => __( 'City', 'giftflowwp' ),
                 'type'  => 'textfield',
+                'description' => __( 'Enter the city of the donor', 'giftflowwp' ),
             ),
+            // state
             'state' => array(
                 'label' => __( 'State/Province', 'giftflowwp' ),
                 'type'  => 'textfield',
+                'description' => __( 'Enter the state/province of the donor', 'giftflowwp' ),
             ),
+            // postal code
             'postal_code' => array(
                 'label' => __( 'Postal Code', 'giftflowwp' ),
                 'type'  => 'textfield',
+                'description' => __( 'Enter the postal code of the donor', 'giftflowwp' ),
             ),
+            // country
             'country' => array(
                 'label' => __( 'Country', 'giftflowwp' ),
                 'type'  => 'textfield',
+                'description' => __( 'Enter the country of the donor', 'giftflowwp' ),
             ),
         );
     }
@@ -72,19 +98,25 @@ class Donor_Contact_Meta extends Base_Meta_Box {
         foreach ( $fields as $field_id => $field ) {
             $value = get_post_meta( $post->ID, '_' . $field_id, true );
             
-            // Create field instance
-            $field_args = array(
-                'value' => $value,
-                'label' => $field['label'],
+            // Create field instance with all necessary parameters
+            $field_instance = new \GiftFlowWP_Field(
+                $field_id,                    // id
+                $field_id,                    // name
+                $field['type'],              // type
+                array(
+                    'value' => $value,
+                    'label' => $field['label'],
+                    'description' => $field['description'],
+                    'wrapper_classes' => array('giftflowwp-field-wrapper'),
+                    'classes' => array('giftflowwp-field-input'),
+                    'attributes' => array(
+                        'id' => $field_id,
+                        'name' => $field_id,
+                    )
+                )
             );
             
-            // Add additional field properties based on type
-            if ( 'textarea' === $field['type'] ) {
-                $field_args['rows'] = 3;
-            }
-            
-            // Create and render the field
-            $field_instance = new \GiftFlowWP_Field( $field_id, $field_id, $field['type'], $field_args );
+            // Render the field
             echo $field_instance->render();
         }
     }

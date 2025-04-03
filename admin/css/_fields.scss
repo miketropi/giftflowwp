@@ -9,7 +9,7 @@
   margin-bottom: $spacing-lg;
   position: relative;
   display: grid;
-  grid-template-columns: 1fr calc(100% - 150px - 1em);
+  grid-template-columns: calc(100px + 1em) 1fr;
   align-items: flex-start;
   // flex-wrap: wrap;
   
@@ -21,7 +21,7 @@
     font-weight: 500;
     color: $text-color;
     font-size: $font-size-md;
-    min-width: 150px; // Fixed width for labels to align fields
+    min-width: 100px; // Fixed width for labels to align fields
     padding-top: 1em;
     
     .required {
@@ -75,6 +75,13 @@
     
     &::placeholder {
       color: #aaa;
+    }
+  }
+
+  &-switch {
+
+    .giftflowwp-field-wrapper {
+      padding-top: 1em;
     }
   }
 }
@@ -208,9 +215,16 @@
   
   input {
     opacity: 0;
-    width: 0;
-    height: 0;
-    
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 9;
+    min-width: auto !important; 
+    margin: 0 !important;
+    padding: 0 !important;
+
     &:checked + .giftflowwp-switch-slider {
       background-color: $primary-color;
     }
