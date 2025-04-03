@@ -1,0 +1,23 @@
+{
+  "name": "giftflowwp",
+  "version": "1.0.0",
+  "description": "A comprehensive WordPress plugin for managing donations, donors, and campaigns with modern features and extensible architecture.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "mix watch",
+    "build": "mix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "laravel-mix": "^6.0.49"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.26.3",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.86.2",
+    "sass-loader": "^12.6.0"
+  }
+}

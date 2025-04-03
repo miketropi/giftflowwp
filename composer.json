@@ -1,0 +1,23 @@
+{
+    "name": "giftflowwp/giftflowwp",
+    "description": "WordPress donation plugin with Stripe and PayPal integration",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "GiftFlowWp\\": "includes/"
+        }
+    },
+    "require": {
+        "php": ">=7.4",
+        "paypal/paypal-checkout-sdk": "^1.0",
+        "stripe/stripe-php": "^17.1"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

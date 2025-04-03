@@ -1,0 +1,61 @@
+/* Gallery Field Styles */
+.giftflowwp-gallery-field {
+	margin-bottom: 15px;
+}
+
+.giftflowwp-gallery-preview {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 10px;
+	min-height: 100px;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background-color: #f9f9f9;
+}
+
+.giftflowwp-gallery-image {
+	position: relative;
+	width: 100px;
+	height: 100px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	overflow: hidden;
+}
+
+.giftflowwp-gallery-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.giftflowwp-gallery-remove {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: #fff;
+	border-radius: 50%;
+	cursor: pointer;
+	font-size: 14px;
+	transition: background-color 0.2s;
+}
+
+.giftflowwp-gallery-remove:hover {
+	background-color: rgba(0, 0, 0, 0.7);
+}
+
+.giftflowwp-gallery-controls {
+	display: flex;
+	gap: 10px;
+}
+
+.giftflowwp-gallery-add,
+.giftflowwp-gallery-remove-all {
+	margin: 0;
+} 

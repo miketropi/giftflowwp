@@ -1,0 +1,32 @@
+/**
+ * GiftFlowWP Variables
+ *
+ * Global variables for styling
+ */
+
+// Colors
+$primary-color: #4a6cf7;
+$primary-hover: #3a5ce5;
+$text-color: #333;
+$text-light: #666;
+$border-color: #ddd;
+$error-color: #e53935;
+
+// Spacing
+$spacing-xs: 0.25em;
+$spacing-sm: 0.5em;
+$spacing-md: 1em;
+$spacing-lg: 1.5em;
+
+// Typography
+$font-size-sm: 0.875em;
+$font-size-md: 1em;
+$font-size-lg: 1.125em;
+
+// Borders & Shadows
+$border-radius: 4px;
+$box-shadow: null; // 0 2px 4px rgba(0, 0, 0, 0.05);
+$box-shadow-focus: null; // 0 0 0 3px rgba(74, 108, 247, 0.2);
+
+// Transitions
+$transition-speed: 0.2s;
