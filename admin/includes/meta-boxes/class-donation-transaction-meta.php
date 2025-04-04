@@ -33,7 +33,7 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
                 'label' => __( 'Amount', 'giftflowwp' ),
                 'type'  => 'currency',
                 // 'step'  => '0.01',
-                'currency_symbol' => '$',
+                // 'currency_symbol' => '$',
                 'description' => __( 'Enter the amount of the donation', 'giftflowwp' ),
             ),
             'payment_method' => array(

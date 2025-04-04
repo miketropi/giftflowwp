@@ -5,12 +5,20 @@
     h2.nav-tab-wrapper {
       border-bottom: none;
     }
+
+    .giftflowwp-field {
+      grid-template-columns: 50% 50%;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 100%;
+      }
+    }
   }
 
   h1 {
-    font-size: 24px;
+    // font-size: 24px;
     margin-bottom: 20px;
-    color: #23282d;
+    // color: #23282d;
   }
 
   .nav-tab-wrapper {
@@ -21,7 +29,7 @@
     .nav-tab {
       margin-left: 0;
       margin-right: 5px;
-      padding: 10px 15px;
+      padding: 8px 20px;
       font-size: 14px;
       line-height: 1.71428571;
       font-weight: 600;

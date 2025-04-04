@@ -140,13 +140,19 @@ class Campaign extends Base_Post_Type {
         // Special handling for different column types
         switch ( $column ) {
             case 'goal_amount':
-                echo esc_html( '$' . number_format( $meta_value, 2 ) );
+                // get currency symbol
+                // $currency_symbol = giftflowwp_get_currency_symbol(giftflowwp_get_current_currency());
+                // echo esc_html( $currency_symbol . number_format( $meta_value, 2 ) );
+
+                echo giftflowwp_render_currency_formatted_amount($meta_value);
                 break;
                 
             case 'raised_amount':
-                // echo esc_html( '$' . number_format( $meta_value, 2 ) );
-                // echo esc_html( '$' . number_format( giftflowwp_get_campaign_raised_amount( $post_id ), 2 ) );
-                echo esc_html( '$' . number_format( $meta_value, 2 ) );
+                // get currency symbol
+                // $currency_symbol = giftflowwp_get_currency_symbol(giftflowwp_get_current_currency());
+                // echo esc_html( $currency_symbol . number_format( $meta_value, 2 ) );
+
+                echo giftflowwp_render_currency_formatted_amount($meta_value);
                 
                 echo sprintf( ' (%s%s)', giftflowwp_get_campaign_progress_percentage( $post_id ), '%' );
                 break;

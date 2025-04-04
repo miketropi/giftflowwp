@@ -269,8 +269,12 @@ class GiftFlowWP_Field {
 		// Set field step value.
 		$this->step = isset( $args['step'] ) ? $args['step'] : null;
 
+
+    // default currency symbol
+    $default_currency_symbol = giftflowwp_get_currency_symbol(giftflowwp_get_current_currency());
+
 		// Set field currency symbol.
-		$this->currency_symbol = isset( $args['currency_symbol'] ) ? $args['currency_symbol'] : '$';
+		$this->currency_symbol = isset( $args['currency_symbol'] ) ? $args['currency_symbol'] : $default_currency_symbol;
 
 		// Set field currency position.
 		$this->currency_position = isset( $args['currency_position'] ) ? $args['currency_position'] : 'before';

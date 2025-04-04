@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: GiftFlowWp
+ * Plugin Name: GiftFlow
  * Plugin URI: https://giftflowwp.com
  * Description: A comprehensive WordPress plugin for managing donations, donors, and campaigns with modern features and extensible architecture.
  * Version: 1.0.0
@@ -51,6 +51,7 @@ function giftflowwp_load_files() {
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-loader.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-field.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-ajax.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-block-template.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/common.php';
     
     // Admin files
@@ -71,6 +72,7 @@ function giftflowwp_load_files() {
     // Frontend files
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/frontend/class-shortcodes.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/frontend/class-forms.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/frontend/class-template.php';
     
     // Payment gateways
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-gateway-base.php';

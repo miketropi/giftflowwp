@@ -717,10 +717,16 @@
 .giftflow_page_giftflowwp-settings .wrap h2.nav-tab-wrapper {
   border-bottom: none;
 }
+.giftflow_page_giftflowwp-settings .wrap .giftflowwp-field {
+  grid-template-columns: 50% 50%;
+}
+@media (max-width: 768px) {
+  .giftflow_page_giftflowwp-settings .wrap .giftflowwp-field {
+    grid-template-columns: 100%;
+  }
+}
 .giftflow_page_giftflowwp-settings h1 {
-  font-size: 24px;
   margin-bottom: 20px;
-  color: #23282d;
 }
 .giftflow_page_giftflowwp-settings .nav-tab-wrapper {
   margin-bottom: 20px;
@@ -729,7 +735,7 @@
 .giftflow_page_giftflowwp-settings .nav-tab-wrapper .nav-tab {
   margin-left: 0;
   margin-right: 5px;
-  padding: 10px 15px;
+  padding: 8px 20px;
   font-size: 14px;
   line-height: 1.71428571;
   font-weight: 600;

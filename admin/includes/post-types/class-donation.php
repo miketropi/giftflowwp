@@ -95,8 +95,12 @@ class Donation extends Base_Post_Type {
     public function render_custom_columns( $column, $post_id ) {
         switch ( $column ) {
             case 'amount':
+                // get currency symbol
+                // $currency_symbol = giftflowwp_get_currency_symbol(giftflowwp_get_current_currency());
+                // $amount = get_post_meta( $post_id, '_amount', true );
+                // echo esc_html( $currency_symbol . number_format( floatval( $amount ), 2 ) );
                 $amount = get_post_meta( $post_id, '_amount', true );
-                echo esc_html( '$' . number_format( floatval( $amount ), 2 ) );
+                echo giftflowwp_render_currency_formatted_amount($amount);
                 break;
 
             case 'payment_method':

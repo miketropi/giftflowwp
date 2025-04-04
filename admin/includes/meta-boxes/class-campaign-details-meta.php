@@ -30,6 +30,14 @@ class Campaign_Details_Meta extends Base_Meta_Box {
      * @return array
      */
     protected function get_fields() {
+        $preset_donation_amounts = explode(',', giftflowwp_get_preset_donation_amounts());
+        $preset_donation_amounts = array_map(function($amount) {
+            return array(
+                'amount' => (int)trim($amount),
+            );
+        }, $preset_donation_amounts);
+        // var_dump($preset_donation_amounts);die;
+
         return array(
             'regular' => array(
                 'goal_amount' => array(
@@ -37,7 +45,7 @@ class Campaign_Details_Meta extends Base_Meta_Box {
                     'type'  => 'currency',
                     'step'  => '1',
                     'min'   => '0',
-                    'currency_symbol' => '$',
+                    // 'currency_symbol' => '$',
                     // description
                     'description' => __( 'Enter the goal amount for the campaign', 'giftflowwp' ),
                 ),
@@ -67,9 +75,11 @@ class Campaign_Details_Meta extends Base_Meta_Box {
             ),
             'advanced' => array(
                 // repeater preset donation amounts ($10, $25, $50, $100, $250)
-                'donation_amounts' => array(
+                'preset_donation_amounts' => array(
                     'label' => __( 'Preset Donation Amounts', 'giftflowwp' ),
                     'type'  => 'repeater',
+                    'default' => $preset_donation_amounts,
+                    'description' => __( 'Enter the preset donation amounts for the campaign', 'giftflowwp' ),
                     'repeater_settings' => array(
                         'fields' => array(
                             'amount' => array(
@@ -77,9 +87,9 @@ class Campaign_Details_Meta extends Base_Meta_Box {
                                 'type'  => 'currency',
                                 'step'  => '1',
                                 'min'   => '0',
-                                'value' => 10,
+                                // 'value' => 10,
                                 'description' => __( 'Enter the amount for the donation', 'giftflowwp' ),
-                                'currency_symbol' => '$',
+                                // 'currency_symbol' => '$',
                             ),
                         ),
                     ),
@@ -89,12 +99,14 @@ class Campaign_Details_Meta extends Base_Meta_Box {
                 'allow_custom_donation_amounts' => array(
                     'label' => __( 'Allow Custom Donation Amounts', 'giftflowwp' ),
                     'type'  => 'switch',
+                    'default' => 1,
                     'description' => __( 'Allow users to enter their own donation amounts', 'giftflowwp' ),
                 ),
 
                 'location' => array(
                     'label' => __( 'Location', 'giftflowwp' ),
                     'type'  => 'textfield',
+                    'default' => 'United States',
                     'description' => __( 'Enter the location for the campaign', 'giftflowwp' ),
                 ),
                 'gallery' => array(
@@ -123,7 +135,12 @@ class Campaign_Details_Meta extends Base_Meta_Box {
         
         // Render regular fields
         foreach ( $fields['regular'] as $field_id => $field_args ) {
-            $value = get_post_meta( $post->ID, '_' . $field_id, true );
+            // metadata_exists
+            if ( metadata_exists( 'post', $post->ID, '_' . $field_id ) ) {
+                $value = get_post_meta( $post->ID, '_' . $field_id, true );
+            } else {
+                $value = $field_args['default'] ?? '';
+            }
 
             // Create field instance
             $field = new GiftFlowWP_Field(
@@ -154,11 +171,16 @@ class Campaign_Details_Meta extends Base_Meta_Box {
         
         // Render advanced fields
         foreach ( $fields['advanced'] as $field_id => $field_args ) {
-            $value = get_post_meta( $post->ID, '_' . $field_id, true );
-
-            // if field type is repeater, then we need to unserialize the value
-            if ( $field_args['type'] == 'repeater' && $value ) {
-                $value = unserialize( $value );
+            // metadata_exists
+            if ( metadata_exists( 'post', $post->ID, '_' . $field_id ) ) {
+                $value = get_post_meta( $post->ID, '_' . $field_id, true );
+                
+                // if field type is repeater, then we need to unserialize the value
+                if ( $field_args['type'] == 'repeater' && $value ) {
+                    $value = unserialize( $value );
+                }
+            } else {
+                $value = $field_args['default'] ?? '';
             }
 
             // Create field instance

@@ -28,22 +28,10 @@ class Loader extends Base {
     }
 
     /**
-     * Register dashboard styles
-     */
-    // function giftflowwp_dashboard_styles() {
-    //     $screen = get_current_screen();
-    //     if ($screen && $screen->id === 'toplevel_page_giftflowwp-dashboard') {
-    //         wp_enqueue_style('giftflowwp-dashboard', GIFTFLOWWP_PLUGIN_URL . 'assets/css/admin.bundle.css', array(), GIFTFLOWWP_VERSION);
-    //     }
-    // }
-    // add_action('admin_enqueue_scripts', 'giftflowwp_dashboard_styles');
-
-    /**
      * Initialize WordPress hooks
      */
     private function init_hooks() {
         add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
-        // add_action( 'init', array( $this, 'init' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
     }
 
@@ -62,6 +50,9 @@ class Loader extends Base {
      * Initialize plugin components
      */
     public function init() {
+        // core
+        new \GiftFlowWp\Core\Block_Template();
+
         // Initialize post types
         new \GiftFlowWp\Admin\PostTypes\Donation();
         new \GiftFlowWp\Admin\PostTypes\Donor();
@@ -71,6 +62,9 @@ class Loader extends Base {
         new \GiftFlowWp\Admin\MetaBoxes\Donation_Transaction_Meta();
         new \GiftFlowWp\Admin\MetaBoxes\Donor_Contact_Meta();
         new \GiftFlowWp\Admin\MetaBoxes\Campaign_Details_Meta();
+
+        // Initialize frontend components
+        new \GiftFlowWp\Frontend\Shortcodes();
     }
 
     public function activate() {
