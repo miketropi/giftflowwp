@@ -1,5 +1,9 @@
 const mix = require('laravel-mix');
-// require('@tinypixelco/laravel-mix-wp-blocks');
+require('@tinypixelco/laravel-mix-wp-blocks');
+
+mix.block('blocks/index.js', 'blocks-build', {
+    outputFormat: "json",
+});
 
 // Get all JS files in assets/js directory
 const fs = require('fs');
