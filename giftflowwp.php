@@ -52,7 +52,9 @@ function giftflowwp_load_files() {
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-field.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-ajax.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-block-template.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-wp-block-custom-hooks.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/common.php';
+
     
     // Admin files
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/dashboard.php';
@@ -78,6 +80,8 @@ function giftflowwp_load_files() {
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-gateway-base.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-stripe.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-paypal.php';
+
+    // Blocks
     
     // Apply filters to allow extensions to load additional files
     $additional_files = apply_filters( 'giftflowwp_load_files', array() );

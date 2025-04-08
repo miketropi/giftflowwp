@@ -54,7 +54,7 @@ class Campaign extends Base_Post_Type {
             'menu_position'      => null,
             'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
             'menu_icon'          => 'dashicons-megaphone',
-            'show_in_rest'       => false,
+            'show_in_rest'       => true,
         );
 
         // Define custom taxonomies
@@ -80,7 +80,7 @@ class Campaign extends Base_Post_Type {
                     'show_admin_column' => true,
                     'query_var'         => true,
                     'rewrite'           => array( 'slug' => 'campaign-tax' ),
-                    'show_in_rest'      => false,
+                    'show_in_rest'      => true, 
                 ),
             ),
         );

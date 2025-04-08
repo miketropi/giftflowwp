@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+// require('@tinypixelco/laravel-mix-wp-blocks');
 
 // Get all JS files in assets/js directory
 const fs = require('fs');

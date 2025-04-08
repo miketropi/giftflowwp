@@ -133,95 +133,122 @@ class Campaign_Details_Meta extends Base_Meta_Box {
 
         $fields = $this->get_fields();
         
-        // Render regular fields
-        foreach ( $fields['regular'] as $field_id => $field_args ) {
-            // metadata_exists
-            if ( metadata_exists( 'post', $post->ID, '_' . $field_id ) ) {
-                $value = get_post_meta( $post->ID, '_' . $field_id, true );
-            } else {
-                $value = $field_args['default'] ?? '';
-            }
-
-            // Create field instance
-            $field = new GiftFlowWP_Field(
-                $field_id,
-                $field_id,
-                $field_args['type'],
-                array_merge(
-                    $field_args,
-                    array(
-                        'value' => $value,
-                        'wrapper_classes' => array('campaign-details-field'),
-                    )
-                )
-            );
-            
-            // Render the field
-            echo $field->render();
-        }
-        
-        // Add advanced section toggle button
-        echo '<div class="campaign-advanced-toggle">';
-        echo '<button type="button" class="button toggle-advanced-fields">' . __( 'Show Advanced Options', 'giftflowwp' ) . '</button>';
-        echo '</div>';
-        
-        // Add advanced fields container
-        echo '<div class="campaign-advanced-fields" style="display:none;">';
-        echo '<h3>' . __( 'Advanced Options', 'giftflowwp' ) . '</h3>';
-        
-        // Render advanced fields
-        foreach ( $fields['advanced'] as $field_id => $field_args ) {
-            // metadata_exists
-            if ( metadata_exists( 'post', $post->ID, '_' . $field_id ) ) {
-                $value = get_post_meta( $post->ID, '_' . $field_id, true );
-                
-                // if field type is repeater, then we need to unserialize the value
-                if ( $field_args['type'] == 'repeater' && $value ) {
-                    $value = unserialize( $value );
-                }
-            } else {
-                $value = $field_args['default'] ?? '';
-            }
-
-            // Create field instance
-            $field = new GiftFlowWP_Field(
-                $field_id,
-                $field_id,
-                $field_args['type'],
-                array_merge(
-                    $field_args,
-                    array(
-                        'value' => $value,
-                        'wrapper_classes' => array('campaign-details-field', 'advanced-field'),
-                    )
-                )
-            );
-            
-            // Render the field
-            echo $field->render();
-        }
-        
-        echo '</div>';
-        
-        // Add JavaScript for toggle functionality
+        ob_start();
         ?>
+        <div class="campaign-details-tabs">
+            <div class="nav-tab-wrapper">
+                <a href="#general-tab" class="nav-tab nav-tab-active"><?php esc_html_e( 'General', 'giftflowwp' ); ?></a>
+                <a href="#advanced-tab" class="nav-tab"><?php esc_html_e( 'Advanced', 'giftflowwp' ); ?></a>
+            </div>
+            
+            <div id="general-tab" class="tab-content active">
+                <?php
+                foreach ( $fields['regular'] as $field_id => $field_args ) {
+                    if ( metadata_exists( 'post', $post->ID, '_' . $field_id ) ) {
+                        $value = get_post_meta( $post->ID, '_' . $field_id, true );
+                    } else {
+                        $value = $field_args['default'] ?? '';
+                    }
+
+                    $field = new GiftFlowWP_Field(
+                        $field_id,
+                        $field_id,
+                        $field_args['type'],
+                        array_merge(
+                            $field_args,
+                            array(
+                                'value' => $value,
+                                'wrapper_classes' => array('campaign-details-field'),
+                            )
+                        )
+                    );
+                    
+                    echo $field->render();
+                }
+                ?>
+            </div>
+            
+            <div id="advanced-tab" class="tab-content">
+                <?php
+                foreach ( $fields['advanced'] as $field_id => $field_args ) {
+                    if ( metadata_exists( 'post', $post->ID, '_' . $field_id ) ) {
+                        $value = get_post_meta( $post->ID, '_' . $field_id, true );
+                        
+                        if ( $field_args['type'] == 'repeater' && $value ) {
+                            $value = unserialize( $value );
+                        }
+                    } else {
+                        $value = $field_args['default'] ?? '';
+                    }
+
+                    $field = new GiftFlowWP_Field(
+                        $field_id,
+                        $field_id,
+                        $field_args['type'],
+                        array_merge(
+                            $field_args,
+                            array(
+                                'value' => $value,
+                                'wrapper_classes' => array('campaign-details-field', 'advanced-field'),
+                            )
+                        )
+                    );
+                    
+                    echo $field->render();
+                }
+                ?>
+            </div>
+        </div>
+
+        <style>
+            .campaign-details-tabs {
+                margin-top: 10px;
+            }
+            .tab-content {
+                display: none;
+                padding: 20px 0;
+            }
+            .tab-content.active {
+                display: block;
+            }
+            .nav-tab-wrapper {
+                margin-bottom: 20px;
+            }
+            .nav-tab {
+                padding: 8px 12px;
+                text-decoration: none;
+                border: 1px solid #ccc;
+                background: #f1f1f1;
+                margin-right: 5px;
+                transform: translateY(1px);
+                -webkit-transform: translateY(1px);
+            }
+            .nav-tab-active {
+                background: #fff;
+                border-bottom: 1px solid #fff;
+            }
+        </style>
+
         <script type="text/javascript">
             jQuery(document).ready(function($) {
-                $('.toggle-advanced-fields').on('click', function() {
-                    var $advancedFields = $('.campaign-advanced-fields');
-                    var $button = $(this);
+                $('.nav-tab').on('click', function(e) {
+                    e.preventDefault();
                     
-                    if ($advancedFields.is(':visible')) {
-                        $advancedFields.slideUp();
-                        $button.text('<?php echo esc_js( __( 'Show Advanced Options', 'giftflowwp' ) ); ?>');
-                    } else {
-                        $advancedFields.slideDown();
-                        $button.text('<?php echo esc_js( __( 'Hide Advanced Options', 'giftflowwp' ) ); ?>');
-                    }
+                    // Remove active class from all tabs and content
+                    $('.nav-tab').removeClass('nav-tab-active');
+                    $('.tab-content').removeClass('active');
+                    
+                    // Add active class to clicked tab
+                    $(this).addClass('nav-tab-active');
+                    
+                    // Show corresponding content
+                    var target = $(this).attr('href');
+                    $(target).addClass('active');
                 });
             });
         </script>
         <?php
+        echo ob_get_clean();
     }
 
     /**
