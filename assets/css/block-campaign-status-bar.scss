@@ -1,0 +1,83 @@
+// Campaign Status Bar Styles
+.giftflowwp-campaign-status-bar {
+
+  .campaign-progress {
+    .progress-stats {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 0.75rem;
+
+      @media (max-width: 768px) {
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 0.85rem;
+      }
+
+      .giftflowwp-currency-formatted-amount {
+        color: black; 
+        font-weight: 600;
+      }
+    }
+
+    .progress-bar {
+      height: 0.5rem;
+      background-color: #f1f5f9;
+      border-radius: 9999px;
+      overflow: hidden;
+      width: 100%;
+      margin-bottom: 1rem;
+
+      @media (max-width: 480px) {
+        height: 0.6rem; // Slightly larger on mobile for better touch visibility
+      }
+
+      .progress {
+        height: 100%;
+        background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+        border-radius: 9999px;
+        transition: width 0.5s ease;
+      }
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      color: #64748b;
+      font-size: 0.875rem;
+
+      @media (max-width: 768px) {
+        font-size: 0.8rem;
+      }
+
+      @media (max-width: 480px) {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .progress-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        @media (max-width: 480px) {
+          justify-content: flex-start;
+        }
+
+        .__icon {
+          display: flex;
+          align-items: center;
+          color: #64748b;
+        }
+
+        .__text {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+

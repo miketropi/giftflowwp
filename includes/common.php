@@ -269,7 +269,7 @@ function giftflowwp_render_currency_formatted_amount($amount, $decimals = 2, $cu
     $template = giftflowwp_get_currency_template();
   }
 
-  $amount = str_replace(array_keys($replace), array_values($replace), $template);
+  $amount = '<span class="giftflowwp-currency-formatted-amount">' . str_replace(array_keys($replace), array_values($replace), $template) . '</span>';
 
   $amount = apply_filters('giftflowwp_render_currency_formatted_amount', $amount, $currency, $decimals);
   return $amount;
@@ -288,3 +288,36 @@ function giftflowwp_get_preset_donation_amounts() {
   return $preset_donation_amounts;
 }
 
+
+function giftflowwp_get_campaign_days_left($campaign_id) {
+  $start_date = get_post_meta($campaign_id, '_start_date', true);
+  $end_date = get_post_meta($campaign_id, '_end_date', true);
+  
+  if (!$start_date || !$end_date) {
+    return 0;
+  }
+  
+
+  // current date
+  $current_date = current_time('timestamp');
+
+  $start_date = strtotime($start_date);
+  $end_date = strtotime($end_date);
+
+  // if start date is in the future, return false
+  if ($start_date > $current_date) {
+    return false;
+  }
+
+  // if end date is in the past, return true
+  if ($end_date < $current_date) {
+    return true;
+  }
+
+  $days_left = ceil(($end_date - $current_date) / 86400);
+
+  // apply filter
+  $days_left = apply_filters('giftflowwp_get_campaign_days_left', $days_left, $campaign_id);
+  
+  return $days_left;
+}

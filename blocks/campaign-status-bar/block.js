@@ -1,24 +1,35 @@
 import { registerBlockType } from '@wordpress/blocks';
-import { RichText } from '@wordpress/block-editor';
+import ServerSideRender from '@wordpress/server-side-render';
+import { useBlockProps } from '@wordpress/block-editor';
+import { Disabled } from '@wordpress/components';
+
 
 registerBlockType('giftflowwp/campaign-status-bar', {
+    apiVersion: 3,
     title: 'Campaign Status Bar',
     icon: 'block-default',
     category: 'giftflowwp',
     attributes: {
-        content: { type: 'string', source: 'html', selector: 'p' },
+        __editorPostId: {
+            type: 'number',
+            default: 0,
+        },
     },
-    edit({ attributes, setAttributes }) {
+    usesContext: ['postId'],
+    edit: (props) => {
+        const { attributes, context } = props;
+        const blockProps = useBlockProps();
+
+        attributes.__editorPostId = parseInt(context.postId);
+
         return (
-            <RichText
-                tagName="p"
-                value={attributes.content}
-                onChange={(content) => setAttributes({ content })}
-                placeholder="Enter text..."
-            />
+            <div {...blockProps}>
+                <Disabled>
+                    <ServerSideRender 
+                        block="giftflowwp/campaign-status-bar" 
+                        attributes={ attributes } />
+                </Disabled>
+            </div>
         );
-    },
-    save({ attributes }) {
-        return <RichText.Content tagName="p" value={attributes.content} />;
     },
 });

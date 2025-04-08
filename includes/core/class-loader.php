@@ -23,14 +23,21 @@ class Loader extends Base {
     /**
      * Enqueue styles
      */
-    public function enqueue_scripts() {
+    public function admin_enqueue_scripts() {
         wp_enqueue_script('giftflowwp-dashboard', $this->get_plugin_url() . 'assets/js/admin.bundle.js', array(), $this->get_version(), true);
+        wp_enqueue_style('giftflowwp-dashboard', $this->get_plugin_url() . 'assets/css/admin.bundle.css', array(), $this->get_version());
+    }
+
+    public function enqueue_scripts() {
+        // block-campaign-status-bar.bundle.css
+        wp_enqueue_style('giftflowwp-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version());
     }
 
     // enqueue blocks
     public function enqueue_blocks() {
-        $args = require($this->get_plugin_dir() . '/assets/blocks-build/index.asset.php');
-        wp_enqueue_script('giftflowwp-blocks', $this->get_plugin_url() . 'assets/blocks-build/index.js', $args['dependencies'], $args['version'], true);
+        $args = require($this->get_plugin_dir() . '/blocks-build/index.asset.php');
+        wp_enqueue_script('giftflowwp-blocks', $this->get_plugin_url() . '/blocks-build/index.js', $args['dependencies'], $args['version'], true);
+        wp_enqueue_style('giftflowwp-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version());
     }
 
     // Creating a new (custom) block category
@@ -49,7 +56,8 @@ class Loader extends Base {
      */
     private function init_hooks() {
         add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
-        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+        add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
         add_action( 'enqueue_block_assets', array( $this, 'enqueue_blocks' ) );
         add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
     }

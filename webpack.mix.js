@@ -1,9 +1,7 @@
 const mix = require('laravel-mix');
 require('@tinypixelco/laravel-mix-wp-blocks');
 
-mix.block('blocks/index.js', 'blocks-build', {
-    outputFormat: "json",
-});
+mix.block('blocks/index.js', 'blocks-build');
 
 // Get all JS files in assets/js directory
 const fs = require('fs');
@@ -48,7 +46,7 @@ Object.keys(scssFiles).forEach(filename => {
 });
 
 mix.react()
-   .setPublicPath('assets')
+//    .setPublicPath('assets')
 
 // for admin 
 mix.js('admin/js/admin.js', 'assets/js/admin.bundle.js')

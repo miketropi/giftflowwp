@@ -22,6 +22,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/***/ }),
+
+/***/ "./assets/css/block-campaign-status-bar.scss":
+/*!***************************************************!*\
+  !*** ./assets/css/block-campaign-status-bar.scss ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
 /***/ })
 
 /******/ 	});
@@ -110,8 +123,9 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
-/******/ 			"/js/admin.bundle": 0,
-/******/ 			"css/admin.bundle": 0
+/******/ 			"/assets/js/admin.bundle": 0,
+/******/ 			"assets/css/admin.bundle": 0,
+/******/ 			"assets/css/block-campaign-status-bar.bundle": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -161,8 +175,9 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/admin.bundle"], () => (__webpack_require__("./admin/js/admin.js")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/admin.bundle"], () => (__webpack_require__("./admin/css/admin.scss")))
+/******/ 	__webpack_require__.O(undefined, ["assets/css/admin.bundle","assets/css/block-campaign-status-bar.bundle"], () => (__webpack_require__("./admin/js/admin.js")))
+/******/ 	__webpack_require__.O(undefined, ["assets/css/admin.bundle","assets/css/block-campaign-status-bar.bundle"], () => (__webpack_require__("./assets/css/block-campaign-status-bar.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["assets/css/admin.bundle","assets/css/block-campaign-status-bar.bundle"], () => (__webpack_require__("./admin/css/admin.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
