@@ -37,20 +37,20 @@ function giftflowwp_campaign_single_content_block_render($attributes, $content, 
     'campaign' => array(
       'id' => 'campaign',
       'label' => apply_filters('campaign_single_content_tab_campaign_label', __('Campaign', 'giftflowwp')),
-      'content' => apply_filters('campaign_single_content_tab_campaign', 'Campaign content', $post_id),
+      'content' => apply_filters('campaign_single_content_tab_campaign', '', $post_id),
       'icon' => apply_filters('campaign_single_content_tab_campaign_icon', $icons[0]),
       'is_active' => true,
     ),
     'donations' => array(
       'id' => 'donations',
       'label' => apply_filters('campaign_single_content_tab_donations_label', __('Donations', 'giftflowwp')),
-      'content' => apply_filters('campaign_single_content_tab_donations', 'Donations content', $post_id),
+      'content' => apply_filters('campaign_single_content_tab_donations', '', $post_id),
       'icon' => apply_filters('campaign_single_content_tab_donations_icon', $icons[1]),
     ),
     'comments' => array(
       'id' => 'comments',
       'label' => apply_filters('campaign_single_content_tab_comments_label', __('Comments', 'giftflowwp')),
-      'content' => apply_filters('campaign_single_content_tab_comments', 'Comments content', $post_id),
+      'content' => apply_filters('campaign_single_content_tab_comments', '', $post_id),
       'icon' => apply_filters('campaign_single_content_tab_comments_icon', $icons[2]),
     ),
   );
@@ -129,8 +129,37 @@ function giftflowwp_campaign_single_content_tab_campaign($content, $post_id) {
   ob_start();
   ?>
   <div class="campaign-post-content">
+
+    <?php echo do_shortcode('[giftflow_donation_form campaign_id="' . $post_id . '"]'); ?>
+
     <!-- campaign post content by id -->
     <?php echo get_the_content($post_id); ?>
+  </div>
+  <?php
+  return ob_get_clean();
+}
+
+// add filter campaign_single_content_tab_donations
+add_filter('campaign_single_content_tab_donations', 'giftflowwp_campaign_single_content_tab_donations', 10, 2);
+
+function giftflowwp_campaign_single_content_tab_donations($content, $post_id) {
+  ob_start();
+  ?>
+  <div class="campaign-post-donations">
+    <!-- description -->
+    <strong><?php _e('Below are the donations for this campaign.', 'giftflowwp'); ?></strong>
+
+    <div class="__campaign-post-donations-list" data-campaign-id="<?php echo $post_id; ?>">
+      <!-- template load by javascript -->
+    </div>
+
+    <?php
+      // get all donations for the campaign
+      // $results = giftflowwp_get_campaign_donations($post_id);
+      // echo '<pre>';
+      // print_r($results);
+      // echo '</pre>';
+    ?>
   </div>
   <?php
   return ob_get_clean();

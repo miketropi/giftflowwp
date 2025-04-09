@@ -27,8 +27,6 @@ class Shortcodes extends Base {
      */
     private function init_shortcodes() {
         add_shortcode( 'giftflow_donation_form', array( $this, 'render_donation_form' ) );
-        add_shortcode( 'giftflow_campaign', array( $this, 'render_campaign' ) );
-        add_shortcode( 'giftflow_donations', array( $this, 'render_donations' ) );
     }
 
     /**
@@ -40,48 +38,13 @@ class Shortcodes extends Base {
     public function render_donation_form( $atts ) {
         $atts = shortcode_atts( array(
             'campaign_id' => 0,
-            'amount' => '',
-            'show_recurring' => true,
         ), $atts );
 
         ob_start();
-        include $this->plugin_dir . 'templates/frontend/donation-form.php';
+        // load the donation form template use class-template.php
+        $template = new Template();
+        $template->load_template('donation-form.php', $atts);
         return ob_get_clean();
     }
 
-    /**
-     * Render campaign shortcode
-     *
-     * @param array $atts Shortcode attributes
-     * @return string
-     */
-    public function render_campaign( $atts ) {
-        $atts = shortcode_atts( array(
-            'id' => 0,
-            'show_progress' => true,
-            'show_donations' => true,
-        ), $atts );
-
-        ob_start();
-        include $this->plugin_dir . 'templates/frontend/campaign.php';
-        return ob_get_clean();
-    }
-
-    /**
-     * Render donations list shortcode
-     *
-     * @param array $atts Shortcode attributes
-     * @return string
-     */
-    public function render_donations( $atts ) {
-        $atts = shortcode_atts( array(
-            'campaign_id' => 0,
-            'limit' => 10,
-            'show_amount' => true,
-        ), $atts );
-
-        ob_start();
-        include $this->plugin_dir . 'templates/frontend/donations.php';
-        return ob_get_clean();
-    }
 } 

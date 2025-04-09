@@ -44,6 +44,16 @@ function giftflowwp_get_campaign_raised_amount($campaign_id) {
 }
 
 /**
+ * giftflowwp_get_campaign_goal_amount
+ * 
+ * @param int $campaign_id The campaign ID
+ * @return float The goal amount
+ */
+function giftflowwp_get_campaign_goal_amount($campaign_id) {
+    return get_post_meta($campaign_id, '_goal_amount', true);
+}
+
+/**
  * Get the percentage of raised amount compared to goal amount
  *
  * @param int $campaign_id The campaign ID
@@ -275,6 +285,17 @@ function giftflowwp_render_currency_formatted_amount($amount, $decimals = 2, $cu
   return $amount;
 }
 
+// get symbol
+function giftflowwp_get_global_currency_symbol() {
+  $currency = giftflowwp_get_current_currency();
+  $currencies = giftflowwp_get_common_currency();
+  $_currency = array_filter($currencies, function($c) use ($currency) {
+    return $c['code'] === $currency;
+  });
+  $_currency = array_values($_currency);
+  return $_currency[0]['symbol'];
+}
+
 // get currency template
 function giftflowwp_get_currency_template() {
   $options = get_option('giftflowwp_general_options');
@@ -288,6 +309,27 @@ function giftflowwp_get_preset_donation_amounts() {
   return $preset_donation_amounts;
 }
 
+/**
+ * get preset donation amounts by campaign id
+ * 
+ * @param int $campaign_id
+ * @return array
+ */
+function giftflowwp_get_preset_donation_amounts_by_campaign($campaign_id) {
+  $preset_donation_amounts = get_post_meta($campaign_id, '_preset_donation_amounts', true);
+
+  // unserialize if exists
+  if (is_serialized($preset_donation_amounts)) {
+    $preset_donation_amounts = unserialize($preset_donation_amounts);
+  }
+  
+
+  return array_map(function($item) {
+    return array(
+      'amount' => (float)trim($item['amount']),
+    );
+  }, $preset_donation_amounts);
+}
 
 function giftflowwp_get_campaign_days_left($campaign_id) {
   $start_date = get_post_meta($campaign_id, '_start_date', true);
@@ -320,4 +362,52 @@ function giftflowwp_get_campaign_days_left($campaign_id) {
   $days_left = apply_filters('giftflowwp_get_campaign_days_left', $days_left, $campaign_id);
   
   return $days_left;
+}
+
+// get all donations for the campaign id  
+function giftflowwp_get_campaign_donations($campaign_id, $args = array()) {
+
+  $args = wp_parse_args($args, array(
+    'posts_per_page' => 20,
+    'paged' => 1,
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'post_status' => 'publish',
+    'post_type' => 'donation',
+  ));
+
+  $args['meta_key'] = '_campaign_id';
+  $args['meta_value'] = $campaign_id;
+
+  $donations = new WP_Query($args);
+
+  // return donation posts, total, and pagination
+  return array(
+    'posts' => array_map(function($post) {
+      $donor_meta = [];
+      $donor_meta['id'] = get_post_meta($post->ID, '_donor_id', true);
+      $donor_meta['name'] = get_the_title($donor_meta['id']);
+      $donor_meta['email'] = get_post_meta($donor_meta['id'], '_email', true);
+      $donor_meta['phone'] = get_post_meta($donor_meta['id'], '_phone', true);
+      $donor_meta['address'] = get_post_meta($donor_meta['id'], '_address', true);
+      $donor_meta['city'] = get_post_meta($donor_meta['id'], '_city', true);
+      $donor_meta['state'] = get_post_meta($donor_meta['id'], '_state', true);
+      $donor_meta['postal_code'] = get_post_meta($donor_meta['id'], '_postal_code', true);
+      $donor_meta['country'] = get_post_meta($donor_meta['id'], '_country', true);
+
+      return array(
+        'id' => $post->ID,
+        'amount' => get_post_meta($post->ID, '_amount', true),
+        'amount_formatted' => giftflowwp_render_currency_formatted_amount(get_post_meta($post->ID, '_amount', true)),
+        'payment_method' => get_post_meta($post->ID, '_payment_method', true),
+        'status' => get_post_meta($post->ID, '_status', true),
+        'transaction_id' => get_post_meta($post->ID, '_transaction_id', true),
+        'donor_id' => get_post_meta($post->ID, '_donor_id', true),
+        'donor_meta' => $donor_meta,
+        'campaign_id' => get_post_meta($post->ID, '_campaign_id', true),
+      );
+    }, $donations->posts),
+    'total' => $donations->found_posts,
+    'pagination' => $donations->max_num_pages,
+  );
 }

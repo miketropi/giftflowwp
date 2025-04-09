@@ -31,6 +31,9 @@ class Loader extends Base {
     public function enqueue_scripts() {
         // block-campaign-status-bar.bundle.css
         wp_enqueue_style('giftflowwp-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version());
+    
+        // donation-form.bundle.css
+        wp_enqueue_style('giftflowwp-donation-form', $this->get_plugin_url() . 'assets/css/donation-form.bundle.css', array(), $this->get_version());
     }
 
     // enqueue blocks
