@@ -1,8 +1,7 @@
 {
     "/js/admin.bundle.js": "/js/admin.bundle.js",
-    "/js/admin.bundle.asset.php": "/js/admin.bundle.asset.php",
+    "/js/admin.bundle.asset.json": "/js/admin.bundle.asset.json",
     "/blocks-build/index.js": "/blocks-build/index.js",
-    "/blocks-build/index.asset.php": "/blocks-build/index.asset.php",
-    "/css/admin.bundle.css": "/css/admin.bundle.css",
-    "/css/common.bundle.css": "/css/common.bundle.css"
+    "/blocks-build/index.asset.json": "/blocks-build/index.asset.json",
+    "/css/admin.bundle.css": "/css/admin.bundle.css"
 }

@@ -5,17 +5,11 @@ import { Disabled } from '@wordpress/components';
 const { useSelect } = wp.data;
 
 
-registerBlockType('giftflowwp/campaign-status-bar', {
+registerBlockType('giftflowwp/campaign-single-content', {
     apiVersion: 3,
-    title: 'Campaign Status Bar',
+    title: 'Campaign Single Content',
     icon: 'block-default',
     category: 'giftflowwp',
-    attributes: {
-        __editorPostId: {
-            type: 'number',
-            default: 0,
-        },
-    },
     usesContext: ['postId'],
     edit: (props) => {
         const { attributes, ...rest } = props;
@@ -23,13 +17,12 @@ registerBlockType('giftflowwp/campaign-status-bar', {
 
         // if context.postId is 0 or empty, set attributes.__editorPostId to 0
         attributes.__editorPostId = rest?.context?.postId ?? 0;
-        
 
         return (
             <div {...blockProps}>
                 <Disabled>
                     <ServerSideRender 
-                        block="giftflowwp/campaign-status-bar" 
+                        block="giftflowwp/campaign-single-content" 
                         attributes={ attributes } />
                 </Disabled>
             </div>

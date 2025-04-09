@@ -20,7 +20,7 @@ function giftflowwp_campaign_status_bar_block() {
 add_action('init', 'giftflowwp_campaign_status_bar_block');
 
 function giftflowwp_campaign_status_bar_block_render($attributes, $content, $block) {
-    $post_id = (int) $block->context['postId'];
+    $post_id = get_the_ID();
 
     // Check if it is a WP json api request:
     if ( wp_is_serving_rest_request() ) {
@@ -30,6 +30,42 @@ function giftflowwp_campaign_status_bar_block_render($attributes, $content, $blo
         $attributes['__editorPostId'] = (int) $attributes['__editorPostId'];
       }
       $post_id = $attributes['__editorPostId'] ?? $post_id;
+    }
+
+    // if $post_id is 0 or empty, return
+    if ( empty($post_id) ) {
+      ob_start();
+      ?>
+      <div class="giftflowwp-campaign-status-bar">
+        <div class="campaign-progress">
+            <div class="progress-stats">
+                <?php echo __('Campaign not found or no data available', 'giftflowwp'); ?>
+            </div>
+            <div class="progress-bar" style="height: 0.5rem; background-color: #f1f5f9; overflow: hidden; width: 100%;">
+                <div class="progress" style="width: 0%; height: 100%; background: linear-gradient(90deg, #0ea5e9, #38bdf8);"></div>
+            </div>
+            <div class="progress-meta">
+                <div class="progress-meta-item">
+                    <span class="__icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </span>
+                    <span class="__text">
+                        <?php _e('No donations yet', 'giftflowwp'); ?>
+                    </span>
+                </div>
+                <div class="progress-meta-item">
+                    <span class="__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock2-icon lucide-clock-2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 10"/></svg>
+                    </span>
+                    <span class="__text">
+                      <?php _e('Not available', 'giftflowwp'); ?>
+                    </span>
+                </div>
+            </div>
+        </div>
+      </div>
+      <?php
+      return ob_get_clean();
     }
 
     // Get campaign data
@@ -76,7 +112,14 @@ function giftflowwp_campaign_status_bar_block_render($attributes, $content, $blo
                     <span class="__icon">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     </span>
-                    <span class="__text"><?php echo $donation_count; ?> <?php echo _n('donation', 'donations', $donation_count, 'giftflowwp'); ?></span>
+                    <span class="__text">
+                        <!-- if donation count is 0, show "No donations yet" else show donation count -->
+                        <?php if ($donation_count === 0) : ?>
+                            <?php _e('No donations yet', 'giftflowwp'); ?>
+                        <?php else : ?>
+                            <?php echo $donation_count; ?> <?php echo _n('donation', 'donations', $donation_count, 'giftflowwp'); ?>
+                        <?php endif; ?>
+                    </span>
                 </div>
                 <!-- days left -->
                 <div class="progress-meta-item">

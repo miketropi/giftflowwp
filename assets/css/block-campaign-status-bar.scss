@@ -1,10 +1,12 @@
 // Campaign Status Bar Styles
 .giftflowwp-campaign-status-bar {
+  padding-top: 1.5em;
+  border-top: 1px solid #e2e8f0;
 
   .campaign-progress {
     .progress-stats {
       font-size: 1rem;
-      color: #555;
+      // color: #555;
       margin-bottom: 0.75rem;
 
       @media (max-width: 768px) {
@@ -16,7 +18,7 @@
       }
 
       .giftflowwp-currency-formatted-amount {
-        color: black; 
+        // color: black; 
         font-weight: 600;
       }
     }
@@ -45,7 +47,6 @@
       display: flex;
       justify-content: space-between;
       margin-top: 0.5rem;
-      color: #64748b;
       font-size: 0.875rem;
 
       @media (max-width: 768px) {
@@ -69,7 +70,6 @@
         .__icon {
           display: flex;
           align-items: center;
-          color: #64748b;
         }
 
         .__text {

@@ -4,5 +4,6 @@
     "/blocks-build/index.js": "/blocks-build/index.js",
     "/blocks-build/index.asset.php": "/blocks-build/index.asset.php",
     "/assets/css/admin.bundle.css": "/assets/css/admin.bundle.css",
-    "/assets/css/block-campaign-status-bar.bundle.css": "/assets/css/block-campaign-status-bar.bundle.css"
+    "/assets/css/block-campaign-status-bar.bundle.css": "/assets/css/block-campaign-status-bar.bundle.css",
+    "/assets/css/block-campaign-single-content.bundle.css": "/assets/css/block-campaign-single-content.bundle.css"
 }

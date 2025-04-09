@@ -1,6 +1,9 @@
+.giftflowwp-campaign-status-bar {
+  padding-top: 1.5em;
+  border-top: 1px solid #e2e8f0;
+}
 .giftflowwp-campaign-status-bar .campaign-progress .progress-stats {
   font-size: 1rem;
-  color: #555;
   margin-bottom: 0.75rem;
 }
 @media (max-width: 768px) {
@@ -14,7 +17,6 @@
   }
 }
 .giftflowwp-campaign-status-bar .campaign-progress .progress-stats .giftflowwp-currency-formatted-amount {
-  color: black;
   font-weight: 600;
 }
 .giftflowwp-campaign-status-bar .campaign-progress .progress-bar {
@@ -40,7 +42,6 @@
   display: flex;
   justify-content: space-between;
   margin-top: 0.5rem;
-  color: #64748b;
   font-size: 0.875rem;
 }
 @media (max-width: 768px) {
@@ -67,7 +68,6 @@
 .giftflowwp-campaign-status-bar .campaign-progress .progress-meta .progress-meta-item .__icon {
   display: flex;
   align-items: center;
-  color: #64748b;
 }
 .giftflowwp-campaign-status-bar .campaign-progress .progress-meta .progress-meta-item .__text {
   font-weight: 500;

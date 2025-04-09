@@ -38,6 +38,8 @@ class Loader extends Base {
         $args = require($this->get_plugin_dir() . '/blocks-build/index.asset.php');
         wp_enqueue_script('giftflowwp-blocks', $this->get_plugin_url() . '/blocks-build/index.js', $args['dependencies'], $args['version'], true);
         wp_enqueue_style('giftflowwp-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version());
+
+        wp_enqueue_style('giftflowwp-block-campaign-single-content', $this->get_plugin_url() . 'assets/css/block-campaign-single-content.bundle.css', array(), $this->get_version());
     }
 
     // Creating a new (custom) block category
