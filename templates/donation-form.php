@@ -26,7 +26,8 @@ $icons = array(
     'switch' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-toggle-left-icon lucide-toggle-left"><rect width="20" height="12" x="2" y="6" rx="6" ry="6"/><circle cx="8" cy="12" r="2"/></svg>',
     'star' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star-icon lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>',
     'credit-card' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card-icon lucide-credit-card"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>',
-    'bank' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-landmark-icon lucide-landmark"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>'
+    'bank' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-landmark-icon lucide-landmark"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>',
+    'paypal' => '<svg width="20px" height="20px" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M33.0312 28C39 28 43 25.5 43 20C43 14.5 39 12 33.0312 12H22L17 43H26L28 28H33.0312Z" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/> <path d="M18 36H10L15 5H26.0312C32 5 36 7.5 36 13C36 18.5 32 21 26.0312 21H21" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/> </svg>',
 );
 ?>
 <form class="giftflowwp-donation-form" id="giftflowwp-donation-form" data-campaign-id="<?php echo esc_attr($campaign_id); ?>">
@@ -99,11 +100,13 @@ $icons = array(
                     <?php echo giftflowwp_get_global_currency_symbol(); ?>
                   </span>
                   <input type="number" step="1" min="1" id="giftflowwp-donation-form-input-amount" name="giftflowwp-donation-form-input-amount" placeholder="<?php _e('Enter amount', 'giftflowwp'); ?>">
-                  <p class="giftflowwp-donation-form-input-description">
+                  
+                </div> 
+
+                <p class="giftflowwp-donation-form-input-description">
                     <?php echo $icons['info']; ?>
                     <?php _e('Select an amount or enter your own', 'giftflowwp'); ?>
-                  </p>
-                </div> 
+                </p>
                 
                 <!-- preset donation amounts -->
                 <div class="giftflowwp-donation-form-preset-amounts">
@@ -156,62 +159,79 @@ $icons = array(
     <!-- Step 2: Payment Method -->
     <div class="giftflowwp-donation-form-step giftflowwp-donation-form-step-2">
         <div class="giftflowwp-donation-form-body">
-            
+            <div class="giftflowwp-donation-form-step-2-content">
+                <!-- Payment Methods -->
+                <div class="giftflowwp-donation-form-payment-section">
+                    <h3><?php _e('Select Payment Method', 'giftflowwp'); ?></h3>
+                    
+                    <div class="giftflowwp-donation-form-payment-methods">
+                        <div class="giftflowwp-donation-form-payment-method">
+                            <input type="radio" id="payment-method-stripe" name="payment_method" value="stripe" checked>
+                            <label for="payment-method-stripe">
+                                <div class="payment-method-icon">
+                                    <?php echo $icons['credit-card']; ?>
+                                </div>
+                                <div class="payment-method-info">
+                                    <span class="payment-method-title"><?php _e('Credit Card', 'giftflowwp'); ?></span>
+                                    <span class="payment-method-description"><?php _e('Pay securely with your credit card', 'giftflowwp'); ?></span>
+                                </div>
+                            </label>
+                        </div>
 
-            <div class="giftflowwp-donation-form-payment-methods">
-                <h3><?php _e('Select Payment Method', 'giftflowwp'); ?></h3>
-                
-                <div class="giftflowwp-donation-form-payment-method">
-                    <input type="radio" id="payment-method-stripe" name="payment_method" value="stripe" checked>
-                    <label for="payment-method-stripe">
-                        <?php echo $icons['credit-card']; ?>
-                        <span><?php _e('Credit Card', 'giftflowwp'); ?></span>
-                    </label>
-                </div>
+                        <div class="giftflowwp-donation-form-payment-method">
+                            <input type="radio" id="payment-method-paypal" name="payment_method" value="paypal">
+                            <label for="payment-method-paypal">
+                                <div class="payment-method-icon">
+                                    <?php echo $icons['paypal']; ?>
+                                </div>
+                                <div class="payment-method-info">
+                                    <span class="payment-method-title"><?php _e('PayPal', 'giftflowwp'); ?></span>
+                                    <span class="payment-method-description"><?php _e('Pay with your PayPal account', 'giftflowwp'); ?></span>
+                                </div>
+                            </label>
+                        </div>
 
-                <div class="giftflowwp-donation-form-payment-method">
-                    <input type="radio" id="payment-method-paypal" name="payment_method" value="paypal">
-                    <label for="payment-method-paypal">
-                        <img src="<?php echo GIFTFLOWWP_PLUGIN_URL; ?>assets/images/paypal-logo.png" alt="PayPal">
-                        <span><?php _e('PayPal', 'giftflowwp'); ?></span>
-                    </label>
-                </div>
-
-                <!-- bank transfer -->
-                <div class="giftflowwp-donation-form-payment-method">
-                    <input type="radio" id="payment-method-bank-transfer" name="payment_method" value="bank-transfer">
-                    <label for="payment-method-bank-transfer">
-                        <?php echo $icons['bank']; ?>   
-                        <span><?php _e('Bank Transfer', 'giftflowwp'); ?></span> 
-                    </label>
-                </div>
-
-                <!-- Stripe payment form (hidden by default) -->
-                <div class="giftflowwp-donation-form-stripe-payment" id="stripe-payment-form">
-                    <div id="card-element"></div>
-                    <div id="card-errors" role="alert"></div>
-                </div>
-            </div>
-
-            <!-- Donation Summary -->
-            <div class="giftflowwp-donation-form-summary">
-                <h4><?php _e('Donation Summary', 'giftflowwp'); ?></h4>
-                <div class="giftflowwp-donation-form-summary-content">
-                    <div class="giftflowwp-donation-form-summary-item">
-                        <span class="giftflowwp-donation-form-summary-label"><?php _e('Amount', 'giftflowwp'); ?></span>
-                        <span class="giftflowwp-donation-form-summary-value" id="summary-amount"><?php echo giftflowwp_render_currency_formatted_amount(0); ?></span>
+                        <div class="giftflowwp-donation-form-payment-method">
+                            <input type="radio" id="payment-method-bank-transfer" name="payment_method" value="bank-transfer">
+                            <label for="payment-method-bank-transfer">
+                                <div class="payment-method-icon">
+                                    <?php echo $icons['bank']; ?>
+                                </div>
+                                <div class="payment-method-info">
+                                    <span class="payment-method-title"><?php _e('Bank Transfer', 'giftflowwp'); ?></span>
+                                    <span class="payment-method-description"><?php _e('Direct bank transfer', 'giftflowwp'); ?></span>
+                                </div>
+                            </label>
+                        </div>
                     </div>
-                    <div class="giftflowwp-donation-form-summary-item">
-                        <span class="giftflowwp-donation-form-summary-label"><?php _e('Type', 'giftflowwp'); ?></span>
-                        <span class="giftflowwp-donation-form-summary-value" id="summary-type"><?php _e('One-time', 'giftflowwp'); ?></span>
+
+                    <!-- Stripe payment form (hidden by default) -->
+                    <div class="giftflowwp-donation-form-stripe-payment" id="stripe-payment-form">
+                        <div id="card-element"></div>
+                        <div id="card-errors" role="alert"></div>
                     </div>
-                    <div class="giftflowwp-donation-form-summary-item">
-                        <span class="giftflowwp-donation-form-summary-label"><?php _e('Donor', 'giftflowwp'); ?></span>
-                        <span class="giftflowwp-donation-form-summary-value" id="summary-donor">-</span>
-                    </div>
-                    <div class="giftflowwp-donation-form-summary-item">
-                        <span class="giftflowwp-donation-form-summary-label"><?php _e('Campaign', 'giftflowwp'); ?></span>
-                        <span class="giftflowwp-donation-form-summary-value"><?php echo get_the_title($campaign_id); ?></span>
+                </div>
+
+                <!-- Donation Summary -->
+                <div class="giftflowwp-donation-form-summary-section">
+                    <h3><?php _e('Donation Summary', 'giftflowwp'); ?></h3>
+                    <div class="giftflowwp-donation-form-summary">
+                        <div class="giftflowwp-donation-form-summary-item">
+                            <span class="giftflowwp-donation-form-summary-label"><?php _e('Amount', 'giftflowwp'); ?></span>
+                            <span class="giftflowwp-donation-form-summary-value" id="summary-amount"><?php echo giftflowwp_render_currency_formatted_amount(0); ?></span>
+                        </div>
+                        <div class="giftflowwp-donation-form-summary-item">
+                            <span class="giftflowwp-donation-form-summary-label"><?php _e('Type', 'giftflowwp'); ?></span>
+                            <span class="giftflowwp-donation-form-summary-value" id="summary-type"><?php _e('One-time', 'giftflowwp'); ?></span>
+                        </div>
+                        <div class="giftflowwp-donation-form-summary-item">
+                            <span class="giftflowwp-donation-form-summary-label"><?php _e('Donor', 'giftflowwp'); ?></span>
+                            <span class="giftflowwp-donation-form-summary-value" id="summary-donor">-</span>
+                        </div>
+                        <div class="giftflowwp-donation-form-summary-item">
+                            <span class="giftflowwp-donation-form-summary-label"><?php _e('Campaign', 'giftflowwp'); ?></span>
+                            <span class="giftflowwp-donation-form-summary-value"><?php echo get_the_title($campaign_id); ?></span>
+                        </div>
                     </div>
                 </div>
             </div>

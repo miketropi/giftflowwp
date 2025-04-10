@@ -1,23 +1,29 @@
 .giftflowwp-donation-form {
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 800px;
+    margin: 2rem auto;
     padding: 2.5rem;
-    background: #fdfdfd;
-    border-radius: 1px;
-    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
 
     .giftflowwp-currency-formatted-amount {
-      font-weight: 600;
+        font-weight: 600;
+        color: #1a1a1a;
     }
 
     label {
-      // font-weight: 600;
-      // color: #374151;
-      font-size: 0.9em;
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+        font-size: 0.9em;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #374151;
     }
 
     input[type="number"],
@@ -26,52 +32,46 @@
     select,
     textarea {
         box-sizing: border-box;
-        background: white;
-        border: 1px solid #e5e7eb;
-        border-radius: 1px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
         width: 100%;
-        padding: 0.7em;
-        font-size: .95em;
+        padding: 0.875em 1em;
+        font-size: 1em;
         transition: all 0.2s ease;
-        color: black;
+        color: #1a1a1a;
 
         &:focus {
             outline: none;
-            border-color: black;
+            border-color: #3b82f6;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
-        // placeholder color
         &::placeholder {
-          color: black;
-        }
-
-        &:focus {
-          + .giftflowwp-donation-form-input-description {
-            background: black;
-            color: white;
-          }
+            color: #94a3b8;
         }
     }
 
     textarea {
-      min-height: 120px;
-      resize: vertical;
-      line-height: 1.5;
+        min-height: 120px;
+        resize: vertical;
+        line-height: 1.5;
     }
 
     &-input-description {
-      background: #e5e7eb;
-      color: black;
-      padding: 0.7em;
-      margin: 0;
-      line-height: normal;
-      font-weight: 400;
-      font-size: .7em;
-      transition: all 0.2s ease;
+        background: #f1f5f9;
+        color: #475569;
+        padding: 0.75em 1em;
+        margin: 0.5rem 0 0;
+        border-radius: 8px;
+        line-height: 1.5;
+        font-size: 0.85em;
+        transition: all 0.2s ease;
         
-      display: flex;
-      align-items: center;
-      gap: 4px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 
     &-header {
@@ -79,15 +79,15 @@
         gap: 2rem;
         margin-bottom: 2.5rem;
         padding-bottom: 2rem;
-        border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+        border-bottom: 1px solid #e2e8f0;
 
         &-left {
-            flex: 0 0 140px;
+            flex: 0 0 160px;
 
             img {
                 width: 100%;
                 height: auto;
-                border-radius: 1px;
+                border-radius: 12px;
                 object-fit: cover;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             }
@@ -100,17 +100,17 @@
             justify-content: center;
 
             h4 {
-                margin: 0 0 0.75rem;
-                font-size: 1.5rem;
+                margin: 0 0 1rem;
+                font-size: 1.75rem;
                 font-weight: 600;
-                // color: #111827;
+                color: #0f172a;
                 line-height: 1.3;
             }
 
             p {
                 margin: 0;
-                // color: #6b7280;
-                // font-size: 0.95rem;
+                color: #475569;
+                font-size: 1.1rem;
                 line-height: 1.5;
             }
         }
@@ -123,63 +123,65 @@
     }
 
     &-input-amount {
-        padding: 1.5em;
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 1px;
+        padding: 1.5rem;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        transition: all 0.2s ease;
 
-        
+        &:hover {
+            border-color: #cbd5e1;
+        }
     }
 
     &-preset-amounts {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
         gap: 0.75rem;
         margin-top: 1rem;
 
         button {
-            border: 1px solid #e5e7eb;
-            border-radius: 1px;
-            padding: 0.95em 1em;
-            font-size: 0.8rem;
-            font-weight: normal;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s ease; 
-            background: transparent;
-
-            .giftflowwp-currency-formatted-amount {
-                font-weight: normal;
-            }
+            transition: all 0.2s ease;
+            background: #ffffff;
+            color: #374151;
 
             &:hover {
-                background: black;
-                color: white;
+                background: #f1f5f9;
+                border-color: #cbd5e1;
+                transform: translateY(-1px);
             }
-            
+
+            &.active {
+                background: #3b82f6;
+                border-color: #3b82f6;
+                color: #ffffff;
+            }
         }
     }
 
     &-input-amount-input-wrapper {
-      position: relative;
+        position: relative;
 
-      input[type="number"] {
-        padding-left: 2em;
-      }
+        input[type="number"] {
+            padding-left: 2.5em;
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
 
-      .__currency-symbol {
-        position: absolute;
-        left: .7em;
-        top: 9px;
-        font-size: .95em;
-      }
-    }
-
-    &-user-info-first-name-last-name {
-        display: flex;
-        gap: 1.5rem;
-
-        > div {
-            flex: 1;
+        .__currency-symbol {
+            position: absolute;
+            left: 1em;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #374151;
         }
     }
 
@@ -187,6 +189,20 @@
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
+        padding: 1.5rem;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+
+        &-first-name-last-name {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+
+            @media (max-width: 640px) {
+                grid-template-columns: 1fr;
+            }
+        }
 
         &-anonymous {
             display: flex;
@@ -197,8 +213,8 @@
             input[type="checkbox"] {
                 width: 1.25rem;
                 height: 1.25rem;
-                border-radius: 1px;
-                border: 1.5px solid #e5e7eb;
+                border-radius: 4px;
+                border: 1px solid #e2e8f0;
                 cursor: pointer;
                 transition: all 0.2s ease;
 
@@ -215,252 +231,64 @@
         }
     }
 
-    &-submit {
-        width: 100%;
-        padding: 1.25rem;
-        background: black;
-        color: white;
-        border: none;
-        border-radius: 1px;
-        font-size: 1.1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        // margin-top: 1rem;
-
-        &:hover {
-            transform: translateY(-1px);
-        }
-
-        &:active {
-            transform: translateY(0);
-        }
-
-        &:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-    }
-
-    &-step {
-        display: none;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-
-        &.active {
-            display: block;
-            opacity: 1;
-        }
-    }
-
-    &-payment-methods {
-        h3 {
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-    }
-
-    &-payment-method {
-        margin-bottom: 1rem;
-
-        input[type="radio"] {
-            display: none;
-
-            + label {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                padding: 1rem;
-                border: 1px solid #e5e7eb;
-                border-radius: 1px;
-                cursor: pointer;
-                transition: all 0.2s ease;
-
-                img {
-                    height: 24px;
-                    width: auto;
-                }
-
-                &:hover {
-                    border-color: black;
-                }
-            }
-
-            &:checked + label {
-                border-color: black;
-                background: black;
-                color: white;
-            }
-        }
-    }
-
-    &-stripe-payment {
-        margin-top: 1.5rem;
-        padding: 1.5rem;
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 1px;
-
-        #card-element {
-            padding: 0.7em;
-            border: 1px solid #e5e7eb;
-            border-radius: 1px;
-        }
-
-        #card-errors {
-            color: #dc2626;
-            font-size: 0.9em;
-            margin-top: 0.5rem;
-        }
-    }
-
-    &-step-buttons {
-        display: flex;
-        gap: 1rem;
-        margin-top: 1rem;
-
-        button {
-            flex: 1;
-            padding: 1.25rem;
-            border: none;
-            border-radius: 1px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-
-            &.giftflowwp-donation-form-prev-step {
-                background: #f3f4f6;
-                color: black;
-
-
-                &:hover {
-                    transform: translateY(-1px);
-                    background: #e5e7eb;
-                }
-        
-                &:active {
-                    transform: translateY(0);
-                }
-            }
-
-            &.giftflowwp-donation-form-submit {
-                background: black;
-                color: white;
-
-                &:hover {
-                    transform: translateY(-1px);
-                }
-
-                &:active {
-                    transform: translateY(0);
-                }
-
-                &:disabled {
-                    background: #9ca3af;
-                    cursor: not-allowed;
-                    transform: none;
-                    box-shadow: none;
-                }
-            }
-        }
-    }
-
-    &-next-step {
-        width: 100%;
-        padding: 1.25rem;
-        background: black;
-        color: white;
-        border: none;
-        border-radius: 1px;
-        font-size: 1.1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        margin-top: 1rem;
-
-        &:hover {
-            transform: translateY(-1px);
-        }
-
-        &:active {
-            transform: translateY(0);
-        }
-
-        &:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-    }
-
     &-steps-nav {
         display: flex;
-        // grid-template-columns: 1fr 1fr 1fr;
-        justify-content: space-between;
         align-items: center;
-        gap: 1em;
-        margin-bottom: 2em;
-        // gap: 1rem;
-        // margin-bottom: 2rem;
-        // padding-bottom: 1rem;
-        // border-bottom: 1px solid #e5e7eb;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #e2e8f0;
     }
 
     &-step-nav-item {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        // padding: 0.5rem 1rem;
-        border-radius: 1px;
+        gap: 0.75rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: 8px;
         cursor: pointer;
         transition: all 0.2s ease;
 
         &.active {
-            // background: black;
-            // color: white;
+            background: #f1f5f9;
 
             .giftflowwp-donation-form-step-nav-number {
-                background: black;
-                color: white;
+                background: #3b82f6;
+                color: #ffffff;
+            }
+
+            .giftflowwp-donation-form-step-nav-title {
+                color: #0f172a;
+                font-weight: 500;
             }
         }
-    }
-
-    &-steps-nav-separator {
-        flex: 1 1 0;
-        height: 1px;
-        background: #e5e7eb;
     }
 
     &-step-nav-number {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
         border-radius: 50%;
-        background: #f4f4f5;
-        color: black;
-        font-size: 0.8em;
-        font-weight: normal;
+        background: #e2e8f0;
+        color: #64748b;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
     }
 
     &-step-nav-title {
-        font-size: 0.9em;
-        font-weight: 500;
+        font-size: 0.95rem;
+        color: #64748b;
+        transition: all 0.2s ease;
     }
 
     &-recurring-options {
-        // style grid 2 columns
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
-        margin-bottom: 1em;
+        margin-bottom: 1.5rem;
     }
 
     &-recurring-option {
@@ -470,84 +298,321 @@
             + label {
                 display: flex;
                 flex-direction: column;
-                gap: 0rem;
-                padding: 1rem;
-                border: 1px solid #e5e7eb;
-                border-radius: 1px;
+                gap: 0.5rem;
+                padding: 1.25rem;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
                 cursor: pointer;
                 transition: all 0.2s ease;
+                background: #ffffff;
 
                 &:hover {
-                    border-color: black;
+                    border-color: #cbd5e1;
+                    transform: translateY(-1px);
                 }
             }
 
             &:checked + label {
-                border-color: black;
-                background: black;
-                color: white;
+                border-color: #3b82f6;
+                background: #eff6ff;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
             }
         }
     }
 
     &-recurring-option-title {
         font-weight: 500;
-        font-size: 0.95em;
+        font-size: 1rem;
+        color: #0f172a;
         display: flex;
         align-items: center;
-        gap: 0.3em;
+        gap: 0.5rem;
     }
 
     &-recurring-option-description {
-        font-size: 0.8em;
-        color: #939393;
+        font-size: 0.875rem;
+        color: #64748b;
     }
 
-    &-summary {
-        margin-bottom: 1em;
-        padding: 1.5em;
-        background: #ffffff;
-        border: 1px solid #e5e7eb;
-        border-radius: 1px;
-        font-size: .9em;
+    &-payment-methods {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
 
-        h4 {
-            margin: 0 0 1rem;
-            font-size: 1em;
-            font-weight: 600;
+    &-payment-method {
+        input[type="radio"] {
+            display: none;
+
+            + label {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                padding: 1.25rem;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                background: #ffffff;
+
+                &:hover {
+                    border-color: #cbd5e1;
+                    transform: translateY(-1px);
+                }
+            }
+
+            &:checked + label {
+                border-color: #3b82f6;
+                background: #eff6ff;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+
+                .payment-method-icon {
+                    color: #3b82f6;
+                }
+            }
+        }
+
+        .payment-method-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            color: #64748b;
+            transition: all 0.2s ease;
+
+            svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            img {
+                width: 24px;
+                height: auto;
+            }
+        }
+
+        .payment-method-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .payment-method-title {
+            font-weight: 500;
+            color: #0f172a;
+        }
+
+        .payment-method-description {
+            font-size: 0.875rem;
+            color: #64748b;
         }
     }
 
-    &-summary-content {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
+    &-stripe-payment {
+        margin-top: 1.5rem;
+        padding: 1.5rem;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+
+        #card-element {
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+
+            &:focus {
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
+        }
+
+        #card-errors {
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            background: #fef2f2;
+            border-radius: 6px;
+        }
+    }
+
+    &-summary-section {
+        h3 {
+            margin: 0 0 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0f172a;
+        }
+    }
+
+    &-summary {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 1.5rem;
     }
 
     &-summary-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.5rem 0;
-        border-bottom: 1px solid #e5e7eb;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f1f5f9;
 
         &:last-child {
             border-bottom: none;
+            padding-bottom: 0;
         }
     }
 
     &-summary-label {
-        font-size: 0.9em;
-        color: #6b7280;
-        text-wrap: nowrap;
+        font-size: 0.95rem;
+        color: #64748b;
     }
 
     &-summary-value {
         font-weight: 500;
-        text-wrap: nowrap;
+        color: #0f172a;
+        text-align: right;
+        max-width: 60%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        max-width: 70%;
     }
+
+    &-step-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+
+        button {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &.giftflowwp-donation-form-prev-step {
+                background: #f1f5f9;
+                color: #374151;
+
+                &:hover {
+                    background: #e2e8f0;
+                    transform: translateY(-1px);
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+            }
+
+            &.giftflowwp-donation-form-submit {
+                background: #3b82f6;
+                color: #ffffff;
+
+                &:hover {
+                    background: #2563eb;
+                    transform: translateY(-1px);
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+
+                &:disabled {
+                    background: #94a3b8;
+                    cursor: not-allowed;
+                    transform: none;
+                }
+            }
+        }
+    }
+
+    // Responsive adjustments
+    @media (max-width: 768px) {
+        padding: 1.5rem;
+        margin: 1rem auto;
+
+        &-header {
+            flex-direction: column;
+            gap: 1rem;
+
+            &-left {
+                flex: none;
+                max-width: 200px;
+                margin: 0 auto;
+            }
+        }
+
+        &-step-2-content {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+// Loading spinner
+.giftflowwp-loading-spinner {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #ffffff;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// Success message
+.giftflowwp-success-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+
+    .giftflowwp-success-icon {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 1rem;
+        color: #10b981;
+    }
+
+    p {
+        margin: 0;
+        font-size: 1.1rem;
+        color: #0f172a;
+    }
+}
+
+// Error message
+.giftflowwp-form-error {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    background: #fef2f2;
+    border-radius: 6px;
+    border: 1px solid #fecaca;
+    transition: all 0.3s ease;
 }

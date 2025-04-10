@@ -24,14 +24,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update steps visibility and navigation
     function updateSteps() {
-        steps.forEach(step => step.classList.remove('active'));
+        steps.forEach(step => {
+            step.classList.remove('active');
+            step.style.display = 'none';
+        });
         stepNavItems.forEach(item => item.classList.remove('active'));
         
-        document.querySelector(`.giftflowwp-donation-form-step-${currentStep}`).classList.add('active');
+        const currentStepElement = document.querySelector(`.giftflowwp-donation-form-step-${currentStep}`);
+        currentStepElement.classList.add('active');
+        currentStepElement.style.display = 'block';
+        
         document.querySelector(`.giftflowwp-donation-form-step-nav-item[data-step="${currentStep}"]`).classList.add('active');
     }
 
-    // Validate step 1
+    // Validate step 1 with improved error handling
     function validateStep1() {
         const amount = document.getElementById('giftflowwp-donation-form-input-amount').value;
         const firstName = document.getElementById('giftflowwp-donation-form-user-info-first-name').value;
@@ -40,26 +46,62 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let isValid = true;
         let errorMessage = '';
+        let errorField = null;
 
         if (!amount || parseFloat(amount) <= 0) {
             isValid = false;
             errorMessage = 'Please enter a valid donation amount';
+            errorField = 'giftflowwp-donation-form-input-amount';
         } else if (!firstName) {
             isValid = false;
             errorMessage = 'Please enter your first name';
+            errorField = 'giftflowwp-donation-form-user-info-first-name';
         } else if (!lastName) {
             isValid = false;
             errorMessage = 'Please enter your last name';
+            errorField = 'giftflowwp-donation-form-user-info-last-name';
         } else if (!email || !isValidEmail(email)) {
             isValid = false;
             errorMessage = 'Please enter a valid email address';
+            errorField = 'giftflowwp-donation-form-user-info-email';
         }
 
         if (!isValid) {
-            alert(errorMessage);
+            showError(errorMessage, errorField);
         }
 
         return isValid;
+    }
+
+    // Show error message with animation
+    function showError(message, fieldId) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'giftflowwp-form-error';
+        errorDiv.textContent = message;
+        errorDiv.style.opacity = '0';
+        errorDiv.style.transform = 'translateY(-10px)';
+        
+        const field = document.getElementById(fieldId);
+        field.parentNode.insertBefore(errorDiv, field.nextSibling);
+        
+        // Add error class to input
+        field.classList.add('error');
+        
+        // Animate error message
+        setTimeout(() => {
+            errorDiv.style.opacity = '1';
+            errorDiv.style.transform = 'translateY(0)';
+        }, 10);
+        
+        // Remove error after 3 seconds
+        setTimeout(() => {
+            errorDiv.style.opacity = '0';
+            errorDiv.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                errorDiv.remove();
+                field.classList.remove('error');
+            }, 300);
+        }, 3000);
     }
 
     // Email validation
@@ -68,31 +110,58 @@ document.addEventListener('DOMContentLoaded', function() {
         return emailRegex.test(email);
     }
 
-    // Preset amount buttons
+    // Preset amount buttons with active state
     const presetAmountButtons = form.querySelectorAll('.giftflowwp-donation-form-preset-amount');
     presetAmountButtons.forEach(button => {
         button.addEventListener('click', function() {
             const amount = this.dataset.amount;
-            document.getElementById('giftflowwp-donation-form-input-amount').value = amount;
+            const amountInput = document.getElementById('giftflowwp-donation-form-input-amount');
+            amountInput.value = amount;
+            
+            // Update active state
+            presetAmountButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
             updateDonationSummary();
         });
     });
 
-    // Amount input change
+    // Amount input change with validation
     const amountInput = document.getElementById('giftflowwp-donation-form-input-amount');
     amountInput.addEventListener('input', function() {
+        // Remove active state from preset buttons
+        presetAmountButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Validate amount
+        const amount = parseFloat(this.value);
+        if (amount > 0) {
+            this.classList.remove('error');
+        } else {
+            this.classList.add('error');
+        }
+        
         updateDonationSummary();
     });
 
-    // Donation type change
+    // Donation type change with animation
     const donationTypeInputs = form.querySelectorAll('input[name="donation_type"]');
     donationTypeInputs.forEach(input => {
         input.addEventListener('change', function() {
+            const labels = form.querySelectorAll('.giftflowwp-donation-form-recurring-option label');
+            labels.forEach(label => {
+                label.style.transform = 'scale(1)';
+                setTimeout(() => {
+                    label.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        label.style.transform = 'scale(1)';
+                    }, 150);
+                }, 10);
+            });
             updateDonationSummary();
         });
     });
 
-    // Update donation summary
+    // Update donation summary with animation
     function updateDonationSummary() {
         const amount = document.getElementById('giftflowwp-donation-form-input-amount').value;
         const donationType = form.querySelector('input[name="donation_type"]:checked').value;
@@ -100,39 +169,68 @@ document.addEventListener('DOMContentLoaded', function() {
         const lastName = document.getElementById('giftflowwp-donation-form-user-info-last-name').value;
         const anonymous = document.getElementById('giftflowwp-donation-form-user-info-anonymous').checked;
 
-        // Update amount with fallback for currency symbol
+        // Animate summary updates
+        const summaryAmount = document.getElementById('summary-amount');
+        const summaryType = document.getElementById('summary-type');
+        const summaryDonor = document.getElementById('summary-donor');
+
+        // Fade out
+        [summaryAmount, summaryType, summaryDonor].forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(-5px)';
+        });
+
+        // Update values
         const currencySymbol = (window.giftflowwpForms && window.giftflowwpForms.currency_symbol) || '$';
-        document.getElementById('summary-amount').textContent = currencySymbol + amount;
+        summaryAmount.textContent = currencySymbol + amount;
+        summaryType.textContent = donationType === 'monthly' ? 'Monthly' : 'One-time';
+        summaryDonor.textContent = anonymous ? 'Anonymous' : `${firstName} ${lastName}`;
 
-        // Update type
-        document.getElementById('summary-type').textContent = donationType === 'monthly' ? 'Monthly' : 'One-time';
-
-        // Update donor name
-        if (anonymous) {
-            document.getElementById('summary-donor').textContent = 'Anonymous';
-        } else {
-            document.getElementById('summary-donor').textContent = `${firstName} ${lastName}`;
-        }
+        // Fade in
+        setTimeout(() => {
+            [summaryAmount, summaryType, summaryDonor].forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            });
+        }, 150);
     }
 
-    // Payment method selection
+    // Payment method selection with animation
     const paymentMethodInputs = form.querySelectorAll('input[name="payment_method"]');
     paymentMethodInputs.forEach(input => {
         input.addEventListener('change', function() {
             const selectedMethod = this.value;
+            const labels = form.querySelectorAll('.giftflowwp-donation-form-payment-method label');
             
-            // Hide all payment forms
+            // Animate payment method selection
+            labels.forEach(label => {
+                label.style.transform = 'scale(1)';
+                setTimeout(() => {
+                    label.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        label.style.transform = 'scale(1)';
+                    }, 150);
+                }, 10);
+            });
+            
+            // Show/hide payment forms with animation
             const stripePaymentForm = document.getElementById('stripe-payment-form');
-            stripePaymentForm.style.display = 'none';
+            stripePaymentForm.style.opacity = '0';
+            stripePaymentForm.style.transform = 'translateY(-10px)';
             
-            // Show selected payment form
-            if (selectedMethod === 'stripe') {
-                stripePaymentForm.style.display = 'block';
-            }
+            setTimeout(() => {
+                stripePaymentForm.style.display = selectedMethod === 'stripe' ? 'block' : 'none';
+                if (selectedMethod === 'stripe') {
+                    setTimeout(() => {
+                        stripePaymentForm.style.opacity = '1';
+                        stripePaymentForm.style.transform = 'translateY(0)';
+                    }, 10);
+                }
+            }, 300);
         });
     });
 
-    // Form submission
+    // Form submission with loading state
     form.addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -155,9 +253,11 @@ document.addEventListener('DOMContentLoaded', function() {
             nonce: giftflowwpForms.nonce
         };
 
-        // Disable submit button
+        // Show loading state
         const submitButton = form.querySelector('.giftflowwp-donation-form-submit');
+        const originalText = submitButton.textContent;
         submitButton.disabled = true;
+        submitButton.innerHTML = '<span class="giftflowwp-loading-spinner"></span> Processing...';
 
         // Process payment based on selected method
         if (formData.payment_method === 'stripe') {
@@ -167,27 +267,44 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Process Stripe payment
+    // Process Stripe payment with improved error handling
     function processStripePayment(formData) {
-        // Initialize Stripe
         const stripe = Stripe(giftflowwpForms.stripe_public_key);
         const elements = stripe.elements();
 
-        // Create card element
-        const card = elements.create('card');
+        const card = elements.create('card', {
+            style: {
+                base: {
+                    fontSize: '16px',
+                    color: '#32325d',
+                    '::placeholder': {
+                        color: '#aab7c4'
+                    }
+                },
+                invalid: {
+                    color: '#dc2626',
+                    iconColor: '#dc2626'
+                }
+            }
+        });
+
         card.mount('#card-element');
 
-        // Handle card errors
         card.addEventListener('change', function(event) {
             const displayError = document.getElementById('card-errors');
             if (event.error) {
                 displayError.textContent = event.error.message;
+                displayError.style.opacity = '1';
+                displayError.style.transform = 'translateY(0)';
             } else {
-                displayError.textContent = '';
+                displayError.style.opacity = '0';
+                displayError.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    displayError.textContent = '';
+                }, 300);
             }
         });
 
-        // Create payment method
         stripe.createPaymentMethod({
             type: 'card',
             card: card,
@@ -195,8 +312,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (result.error) {
                 const errorElement = document.getElementById('card-errors');
                 errorElement.textContent = result.error.message;
+                errorElement.style.opacity = '1';
+                errorElement.style.transform = 'translateY(0)';
+                
                 const submitButton = form.querySelector('.giftflowwp-donation-form-submit');
                 submitButton.disabled = false;
+                submitButton.textContent = originalText;
             } else {
                 formData.payment_method_id = result.paymentMethod.id;
                 submitDonation(formData);
@@ -206,23 +327,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Process PayPal payment
     function processPayPalPayment(formData) {
-        // Create URL parameters
         const params = new URLSearchParams();
         for (const [key, value] of Object.entries(formData)) {
             params.append(key, value);
         }
 
-        // Redirect to PayPal
         window.location.href = `${giftflowwpForms.paypal_redirect_url}?${params.toString()}`;
     }
 
-    // Submit donation
+    // Submit donation with improved error handling
     function submitDonation(formData) {
         const xhr = new XMLHttpRequest();
         xhr.open('POST', giftflowwpForms.ajaxurl, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-        // Create form data
         const data = new URLSearchParams();
         data.append('action', 'process_donation');
         for (const [key, value] of Object.entries(formData)) {
@@ -233,27 +351,46 @@ document.addEventListener('DOMContentLoaded', function() {
             if (xhr.status === 200) {
                 const response = JSON.parse(xhr.responseText);
                 if (response.success) {
-                    // Show success message
-                    alert('Thank you for your donation!');
-                    // Redirect to thank you page
-                    window.location.href = response.data.redirect_url;
+                    // Show success message with animation
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'giftflowwp-success-message';
+                    successMessage.innerHTML = `
+                        <svg class="giftflowwp-success-icon" viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                        <p>${response.data.message || 'Thank you for your donation!'}</p>
+                    `;
+                    form.parentNode.insertBefore(successMessage, form.nextSibling);
+                    
+                    // Animate success message
+                    setTimeout(() => {
+                        successMessage.style.opacity = '1';
+                        successMessage.style.transform = 'translateY(0)';
+                    }, 10);
+                    
+                    // Redirect after delay
+                    setTimeout(() => {
+                        window.location.href = response.data.redirect_url;
+                    }, 2000);
                 } else {
-                    // Show error message
-                    alert(response.data.message);
+                    showError(response.data.message || 'An error occurred. Please try again.');
                     const submitButton = form.querySelector('.giftflowwp-donation-form-submit');
                     submitButton.disabled = false;
+                    submitButton.textContent = originalText;
                 }
             } else {
-                alert('An error occurred. Please try again.');
+                showError('An error occurred. Please try again.');
                 const submitButton = form.querySelector('.giftflowwp-donation-form-submit');
                 submitButton.disabled = false;
+                submitButton.textContent = originalText;
             }
         };
 
         xhr.onerror = function() {
-            alert('An error occurred. Please try again.');
+            showError('An error occurred. Please try again.');
             const submitButton = form.querySelector('.giftflowwp-donation-form-submit');
             submitButton.disabled = false;
+            submitButton.textContent = originalText;
         };
 
         xhr.send(data.toString());
