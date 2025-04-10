@@ -2,7 +2,7 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 2.5rem;
-    background: #ffffff;
+    background: #fdfdfd;
     border-radius: 1px;
     border: 1px solid #e5e7eb;
 
@@ -124,67 +124,38 @@
 
     &-input-amount {
         padding: 1.5em;
-        background: #f9fafb;
+        background: #fff;
         border: 1px solid #e5e7eb;
         border-radius: 1px;
 
-        label {
-            // display: block;
-            // margin-bottom: 0.75rem;
-            // font-weight: 500;
-            // color: #374151;
-            // font-size: 0.95rem;
-        }
-
-        input[type="number"] {
-            // width: 100%;
-            // padding: 1rem;
-            // border: 1.5px solid #e5e7eb;
-            // border-radius: 1px;
-            // font-size: 1.1rem;
-            // transition: all 0.2s ease;
-            // background: #f9fafb;
-
-            // &:focus {
-            //     outline: none;
-            //     border-color: #3b82f6;
-            //     background: #ffffff;
-            //     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-            // }
-
-            // &::-webkit-inner-spin-button,
-            // &::-webkit-outer-spin-button {
-            //     -webkit-appearance: none;
-            //     margin: 0;
-            // }
-        }
+        
     }
 
     &-preset-amounts {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
         gap: 0.75rem;
         margin-top: 1rem;
 
         button {
-            padding: 0.75em 1em;
+            border: 1px solid #e5e7eb;
             border-radius: 1px;
+            padding: 0.95em 1em;
             font-size: 0.8rem;
             font-weight: normal;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s ease; 
             background: transparent;
-            color: black;
-            border: 1px solid black;
+
+            .giftflowwp-currency-formatted-amount {
+                font-weight: normal;
+            }
 
             &:hover {
-                transform: translateY(-1px);
+                background: black;
+                color: white;
             }
-
-            &.active {
-                
-              
-            }
+            
         }
     }
 
@@ -216,41 +187,6 @@
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
-
-        > div {
-            label {
-                // display: block;
-                // margin-bottom: 0.75rem;
-                // font-weight: 500;
-                // color: #374151;
-                // font-size: 0.95rem;
-            }
-
-            input[type="text"],
-            input[type="email"],
-            textarea {
-                // width: 100%;
-                // padding: 1rem;
-                // border: 1.5px solid #e5e7eb;
-                // border-radius: 1px;
-                // font-size: 1rem;
-                // transition: all 0.2s ease;
-                // background: #f9fafb;
-
-                // &:focus {
-                //     outline: none;
-                //     border-color: #3b82f6;
-                //     background: #ffffff;
-                //     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-                // }
-            }
-
-            textarea {
-                // min-height: 120px;
-                // resize: vertical;
-                // line-height: 1.5;
-            }
-        }
 
         &-anonymous {
             display: flex;
@@ -290,6 +226,160 @@
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s ease;
+        // margin-top: 1rem;
+
+        &:hover {
+            transform: translateY(-1px);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+
+        &:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+    }
+
+    &-step {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+
+        &.active {
+            display: block;
+            opacity: 1;
+        }
+    }
+
+    &-payment-methods {
+        h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+    }
+
+    &-payment-method {
+        margin-bottom: 1rem;
+
+        input[type="radio"] {
+            display: none;
+
+            + label {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                padding: 1rem;
+                border: 1px solid #e5e7eb;
+                border-radius: 1px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                img {
+                    height: 24px;
+                    width: auto;
+                }
+
+                &:hover {
+                    border-color: black;
+                }
+            }
+
+            &:checked + label {
+                border-color: black;
+                background: black;
+                color: white;
+            }
+        }
+    }
+
+    &-stripe-payment {
+        margin-top: 1.5rem;
+        padding: 1.5rem;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 1px;
+
+        #card-element {
+            padding: 0.7em;
+            border: 1px solid #e5e7eb;
+            border-radius: 1px;
+        }
+
+        #card-errors {
+            color: #dc2626;
+            font-size: 0.9em;
+            margin-top: 0.5rem;
+        }
+    }
+
+    &-step-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+
+        button {
+            flex: 1;
+            padding: 1.25rem;
+            border: none;
+            border-radius: 1px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &.giftflowwp-donation-form-prev-step {
+                background: #f3f4f6;
+                color: black;
+
+
+                &:hover {
+                    transform: translateY(-1px);
+                    background: #e5e7eb;
+                }
+        
+                &:active {
+                    transform: translateY(0);
+                }
+            }
+
+            &.giftflowwp-donation-form-submit {
+                background: black;
+                color: white;
+
+                &:hover {
+                    transform: translateY(-1px);
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+
+                &:disabled {
+                    background: #9ca3af;
+                    cursor: not-allowed;
+                    transform: none;
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+
+    &-next-step {
+        width: 100%;
+        padding: 1.25rem;
+        background: black;
+        color: white;
+        border: none;
+        border-radius: 1px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
         margin-top: 1rem;
 
         &:hover {
@@ -306,5 +396,158 @@
             transform: none;
             box-shadow: none;
         }
+    }
+
+    &-steps-nav {
+        display: flex;
+        // grid-template-columns: 1fr 1fr 1fr;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1em;
+        margin-bottom: 2em;
+        // gap: 1rem;
+        // margin-bottom: 2rem;
+        // padding-bottom: 1rem;
+        // border-bottom: 1px solid #e5e7eb;
+    }
+
+    &-step-nav-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        // padding: 0.5rem 1rem;
+        border-radius: 1px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &.active {
+            // background: black;
+            // color: white;
+
+            .giftflowwp-donation-form-step-nav-number {
+                background: black;
+                color: white;
+            }
+        }
+    }
+
+    &-steps-nav-separator {
+        flex: 1 1 0;
+        height: 1px;
+        background: #e5e7eb;
+    }
+
+    &-step-nav-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #f4f4f5;
+        color: black;
+        font-size: 0.8em;
+        font-weight: normal;
+    }
+
+    &-step-nav-title {
+        font-size: 0.9em;
+        font-weight: 500;
+    }
+
+    &-recurring-options {
+        // style grid 2 columns
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-bottom: 1em;
+    }
+
+    &-recurring-option {
+        input[type="radio"] {
+            display: none;
+
+            + label {
+                display: flex;
+                flex-direction: column;
+                gap: 0rem;
+                padding: 1rem;
+                border: 1px solid #e5e7eb;
+                border-radius: 1px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                &:hover {
+                    border-color: black;
+                }
+            }
+
+            &:checked + label {
+                border-color: black;
+                background: black;
+                color: white;
+            }
+        }
+    }
+
+    &-recurring-option-title {
+        font-weight: 500;
+        font-size: 0.95em;
+        display: flex;
+        align-items: center;
+        gap: 0.3em;
+    }
+
+    &-recurring-option-description {
+        font-size: 0.8em;
+        color: #939393;
+    }
+
+    &-summary {
+        margin-bottom: 1em;
+        padding: 1.5em;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 1px;
+        font-size: .9em;
+
+        h4 {
+            margin: 0 0 1rem;
+            font-size: 1em;
+            font-weight: 600;
+        }
+    }
+
+    &-summary-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    &-summary-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #e5e7eb;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    &-summary-label {
+        font-size: 0.9em;
+        color: #6b7280;
+        text-wrap: nowrap;
+    }
+
+    &-summary-value {
+        font-weight: 500;
+        text-wrap: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 70%;
     }
 }

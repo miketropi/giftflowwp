@@ -34,6 +34,9 @@ class Loader extends Base {
     
         // donation-form.bundle.css
         wp_enqueue_style('giftflowwp-donation-form', $this->get_plugin_url() . 'assets/css/donation-form.bundle.css', array(), $this->get_version());
+    
+        // forms.bundle.js
+        wp_enqueue_script('giftflowwp-forms', $this->get_plugin_url() . 'assets/js/forms.bundle.js', array(), $this->get_version(), true);
     }
 
     // enqueue blocks
