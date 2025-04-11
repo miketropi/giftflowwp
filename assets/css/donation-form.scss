@@ -7,7 +7,7 @@ $border-color: #E5E7EB;
 $background-color: #F9FAFB;
 $error-color: #EF4444;
 $success-color: #10B981;
-$border-radius: 1px;
+$border-radius: 6px;
 $transition: all 0.3s ease;
 
 // Breakpoints
@@ -57,11 +57,14 @@ $mobile: 480px;
 
 // Base styles
 .donation-form {
-  max-width: 800px;
+  // max-width: 800px;
+  max-width: 100%;
   margin: 0 auto;
   background: white;
   border: 1px solid $border-color;
   overflow: hidden;
+  border-radius: $border-radius;
+  font-size: 1rem;
   
   @include tablet {
     max-width: 95%;
@@ -104,6 +107,7 @@ $mobile: 480px;
       height: 150px;
       overflow: hidden;
       border: 1px solid $border-color;
+      border-radius: $border-radius;
       
       @include tablet {
         width: 80px;
@@ -124,7 +128,7 @@ $mobile: 480px;
     }
 
     &-title {
-      font-size: 1.5rem;
+      // font-size: 1.5rem;
       font-weight: 600;
       color: $text-color;
       margin: 0 0 0.5rem 0;
@@ -260,6 +264,7 @@ $mobile: 480px;
     border: none;
     margin: 0 0 2rem;
     padding: 0;
+    border-top: solid 1px $border-color;
     
     @include mobile {
       margin: 0 0 1.5rem;
@@ -270,6 +275,7 @@ $mobile: 480px;
     font-weight: 600;
     color: $text-color;
     margin-bottom: 1rem;
+    padding: 0 1rem 0 0;
     
     @include mobile {
       margin-bottom: 0.75rem;
@@ -298,6 +304,7 @@ $mobile: 480px;
           color: white;
         }
       }
+      
     }
   }
 
@@ -308,6 +315,11 @@ $mobile: 480px;
     border: 1px solid $border-color;
     cursor: pointer;
     transition: $transition;
+    border-radius: $border-radius;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
     
     @include mobile {
       padding: 1rem;
@@ -379,6 +391,10 @@ $mobile: 480px;
         @include mobile {
           font-size: 1rem;
         }
+
+        &.error {
+          border-color: $error-color;
+        }
       }
     }
   }
@@ -399,6 +415,11 @@ $mobile: 480px;
       color: $text-color;
       cursor: pointer;
       transition: $transition;
+      border-radius: $border-radius;
+
+      > * {
+        pointer-events: none;
+      }
       
       @include mobile {
         padding: 0.75rem 0.5rem;
@@ -407,6 +428,12 @@ $mobile: 480px;
       &:hover {
         border-color: $primary-color;
         color: $primary-color;
+      }
+
+      &.active {
+        border-color: $primary-color;
+        background: $primary-color;
+        color: white;
       }
     }
   }
@@ -422,10 +449,36 @@ $mobile: 480px;
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 500;
+      font-size: 0.9rem;
+      color: $text-light;
     }
 
     input[type="text"], input[type="email"], input[type="tel"], textarea {
       @include input-style;
+    }
+
+    &.error {
+      label {
+        color: $error-color;
+      }
+
+      input[type="text"], input[type="email"], input[type="tel"], textarea {
+        border-color: $error-color;
+      }
+
+      .donation-form__field-error {
+        display: flex;
+      }
+    }
+
+    &-error {
+      display: none;
+      align-items: center;
+      gap: 0.3rem;
+      color: $error-color;
+      font-size: 0.7rem;
+      margin-top: 0.5rem;
+      font-weight: 600;
     }
 
     // input[type="checkbox"], input[type="radio"] {
@@ -471,6 +524,7 @@ $mobile: 480px;
     border: 1px solid $border-color;
     cursor: pointer;
     transition: $transition;
+    border-radius: $border-radius;
     
     @include mobile {
       padding: 0.75rem;
@@ -507,7 +561,7 @@ $mobile: 480px;
     padding: 1.5rem;
     background: $background-color;
     border: 1px solid $border-color;
-    
+    border-radius: $border-radius;
     @include mobile {
       margin-top: 1.5rem;
       padding: 1rem;
@@ -571,7 +625,7 @@ $mobile: 480px;
   }
 
   &__button {
-    padding: 1rem;
+    padding: 1.3rem 1rem;
     border-radius: $border-radius;
     font-weight: 500;
     cursor: pointer;
@@ -609,8 +663,49 @@ $mobile: 480px;
         color: $primary-color;
       }
     }
+
+    &:hover {
+      transform: translateY(-1px);
+    }
   }
+
+  &__security-notice {
+    padding: 1.5rem 1rem;
+    margin-top: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: $border-radius;
+    border-left: 3px solid $secondary-color;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      // color: $text-light;
+      display: flex;
+      align-items: center;
+    }
+    
+    @include tablet {
+      padding: 1.25rem;
+      margin-top: 1.25rem;
+    }
+    
+    @include mobile {
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+  }
+
+  &__security-notice-icon {
+    margin-right: 0.5rem;
+    font-size: 1.25rem;
+    display: flex;
+  }
+
 }
+
 
 // Responsive styles
 @media (max-width: 768px) {

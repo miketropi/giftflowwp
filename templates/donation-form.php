@@ -64,6 +64,8 @@ $icons = array(
     'shield' => '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>',
     'phone' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>',
     'message' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>',
+		'shield-check' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check-icon lucide-shield-check"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>',
+		'error' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert-icon lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>',
 );
 
 // Get default donation amount (first preset amount or 10)
@@ -84,7 +86,7 @@ $currency_symbol = giftflowwp_get_global_currency_symbol();
                 <?php echo get_the_post_thumbnail($campaign_id, 'thumbnail'); ?>
             </div>
             <div class="donation-form__campaign-info">
-                <h2 class="donation-form__campaign-title"><?php _e('Donate to', 'giftflowwp'); ?>: <?php echo esc_html($campaign_title); ?></h2>
+                <h4 class="donation-form__campaign-title"><?php _e('Donate to', 'giftflowwp'); ?>: <?php echo esc_html($campaign_title); ?></h4>
                 <div class="donation-form__campaign-progress">
                     <?php echo sprintf(__('%s raised from %s goal', 'giftflowwp'), giftflowwp_render_currency_formatted_amount($raised_amount), giftflowwp_render_currency_formatted_amount($goal_amount)); ?>
                 </div>
@@ -120,7 +122,7 @@ $currency_symbol = giftflowwp_get_global_currency_symbol();
                 <div class="donation-form__step-panel-content">
                     <!-- Donation Type -->
                     <fieldset class="donation-form__fieldset">
-                        <legend class="donation-form__legend"><?php _e('Donation Type', 'giftflowwp'); ?></legend>
+                        <legend class="donation-form__legend"><?php _e('Select donation type, one-time or monthly', 'giftflowwp'); ?></legend>
                         <div class="donation-form__radio-group donation-form__radio-group--donation-type">
                             <input type="radio" name="donation_type" value="once" checked id="donation_type_once">
                             <label class="donation-form__radio-label" for="donation_type_once">
@@ -155,7 +157,10 @@ $currency_symbol = giftflowwp_get_global_currency_symbol();
                             </div>
                             <div class="donation-form__preset-amounts">
                                 <?php foreach ($preset_donation_amounts as $amount) : ?>
-                                    <button type="button" class="donation-form__preset-amount" data-amount="<?php echo esc_attr($amount['amount']); ?>">
+                                    <button 
+																			type="button" 
+																			class="donation-form__preset-amount" 
+																			data-amount="<?php echo esc_attr($amount['amount']); ?>">
                                         <?php echo giftflowwp_render_currency_formatted_amount($amount['amount']); ?>
                                     </button>
                                 <?php endforeach; ?>
@@ -169,11 +174,23 @@ $currency_symbol = giftflowwp_get_global_currency_symbol();
                         <div class="donation-form__fields">
                             <div class="donation-form__field">
                                 <label for="donor_name"><?php _e('Full Name', 'giftflowwp'); ?></label>
-                                <input type="text" id="donor_name" name="donor_name" required>
+                                <input type="text" id="donor_name" name="donor_name" required data-validate="required">
+
+																<?php // error message ?>
+																<div class="donation-form__field-error">
+																	<?php echo $icons['error']; ?>
+																	<?php _e('This field is required, please enter your name', 'giftflowwp'); ?>
+																</div> 
                             </div>
                             <div class="donation-form__field">
                                 <label for="donor_email"><?php _e('Email Address', 'giftflowwp'); ?></label>
-                                <input type="email" id="donor_email" name="donor_email" required>
+                                <input type="email" id="donor_email" name="donor_email" required data-validate="email">
+
+																<?php // error message ?>
+																<div class="donation-form__field-error">
+																	<?php echo $icons['error']; ?>
+																	<?php _e('This field is required, please enter your email', 'giftflowwp'); ?>
+																</div> 
                             </div>
                             <div class="donation-form__field">
                                 <label for="donor_message"><?php _e('Message (Optional)', 'giftflowwp'); ?></label>
@@ -203,7 +220,7 @@ $currency_symbol = giftflowwp_get_global_currency_symbol();
                         <legend class="donation-form__legend"><?php _e('Select Payment Method', 'giftflowwp'); ?></legend>
                         <div class="donation-form__payment-methods">
                             <label class="donation-form__payment-method">
-                                <input type="radio" name="payment_method" value="credit_card" required>
+                                <input type="radio" checked name="payment_method" value="credit_card" required>
                                 <span class="donation-form__payment-method-content">
                                     <?php echo $icons['credit-card']; ?>
                                     <span class="donation-form__payment-method-title"><?php _e('Credit Card', 'giftflowwp'); ?></span>
@@ -245,8 +262,19 @@ $currency_symbol = giftflowwp_get_global_currency_symbol();
                         </dl>
                     </div>
                 </div>
+
+                <?php // notice scurity payment check ?>
+                <div class="donation-form__security-notice">
+                    <span class="donation-form__security-notice-icon"><?php echo $icons['shield-check']; ?></span>
+                    <p><?php _e('We use methods of payment that are secure and trusted. Your payment information is encrypted and never stored on our servers.', 'giftflowwp'); ?></p>
+                </div>
+
                 <div class="donation-form__step-actions">
-                    <button type="button" class="donation-form__button donation-form__button--back" data-prev-step="donation-information">
+										<?php // hidden fields campaign id, wp nonce, form nonce ?>
+										<input type="hidden" name="campaign_id" value="<?php echo esc_attr($campaign_id); ?>">
+										<input type="hidden" name="wp_nonce" value="<?php echo wp_create_nonce('giftflowwp_donation_form'); ?>">
+
+										<button type="button" class="donation-form__button donation-form__button--back" data-prev-step="donation-information">
                         <?php _e('Back', 'giftflowwp'); ?>
                     </button>
                     <button type="submit" class="donation-form__button donation-form__button--submit">
