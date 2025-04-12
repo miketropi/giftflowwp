@@ -1,16 +1,25 @@
 /**
  * Donation Form
  */
+import {loadStripe} from '@stripe/stripe-js';
 
-((w) => {
+const STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY9lOPy403ifo5p89vrcviO4p3SJPkPEejxi2xIpiv9A00JfVSw8VW';
+
+
+
+(async (w) => {
    'use strict';
-
-   const donationForm = class {
+	const donationForm = class {
 
     constructor(donationForm, options) {
 			this.fields = {};
 			this.form = donationForm;
 			this.options = options;
+			this.totalSteps = this.form.querySelectorAll('.donation-form__step-panel').length;
+			this.currentStep = 1;
+
+			this.stripe = null;
+			this.stripeElements = null;
 
 			this.init(donationForm, options);
     }
@@ -18,7 +27,7 @@
     init(donationForm, options) {
 			this.setInitFields(donationForm);
 			this.onListenerFormFieldUpdate();
-
+			this.stripeInit();
 			// on change amount field
 			this.form.addEventListener('input', (event) => {
 				if (event.target.name === 'donation_amount') {
@@ -32,7 +41,69 @@
 					this.onClickPresetAmount(event);
 				}
 			});
+
+			// on click next step
+			this.form.addEventListener('click', (event) => {
+				// is contains class and is element had class donation-form__button--next
+				const isNextButton = event.target.classList.contains('donation-form__button--next') && event.target.tagName === 'BUTTON';
+				if (isNextButton) {
+					const stepPass = this.onValidateFieldsCurrentStep();
+					// console.log('stepPass', stepPass);
+
+					if (stepPass) {
+						this.onNextStep();
+					}
+				}
+			});
+
+			// on click previous step
+			this.form.addEventListener('click', (event) => {
+				// is contains class and is element had class donation-form__button--back
+				const isBackButton = event.target.classList.contains('donation-form__button--back') && event.target.tagName === 'BUTTON';
+
+				if (isBackButton) {
+					this.onPreviousStep();
+				}
+			});
     }
+
+		async stripeInit() {
+			const stripe = await loadStripe(STRIPE_PUBLIC_KEY);
+			const elements = stripe.elements();
+
+			const cardElement = elements.create('card');
+			cardElement.mount(this.form.querySelector('#STRIPE-CARD-ELEMENT'));
+
+			this.stripe = stripe;
+			this.stripeElements = elements;
+		}
+
+
+		onNextStep() {
+			const self = this;
+			self.currentStep++;
+
+			// nav
+			self.form.querySelector('.donation-form__step-link.is-active').classList.remove('is-active');
+			self.form.querySelector(`.donation-form__step-item.nav-step-${self.currentStep} .donation-form__step-link`).classList.add('is-active');
+
+			// panel
+			self.form.querySelector('.donation-form__step-panel.is-active').classList.remove('is-active');
+			self.form.querySelector('.donation-form__step-panel.step-' + self.currentStep).classList.add('is-active');
+		}
+
+		onPreviousStep() {
+			const self = this;
+			self.currentStep--;
+
+			// nav
+			self.form.querySelector('.donation-form__step-link.is-active').classList.remove('is-active');
+			self.form.querySelector(`.donation-form__step-item.nav-step-${self.currentStep} .donation-form__step-link`).classList.add('is-active');
+
+			// panel
+			self.form.querySelector('.donation-form__step-panel.is-active').classList.remove('is-active');
+			self.form.querySelector('.donation-form__step-panel.step-' + self.currentStep).classList.add('is-active');
+		}
 
 		setInitFields(donationForm) {
 			const self = this;
@@ -92,16 +163,17 @@
 				return;
 			}
 
-			if (field === 'donation_amount') {
-				if(!this.onValidateValue('required', value)) {
-					inputField.classList.add('error');
-				} else {
-					inputField.classList.remove('error');
-				}
-			}
-
 			const wrapperField = inputField.closest('.donation-form__field');
 			if (!wrapperField) {
+
+				if(!this.onValidateValue('required', value)) {
+					inputField.classList.add('error'); 
+					this.onUpdateOutputField(field, '');
+				} else {
+					inputField.classList.remove('error');
+					this.onUpdateOutputField(field, value);
+				}
+
 				return;
 			}
 
@@ -110,10 +182,25 @@
 				if (!pass) {
 					// inputField.classList.add('error');
 					wrapperField.classList.add('error');
+					this.onUpdateOutputField(field, '');
 				} else {
 					// inputField.classList.remove('error');
 					wrapperField.classList.remove('error');
+					this.onUpdateOutputField(field, value);
 				}
+			}
+		}
+
+		onUpdateOutputField(field, value) {
+			const outputField = this.form.querySelector(`[data-output="${field}"]`);
+			const formatTemplate = outputField?.dataset?.formatTemplate;
+
+			if (formatTemplate) {
+				value = formatTemplate.replace('{{value}}', value);
+			}
+
+			if (outputField) {
+				outputField.textContent = value;
 			}
 		}
 
@@ -143,6 +230,31 @@
 			this.form.querySelectorAll('.donation-form__preset-amount').forEach((presetAmount) => {
 				presetAmount.classList.remove('active');
 			});
+		}
+
+		onValidateFieldsCurrentStep() {
+			const self = this;
+			const currentStepWrapper = this.form.querySelector('.donation-form__step-panel.is-active');
+			let pass = true;
+			
+			if (!currentStepWrapper) {
+				return;
+			}
+
+			const fields = currentStepWrapper.querySelectorAll('input[name][data-validate]');
+			fields.forEach((field) => {
+				const fieldName = field.name;
+				const fieldValue = field.value;
+				const fieldValidate = field.dataset.validate;
+				
+				if(!this.onValidateValue(fieldValidate, fieldValue)) {
+					pass = false;
+				}
+				
+				self.onUpdateUIByField(fieldName, fieldValue);
+			});
+
+			return pass;
 		}
 		
 		// validate field by type

@@ -539,6 +539,10 @@
   align-items: center;
   justify-content: center;
   flex: 1;
+  gap: 0.5rem;
+}
+.donation-form__button > * {
+  pointer-events: none;
 }
 @media (max-width: 768px) {
   .donation-form__button {
@@ -565,6 +569,7 @@
 }
 .donation-form__button:hover {
   transform: translateY(-1px);
+  gap: 0.75rem;
 }
 .donation-form__security-notice {
   padding: 1.5rem 1rem;

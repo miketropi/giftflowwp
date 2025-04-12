@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@stripe/stripe-js": "^7.0.0",
     "@tinypixelco/laravel-mix-wp-blocks": "^1.2.0",
     "@wordpress/dependency-extraction-webpack-plugin": "^6.21.0",
     "laravel-mix": "^6.0.49",

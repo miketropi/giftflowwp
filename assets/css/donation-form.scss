@@ -636,7 +636,12 @@ $mobile: 480px;
     align-items: center;
     justify-content: center;
     flex: 1;
-    
+    gap: 0.5rem;
+
+    > * {
+      pointer-events: none;
+    }
+
     @include tablet {
       width: 100%;
       padding: 0.875rem 1rem;
@@ -666,6 +671,7 @@ $mobile: 480px;
 
     &:hover {
       transform: translateY(-1px);
+      gap: 0.75rem;
     }
   }
 

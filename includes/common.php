@@ -299,8 +299,16 @@ function giftflowwp_get_global_currency_symbol() {
 // get currency template
 function giftflowwp_get_currency_template() {
   $options = get_option('giftflowwp_general_options');
-  $currency_template = isset($options['currency_template']) ? $options['currency_template'] : '{{currency_symbol}} {{amount}}';
+  $currency_template = isset($options['currency_template']) ? $options['currency_template'] : '{{currency_symbol}}{{amount}}';
   return $currency_template;
+}
+
+function giftflowwp_get_currency_js_format_template() {
+  $temp = giftflowwp_get_currency_template();
+  $symbol = giftflowwp_get_global_currency_symbol();
+  $template = str_replace('{{currency_symbol}}', $symbol, $temp);
+  $template = str_replace('{{amount}}', '{{value}}', $template);
+  return $template;
 }
 
 function giftflowwp_get_preset_donation_amounts() {
