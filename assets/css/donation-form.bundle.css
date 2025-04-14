@@ -568,7 +568,6 @@
   color: #000000;
 }
 .donation-form__button:hover {
-  transform: translateY(-1px);
   gap: 0.75rem;
 }
 .donation-form__security-notice {
@@ -634,4 +633,44 @@
   .donation-form__step-panel {
     padding: 1rem;
   }
+}
+.donation-form__payment-method-description {
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: #6B7280;
+  line-height: 1.5;
+}
+.donation-form__payment-method-description--stripe #STRIPE-CARD-ELEMENT {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+.donation-form__payment-method-description--stripe #STRIPE-CARD-ELEMENT:focus-within {
+  border-color: #000000;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+.donation-form__payment-method-description--stripe #STRIPE-CARD-ELEMENT .StripeElement {
+  width: 100%;
+  min-height: 40px;
+}
+@media (max-width: 480px) {
+  .donation-form__payment-method-description {
+    padding: 0.75rem;
+    font-size: 0.8125rem;
+  }
+  .donation-form__payment-method-description #STRIPE-CARD-ELEMENT {
+    padding: 0.75rem;
+  }
+}
+.donation-form .custom-error {
+  border-color: #EF4444;
+}
+.donation-form .custom-error .custom-error-message {
+  display: flex;
 }

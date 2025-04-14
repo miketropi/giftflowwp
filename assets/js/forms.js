@@ -1,12 +1,6 @@
 /**
  * Donation Form
  */
-import {loadStripe} from '@stripe/stripe-js';
-
-const STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY9lOPy403ifo5p89vrcviO4p3SJPkPEejxi2xIpiv9A00JfVSw8VW';
-
-
-
 (async (w) => {
    'use strict';
 	const donationForm = class {
@@ -18,16 +12,26 @@ const STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8
 			this.totalSteps = this.form.querySelectorAll('.donation-form__step-panel').length;
 			this.currentStep = 1;
 
-			this.stripe = null;
-			this.stripeElements = null;
-
 			this.init(donationForm, options);
     }
     
     init(donationForm, options) {
+			const self = this;
+
 			this.setInitFields(donationForm);
 			this.onListenerFormFieldUpdate();
-			this.stripeInit();
+
+			// create event trigger on load form to document
+			document.dispatchEvent(new CustomEvent('donationFormLoaded', {
+				detail: {
+					self: self,
+					form: self.form
+				}
+			}));
+
+			// set default payment method selected
+			this.form.querySelector(`input[name="payment_method"][value="${options.paymentMethodSelected}"]`).checked = true;
+
 			// on change amount field
 			this.form.addEventListener('input', (event) => {
 				if (event.target.name === 'donation_amount') {
@@ -66,18 +70,6 @@ const STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8
 				}
 			});
     }
-
-		async stripeInit() {
-			const stripe = await loadStripe(STRIPE_PUBLIC_KEY);
-			const elements = stripe.elements();
-
-			const cardElement = elements.create('card');
-			cardElement.mount(this.form.querySelector('#STRIPE-CARD-ELEMENT'));
-
-			this.stripe = stripe;
-			this.stripeElements = elements;
-		}
-
 
 		onNextStep() {
 			const self = this;
@@ -324,7 +316,9 @@ const STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8
 	// dom loaded
 	document.addEventListener('DOMContentLoaded', () => {
 		// initialize all donation forms
-		initDonationForm('.donation-form', {});
+		initDonationForm('.donation-form', {
+			paymentMethodSelected: 'stripe',
+		});
  	});
 
 })(window)

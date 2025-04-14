@@ -670,7 +670,7 @@ $mobile: 480px;
     }
 
     &:hover {
-      transform: translateY(-1px);
+      // transform: translateY(-1px);
       gap: 0.75rem;
     }
   }
@@ -752,6 +752,59 @@ $mobile: 480px;
     
     &__step-panel {
       padding: 1rem;
+    }
+  }
+}
+
+// Stripe Card Element Styling
+.donation-form {
+  &__payment-method-description {
+    // margin-top: 0.75rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: $border-radius;
+    font-size: 0.875rem;
+    color: $text-light;
+    line-height: 1.5;
+
+    &--stripe {
+      #STRIPE-CARD-ELEMENT {
+        margin-top: 1rem;
+        padding: 1rem;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        background-color: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: $transition;
+
+        &:focus-within {
+          border-color: $primary-color;
+          box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+        }
+
+        // Stripe iframe container
+        .StripeElement {
+          width: 100%;
+          min-height: 40px;
+        }
+      }
+    }
+    
+    @include mobile {
+      padding: 0.75rem;
+      font-size: 0.8125rem;
+      
+      #STRIPE-CARD-ELEMENT {
+        padding: 0.75rem;
+      }
+    }
+  }
+
+  .custom-error {
+    border-color: $error-color;
+
+    .custom-error-message {
+      display: flex;
     }
   }
 }

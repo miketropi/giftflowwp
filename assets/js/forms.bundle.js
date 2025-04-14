@@ -62,7 +62,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _stripe_stripe_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @stripe/stripe-js */ "./node_modules/@stripe/stripe-js/lib/index.mjs");
 
 
 
@@ -70,15 +69,13 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Donation Form
  */
-
-var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY9lOPy403ifo5p89vrcviO4p3SJPkPEejxi2xIpiv9A00JfVSw8VW';
 (function () {
-  var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(w) {
+  var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee(w) {
     'use strict';
 
     var donationForm, initDonationForm;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
         case 0:
           donationForm = /*#__PURE__*/function () {
             function donationForm(_donationForm, options) {
@@ -88,17 +85,27 @@ var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY
               this.options = options;
               this.totalSteps = this.form.querySelectorAll('.donation-form__step-panel').length;
               this.currentStep = 1;
-              this.stripe = null;
-              this.stripeElements = null;
               this.init(_donationForm, options);
             }
             return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(donationForm, [{
               key: "init",
               value: function init(_donationForm2, options) {
                 var _this = this;
+                var self = this;
                 this.setInitFields(_donationForm2);
                 this.onListenerFormFieldUpdate();
-                this.stripeInit();
+
+                // create event trigger on load form to document
+                document.dispatchEvent(new CustomEvent('donationFormLoaded', {
+                  detail: {
+                    self: self,
+                    form: self.form
+                  }
+                }));
+
+                // set default payment method selected
+                this.form.querySelector("input[name=\"payment_method\"][value=\"".concat(options.paymentMethodSelected, "\"]")).checked = true;
+
                 // on change amount field
                 this.form.addEventListener('input', function (event) {
                   if (event.target.name === 'donation_amount') {
@@ -136,34 +143,6 @@ var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY
                   }
                 });
               }
-            }, {
-              key: "stripeInit",
-              value: function () {
-                var _stripeInit = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee() {
-                  var stripe, elements, cardElement;
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee$(_context) {
-                    while (1) switch (_context.prev = _context.next) {
-                      case 0:
-                        _context.next = 2;
-                        return (0,_stripe_stripe_js__WEBPACK_IMPORTED_MODULE_4__.loadStripe)(STRIPE_PUBLIC_KEY);
-                      case 2:
-                        stripe = _context.sent;
-                        elements = stripe.elements();
-                        cardElement = elements.create('card');
-                        cardElement.mount(this.form.querySelector('#STRIPE-CARD-ELEMENT'));
-                        this.stripe = stripe;
-                        this.stripeElements = elements;
-                      case 8:
-                      case "end":
-                        return _context.stop();
-                    }
-                  }, _callee, this);
-                }));
-                function stripeInit() {
-                  return _stripeInit.apply(this, arguments);
-                }
-                return stripeInit;
-              }()
             }, {
               key: "onNextStep",
               value: function onNextStep() {
@@ -408,13 +387,15 @@ var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY
           // dom loaded
           document.addEventListener('DOMContentLoaded', function () {
             // initialize all donation forms
-            initDonationForm('.donation-form', {});
+            initDonationForm('.donation-form', {
+              paymentMethodSelected: 'stripe'
+            });
           });
         case 5:
         case "end":
-          return _context2.stop();
+          return _context.stop();
       }
-    }, _callee2);
+    }, _callee);
   }));
   return function (_x) {
     return _ref.apply(this, arguments);
@@ -573,232 +554,6 @@ function _typeof(o) {
     return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
   }, _typeof(o);
 }
-
-
-/***/ }),
-
-/***/ "./node_modules/@stripe/stripe-js/dist/index.mjs":
-/*!*******************************************************!*\
-  !*** ./node_modules/@stripe/stripe-js/dist/index.mjs ***!
-  \*******************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   loadStripe: () => (/* binding */ loadStripe)
-/* harmony export */ });
-var RELEASE_TRAIN = 'basil';
-
-var runtimeVersionToUrlVersion = function runtimeVersionToUrlVersion(version) {
-  return version === 3 ? 'v3' : version;
-};
-
-var ORIGIN = 'https://js.stripe.com';
-var STRIPE_JS_URL = "".concat(ORIGIN, "/").concat(RELEASE_TRAIN, "/stripe.js");
-var V3_URL_REGEX = /^https:\/\/js\.stripe\.com\/v3\/?(\?.*)?$/;
-var STRIPE_JS_URL_REGEX = /^https:\/\/js\.stripe\.com\/(v3|[a-z]+)\/stripe\.js(\?.*)?$/;
-var EXISTING_SCRIPT_MESSAGE = 'loadStripe.setLoadParameters was called but an existing Stripe.js script already exists in the document; existing script parameters will be used';
-
-var isStripeJSURL = function isStripeJSURL(url) {
-  return V3_URL_REGEX.test(url) || STRIPE_JS_URL_REGEX.test(url);
-};
-
-var findScript = function findScript() {
-  var scripts = document.querySelectorAll("script[src^=\"".concat(ORIGIN, "\"]"));
-
-  for (var i = 0; i < scripts.length; i++) {
-    var script = scripts[i];
-
-    if (!isStripeJSURL(script.src)) {
-      continue;
-    }
-
-    return script;
-  }
-
-  return null;
-};
-
-var injectScript = function injectScript(params) {
-  var queryString = params && !params.advancedFraudSignals ? '?advancedFraudSignals=false' : '';
-  var script = document.createElement('script');
-  script.src = "".concat(STRIPE_JS_URL).concat(queryString);
-  var headOrBody = document.head || document.body;
-
-  if (!headOrBody) {
-    throw new Error('Expected document.body not to be null. Stripe.js requires a <body> element.');
-  }
-
-  headOrBody.appendChild(script);
-  return script;
-};
-
-var registerWrapper = function registerWrapper(stripe, startTime) {
-  if (!stripe || !stripe._registerWrapper) {
-    return;
-  }
-
-  stripe._registerWrapper({
-    name: 'stripe-js',
-    version: "7.0.0",
-    startTime: startTime
-  });
-};
-
-var stripePromise$1 = null;
-var onErrorListener = null;
-var onLoadListener = null;
-
-var onError = function onError(reject) {
-  return function (cause) {
-    reject(new Error('Failed to load Stripe.js', {
-      cause: cause
-    }));
-  };
-};
-
-var onLoad = function onLoad(resolve, reject) {
-  return function () {
-    if (window.Stripe) {
-      resolve(window.Stripe);
-    } else {
-      reject(new Error('Stripe.js not available'));
-    }
-  };
-};
-
-var loadScript = function loadScript(params) {
-  // Ensure that we only attempt to load Stripe.js at most once
-  if (stripePromise$1 !== null) {
-    return stripePromise$1;
-  }
-
-  stripePromise$1 = new Promise(function (resolve, reject) {
-    if (typeof window === 'undefined' || typeof document === 'undefined') {
-      // Resolve to null when imported server side. This makes the module
-      // safe to import in an isomorphic code base.
-      resolve(null);
-      return;
-    }
-
-    if (window.Stripe && params) {
-      console.warn(EXISTING_SCRIPT_MESSAGE);
-    }
-
-    if (window.Stripe) {
-      resolve(window.Stripe);
-      return;
-    }
-
-    try {
-      var script = findScript();
-
-      if (script && params) {
-        console.warn(EXISTING_SCRIPT_MESSAGE);
-      } else if (!script) {
-        script = injectScript(params);
-      } else if (script && onLoadListener !== null && onErrorListener !== null) {
-        var _script$parentNode;
-
-        // remove event listeners
-        script.removeEventListener('load', onLoadListener);
-        script.removeEventListener('error', onErrorListener); // if script exists, but we are reloading due to an error,
-        // reload script to trigger 'load' event
-
-        (_script$parentNode = script.parentNode) === null || _script$parentNode === void 0 ? void 0 : _script$parentNode.removeChild(script);
-        script = injectScript(params);
-      }
-
-      onLoadListener = onLoad(resolve, reject);
-      onErrorListener = onError(reject);
-      script.addEventListener('load', onLoadListener);
-      script.addEventListener('error', onErrorListener);
-    } catch (error) {
-      reject(error);
-      return;
-    }
-  }); // Resets stripePromise on error
-
-  return stripePromise$1["catch"](function (error) {
-    stripePromise$1 = null;
-    return Promise.reject(error);
-  });
-};
-var initStripe = function initStripe(maybeStripe, args, startTime) {
-  if (maybeStripe === null) {
-    return null;
-  }
-
-  var pk = args[0];
-  var isTestKey = pk.match(/^pk_test/); // @ts-expect-error this is not publicly typed
-
-  var version = runtimeVersionToUrlVersion(maybeStripe.version);
-  var expectedVersion = RELEASE_TRAIN;
-
-  if (isTestKey && version !== expectedVersion) {
-    console.warn("Stripe.js@".concat(version, " was loaded on the page, but @stripe/stripe-js@").concat("7.0.0", " expected Stripe.js@").concat(expectedVersion, ". This may result in unexpected behavior. For more information, see https://docs.stripe.com/sdks/stripejs-versioning"));
-  }
-
-  var stripe = maybeStripe.apply(undefined, args);
-  registerWrapper(stripe, startTime);
-  return stripe;
-}; // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-
-var stripePromise;
-var loadCalled = false;
-
-var getStripePromise = function getStripePromise() {
-  if (stripePromise) {
-    return stripePromise;
-  }
-
-  stripePromise = loadScript(null)["catch"](function (error) {
-    // clear cache on error
-    stripePromise = null;
-    return Promise.reject(error);
-  });
-  return stripePromise;
-}; // Execute our own script injection after a tick to give users time to do their
-// own script injection.
-
-
-Promise.resolve().then(function () {
-  return getStripePromise();
-})["catch"](function (error) {
-  if (!loadCalled) {
-    console.warn(error);
-  }
-});
-var loadStripe = function loadStripe() {
-  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-    args[_key] = arguments[_key];
-  }
-
-  loadCalled = true;
-  var startTime = Date.now(); // if previous attempts are unsuccessful, will re-load script
-
-  return getStripePromise().then(function (maybeStripe) {
-    return initStripe(maybeStripe, args, startTime);
-  });
-};
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@stripe/stripe-js/lib/index.mjs":
-/*!******************************************************!*\
-  !*** ./node_modules/@stripe/stripe-js/lib/index.mjs ***!
-  \******************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   loadStripe: () => (/* reexport safe */ _dist_index_mjs__WEBPACK_IMPORTED_MODULE_0__.loadStripe)
-/* harmony export */ });
-/* harmony import */ var _dist_index_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../dist/index.mjs */ "./node_modules/@stripe/stripe-js/dist/index.mjs");
-
 
 
 /***/ }),

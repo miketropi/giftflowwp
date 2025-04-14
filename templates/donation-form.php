@@ -81,6 +81,28 @@ $currency_symbol = giftflowwp_get_global_currency_symbol();
 
 // Get currency format template
 $currency_format_template = giftflowwp_get_currency_js_format_template();
+
+// Payment methods
+$payment_methods = array(
+	'stripe' => array(
+		'name' => 'stripe',
+		'label' => __('Credit Card', 'giftflowwp'),
+		'icon' => $icons['credit-card'],
+		'callback_html' => 'giftflowwp_stripe_payment_method_callback',
+	),
+	'paypal' => array(
+		'name' => 'paypal',
+		'label' => __('PayPal', 'giftflowwp'),
+		'icon' => $icons['paypal'],
+		// 'callback_html' => 'giftflowwp_paypal_payment_method_callback',
+	),
+	'bank' => array(
+		'name' => 'bank',
+		'label' => __('Bank Transfer', 'giftflowwp'),
+		'icon' => $icons['bank'],
+		// 'callback_html' => 'giftflowwp_bank_payment_method_callback',
+	),
+);
 ?>
 
 <form class="donation-form" id="donation-form">
@@ -225,17 +247,35 @@ $currency_format_template = giftflowwp_get_currency_js_format_template();
                     <fieldset class="donation-form__fieldset">
                         <legend class="donation-form__legend"><?php _e('Select Payment Method', 'giftflowwp'); ?></legend>
                         <div class="donation-form__payment-methods">
-                            <label class="donation-form__payment-method">
+														<?php foreach ($payment_methods as $method) : 
+															// if callback html is set, show the callback html
+															if (isset($method['callback_html'])) {
+																// call the callback html and send all args
+																echo call_user_func($method['callback_html'], $method);
+																continue;
+															}
+															?>
+															<label class="donation-form__payment-method">
+																<input type="radio" checked name="payment_method" value="<?php echo esc_attr($method['name']); ?>">
+																<span class="donation-form__payment-method-content">
+																	<?php echo $method['icon']; ?>
+																	<span class="donation-form__payment-method-title"><?php echo esc_html($method['label']); ?></span>
+																</span>
+															</label>
+														<?php endforeach; ?>
+
+
+                            <!-- <label class="donation-form__payment-method">
                                 <input type="radio" checked name="payment_method" value="credit_card" required>
                                 <span class="donation-form__payment-method-content">
                                     <?php echo $icons['credit-card']; ?>
                                     <span class="donation-form__payment-method-title"><?php _e('Credit Card', 'giftflowwp'); ?></span>
                                 </span>
                             </label>
-														<div id="donation-form__payment-method-description" class="donation-form__payment-method-description">
-															<?php _e('We use Stripe to process payments. Your payment information is encrypted and never stored on our servers.', 'giftflowwp'); ?>
-															<div id="STRIPE-CARD-ELEMENT"></div>
-														</div>
+                            <div class="donation-form__payment-method-description donation-form__payment-method-description--stripe">
+                                <?php _e('We use Stripe to process payments. Your payment information is encrypted and never stored on our servers.', 'giftflowwp'); ?>
+                                <div id="STRIPE-CARD-ELEMENT"></div>
+                            </div>
 
                             <label class="donation-form__payment-method">
                                 <input type="radio" name="payment_method" value="paypal">
@@ -250,7 +290,7 @@ $currency_format_template = giftflowwp_get_currency_js_format_template();
                                     <?php echo $icons['bank']; ?>
                                     <span class="donation-form__payment-method-title"><?php _e('Bank Transfer', 'giftflowwp'); ?></span>
                                 </span>
-                            </label>
+                            </label> -->
                         </div>
                     </fieldset>
 

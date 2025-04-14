@@ -37,6 +37,9 @@ class Loader extends Base {
     
         // forms.bundle.js
         wp_enqueue_script('giftflowwp-forms', $this->get_plugin_url() . 'assets/js/forms.bundle.js', array('jquery'), $this->get_version(), true);
+    
+        // stripe-donation.bundle.js
+        wp_enqueue_script('giftflowwp-stripe-donation', $this->get_plugin_url() . 'assets/js/stripe-donation.bundle.js', array('jquery', 'giftflowwp-forms'), $this->get_version(), true);
     }
 
     // enqueue blocks
