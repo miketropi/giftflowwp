@@ -674,3 +674,37 @@
 .donation-form .custom-error .custom-error-message {
   display: flex;
 }
+.donation-form__payment-notification {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+}
+.donation-form__payment-notification .notification-icon {
+  flex-shrink: 0;
+  margin-right: 0.75rem;
+  margin-top: 0.125rem;
+  color: #000000;
+}
+.donation-form__payment-notification p {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #6B7280;
+  line-height: 1.4;
+}
+@media (max-width: 480px) {
+  .donation-form__payment-notification {
+    padding: 0.625rem;
+  }
+  .donation-form__payment-notification .notification-icon {
+    margin-right: 0.5rem;
+    width: 14px;
+    height: 14px;
+  }
+  .donation-form__payment-notification p {
+    font-size: 0.75rem;
+  }
+}

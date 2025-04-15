@@ -70,12 +70,12 @@ __webpack_require__.r(__webpack_exports__);
  * Donation Form
  */
 (function () {
-  var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee(w) {
+  var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee3(w) {
     'use strict';
 
     var donationForm, initDonationForm;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee$(_context) {
-      while (1) switch (_context.prev = _context.next) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
         case 0:
           donationForm = /*#__PURE__*/function () {
             function donationForm(_donationForm, options) {
@@ -92,6 +92,9 @@ __webpack_require__.r(__webpack_exports__);
               value: function init(_donationForm2, options) {
                 var _this = this;
                 var self = this;
+
+                // set default payment method selected
+                this.form.querySelector("input[name=\"payment_method\"][value=\"".concat(options.paymentMethodSelected, "\"]")).checked = true;
                 this.setInitFields(_donationForm2);
                 this.onListenerFormFieldUpdate();
 
@@ -102,9 +105,6 @@ __webpack_require__.r(__webpack_exports__);
                     form: self.form
                   }
                 }));
-
-                // set default payment method selected
-                this.form.querySelector("input[name=\"payment_method\"][value=\"".concat(options.paymentMethodSelected, "\"]")).checked = true;
 
                 // on change amount field
                 this.form.addEventListener('input', function (event) {
@@ -142,6 +142,79 @@ __webpack_require__.r(__webpack_exports__);
                     _this.onPreviousStep();
                   }
                 });
+
+                // on submit form
+                this.form.addEventListener('submit', function (event) {
+                  event.preventDefault();
+                  _this.onSubmitForm();
+                });
+              }
+            }, {
+              key: "onSubmitForm",
+              value: function () {
+                var _onSubmitForm = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee() {
+                  var self, pass;
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee$(_context) {
+                    while (1) switch (_context.prev = _context.next) {
+                      case 0:
+                        self = this; // validate fields
+                        pass = self.onValidateFieldsCurrentStep();
+                        console.log('pass', pass);
+                        if (pass) {
+                          _context.next = 5;
+                          break;
+                        }
+                        return _context.abrupt("return");
+                      case 5:
+                        _context.next = 7;
+                        return self.onDoHooks();
+                      case 7:
+                        console.log('onSubmitForm', self.fields);
+                      case 8:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }, _callee, this);
+                }));
+                function onSubmitForm() {
+                  return _onSubmitForm.apply(this, arguments);
+                }
+                return onSubmitForm;
+              }()
+            }, {
+              key: "onDoHooks",
+              value: function () {
+                var _onDoHooks = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2() {
+                  var self;
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
+                    while (1) switch (_context2.prev = _context2.next) {
+                      case 0:
+                        self = this; // allow developer add hooks from outside support async function and return promise
+                        return _context2.abrupt("return", new Promise(function (resolve, reject) {
+                          self.form.dispatchEvent(new CustomEvent('donationFormBeforeSubmit', {
+                            detail: {
+                              self: self,
+                              fields: self.fields
+                            },
+                            resolve: resolve,
+                            reject: reject
+                          }));
+                        }));
+                      case 2:
+                      case "end":
+                        return _context2.stop();
+                    }
+                  }, _callee2, this);
+                }));
+                function onDoHooks() {
+                  return _onDoHooks.apply(this, arguments);
+                }
+                return onDoHooks;
+              }()
+            }, {
+              key: "onAddField",
+              value: function onAddField(name, value) {
+                this.fields[name] = value;
               }
             }, {
               key: "onNextStep",
@@ -318,6 +391,15 @@ __webpack_require__.r(__webpack_exports__);
                   }
                   self.onUpdateUIByField(fieldName, fieldValue);
                 });
+                currentStepWrapper.querySelectorAll('[data-custom-validate="true"]').forEach(function (field) {
+                  var status = field.dataset.customValidateStatus;
+                  if (status === 'false') {
+                    pass = false;
+
+                    // add error class to field
+                    field.classList.add('error', 'custom-error');
+                  }
+                });
                 return pass;
               }
 
@@ -393,9 +475,9 @@ __webpack_require__.r(__webpack_exports__);
           });
         case 5:
         case "end":
-          return _context.stop();
+          return _context3.stop();
       }
-    }, _callee);
+    }, _callee3);
   }));
   return function (_x) {
     return _ref.apply(this, arguments);

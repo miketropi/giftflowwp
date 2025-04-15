@@ -423,6 +423,7 @@ function giftflowwp_get_campaign_donations($campaign_id, $args = array()) {
 function giftflowwp_stripe_payment_method_callback($method) {
   $icons = array(
 		'error' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert-icon lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>',
+    'checked' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check-icon lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>',
   );
 
   ?>
@@ -434,20 +435,40 @@ function giftflowwp_stripe_payment_method_callback($method) {
       </span>
   </label>
   <div 
-    class="donation-form__payment-method-description donation-form__payment-method-description--stripe" 
-    data-custom-validate="true" 
-    data-custom-validate-status="false">
-      <p>
-        <?php _e('We use Stripe to process payments. Your payment information is encrypted and never stored on our servers.', 'giftflowwp'); ?>
-      </p>
+    class="donation-form__payment-method-description donation-form__payment-method-description--stripe donation-form__fields" 
+    >
+      <div class="donation-form__payment-notification">
+        <?php echo $icons['checked']; ?>
+        <p><?php _e('We use Stripe to process payments. Your payment information is encrypted and never stored on our servers.', 'giftflowwp'); ?></p>
+      </div>
 
-      <div id="STRIPE-CARD-ELEMENT"></div> <?php // Render card via stripe.js ?>
+      <?php // name on card field ?>
+      <div class="donation-form__field">
+        <label for="card_name" class="donation-form__field-label"><?php _e('Name on card', 'giftflowwp'); ?></label>
+        <input type="text" id="card_name" name="card_name" class="donation-form__field-input" required data-validate="required">
 
-      <div class="donation-form__field-error custom-error-message">
-        <?php echo $icons['error']; ?>
-        <span class="custom-error-message-text">
-          <?php _e('Card information is incomplete', 'giftflowwp'); ?>
-        </span>
+        <div class="donation-form__field-error custom-error-message">
+          <?php echo $icons['error']; ?>
+          <span class="custom-error-message-text">
+            <?php _e('Name on card is required', 'giftflowwp'); ?>
+          </span>
+        </div>
+      </div>
+      
+      <?php // card element ?>
+      <div 
+        class="donation-form__field" 
+        data-custom-validate="true" 
+        data-custom-validate-status="false" >
+        <label for="card_number" class="donation-form__field-label"><?php _e('Card number', 'giftflowwp'); ?></label>
+        <div id="STRIPE-CARD-ELEMENT"></div> <?php // Render card via stripe.js ?>
+
+        <div class="donation-form__field-error custom-error-message">
+          <?php echo $icons['error']; ?>
+          <span class="custom-error-message-text">
+            <?php _e('Card information is incomplete', 'giftflowwp'); ?>
+          </span>
+        </div>
       </div>
   </div>
   <?php

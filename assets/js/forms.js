@@ -18,6 +18,9 @@
     init(donationForm, options) {
 			const self = this;
 
+			// set default payment method selected
+			this.form.querySelector(`input[name="payment_method"][value="${options.paymentMethodSelected}"]`).checked = true;
+
 			this.setInitFields(donationForm);
 			this.onListenerFormFieldUpdate();
 
@@ -28,9 +31,6 @@
 					form: self.form
 				}
 			}));
-
-			// set default payment method selected
-			this.form.querySelector(`input[name="payment_method"][value="${options.paymentMethodSelected}"]`).checked = true;
 
 			// on change amount field
 			this.form.addEventListener('input', (event) => {
@@ -69,7 +69,50 @@
 					this.onPreviousStep();
 				}
 			});
+
+			// on submit form
+			this.form.addEventListener('submit', (event) => {
+				event.preventDefault();
+				this.onSubmitForm();
+			});
     }
+
+		async onSubmitForm() {
+			const self = this;
+			
+
+			// validate fields
+			const pass = self.onValidateFieldsCurrentStep();
+			console.log('pass', pass);
+			if (!pass) {
+				return;
+			}
+
+			// do hooks before submit support async function after submit
+			await self.onDoHooks();
+
+			console.log('onSubmitForm', self.fields);
+		}
+
+		async onDoHooks() {
+			const self = this;
+			
+			// allow developer add hooks from outside support async function and return promise
+			return new Promise((resolve, reject) => {
+				self.form.dispatchEvent(new CustomEvent('donationFormBeforeSubmit', {
+					detail: {
+						self: self,
+						fields: self.fields
+					},
+					resolve,
+					reject
+				}));
+			});
+		}
+
+		onAddField(name, value) {
+			this.fields[name] = value;
+		}
 
 		onNextStep() {
 			const self = this;
@@ -244,6 +287,17 @@
 				}
 				
 				self.onUpdateUIByField(fieldName, fieldValue);
+			});
+
+			currentStepWrapper.querySelectorAll('[data-custom-validate="true"]').forEach((field) => {
+				const status = field.dataset.customValidateStatus;
+
+				if(status === 'false') {
+					pass = false;
+
+					// add error class to field
+					field.classList.add('error', 'custom-error');
+				}
 			});
 
 			return pass;

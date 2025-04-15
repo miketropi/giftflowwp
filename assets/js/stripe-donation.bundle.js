@@ -484,30 +484,40 @@ __webpack_require__.r(__webpack_exports__);
 
 var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY9lOPy403ifo5p89vrcviO4p3SJPkPEejxi2xIpiv9A00JfVSw8VW';
 (function (w) {
+  'use strict';
+
   // make stripeDonation class
   var StripeDonation = /*#__PURE__*/function () {
-    function StripeDonation(form, donationForm) {
+    function StripeDonation(form, formObject) {
       (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, StripeDonation);
       this.form = form;
-      this.donationForm = donationForm;
+      this.formObject = formObject;
       this.init();
     }
     return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(StripeDonation, [{
+      key: "getSelf",
+      value: function getSelf() {
+        return this;
+      }
+    }, {
       key: "init",
       value: function () {
-        var _init = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2() {
-          var cardElement, $element, $wrapper, $errorMessage;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
-            while (1) switch (_context2.prev = _context2.next) {
+        var _init = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee3() {
+          var _this = this;
+          var self, cardElement, $element, $wrapper, $validateWrapper, $errorMessage;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee3$(_context3) {
+            while (1) switch (_context3.prev = _context3.next) {
               case 0:
-                _context2.next = 2;
+                self = this;
+                _context3.next = 3;
                 return (0,_stripe_stripe_js__WEBPACK_IMPORTED_MODULE_4__.loadStripe)(STRIPE_PUBLIC_KEY);
-              case 2:
-                this.stripe = _context2.sent;
+              case 3:
+                this.stripe = _context3.sent;
                 this.stripeElements = this.stripe.elements();
                 cardElement = this.stripeElements.create('card');
                 $element = this.form.querySelector('#STRIPE-CARD-ELEMENT');
                 $wrapper = $element.closest('.donation-form__payment-method-description');
+                $validateWrapper = $wrapper.querySelector('[data-custom-validate="true"]');
                 $errorMessage = $wrapper.querySelector('.custom-error-message .custom-error-message-text');
                 cardElement.mount($element);
                 cardElement.on('change', /*#__PURE__*/function () {
@@ -517,19 +527,35 @@ var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY
                         case 0:
                           console.log('event', event);
                           if (event.complete) {
+                            // console.log(self.formObject.fields);
                             // console.log('Card information is complete.');
-                            $wrapper.dataset.customValidateStatus = 'true';
-                            $wrapper.classList.remove('error', 'custom-error');
+
+                            $validateWrapper.dataset.customValidateStatus = 'true';
+                            $validateWrapper.classList.remove('error', 'custom-error');
+
+                            // const { paymentMethod, error } = await self.stripe.createPaymentMethod({
+                            //   type: 'card',
+                            //   card: cardElement,
+                            //   billing_details: {
+                            //     name: self.formObject.fields.card_name,
+                            //   }
+                            // })
+
+                            // if(error) {
+                            //   console.log('error', error);
+                            // } else {
+                            //   console.log('paymentMethod', paymentMethod);
+                            // }
                           } else {
                             // console.log('Card information is incomplete.');
-                            $wrapper.dataset.customValidateStatus = 'false';
+                            $validateWrapper.dataset.customValidateStatus = 'false';
 
                             // add error message
                             if (event.error) {
-                              $wrapper.classList.add('error', 'custom-error');
+                              $validateWrapper.classList.add('error', 'custom-error');
                               $errorMessage.textContent = event.error.message;
                             } else {
-                              $wrapper.classList.remove('error', 'custom-error');
+                              $validateWrapper.classList.remove('error', 'custom-error');
                               $errorMessage.textContent = '';
                             }
                           }
@@ -543,11 +569,53 @@ var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY
                     return _ref.apply(this, arguments);
                   };
                 }());
-              case 10:
+
+                // add event listener to form
+                this.form.addEventListener('donationFormBeforeSubmit', /*#__PURE__*/function () {
+                  var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(e) {
+                    var _e$detail, self, fields, resolve, reject, _yield$_this$getSelf$, paymentMethod, error;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
+                      while (1) switch (_context2.prev = _context2.next) {
+                        case 0:
+                          _e$detail = e.detail, self = _e$detail.self, fields = _e$detail.fields;
+                          resolve = e.resolve, reject = e.reject;
+                          console.log('self', self);
+                          console.log('fields', fields);
+
+                          // create payment method
+                          _context2.next = 6;
+                          return _this.getSelf().stripe.createPaymentMethod({
+                            type: 'card',
+                            card: cardElement,
+                            billing_details: {
+                              name: fields.card_name
+                            }
+                          });
+                        case 6:
+                          _yield$_this$getSelf$ = _context2.sent;
+                          paymentMethod = _yield$_this$getSelf$.paymentMethod;
+                          error = _yield$_this$getSelf$.error;
+                          if (error) {
+                            reject(error);
+                          } else {
+                            self.onAddField('payment_method', paymentMethod.id);
+                            resolve();
+                          }
+                        case 10:
+                        case "end":
+                          return _context2.stop();
+                      }
+                    }, _callee2);
+                  }));
+                  return function (_x2) {
+                    return _ref2.apply(this, arguments);
+                  };
+                }());
+              case 13:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
-          }, _callee2, this);
+          }, _callee3, this);
         }));
         function init() {
           return _init.apply(this, arguments);
@@ -557,9 +625,9 @@ var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY
     }]);
   }();
   document.addEventListener('donationFormLoaded', function (e) {
-    var _e$detail = e.detail,
-      self = _e$detail.self,
-      form = _e$detail.form;
+    var _e$detail2 = e.detail,
+      self = _e$detail2.self,
+      form = _e$detail2.form;
     new StripeDonation(form, self);
   });
 })(window);
