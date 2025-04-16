@@ -532,20 +532,6 @@ var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY
 
                             $validateWrapper.dataset.customValidateStatus = 'true';
                             $validateWrapper.classList.remove('error', 'custom-error');
-
-                            // const { paymentMethod, error } = await self.stripe.createPaymentMethod({
-                            //   type: 'card',
-                            //   card: cardElement,
-                            //   billing_details: {
-                            //     name: self.formObject.fields.card_name,
-                            //   }
-                            // })
-
-                            // if(error) {
-                            //   console.log('error', error);
-                            // } else {
-                            //   console.log('paymentMethod', paymentMethod);
-                            // }
                           } else {
                             // console.log('Card information is incomplete.');
                             $validateWrapper.dataset.customValidateStatus = 'false';
@@ -573,35 +559,29 @@ var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY
                 // add event listener to form
                 this.form.addEventListener('donationFormBeforeSubmit', /*#__PURE__*/function () {
                   var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(e) {
-                    var _e$detail, self, fields, resolve, reject, _yield$_this$getSelf$, paymentMethod, error;
+                    var _e$detail, self, fields, resolve, reject, _yield$_this$getSelf$, token, error;
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
                       while (1) switch (_context2.prev = _context2.next) {
                         case 0:
-                          _e$detail = e.detail, self = _e$detail.self, fields = _e$detail.fields;
-                          resolve = e.resolve, reject = e.reject;
-                          console.log('self', self);
-                          console.log('fields', fields);
-
-                          // create payment method
-                          _context2.next = 6;
-                          return _this.getSelf().stripe.createPaymentMethod({
+                          _e$detail = e.detail, self = _e$detail.self, fields = _e$detail.fields, resolve = _e$detail.resolve, reject = _e$detail.reject; // create token method
+                          _context2.next = 3;
+                          return _this.getSelf().stripe.createToken(cardElement, {
                             type: 'card',
-                            card: cardElement,
                             billing_details: {
                               name: fields.card_name
                             }
                           });
-                        case 6:
+                        case 3:
                           _yield$_this$getSelf$ = _context2.sent;
-                          paymentMethod = _yield$_this$getSelf$.paymentMethod;
+                          token = _yield$_this$getSelf$.token;
                           error = _yield$_this$getSelf$.error;
                           if (error) {
                             reject(error);
                           } else {
-                            self.onAddField('payment_method', paymentMethod.id);
-                            resolve();
+                            self.onSetField('stripe_payment_token_id', token.id);
+                            resolve(token);
                           }
-                        case 10:
+                        case 7:
                         case "end":
                           return _context2.stop();
                       }

@@ -70,12 +70,12 @@ __webpack_require__.r(__webpack_exports__);
  * Donation Form
  */
 (function () {
-  var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee3(w) {
+  var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee4(w) {
     'use strict';
 
     var donationForm, initDonationForm;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee3$(_context3) {
-      while (1) switch (_context3.prev = _context3.next) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
         case 0:
           donationForm = /*#__PURE__*/function () {
             function donationForm(_donationForm, options) {
@@ -150,16 +150,25 @@ __webpack_require__.r(__webpack_exports__);
                 });
               }
             }, {
+              key: "onSetLoading",
+              value: function onSetLoading(status) {
+                var self = this;
+                self.form.querySelector('.donation-form__button--submit').classList.toggle('loading', status);
+                self.form.querySelector('.donation-form__button--submit').disabled = status;
+              }
+            }, {
               key: "onSubmitForm",
               value: function () {
                 var _onSubmitForm = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee() {
-                  var self, pass;
+                  var self, pass, response;
                   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee$(_context) {
                     while (1) switch (_context.prev = _context.next) {
                       case 0:
-                        self = this; // validate fields
-                        pass = self.onValidateFieldsCurrentStep();
-                        console.log('pass', pass);
+                        self = this;
+                        self.onSetLoading(true);
+
+                        // validate fields
+                        pass = self.onValidateFieldsCurrentStep(); // console.log('pass', pass);
                         if (pass) {
                           _context.next = 5;
                           break;
@@ -169,8 +178,13 @@ __webpack_require__.r(__webpack_exports__);
                         _context.next = 7;
                         return self.onDoHooks();
                       case 7:
-                        console.log('onSubmitForm', self.fields);
-                      case 8:
+                        _context.next = 9;
+                        return self.onSendData(self.fields);
+                      case 9:
+                        response = _context.sent;
+                        console.log('onSubmitForm', response);
+                        self.onSetLoading(false);
+                      case 12:
                       case "end":
                         return _context.stop();
                     }
@@ -182,29 +196,66 @@ __webpack_require__.r(__webpack_exports__);
                 return onSubmitForm;
               }()
             }, {
-              key: "onDoHooks",
+              key: "onSendData",
               value: function () {
-                var _onDoHooks = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2() {
-                  var self;
+                var _onSendData = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(data) {
+                  var ajaxurl, response;
                   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
                     while (1) switch (_context2.prev = _context2.next) {
                       case 0:
+                        ajaxurl = "".concat(window.giftflowwpDonationForms.ajaxurl, "?action=giftflowwp_donation_form&wp_nonce=").concat(data.wp_nonce);
+                        _context2.next = 3;
+                        return fetch(ajaxurl, {
+                          method: 'POST',
+                          body: JSON.stringify(data),
+                          headers: {
+                            'Content-Type': 'application/json'
+                          }
+                        }).then(function (response) {
+                          return response.json();
+                        }).then(function (data) {
+                          return console.log(data);
+                        })["catch"](function (error) {
+                          return console.error('Error:', error);
+                        });
+                      case 3:
+                        response = _context2.sent;
+                        return _context2.abrupt("return", response);
+                      case 5:
+                      case "end":
+                        return _context2.stop();
+                    }
+                  }, _callee2);
+                }));
+                function onSendData(_x2) {
+                  return _onSendData.apply(this, arguments);
+                }
+                return onSendData;
+              }()
+            }, {
+              key: "onDoHooks",
+              value: function () {
+                var _onDoHooks = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee3() {
+                  var self;
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee3$(_context3) {
+                    while (1) switch (_context3.prev = _context3.next) {
+                      case 0:
                         self = this; // allow developer add hooks from outside support async function and return promise
-                        return _context2.abrupt("return", new Promise(function (resolve, reject) {
+                        return _context3.abrupt("return", new Promise(function (resolve, reject) {
                           self.form.dispatchEvent(new CustomEvent('donationFormBeforeSubmit', {
                             detail: {
                               self: self,
-                              fields: self.fields
-                            },
-                            resolve: resolve,
-                            reject: reject
+                              fields: self.fields,
+                              resolve: resolve,
+                              reject: reject
+                            }
                           }));
                         }));
                       case 2:
                       case "end":
-                        return _context2.stop();
+                        return _context3.stop();
                     }
-                  }, _callee2, this);
+                  }, _callee3, this);
                 }));
                 function onDoHooks() {
                   return _onDoHooks.apply(this, arguments);
@@ -212,8 +263,8 @@ __webpack_require__.r(__webpack_exports__);
                 return onDoHooks;
               }()
             }, {
-              key: "onAddField",
-              value: function onAddField(name, value) {
+              key: "onSetField",
+              value: function onSetField(name, value) {
                 this.fields[name] = value;
               }
             }, {
@@ -475,9 +526,9 @@ __webpack_require__.r(__webpack_exports__);
           });
         case 5:
         case "end":
-          return _context3.stop();
+          return _context4.stop();
       }
-    }, _callee3);
+    }, _callee4);
   }));
   return function (_x) {
     return _ref.apply(this, arguments);

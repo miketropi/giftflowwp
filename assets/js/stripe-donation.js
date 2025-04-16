@@ -43,20 +43,6 @@ const STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8
           
           $validateWrapper.dataset.customValidateStatus = 'true';
           $validateWrapper.classList.remove('error', 'custom-error');
-
-          // const { paymentMethod, error } = await self.stripe.createPaymentMethod({
-          //   type: 'card',
-          //   card: cardElement,
-          //   billing_details: {
-          //     name: self.formObject.fields.card_name,
-          //   }
-          // })
-
-          // if(error) {
-          //   console.log('error', error);
-          // } else {
-          //   console.log('paymentMethod', paymentMethod);
-          // }
         } else {
           // console.log('Card information is incomplete.');
           $validateWrapper.dataset.customValidateStatus = 'false';
@@ -75,16 +61,11 @@ const STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8
 
       // add event listener to form
       this.form.addEventListener('donationFormBeforeSubmit', async (e) => {
-        const { self, fields } = e.detail;
-        const { resolve, reject } = e;
+        const { self, fields, resolve, reject } = e.detail;
 
-        console.log('self', self);
-        console.log('fields', fields); 
-
-        // create payment method
-        const { paymentMethod, error } = await this.getSelf().stripe.createPaymentMethod({
+        // create token method
+        const { token, error } = await this.getSelf().stripe.createToken(cardElement, {
           type: 'card',
-          card: cardElement,
           billing_details: {
             name: fields.card_name,
           }
@@ -93,8 +74,8 @@ const STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8
         if(error) {
           reject(error);
         } else {
-          self.onAddField('payment_method', paymentMethod.id);
-          resolve();
+          self.onSetField('stripe_payment_token_id', token.id);
+          resolve(token);
         }
       });
     }

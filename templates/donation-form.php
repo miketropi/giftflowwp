@@ -329,7 +329,9 @@ $payment_methods = array(
 											<?php echo $icons['prev']; ?>
 											<?php _e('Back', 'giftflowwp'); ?>
                     </button>
-                    <button type="submit" class="donation-form__button donation-form__button--submit">
+										
+										<?php // support class loading show icon loading when submit ?>
+										<button type="submit" class="donation-form__button donation-form__button--submit">
 											<?php _e('Complete Donation', 'giftflowwp'); ?>
 											<?php echo $icons['next']; ?>
                     </button>

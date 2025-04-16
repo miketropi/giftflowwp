@@ -77,13 +77,19 @@
 			});
     }
 
+		onSetLoading(status) {
+			const self = this;
+			self.form.querySelector('.donation-form__button--submit').classList.toggle('loading', status);
+			self.form.querySelector('.donation-form__button--submit').disabled = status;
+		}
+
 		async onSubmitForm() {
 			const self = this;
-			
+			self.onSetLoading(true);
 
 			// validate fields
 			const pass = self.onValidateFieldsCurrentStep();
-			console.log('pass', pass);
+			// console.log('pass', pass);
 			if (!pass) {
 				return;
 			}
@@ -91,7 +97,28 @@
 			// do hooks before submit support async function after submit
 			await self.onDoHooks();
 
-			console.log('onSubmitForm', self.fields);
+			// send data
+			const response = await self.onSendData(self.fields);
+
+			console.log('onSubmitForm', response);
+
+			self.onSetLoading(false);
+		}
+
+		async onSendData(data) {
+			let ajaxurl = `${window.giftflowwpDonationForms.ajaxurl}?action=giftflowwp_donation_form&wp_nonce=${data.wp_nonce}`;
+
+			const response = await fetch(ajaxurl, {
+				method: 'POST',
+				body: JSON.stringify(data),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(response => response.json())
+				.then(data => console.log(data))
+				.catch(error => console.error('Error:', error));
+
+			return response;
 		}
 
 		async onDoHooks() {
@@ -102,15 +129,15 @@
 				self.form.dispatchEvent(new CustomEvent('donationFormBeforeSubmit', {
 					detail: {
 						self: self,
-						fields: self.fields
-					},
-					resolve,
-					reject
+						fields: self.fields,
+						resolve,
+						reject
+					}
 				}));
 			});
 		}
 
-		onAddField(name, value) {
+		onSetField(name, value) {
 			this.fields[name] = value;
 		}
 

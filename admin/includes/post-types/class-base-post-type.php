@@ -61,8 +61,13 @@ abstract class Base_Post_Type {
         // Initialize post type properties
         $this->init_post_type();
         // Register post type and taxonomies
-        add_action( 'init', array( $this, 'register_post_type' ) );
-        add_action( 'init', array( $this, 'register_taxonomies' ) );
+        // add_action( 'init', array( $this, 'register_post_type' ) );
+        // add_action( 'init', array( $this, 'register_taxonomies' ) );
+
+        $this->register_post_type();
+        $this->register_taxonomies();
+
+        
         
         // Register admin columns if defined
         if ( ! empty( $this->admin_columns ) ) {

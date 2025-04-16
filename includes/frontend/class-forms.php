@@ -27,63 +27,74 @@ class Forms extends Base {
      */
     private function init_hooks() {
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-        add_action( 'wp_ajax_process_donation', array( $this, 'process_donation' ) );
-        add_action( 'wp_ajax_nopriv_process_donation', array( $this, 'process_donation' ) );
+        add_action( 'wp_ajax_giftflowwp_donation_form', array( $this, 'process_donation' ) );
+        add_action( 'wp_ajax_nopriv_giftflowwp_donation_form', array( $this, 'process_donation' ) );
     }
 
     /**
      * Enqueue required scripts and styles
      */
     public function enqueue_scripts() {
-        wp_enqueue_style(
-            'giftflowwp-forms',
-            $this->plugin_url . 'assets/css/forms.css',
-            array(),
-            $this->version
-        );
-
-        wp_enqueue_script(
-            'giftflowwp-forms',
-            $this->plugin_url . 'assets/js/forms.js',
-            array( 'jquery' ),
-            $this->version,
-            true
-        );
+        // donation-form.bundle.css
+        wp_enqueue_style('giftflowwp-donation-form', $this->get_plugin_url() . 'assets/css/donation-form.bundle.css', array(), $this->get_version());
+    
+        // forms.bundle.js
+        wp_enqueue_script('giftflowwp-donation-forms', $this->get_plugin_url() . 'assets/js/forms.bundle.js', array('jquery'), $this->get_version(), true);
+    
+        // stripe-donation.bundle.js
+        wp_enqueue_script('giftflowwp-stripe-donation', $this->get_plugin_url() . 'assets/js/stripe-donation.bundle.js', array('jquery', 'giftflowwp-donation-forms'), $this->get_version(), true);
 
         wp_localize_script(
-            'giftflowwp-forms',
-            'giftflowwpForms',
+            'giftflowwp-donation-forms',
+            'giftflowwpDonationForms',
             array(
                 'ajaxurl' => admin_url( 'admin-ajax.php' ),
-                'nonce' => wp_create_nonce( 'giftflowwp_donation_nonce' ),
+                // 'nonce' => wp_create_nonce( 'giftflowwp_donation_nonce' ),
             )
         );
     }
 
     /**
      * Process donation form submission
+     * 
+     * @return void
+     * 
+     * Fields include:
+     * - anonymous_donation: boolean (true/false)
+     * - campaign_id: string (campaign post ID)
+     * - card_name: string (name on card)
+     * - donation_amount: string (donation amount)
+     * - donation_type: string (once/monthly/etc)
+     * - donor_email: string (email address)
+     * - donor_name: string (donor's name)
+     * - payment_method: string (payment method)
      */
     public function process_donation() {
-        check_ajax_referer( 'giftflowwp_donation_nonce', 'nonce' );
+        // get fields from fetch post data
+        $fields = json_decode( file_get_contents( 'php://input' ), true );
 
-        $data = array(
-            'amount' => isset( $_POST['amount'] ) ? floatval( $_POST['amount'] ) : 0,
-            'campaign_id' => isset( $_POST['campaign_id'] ) ? intval( $_POST['campaign_id'] ) : 0,
-            'donor_name' => isset( $_POST['donor_name'] ) ? sanitize_text_field( $_POST['donor_name'] ) : '',
-            'donor_email' => isset( $_POST['donor_email'] ) ? sanitize_email( $_POST['donor_email'] ) : '',
-            'payment_method' => isset( $_POST['payment_method'] ) ? sanitize_text_field( $_POST['payment_method'] ) : '',
-            'is_recurring' => isset( $_POST['is_recurring'] ) ? (bool) $_POST['is_recurring'] : false,
-        );
+        // convert amout to float
+        $fields['donation_amount'] = floatval( $fields['donation_amount'] );
+
+        // add filter to fields
+        $fields = apply_filters( 'giftflowwp_donation_form_fields', $fields );
+
+        // wp_send_json_success( $fields );
+
+        // giftflowwp_donation_form
+        check_ajax_referer( 'giftflowwp_donation_form', 'wp_nonce' );
+
+        // wp_send_json_success( $fields );
 
         // Validate data
-        if ( ! $this->validate_donation_data( $data ) ) {
+        if ( ! $this->validate_donation_data( $fields ) ) {
             wp_send_json_error( array(
                 'message' => __( 'Invalid donation data', 'giftflowwp' ),
             ) );
         }
 
         // Process payment
-        $payment_result = $this->process_payment( $data );
+        $payment_result = $this->process_payment( $fields );
 
         if ( is_wp_error( $payment_result ) ) {
             wp_send_json_error( array(
@@ -113,7 +124,7 @@ class Forms extends Base {
      * @return bool
      */
     private function validate_donation_data( $data ) {
-        if ( $data['amount'] <= 0 ) {
+        if ( $data['donation_amount'] <= 0 ) {
             return false;
         }
 
@@ -124,6 +135,10 @@ class Forms extends Base {
         if ( ! is_email( $data['donor_email'] ) ) {
             return false;
         }
+
+        if ( empty( $data['payment_method'] ) ) {
+            return false;
+        } 
 
         return true;
     }
@@ -136,7 +151,28 @@ class Forms extends Base {
      */
     private function process_payment( $data ) {
         // This will be implemented based on the payment gateway
-        return true;
+        // wp_send_json_success( [
+        //     'step' => 'process_payment',
+        //     'data' => $data,
+        // ] );
+
+        // create hook for payment method, allow 3rd party to process payment
+        // $payment_result = do_action( 'giftflowwp_process_payment_' . $data['payment_method'], $data );
+        // wp_send_json_success( $payment_result );
+
+        // // return payment result
+        // return $payment_result;
+
+        // return true if payment is successful
+        // return true;
+
+        // call function based on payment method, allow 3rd party to process payment
+        // check if function exists
+        if ( function_exists( 'giftflowwp_process_payment_' . $data['payment_method'] ) ) {
+            return call_user_func( 'giftflowwp_process_payment_' . $data['payment_method'], $data );
+        }
+
+        return false;
     }
 
     /**

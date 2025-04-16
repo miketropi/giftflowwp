@@ -11,6 +11,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// add custom nav item under plugin title in WordPress admin plugin list
+add_filter('plugin_action_links_' . GIFTFLOWWP_PLUGIN_BASENAME, 'giftflowwp_add_settings_link');
+
+function giftflowwp_add_settings_link($links) {
+    $settings_link = '<a href="admin.php?page=giftflowwp-settings">' . __('Settings', 'giftflowwp') . '</a>';
+    array_unshift($links, $settings_link);
+    return $links;
+}
+
 // add submenu page to giftflowwp-dashboard menu
 add_action('admin_menu', 'giftflowwp_add_settings_page', 30);
 

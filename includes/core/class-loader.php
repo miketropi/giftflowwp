@@ -32,14 +32,14 @@ class Loader extends Base {
         // block-campaign-status-bar.bundle.css
         wp_enqueue_style('giftflowwp-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version());
     
-        // donation-form.bundle.css
-        wp_enqueue_style('giftflowwp-donation-form', $this->get_plugin_url() . 'assets/css/donation-form.bundle.css', array(), $this->get_version());
+        // // donation-form.bundle.css
+        // wp_enqueue_style('giftflowwp-donation-form', $this->get_plugin_url() . 'assets/css/donation-form.bundle.css', array(), $this->get_version());
     
-        // forms.bundle.js
-        wp_enqueue_script('giftflowwp-forms', $this->get_plugin_url() . 'assets/js/forms.bundle.js', array('jquery'), $this->get_version(), true);
+        // // forms.bundle.js
+        // wp_enqueue_script('giftflowwp-forms', $this->get_plugin_url() . 'assets/js/forms.bundle.js', array('jquery'), $this->get_version(), true);
     
-        // stripe-donation.bundle.js
-        wp_enqueue_script('giftflowwp-stripe-donation', $this->get_plugin_url() . 'assets/js/stripe-donation.bundle.js', array('jquery', 'giftflowwp-forms'), $this->get_version(), true);
+        // // stripe-donation.bundle.js
+        // wp_enqueue_script('giftflowwp-stripe-donation', $this->get_plugin_url() . 'assets/js/stripe-donation.bundle.js', array('jquery', 'giftflowwp-forms'), $this->get_version(), true);
     }
 
     // enqueue blocks
@@ -66,7 +66,8 @@ class Loader extends Base {
      * Initialize WordPress hooks
      */
     private function init_hooks() {
-        add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+        add_action( 'init', array( $this, 'load_textdomain' ) );
+        add_action( 'init', array( $this, 'init' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
         add_action( 'enqueue_block_assets', array( $this, 'enqueue_blocks' ) );
@@ -75,8 +76,8 @@ class Loader extends Base {
 
     /**
      * Load plugin textdomain
-     */
-    public function load_textdomain() {
+     */ 
+    public function load_textdomain() { 
         load_plugin_textdomain(
             'giftflowwp',
             false,
@@ -103,6 +104,7 @@ class Loader extends Base {
 
         // Initialize frontend components
         new \GiftFlowWp\Frontend\Shortcodes();
+        new \GiftFlowWp\Frontend\Forms(); 
     }
 
     public function activate() {

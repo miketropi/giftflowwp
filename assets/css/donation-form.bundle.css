@@ -558,6 +558,33 @@
 .donation-form__button--next:hover, .donation-form__button--submit:hover {
   background: black;
 }
+.donation-form__button.loading {
+  cursor: not-allowed;
+  opacity: 0.7;
+  position: relative;
+  overflow: hidden;
+}
+.donation-form__button.loading::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: loading-shimmer 1.5s infinite;
+}
+@keyframes loading-shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+.donation-form__button.loading > * {
+  pointer-events: none;
+}
 .donation-form__button--back {
   background: white;
   color: black;
