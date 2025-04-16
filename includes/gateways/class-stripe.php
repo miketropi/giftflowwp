@@ -25,7 +25,7 @@ function giftflowwp_process_payment_stripe( $data ) {
     // Get Stripe settings
     $payment_options = get_option('giftflowwp_payment_options');
     $stripe_secret_key = isset($payment_options['stripe_secret_key']) ? $payment_options['stripe_secret_key'] : '';
-		$stripe_secret_key = 'sk_test_51RCupsGHehBuaAbS59hjg6nwV5RtmTavKav6MGuh9Y7Uor1W618l3pUrg0MKUzzoeuq4nCBlyIDRDFkbW8IyMrBB00ghY2d11g';
+		$stripe_secret_key = '***';
 
     if (empty($stripe_secret_key)) {
         return new WP_Error('stripe_error', __('Stripe secret key is not configured', 'giftflowwp'));
