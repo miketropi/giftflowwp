@@ -43,28 +43,30 @@ function giftflowwp_settings_page() {
     // Get active tab
     $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'general';
 
+    // build array of tabs 
+    $tabs = apply_filters('giftflowwp_settings_tabs', [
+        'general' => __('General', 'giftflowwp'),
+        'payment' => __('Payment', 'giftflowwp'),
+        'email' => __('Email', 'giftflowwp'),
+        'design' => __('Design', 'giftflowwp'),
+    ]);
+    
+
     // Get all options
-    $general_options = get_option('giftflowwp_general_options');
-    $payment_options = get_option('giftflowwp_payment_options');
-    $email_options = get_option('giftflowwp_email_options');
-    $design_options = get_option('giftflowwp_design_options');
+    // $general_options = get_option('giftflowwp_general_options');
+    // $payment_options = get_option('giftflowwp_payment_options');
+    // $email_options = get_option('giftflowwp_email_options');
+    // $design_options = get_option('giftflowwp_design_options');
     ?>
     <div class="wrap">
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
         
         <h2 class="nav-tab-wrapper">
-            <a href="?page=giftflowwp-settings&tab=general" class="nav-tab <?php echo $active_tab === 'general' ? 'nav-tab-active' : ''; ?>">
-                <?php _e('General', 'giftflowwp'); ?>
-            </a>
-            <a href="?page=giftflowwp-settings&tab=payment" class="nav-tab <?php echo $active_tab === 'payment' ? 'nav-tab-active' : ''; ?>">
-                <?php _e('Payment', 'giftflowwp'); ?>
-            </a>
-            <a href="?page=giftflowwp-settings&tab=email" class="nav-tab <?php echo $active_tab === 'email' ? 'nav-tab-active' : ''; ?>">
-                <?php _e('Email', 'giftflowwp'); ?>
-            </a>
-            <a href="?page=giftflowwp-settings&tab=design" class="nav-tab <?php echo $active_tab === 'design' ? 'nav-tab-active' : ''; ?>">
-                <?php _e('Design', 'giftflowwp'); ?>
-            </a>
+            <?php foreach ($tabs as $tab_key => $tab_label) : ?>
+                <a href="?page=giftflowwp-settings&tab=<?php echo $tab_key; ?>" class="nav-tab <?php echo $active_tab === $tab_key ? 'nav-tab-active' : ''; ?>">
+                    <?php echo $tab_label; ?>
+                </a>
+            <?php endforeach; ?>
         </h2>
 
         <form method="post" action="options.php">
@@ -87,6 +89,9 @@ function giftflowwp_settings_page() {
                     do_settings_sections('giftflowwp-design');
                     break;
             }
+
+            do_action('giftflowwp_settings_tabs', $active_tab);
+
             submit_button(__('Save Settings', 'giftflowwp'));
             ?>
         </form>
