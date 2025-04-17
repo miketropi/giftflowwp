@@ -215,6 +215,18 @@ class GiftFlowWP_Field {
 	);
 
 	/**
+	 * Field accordion settings (for accordion)
+	 *
+	 * @var array
+	 */
+	private $accordion_settings = array(
+		'fields' => array(),
+		'is_open' => false,
+		'icon' => 'dashicons-arrow-down-alt2',
+		'icon_position' => 'right',
+	);
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $id Field ID.
@@ -303,6 +315,12 @@ class GiftFlowWP_Field {
 		if ( 'repeater' === $type && isset( $args['repeater_settings'] ) ) {
 			$this->repeater_settings = wp_parse_args( $args['repeater_settings'], $this->repeater_settings );
 		}
+
+		// Set accordion settings.
+		if ( 'accordion' === $type && isset( $args['accordion_settings'] ) ) {
+			$this->accordion_settings = wp_parse_args( $args['accordion_settings'], $this->accordion_settings );
+		}
+		
 	}
 
 	/**
@@ -362,6 +380,9 @@ class GiftFlowWP_Field {
 				break;
 			case 'repeater':
 				$output .= $this->render_repeater();
+				break;
+			case 'accordion':
+				$output .= $this->render_accordion();
 				break;
 			default:
 				$output .= $this->render_textfield();
@@ -1249,6 +1270,164 @@ class GiftFlowWP_Field {
 			</div>
 		</div>
 		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Render accordion field
+	 *
+	 * @return string
+	 */
+	private function render_accordion() {
+		// Start output buffering
+		ob_start();
+		
+		// Get accordion settings
+		$settings = $this->accordion_settings;
+		$is_open = $settings['is_open'] ? 'open' : '';
+		$icon = $settings['icon'];
+		$icon_position = $settings['icon_position'];
+		$label = $settings['label'];
+		
+		// Generate unique ID for the accordion
+		$accordion_id = 'giftflowwp-accordion-' . $this->id;
+		?>
+		<div class="giftflowwp-accordion-section <?php echo esc_attr($is_open); ?>" id="<?php echo esc_attr($accordion_id); ?>">
+			<!-- Accordion header -->
+			<div class="giftflowwp-accordion-header">
+				<?php if ($icon_position === 'left'): ?>
+					<span class="dashicons <?php echo esc_attr($icon); ?>"></span>
+				<?php endif; ?>
+				
+				<h3><?php echo esc_html($label); ?></h3>
+				
+				<?php if ($icon_position === 'right'): ?>
+					<span class="dashicons <?php echo esc_attr($icon); ?>"></span>
+				<?php endif; ?>
+			</div>
+			
+			<!-- Accordion content -->
+			<div class="giftflowwp-accordion-content">
+				<?php if (!empty($this->description)): ?>
+					<p class="description"><?php echo esc_html($this->description); ?></p>
+				<?php endif; ?>
+				
+				<?php if (!empty($settings['fields'])): ?>
+					<div class="giftflowwp-accordion-fields">
+						<?php foreach ($settings['fields'] as $field_id => $field_args): 
+							$field_value = isset($field_args['value']) ? $field_args['value'] : '';
+							$field_name = $this->name . '[' . $field_id . ']';
+							$field_id = $this->id . '_' . $field_id;
+							
+							// Create field instance
+							$field = new GiftFlowWP_Field(
+								$field_id,
+								$field_name,
+								$field_args['type'],
+								array_merge(
+									$field_args,
+									array(
+										'value' => $field_value,
+										'wrapper_classes' => array('giftflowwp-accordion-field'),
+									)
+								)
+							);
+							
+							// Render the field
+							echo $field->render();
+						endforeach; ?>
+					</div>
+				<?php endif; ?>
+				
+				<?php if (isset($this->content) && is_callable($this->content)): 
+					call_user_func($this->content);
+				endif; ?>
+			</div>
+		</div>
+		
+		<!-- JavaScript for accordion functionality -->
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				var $accordion = $("#<?php echo esc_js($accordion_id); ?>");
+				var $header = $accordion.find(".giftflowwp-accordion-header");
+				var $content = $accordion.find(".giftflowwp-accordion-content");
+				var $icon = $header.find(".dashicons");
+				
+				// Toggle accordion
+				$header.on("click", function() {
+					$accordion.toggleClass("open");
+					$content.slideToggle(200);
+					
+					// Rotate icon
+					if ($accordion.hasClass("open")) {
+						$icon.css("transform", "rotate(180deg)");
+					} else {
+						$icon.css("transform", "rotate(0deg)");
+					}
+				});
+				
+				// Initialize state
+				if ($accordion.hasClass("open")) {
+					$content.show();
+					$icon.css("transform", "rotate(180deg)");
+				} else {
+					$content.hide();
+					$icon.css("transform", "rotate(0deg)");
+				}
+			});
+		</script>
+		
+		<!-- Styles for accordion -->
+		<style type="text/css">
+			.giftflowwp-accordion-section {
+				border: 1px solid #ddd;
+				margin-bottom: 10px;
+				border-radius: 4px;
+			}
+			
+			.giftflowwp-accordion-header {
+				background: #f5f5f5;
+				padding: 10px 15px;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+			
+			.giftflowwp-accordion-header h3 {
+				margin: 0;
+				font-size: 14px;
+				font-weight: 600;
+			}
+			
+			.giftflowwp-accordion-header .dashicons {
+				transition: transform 0.2s ease;
+			}
+			
+			.giftflowwp-accordion-content {
+				padding: 15px;
+				display: none;
+			}
+			
+			.giftflowwp-accordion-content .description {
+				margin-top: 0;
+			}
+			
+			.giftflowwp-accordion-fields {
+				margin-top: 15px;
+			}
+			
+			.giftflowwp-accordion-field {
+				margin-bottom: 15px;
+			}
+			
+			.giftflowwp-accordion-field:last-child {
+				margin-bottom: 0;
+			}
+		</style>
+		<?php
+		
+		// Return the buffered content
 		return ob_get_clean();
 	}
 

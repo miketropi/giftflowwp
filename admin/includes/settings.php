@@ -158,57 +158,7 @@ function giftflowwp_initialize_settings() {
                 ],
             ],
         ],
-        'payment_methods' => [
-            'option_name' => 'giftflowwp_payment_options',
-            'page' => 'giftflowwp-payment',
-            'section' => 'giftflowwp_payment_settings',
-            'section_title' => __('Payment Methods', 'giftflowwp'),
-            'section_callback' => 'giftflowwp_payment_settings_callback',
-            'fields' => [
-                'paypal_enabled' => [
-                    'id' => 'giftflowwp_paypal_enabled',
-                    'name' => 'giftflowwp_payment_options[paypal_enabled]',
-                    'type' => 'switch',
-                    'label' => __('Enable PayPal', 'giftflowwp'),
-                    'value' => isset($payment_options['paypal_enabled']) ? $payment_options['paypal_enabled'] : false,
-                    'description' => __('Enable PayPal as a payment method', 'giftflowwp'),
-                ],
-                'stripe_enabled' => [
-                    'id' => 'giftflowwp_stripe_enabled',
-                    'name' => 'giftflowwp_payment_options[stripe_enabled]',
-                    'type' => 'switch',
-                    'label' => __('Enable Stripe', 'giftflowwp'),
-                    'value' => isset($payment_options['stripe_enabled']) ? $payment_options['stripe_enabled'] : false,
-                    'description' => __('Enable Stripe as a payment method', 'giftflowwp'),
-                ],
-                'paypal_email' => [
-                    'id' => 'giftflowwp_paypal_email',
-                    'name' => 'giftflowwp_payment_options[paypal_email]',
-                    'type' => 'textfield',
-                    'label' => __('PayPal Email', 'giftflowwp'),
-                    'value' => isset($payment_options['paypal_email']) ? $payment_options['paypal_email'] : '',
-                    'input_type' => 'email',
-                    'description' => __('Enter your PayPal email address', 'giftflowwp'),
-                ],
-                'stripe_publishable_key' => [
-                    'id' => 'giftflowwp_stripe_publishable_key',
-                    'name' => 'giftflowwp_payment_options[stripe_publishable_key]',
-                    'type' => 'textfield',
-                    'label' => __('Stripe Publishable Key', 'giftflowwp'),
-                    'value' => isset($payment_options['stripe_publishable_key']) ? $payment_options['stripe_publishable_key'] : '',
-                    'description' => __('Enter your Stripe publishable key', 'giftflowwp'),
-                ],
-                'stripe_secret_key' => [
-                    'id' => 'giftflowwp_stripe_secret_key',
-                    'name' => 'giftflowwp_payment_options[stripe_secret_key]',
-                    'type' => 'textfield',
-                    'label' => __('Stripe Secret Key', 'giftflowwp'),
-                    'value' => isset($payment_options['stripe_secret_key']) ? $payment_options['stripe_secret_key'] : '',
-                    'input_type' => 'password',
-                    'description' => __('Enter your Stripe secret key', 'giftflowwp'),
-                ],
-            ],
-        ],
+        'payment_methods' => giftflowwp_payment_methods_options(),
         'email' => [
             'option_name' => 'giftflowwp_email_options',
             'page' => 'giftflowwp-email',
@@ -330,13 +280,16 @@ function giftflowwp_initialize_settings() {
                 $field['type'],
                 array_merge(
                     // ['label' => $field['label']],
+                    // isset($field['label']) ? ['label' => $field['label']] : [],
                     isset($field['value']) ? ['value' => $field['value']] : [],
                     isset($field['options']) ? ['options' => $field['options']] : [],
                     isset($field['description']) ? ['description' => $field['description']] : [],
-                    isset($field['min']) ? ['min' => $field['min']] : [],
+                  isset($field['min']) ? ['min' => $field['min']] : [],
                     isset($field['step']) ? ['step' => $field['step']] : [],
                     isset($field['rows']) ? ['rows' => $field['rows']] : [],
                     isset($field['input_type']) ? ['type' => $field['input_type']] : [],
+                    isset($field['accordion_settings']) ? ['accordion_settings' => $field['accordion_settings']] : [],
+                    isset($field['content']) ? ['content' => $field['content']] : [],
                 )
             );
 
@@ -370,3 +323,190 @@ function giftflowwp_email_settings_callback() {
 function giftflowwp_design_settings_callback() {
     echo '<p>' . __('Customize the appearance of donation forms.', 'giftflowwp') . '</p>';
 }
+
+// paypal content
+function giftflowwp_paypal_content() {
+    echo '<p>' . __('111', 'giftflowwp') . '</p>';
+}
+
+// payment methods options register
+function giftflowwp_payment_methods_options() {
+    $payment_options = get_option('giftflowwp_payment_options');
+    // var_dump($payment_options);
+
+    /**
+     * @hook giftflowwp_payment_methods_settings : giftflowwp_payment_methods_options_stripe - 8
+     * @hook giftflowwp_payment_methods_settings : giftflowwp_payment_methods_options_paypal - 10
+     */
+    $payment_fields = apply_filters('giftflowwp_payment_methods_settings', []);
+
+    return [
+        'option_name' => 'giftflowwp_payment_options',
+        'page' => 'giftflowwp-payment',
+        'section' => 'giftflowwp_payment_settings',
+        'section_title' => __('Payment Methods', 'giftflowwp'),
+        'section_callback' => 'giftflowwp_payment_settings_callback',
+        'fields' => $payment_fields,
+    ];
+}
+
+add_action('giftflowwp_payment_methods_settings', 'giftflowwp_payment_methods_options_paypal', 10);
+
+function giftflowwp_payment_methods_options_paypal($payment_fields) {
+    $payment_options = get_option('giftflowwp_payment_options');
+
+    $payment_fields['paypal'] = [
+        'id' => 'giftflowwp_paypal',
+        'name' => 'giftflowwp_payment_options[paypal]',
+        'type' => 'accordion',
+        'label' => __('PayPal', 'giftflowwp'),
+        'description' => __('Configure PayPal payment settings', 'giftflowwp'),
+        'accordion_settings' => [
+            'label' => __('PayPal Settings', 'giftflowwp'),
+            // 'icon' => 'dashicons-admin-tools',
+            // 'icon_position' => 'left',
+            'is_open' => true,
+            'fields' => [
+                'paypal_enabled' => [
+                    'id' => 'giftflowwp_paypal_enabled',
+                    'type' => 'switch',
+                    'label' => __('Enable PayPal', 'giftflowwp'),
+                    'value' => isset($payment_options['paypal']['paypal_enabled']) ? $payment_options['paypal']['paypal_enabled'] : false,
+                    'description' => __('Enable PayPal as a payment method', 'giftflowwp'),
+                ],
+                'paypal_mode' => [
+                    'id' => 'giftflowwp_paypal_mode',
+                    'type' => 'select',
+                    'label' => __('PayPal Mode', 'giftflowwp'),
+                    'value' => isset($payment_options['paypal']['paypal_mode']) ? $payment_options['paypal']['paypal_mode'] : 'sandbox',
+                    'options' => [
+                        'sandbox' => __('Sandbox (Test Mode)', 'giftflowwp'),
+                        'live' => __('Live (Production Mode)', 'giftflowwp'),
+                    ],
+                    'description' => __('Select PayPal environment mode', 'giftflowwp'),
+                ],
+                'paypal_sandbox_email' => [
+                    'id' => 'giftflowwp_paypal_sandbox_email',
+                    'type' => 'textfield',
+                    'label' => __('PayPal Sandbox Email', 'giftflowwp'),
+                    'value' => isset($payment_options['paypal']['paypal_sandbox_email']) ? $payment_options['paypal']['paypal_sandbox_email'] : '',
+                    'input_type' => 'email',
+                    'description' => __('Enter your PayPal sandbox email address', 'giftflowwp'),
+                ],
+                'paypal_sandbox_client_id' => [
+                    'id' => 'giftflowwp_paypal_sandbox_client_id',
+                    'type' => 'textfield',
+                    'label' => __('PayPal Sandbox Client ID', 'giftflowwp'),
+                    'value' => isset($payment_options['paypal']['paypal_sandbox_client_id']) ? $payment_options['paypal']['paypal_sandbox_client_id'] : '',
+                    'description' => __('Enter your PayPal sandbox client ID', 'giftflowwp'),
+                ],
+                'paypal_sandbox_secret' => [
+                    'id' => 'giftflowwp_paypal_sandbox_secret',
+                    'type' => 'textfield',
+                    'label' => __('PayPal Sandbox Secret', 'giftflowwp'),
+                    'value' => isset($payment_options['paypal']['paypal_sandbox_secret']) ? $payment_options['paypal']['paypal_sandbox_secret'] : '',
+                    'input_type' => 'password',
+                    'description' => __('Enter your PayPal sandbox secret key', 'giftflowwp'),
+                ],
+                'paypal_live_email' => [
+                    'id' => 'giftflowwp_paypal_live_email',
+                    'type' => 'textfield',
+                    'label' => __('PayPal Live Email', 'giftflowwp'),
+                    'value' => isset($payment_options['paypal']['paypal_live_email']) ? $payment_options['paypal']['paypal_live_email'] : '',
+                    'input_type' => 'email',
+                    'description' => __('Enter your PayPal live email address', 'giftflowwp'),
+                ],
+                'paypal_live_client_id' => [
+                    'id' => 'giftflowwp_paypal_live_client_id',
+                    'type' => 'textfield',
+                    'label' => __('PayPal Live Client ID', 'giftflowwp'),
+                    'value' => isset($payment_options['paypal']['paypal_live_client_id']) ? $payment_options['paypal']['paypal_live_client_id'] : '',
+                    'description' => __('Enter your PayPal live client ID', 'giftflowwp'),
+                ],
+                
+                'paypal_live_secret' => [
+                    'id' => 'giftflowwp_paypal_live_secret',
+                    'type' => 'textfield',
+                    'label' => __('PayPal Live Secret', 'giftflowwp'),
+                    'value' => isset($payment_options['paypal']['paypal_live_secret']) ? $payment_options['paypal']['paypal_live_secret'] : '',
+                    'input_type' => 'password',
+                    'description' => __('Enter your PayPal live secret key', 'giftflowwp'),
+                ],
+            ]
+        ]
+    ];
+
+    return $payment_fields;
+}
+
+// stripe fields
+function giftflowwp_payment_methods_options_stripe($payment_fields) {
+    $payment_options = get_option('giftflowwp_payment_options');
+
+    $payment_fields['stripe'] =  [
+        'id' => 'giftflowwp_stripe',
+        'name' => 'giftflowwp_payment_options[stripe]',
+        'type' => 'accordion',
+        'label' => __('Stripe', 'giftflowwp'),
+        'description' => __('Configure Stripe payment settings', 'giftflowwp'),
+        'accordion_settings' => [
+            'label' => __('Stripe Settings', 'giftflowwp'),
+            'is_open' => true,
+            'fields' => [
+                [
+                    'id' => 'giftflowwp_stripe_enabled',
+                    'type' => 'switch',
+                    'label' => __('Enable Stripe', 'giftflowwp'),
+                    'value' => isset($payment_options['stripe']['stripe_enabled']) ? $payment_options['stripe']['stripe_enabled'] : false,
+                    'description' => __('Enable Stripe as a payment method', 'giftflowwp'),
+                ],
+                'stripe_mode' => [
+                    'id' => 'giftflowwp_stripe_mode',
+                    'type' => 'select',
+                    'label' => __('Stripe Mode', 'giftflowwp'),
+                    'value' => isset($payment_options['stripe_mode']) ? $payment_options['stripe_mode'] : 'sandbox',
+                    'options' => [
+                        'sandbox' => __('Sandbox (Test Mode)', 'giftflowwp'),
+                        'live' => __('Live (Production Mode)', 'giftflowwp'),
+                    ],
+                    'description' => __('Select Stripe environment mode', 'giftflowwp'),
+                ],
+                'stripe_sandbox_publishable_key' => [
+                    'id' => 'giftflowwp_stripe_sandbox_publishable_key',
+                    'type' => 'textfield',
+                    'label' => __('Stripe Sandbox Publishable Key', 'giftflowwp'),
+                    'value' => isset($payment_options['stripe']['stripe_sandbox_publishable_key']) ? $payment_options['stripe']['stripe_sandbox_publishable_key'] : '',
+                    'description' => __('Enter your Stripe sandbox publishable key', 'giftflowwp'),
+                ],
+                'stripe_live_publishable_key' => [
+                    'id' => 'giftflowwp_stripe_live_publishable_key',
+                    'type' => 'textfield',
+                    'label' => __('Stripe Live Publishable Key', 'giftflowwp'),
+                    'value' => isset($payment_options['stripe']['stripe_live_publishable_key']) ? $payment_options['stripe']['stripe_live_publishable_key'] : '',
+                    'description' => __('Enter your Stripe live publishable key', 'giftflowwp'),
+                ],
+                'stripe_sandbox_secret_key' => [
+                    'id' => 'giftflowwp_stripe_sandbox_secret_key',
+                    'type' => 'textfield',
+                    'label' => __('Stripe Sandbox Secret Key', 'giftflowwp'),
+                    'value' => isset($payment_options['stripe']['stripe_sandbox_secret_key']) ? $payment_options['stripe']['stripe_sandbox_secret_key'] : '',
+                    'input_type' => 'password',
+                    'description' => __('Enter your Stripe sandbox secret key', 'giftflowwp'),
+                ],
+                'stripe_live_secret_key' => [
+                    'id' => 'giftflowwp_stripe_live_secret_key',
+                    'type' => 'textfield',
+                    'label' => __('Stripe Live Secret Key', 'giftflowwp'),
+                    'value' => isset($payment_options['stripe']['stripe_live_secret_key']) ? $payment_options['stripe']['stripe_live_secret_key'] : '',
+                    'input_type' => 'password',
+                    'description' => __('Enter your Stripe live secret key', 'giftflowwp'),
+                ]
+            ]
+        ]
+    ];
+
+    return $payment_fields;
+}
+
+add_action('giftflowwp_payment_methods_settings', 'giftflowwp_payment_methods_options_stripe', 8);
+
