@@ -1,0 +1,14 @@
+{
+    "/assets/js/forms.bundle.js": "/assets/js/forms.bundle.js",
+    "/assets/js/forms.bundle.asset.php": "/assets/js/forms.bundle.asset.php",
+    "/assets/js/stripe-donation.bundle.js": "/assets/js/stripe-donation.bundle.js",
+    "/assets/js/stripe-donation.bundle.asset.php": "/assets/js/stripe-donation.bundle.asset.php",
+    "/assets/js/admin.bundle.js": "/assets/js/admin.bundle.js",
+    "/assets/js/admin.bundle.asset.php": "/assets/js/admin.bundle.asset.php",
+    "/blocks-build/index.js": "/blocks-build/index.js",
+    "/blocks-build/index.asset.php": "/blocks-build/index.asset.php",
+    "/assets/css/admin.bundle.css": "/assets/css/admin.bundle.css",
+    "/assets/css/donation-form.bundle.css": "/assets/css/donation-form.bundle.css",
+    "/assets/css/block-campaign-status-bar.bundle.css": "/assets/css/block-campaign-status-bar.bundle.css",
+    "/assets/css/block-campaign-single-content.bundle.css": "/assets/css/block-campaign-single-content.bundle.css"
+}

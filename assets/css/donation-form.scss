@@ -1,0 +1,880 @@
+// Variables
+$primary-color: #000000;
+$secondary-color: #10B981;
+$text-color: black;
+$text-light: #6B7280;
+$border-color: #E5E7EB;
+$background-color: #F9FAFB;
+$error-color: #EF4444;
+$success-color: #10B981;
+$border-radius: 6px;
+$transition: all 0.3s ease;
+
+// Breakpoints
+$tablet: 768px;
+$mobile: 480px;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin input-style {
+  width: 100%;
+  padding:  1rem;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  background-color: white;
+  transition: $transition;
+  box-sizing: border-box;
+  font-size: 1rem;
+  
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $tablet) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
+// Base styles
+.donation-form {
+  // max-width: 800px;
+  max-width: 100%;
+  margin: 0 auto;
+  background: white;
+  border: 1px solid $border-color;
+  overflow: hidden;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  
+  @include tablet {
+    max-width: 95%;
+  }
+  
+  @include mobile {
+    max-width: 100%;
+    border-left: none;
+    border-right: none;
+  }
+
+  // Header styles
+  &__header {
+    padding: 2rem;
+    // background: $background-color;
+    border-bottom: 1px solid $border-color;
+    
+    @include tablet {
+      padding: 1.5rem;
+    }
+    
+    @include mobile {
+      padding: 1rem;
+    }
+  }
+
+  &__campaign {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    
+    @include tablet {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    &-thumbnail {
+      width: 150px;
+      height: 150px;
+      overflow: hidden;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+      
+      @include tablet {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+      }
+      
+      @include mobile {
+        width: 60px;
+        height: 60px;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &-title {
+      // font-size: 1.5rem;
+      font-weight: 600;
+      color: $text-color;
+      margin: 0 0 0.5rem 0;
+      
+      @include mobile {
+        font-size: 1.25rem;
+      }
+    }
+
+    &-progress {
+      margin-top: 0.5rem;
+      color: $text-light;
+      // font-size: 0.875rem;
+
+      .giftflowwp-currency-formatted-amount {
+        color: $text-color;
+        font-weight: 600;
+      }
+    }
+  }
+
+  // Steps navigation
+  &__step-nav {
+    padding: 1.5rem 2rem;
+    background: $background-color;
+    border-bottom: 1px solid $border-color;
+    
+    @include tablet {
+      padding: 1.25rem 1.5rem;
+    }
+    
+    @include mobile {
+      padding: 1rem;
+    }
+  }
+
+  &__step-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    align-items: center;
+
+    @include tablet {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    @include mobile {
+      gap: 0.5rem;
+    }
+    
+  }
+
+  &__step-separator {
+    flex: 1 1 0;
+    border-bottom: 1px solid $border-color;
+  }
+
+  &__step-item {
+    // flex: 1;
+    text-align: center;
+    
+    @include tablet {
+      text-align: left;
+    }
+  }
+
+  &__step-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: $text-light;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: $transition;
+    
+    @include mobile {
+      padding: 0.5rem;
+    }
+
+    &.is-active {
+      // color: $primary-color;
+      // background: rgba($primary-color, 0.1);
+
+      .donation-form__step-number {
+        background: $primary-color;
+        color: white;
+      }
+    }
+  }
+
+  &__step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: $border-color;
+    color: $text-light;
+    font-size: 1rem;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    @include mobile {
+      width: 28px;
+      height: 28px;
+      font-size: 0.875rem;
+    }
+  }
+
+  // Step content
+  &__step-panel {
+    display: none;
+    padding: 2rem;
+    
+    @include tablet {
+      padding: 1.5rem;
+    }
+    
+    @include mobile {
+      padding: 1rem;
+    }
+
+    &.is-active {
+      display: block;
+    }
+  }
+
+  &__fieldset {
+    border: none;
+    margin: 0 0 2rem;
+    padding: 0;
+    border-top: solid 1px $border-color;
+    
+    @include mobile {
+      margin: 0 0 1.5rem;
+    }
+  }
+
+  &__legend {
+    font-weight: 600;
+    color: $text-color;
+    margin-bottom: 1rem;
+    padding: 0 1rem 0 0;
+    
+    @include mobile {
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  // Radio group
+  &__radio-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    
+    @include tablet {
+      grid-template-columns: 1fr;
+    }
+
+    &--donation-type {
+      input[type="radio"] {
+        display: none;
+
+        // is checked
+        &:checked + label {
+          border-color: $primary-color;
+          // box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+          background-color: $primary-color;
+          color: white;
+        }
+      }
+      
+    }
+  }
+
+  &__radio-label {
+    position: relative;
+    display: block;
+    padding: 1.5rem;
+    border: 1px solid $border-color;
+    cursor: pointer;
+    transition: $transition;
+    border-radius: $border-radius;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+    
+    @include mobile {
+      padding: 1rem;
+    }
+
+    input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      
+      &:checked + .donation-form__radio-content {
+        color: $primary-color;
+      }
+    }
+
+    &:hover {
+      border-color: $primary-color;
+    }
+  }
+
+  &__radio-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    align-items: center;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__radio-title {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__radio-description {
+    font-size: 0.875rem;
+    color: $text-light;
+    
+    @include mobile {
+      font-size: 0.75rem;
+    }
+  }
+
+  // Amount input
+  &__amount {
+    &-input {
+      position: relative;
+      margin-bottom: 1rem;
+
+      .donation-form__currency {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $text-light;
+      }
+
+      input {
+        @include input-style;
+        font-size: 1.25rem;
+        font-weight: 600;
+        text-align: center;
+        padding-left: 2.5rem;
+        
+        @include mobile {
+          font-size: 1rem;
+        }
+
+        &.error {
+          border-color: $error-color;
+        }
+      }
+    }
+  }
+
+  &__preset-amounts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    
+    @include mobile {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    button {
+      padding: 1rem;
+      border: 1px solid $border-color;
+      background: white; 
+      color: $text-color;
+      cursor: pointer;
+      transition: $transition;
+      border-radius: $border-radius;
+
+      > * {
+        pointer-events: none;
+      }
+      
+      @include mobile {
+        padding: 0.75rem 0.5rem;
+      }
+
+      &:hover {
+        border-color: $primary-color;
+        color: $primary-color;
+      }
+
+      &.active {
+        border-color: $primary-color;
+        background: $primary-color;
+        color: white;
+      }
+    }
+  }
+
+  // Form fields
+  &__fields {
+    display: grid;
+    gap: 1rem;
+  }
+
+  &__field {
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: $text-light;
+    }
+
+    input[type="text"], input[type="email"], input[type="tel"], textarea {
+      @include input-style;
+    }
+
+    &.error {
+      label {
+        color: $error-color;
+      }
+
+      input[type="text"], input[type="email"], input[type="tel"], textarea {
+        border-color: $error-color;
+      }
+
+      .donation-form__field-error {
+        display: flex;
+      }
+    }
+
+    &-error {
+      display: none;
+      align-items: center;
+      gap: 0.3rem;
+      color: $error-color;
+      font-size: 0.7rem;
+      margin-top: 0.5rem;
+      font-weight: 600;
+    }
+
+    // input[type="checkbox"], input[type="radio"] {
+    //   margin: 0 0.5rem 0 0;
+
+    // }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+      
+      @include mobile {
+        min-height: 80px;
+      }
+    }
+  }
+
+  &__checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+
+    input[type="checkbox"] {
+      margin: 0 0.5rem 0 0;
+      width: 16px;
+      height: 16px;
+      vertical-align: middle;
+    }
+  }
+
+  // Payment methods
+  &__payment-methods {
+    display: grid;
+    gap: 1rem;
+  }
+
+  &__payment-method {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid $border-color;
+    cursor: pointer;
+    transition: $transition;
+    border-radius: $border-radius;
+    
+    @include mobile {
+      padding: 0.75rem;
+    }
+
+    input[type="radio"] {
+      margin: 0;
+    }
+
+    &-content {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      
+      @include mobile {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    &:hover {
+      border-color: $primary-color;
+    }
+  }
+
+  // Summary
+  &__summary {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: $background-color;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    @include mobile {
+      margin-top: 1.5rem;
+      padding: 1rem;
+    }
+
+    &-title {
+      margin: 0 0 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid $border-color;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: $text-color;
+      
+      @include mobile {
+        font-size: 1.125rem;
+        margin: 0 0 0.75rem;
+        padding-bottom: 0.75rem;
+      }
+    }
+
+    &-list {
+      margin: 0;
+      padding: 0;
+    }
+
+    &-item {
+      @include flex-between;
+      margin-bottom: 0.75rem;
+      
+      @include mobile {
+        margin-bottom: 0.5rem;
+      }
+
+      dt {
+        color: $text-light;
+      }
+
+      dd {
+        margin: 0;
+        font-weight: 500;
+        color: $text-color;
+      }
+    }
+  }
+
+  // Step actions
+  &__step-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    
+    @include tablet {
+      flex-direction: column-reverse;
+      margin-top: 1.5rem;
+    }
+    
+    @include mobile {
+      gap: 0.75rem;
+    }
+  }
+
+  &__button {
+    padding: 1.3rem 1rem;
+    border-radius: $border-radius;
+    font-weight: 500;
+    cursor: pointer;
+    transition: $transition;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 0.5rem;
+
+    > * {
+      pointer-events: none;
+    }
+
+    @include tablet {
+      width: 100%;
+      padding: 0.875rem 1rem;
+    }
+
+    &--next,
+    &--submit {
+      background: $primary-color;
+      color: white;
+      border: none;
+
+      &:hover {
+        background: darken($primary-color, 10%);
+      }
+    }
+
+    &.loading {
+      cursor: not-allowed;
+      opacity: 0.7;
+      position: relative;
+      overflow: hidden;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        animation: loading-shimmer 1.5s infinite;
+      }
+
+      @keyframes loading-shimmer {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      > * {
+        pointer-events: none;
+      }
+    }
+
+    &--back {
+      background: white;
+      color: $text-color;
+      border: 1px solid $border-color;
+
+      &:hover {
+        border-color: $primary-color;
+        color: $primary-color;
+      }
+    }
+
+    &:hover {
+      // transform: translateY(-1px);
+      gap: 0.75rem;
+    }
+  }
+
+  &__security-notice {
+    padding: 1.5rem 1rem;
+    margin-top: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: $border-radius;
+    border-left: 3px solid $secondary-color;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      // color: $text-light;
+      display: flex;
+      align-items: center;
+    }
+    
+    @include tablet {
+      padding: 1.25rem;
+      margin-top: 1.25rem;
+    }
+    
+    @include mobile {
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+  }
+
+  &__security-notice-icon {
+    margin-right: 0.5rem;
+    font-size: 1.25rem;
+    display: flex;
+  }
+
+}
+
+
+// Responsive styles
+@media (max-width: 768px) {
+  .donation-form {
+    &__campaign {
+      grid-template-columns: 1fr;
+
+      &-thumbnail {
+        width: 80px;
+        height: 80px;
+      }
+    }
+
+    &__radio-group {
+      grid-template-columns: 1fr;
+    }
+
+    &__step-actions {
+      flex-direction: column-reverse;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .donation-form {
+    &__preset-amounts {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    &__campaign-thumbnail {
+      width: 60px;
+      height: 60px;
+    }
+    
+    &__step-panel {
+      padding: 1rem;
+    }
+  }
+}
+
+// Stripe Card Element Styling
+.donation-form {
+  &__payment-method-description {
+    // margin-top: 0.75rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: $border-radius;
+    font-size: 0.875rem;
+    color: $text-light;
+    line-height: 1.5;
+
+    &--stripe {
+      #STRIPE-CARD-ELEMENT {
+        margin-top: 1rem;
+        padding: 1rem;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        background-color: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: $transition;
+
+        &:focus-within {
+          border-color: $primary-color;
+          box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+        }
+
+        // Stripe iframe container
+        .StripeElement {
+          width: 100%;
+          min-height: 40px;
+        }
+      }
+    }
+    
+    @include mobile {
+      padding: 0.75rem;
+      font-size: 0.8125rem;
+      
+      #STRIPE-CARD-ELEMENT {
+        padding: 0.75rem;
+      }
+    }
+  }
+
+  .custom-error {
+    border-color: $error-color;
+
+    .custom-error-message {
+      display: flex;
+    }
+  }
+  
+  &__payment-notification {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background-color: rgba($primary-color, 0.05);
+    border-radius: $border-radius;
+    
+    .notification-icon {
+      flex-shrink: 0;
+      margin-right: 0.75rem;
+      margin-top: 0.125rem;
+      color: $primary-color;
+    }
+    
+    p {
+      margin: 0;
+      font-size: 0.8125rem;
+      color: $text-light;
+      line-height: 1.4;
+    }
+    
+    @include mobile {
+      padding: 0.625rem;
+      
+      .notification-icon {
+        margin-right: 0.5rem;
+        width: 14px;
+        height: 14px;
+      }
+      
+      p {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+}

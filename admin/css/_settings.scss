@@ -9,6 +9,10 @@
     .giftflowwp-field {
       grid-template-columns: 50% 50%;
 
+      &-accordion {
+        grid-template-columns: 100%;
+      }
+
       @media (max-width: 768px) {
         grid-template-columns: 100%;
       }

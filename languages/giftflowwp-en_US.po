@@ -1,0 +1,28 @@
+# Copyright (C) 2024 GiftFlowWp Team
+# This file is distributed under the same license as the GiftFlow plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: GiftFlow 1.0.0\n"
+"Report-Msgid-Bugs-To: https://giftflowwp.com\n"
+"POT-Creation-Date: 2024-03-21 12:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2024-03-21 12:00+0000\n"
+"Last-Translator: GiftFlowWp Team\n"
+"Language-Team: GiftFlowWp Team\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: giftflowwp\n"
+
+#: giftflowwp.php:35
+msgid "GiftFlowWp requires Composer dependencies to be installed. Please run \"composer install\" in the plugin directory."
+msgstr "GiftFlowWp requires Composer dependencies to be installed. Please run \"composer install\" in the plugin directory."
+
+#: giftflowwp.php:120
+msgid "GiftFlowWp requires PHP 8.2 or higher."
+msgstr "GiftFlowWp requires PHP 8.2 or higher."
+
+#: includes/core/class-loader.php:15
+msgid "GiftFlowWP"
+msgstr "GiftFlowWP" 

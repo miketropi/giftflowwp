@@ -12,12 +12,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@stripe/stripe-js": "^7.0.0",
     "@tinypixelco/laravel-mix-wp-blocks": "^1.2.0",
+    "@wordpress/dependency-extraction-webpack-plugin": "^6.21.0",
     "laravel-mix": "^6.0.49",
     "react": "^19.1.0"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.26.3",
+    "@wordpress/babel-preset-default": "^8.21.0",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.86.2",
     "sass-loader": "^12.6.0"

@@ -720,6 +720,9 @@
 .giftflow_page_giftflowwp-settings .wrap .giftflowwp-field {
   grid-template-columns: 50% 50%;
 }
+.giftflow_page_giftflowwp-settings .wrap .giftflowwp-field-accordion {
+  grid-template-columns: 100%;
+}
 @media (max-width: 768px) {
   .giftflow_page_giftflowwp-settings .wrap .giftflowwp-field {
     grid-template-columns: 100%;

@@ -44,6 +44,16 @@ function giftflowwp_get_campaign_raised_amount($campaign_id) {
 }
 
 /**
+ * giftflowwp_get_campaign_goal_amount
+ * 
+ * @param int $campaign_id The campaign ID
+ * @return float The goal amount
+ */
+function giftflowwp_get_campaign_goal_amount($campaign_id) {
+    return get_post_meta($campaign_id, '_goal_amount', true);
+}
+
+/**
  * Get the percentage of raised amount compared to goal amount
  *
  * @param int $campaign_id The campaign ID
@@ -269,22 +279,198 @@ function giftflowwp_render_currency_formatted_amount($amount, $decimals = 2, $cu
     $template = giftflowwp_get_currency_template();
   }
 
-  $amount = str_replace(array_keys($replace), array_values($replace), $template);
+  $amount = '<span class="giftflowwp-currency-formatted-amount">' . str_replace(array_keys($replace), array_values($replace), $template) . '</span>';
 
   $amount = apply_filters('giftflowwp_render_currency_formatted_amount', $amount, $currency, $decimals);
   return $amount;
 }
 
+// get symbol
+function giftflowwp_get_global_currency_symbol() {
+  $currency = giftflowwp_get_current_currency();
+  $currencies = giftflowwp_get_common_currency();
+  $_currency = array_filter($currencies, function($c) use ($currency) {
+    return $c['code'] === $currency;
+  });
+  $_currency = array_values($_currency);
+  return $_currency[0]['symbol'];
+}
+
 // get currency template
 function giftflowwp_get_currency_template() {
   $options = get_option('giftflowwp_general_options');
-  $currency_template = isset($options['currency_template']) ? $options['currency_template'] : '{{currency_symbol}} {{amount}}';
+  $currency_template = isset($options['currency_template']) ? $options['currency_template'] : '{{currency_symbol}}{{amount}}';
   return $currency_template;
+}
+
+function giftflowwp_get_currency_js_format_template() {
+  $temp = giftflowwp_get_currency_template();
+  $symbol = giftflowwp_get_global_currency_symbol();
+  $template = str_replace('{{currency_symbol}}', $symbol, $temp);
+  $template = str_replace('{{amount}}', '{{value}}', $template);
+  return $template;
 }
 
 function giftflowwp_get_preset_donation_amounts() {
   $options = get_option('giftflowwp_general_options');
   $preset_donation_amounts = isset($options['preset_donation_amounts']) ? $options['preset_donation_amounts'] : '10, 25, 35';
   return $preset_donation_amounts;
+}
+
+/**
+ * get preset donation amounts by campaign id
+ * 
+ * @param int $campaign_id
+ * @return array
+ */
+function giftflowwp_get_preset_donation_amounts_by_campaign($campaign_id) {
+  $preset_donation_amounts = get_post_meta($campaign_id, '_preset_donation_amounts', true);
+
+  // unserialize if exists
+  if (is_serialized($preset_donation_amounts)) {
+    $preset_donation_amounts = unserialize($preset_donation_amounts);
+  }
+  
+
+  return array_map(function($item) {
+    return array(
+      'amount' => (float)trim($item['amount']),
+    );
+  }, $preset_donation_amounts);
+}
+
+function giftflowwp_get_campaign_days_left($campaign_id) {
+  $start_date = get_post_meta($campaign_id, '_start_date', true);
+  $end_date = get_post_meta($campaign_id, '_end_date', true);
+  
+  if (!$start_date || !$end_date) {
+    return 0;
+  }
+  
+
+  // current date
+  $current_date = current_time('timestamp');
+
+  $start_date = strtotime($start_date);
+  $end_date = strtotime($end_date);
+
+  // if start date is in the future, return false
+  if ($start_date > $current_date) {
+    return false;
+  }
+
+  // if end date is in the past, return true
+  if ($end_date < $current_date) {
+    return true;
+  }
+
+  $days_left = ceil(($end_date - $current_date) / 86400);
+
+  // apply filter
+  $days_left = apply_filters('giftflowwp_get_campaign_days_left', $days_left, $campaign_id);
+  
+  return $days_left;
+}
+
+// get all donations for the campaign id  
+function giftflowwp_get_campaign_donations($campaign_id, $args = array()) {
+
+  $args = wp_parse_args($args, array(
+    'posts_per_page' => 20,
+    'paged' => 1,
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'post_status' => 'publish',
+    'post_type' => 'donation',
+  ));
+
+  $args['meta_key'] = '_campaign_id';
+  $args['meta_value'] = $campaign_id;
+
+  $donations = new WP_Query($args);
+
+  // return donation posts, total, and pagination
+  return array(
+    'posts' => array_map(function($post) {
+      $donor_meta = [];
+      $donor_meta['id'] = get_post_meta($post->ID, '_donor_id', true);
+      $donor_meta['name'] = get_the_title($donor_meta['id']);
+      $donor_meta['email'] = get_post_meta($donor_meta['id'], '_email', true);
+      $donor_meta['phone'] = get_post_meta($donor_meta['id'], '_phone', true);
+      $donor_meta['address'] = get_post_meta($donor_meta['id'], '_address', true);
+      $donor_meta['city'] = get_post_meta($donor_meta['id'], '_city', true);
+      $donor_meta['state'] = get_post_meta($donor_meta['id'], '_state', true);
+      $donor_meta['postal_code'] = get_post_meta($donor_meta['id'], '_postal_code', true);
+      $donor_meta['country'] = get_post_meta($donor_meta['id'], '_country', true);
+
+      return array(
+        'id' => $post->ID,
+        'amount' => get_post_meta($post->ID, '_amount', true),
+        'amount_formatted' => giftflowwp_render_currency_formatted_amount(get_post_meta($post->ID, '_amount', true)),
+        'payment_method' => get_post_meta($post->ID, '_payment_method', true),
+        'status' => get_post_meta($post->ID, '_status', true),
+        'transaction_id' => get_post_meta($post->ID, '_transaction_id', true),
+        'donor_id' => get_post_meta($post->ID, '_donor_id', true),
+        'donor_meta' => $donor_meta,
+        'campaign_id' => get_post_meta($post->ID, '_campaign_id', true),
+      );
+    }, $donations->posts),
+    'total' => $donations->found_posts,
+    'pagination' => $donations->max_num_pages,
+  );
+}
+
+function giftflowwp_stripe_payment_method_callback($method) {
+  $icons = array(
+		'error' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert-icon lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>',
+    'checked' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check-icon lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>',
+  );
+
+  ?>
+  <label class="donation-form__payment-method">
+      <input type="radio" checked name="payment_method" value="<?php echo esc_attr($method['name']); ?>" required>
+      <span class="donation-form__payment-method-content">
+          <?php echo $method['icon']; ?>
+          <span class="donation-form__payment-method-title"><?php echo esc_html($method['label']); ?></span>
+      </span>
+  </label>
+  <div 
+    class="donation-form__payment-method-description donation-form__payment-method-description--stripe donation-form__fields" 
+    >
+      <div class="donation-form__payment-notification">
+        <?php echo $icons['checked']; ?>
+        <p><?php _e('We use Stripe to process payments. Your payment information is encrypted and never stored on our servers.', 'giftflowwp'); ?></p>
+      </div>
+
+      <?php // name on card field ?>
+      <div class="donation-form__field">
+        <label for="card_name" class="donation-form__field-label"><?php _e('Name on card', 'giftflowwp'); ?></label>
+        <input type="text" id="card_name" name="card_name" class="donation-form__field-input" required data-validate="required">
+
+        <div class="donation-form__field-error custom-error-message">
+          <?php echo $icons['error']; ?>
+          <span class="custom-error-message-text">
+            <?php _e('Name on card is required', 'giftflowwp'); ?>
+          </span>
+        </div>
+      </div>
+      
+      <?php // card element ?>
+      <div 
+        class="donation-form__field" 
+        data-custom-validate="true" 
+        data-custom-validate-status="false" >
+        <label for="card_number" class="donation-form__field-label"><?php _e('Card number', 'giftflowwp'); ?></label>
+        <div id="STRIPE-CARD-ELEMENT"></div> <?php // Render card via stripe.js ?>
+
+        <div class="donation-form__field-error custom-error-message">
+          <?php echo $icons['error']; ?>
+          <span class="custom-error-message-text">
+            <?php _e('Card information is incomplete', 'giftflowwp'); ?>
+          </span>
+        </div>
+      </div>
+  </div>
+  <?php
 }
 

@@ -9,7 +9,7 @@
  * Text Domain: giftflowwp
  * Domain Path: /languages
  * Requires at least: 5.8
- * Requires PHP: 7.4
+ * Requires PHP: 8.2
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -26,7 +26,7 @@ define( 'GIFTFLOWWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'GIFTFLOWWP_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 // Include Composer autoloader
-if ( file_exists( GIFTFLOWWP_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
+if ( file_exists( GIFTFLOWWP_PLUGIN_DIR . 'vendor/autoload.php' ) ) { 
     require_once GIFTFLOWWP_PLUGIN_DIR . 'vendor/autoload.php';
 } else {
     add_action( 'admin_notices', function() {
@@ -53,6 +53,7 @@ function giftflowwp_load_files() {
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-ajax.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-block-template.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-wp-block-custom-hooks.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'blocks/index.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/common.php';
 
     
@@ -77,7 +78,7 @@ function giftflowwp_load_files() {
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/frontend/class-template.php';
     
     // Payment gateways
-    require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-gateway-base.php';
+    // require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-gateway-base.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-stripe.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-paypal.php';
 
@@ -104,13 +105,10 @@ add_action( 'plugins_loaded', 'giftflowwp_init' );
 /**
  * Initialize the plugin
  */
-function giftflowwp_init() {
-    // Load text domain
-    // load_plugin_textdomain( 'giftflowwp', false, dirname( GIFTFLOWWP_PLUGIN_BASENAME ) . '/languages' );
-
+function giftflowwp_init() { 
     // Initialize plugin
-    $plugin = new \GiftFlowWp\Core\Loader(); 
-    $plugin->init();
+    $plugin = new \GiftFlowWp\Core\Loader();   
+    // $plugin->init();
 }
 
 // Activation hook
@@ -121,10 +119,10 @@ register_activation_hook( __FILE__, 'giftflowwp_activate' );
  */
 function giftflowwp_activate() {
     // Check PHP version
-    if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
+    if ( version_compare( PHP_VERSION, '8.2', '<' ) ) {
         deactivate_plugins( plugin_basename( __FILE__ ) );
         wp_die(
-            __( 'GiftFlowWp requires PHP 7.4 or higher.', 'giftflowwp' ),
+            __( 'GiftFlowWp requires PHP 8.2 or higher.', 'giftflowwp' ),
             'Plugin Activation Error',
             [ 'back_link' => true ]
         );

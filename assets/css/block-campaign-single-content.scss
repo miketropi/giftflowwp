@@ -1,0 +1,92 @@
+// Campaign Single Content Block Styles
+.giftflowwp-campaign-single-content {
+  width: 100%;
+  padding: 3em 0 2em;
+  max-width: 860px;
+  margin: 0 auto; 
+
+  // Tab Widget
+  .giftflowwp-tab-widget {
+    margin-bottom: 1.5rem;
+    
+    &-tabs {
+      display: flex;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 1.5rem;
+      
+      .giftflowwp-tab-widget-tab-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1.25rem;
+        // margin-right: 0.5rem; 
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        transition: all 0.2s ease;
+        background-color: #f6f6f6;
+        
+        &:hover {
+          background-color: #000;
+          color: #fff;
+        }
+        
+        &.active {
+          color: white;
+          background-color: #000;
+          font-weight: 500;
+        }
+        
+        &-icon {
+          display: inline-flex;
+          margin-right: 0.5rem;
+          color: currentColor;
+        }
+        
+        &-label {
+          font-size: 0.95rem;
+        }
+      }
+    }
+  }
+  
+  // Tab Content
+  .giftflowwp-tab-widget-content { 
+    background-color: #fff;
+    border-radius: 0.375rem;
+    
+    &-item {
+      display: none;
+      padding: 1rem 0;
+      
+      &.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+      }
+    }
+  }
+}
+
+// Animation for tab content
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .giftflowwp-campaign-single-content {
+    .giftflowwp-tab-widget-tabs {
+      overflow-x: auto;
+      white-space: nowrap;
+      
+      .giftflowwp-tab-widget-tab-item {
+        padding: 0.5rem 0.75rem;
+      }
+    }
+  }
+}
