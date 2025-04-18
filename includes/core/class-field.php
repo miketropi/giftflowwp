@@ -446,7 +446,7 @@ class GiftFlowWP_Field {
 			return '';
 		}
 
-		return '<p class="description">' . esc_html( $this->description ) . '</p>';
+		return '<p class="description">' . wp_kses_post( $this->description ) . '</p>';
 	}
 
 	/**

@@ -158,6 +158,9 @@ class Campaign extends Base_Post_Type {
                 break;
                 
             case 'start_date':
+                echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $meta_value ) ) );
+                break;
+                
             case 'end_date':
                 echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $meta_value ) ) );
                 break;
@@ -178,6 +181,10 @@ class Campaign extends Base_Post_Type {
                     case 'pending':
                         $status_text = __( 'Pending', 'giftflowwp' );
                         $status_class = 'status-pending';
+                        break;
+                    case 'closed':
+                        $status_text = __( 'Closed', 'giftflowwp' );
+                        $status_class = 'status-closed';
                         break;
                     default:
                         $status_text = __( 'Unknown', 'giftflowwp' );

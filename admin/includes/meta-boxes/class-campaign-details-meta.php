@@ -53,13 +53,13 @@ class Campaign_Details_Meta extends Base_Meta_Box {
                     'label' => __( 'Start Date', 'giftflowwp' ),
                     'type'  => 'datetime',
                     // 'date_format' => 'Y-m-d',
-                    'description' => __( 'Enter the start date for the campaign', 'giftflowwp' ),
+                    'description' => __( 'Select the start date for the campaign 📅.', 'giftflowwp' ),
                 ),
                 'end_date' => array(
                     'label' => __( 'End Date', 'giftflowwp' ),
                     'type'  => 'datetime',
                     // 'date_format' => 'Y-m-d',
-                    'description' => __( 'Enter the end date for the campaign', 'giftflowwp' ),
+                    'description' => __( 'Select the end date for the campaign 📅, If empty, the campaign will be active indefinitely ♾️', 'giftflowwp' ),
                 ),
                 'status' => array(
                     'label'   => __( 'Status', 'giftflowwp' ),
@@ -67,11 +67,49 @@ class Campaign_Details_Meta extends Base_Meta_Box {
                     'options' => array(
                         'active'   => __( 'Active', 'giftflowwp' ),
                         'completed' => __( 'Completed', 'giftflowwp' ),
-                        'pending'   => __( 'Pending', 'giftflowwp' ),
-                        // 'draft'    => __( 'Draft', 'giftflowwp' ),
+                        // closed
+                        'closed' => __( 'Closed', 'giftflowwp' ),
+                        // pending
+                        'pending' => __( 'Pending', 'giftflowwp' ), 
                     ),
-                    'description' => __( 'Select the status for the campaign', 'giftflowwp' ),
+                    'description' => '
+                        <p>' . __( 'Select the status for the campaign donations:', 'giftflowwp' ) . '</p>
+                        <ul>
+                            <li><strong>' . __( 'Active', 'giftflowwp' ) . '</strong> 🟢: ' . __( 'Campaign is open for donations', 'giftflowwp' ) . ' 💰</li>
+                            <li><strong>' . __( 'Completed', 'giftflowwp' ) . '</strong> 🏆: ' . __( 'Campaign is closed and all donations are collected  ✅, but donations are still allowed.', 'giftflowwp' ) . '</li>
+                            <li><strong>' . __( 'Closed', 'giftflowwp' ) . '</strong> 🔒: ' . __( 'Campaign is closed and no more donations are allowed', 'giftflowwp' ) . ' ⛔</li>
+                            <li><strong>' . __( 'Pending', 'giftflowwp' ) . '</strong> ⏳: ' . __( 'Campaign donations are pending and auto-activated when start date is reached', 'giftflowwp' ) . ' 📅</li>
+                        </ul>',
                 ),
+                // on / off one-time donation
+                'one_time' => array(
+                    'label' => __( 'One-Time', 'giftflowwp' ),
+                    'type'  => 'switch',
+                    'description' => __( 'Allow one-time donations', 'giftflowwp' ),
+                    'default' => 1,
+                ),
+                // on / off recurring
+                'recurring' => array(
+                    'label' => __( 'Recurring', 'giftflowwp' ),
+                    'type'  => 'switch',
+                    'description' => __( 'Allow recurring donations', 'giftflowwp' ),
+                    'default' => 0,
+                ),
+                // select recurring interval
+                'recurring_interval' => array(
+                    'label' => __( 'Recurring Interval', 'giftflowwp' ),
+                    'type'  => 'select',
+                    'options' => array(
+                        'daily' => __( 'Daily', 'giftflowwp' ),
+                        'weekly' => __( 'Weekly', 'giftflowwp' ),
+                        'monthly' => __( 'Monthly', 'giftflowwp' ),
+                        'quarterly' => __( 'Quarterly', 'giftflowwp' ),
+                        'yearly' => __( 'Yearly', 'giftflowwp' ),
+                    ),
+                    'description' => __( 'Select the recurring interval for recurring donations', 'giftflowwp' ),
+                    'default' => 'monthly',
+                )
+
             ),
             'advanced' => array(
                 // repeater preset donation amounts ($10, $25, $50, $100, $250)

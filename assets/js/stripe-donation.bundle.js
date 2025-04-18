@@ -482,7 +482,7 @@ __webpack_require__.r(__webpack_exports__);
  * 
  */
 
-var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY9lOPy403ifo5p89vrcviO4p3SJPkPEejxi2xIpiv9A00JfVSw8VW';
+var STRIPE_PUBLIC_KEY = giftflowwpStripeDonation.stripe_publishable_key;
 (function (w) {
   'use strict';
 

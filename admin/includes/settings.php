@@ -458,7 +458,7 @@ function giftflowwp_payment_methods_options_stripe($payment_fields) {
             'label' => __('Stripe Settings', 'giftflowwp'),
             'is_open' => true,
             'fields' => [
-                [
+                'stripe_enabled' => [
                     'id' => 'giftflowwp_stripe_enabled',
                     'type' => 'switch',
                     'label' => __('Enable Stripe', 'giftflowwp'),
@@ -483,13 +483,6 @@ function giftflowwp_payment_methods_options_stripe($payment_fields) {
                     'value' => isset($payment_options['stripe']['stripe_sandbox_publishable_key']) ? $payment_options['stripe']['stripe_sandbox_publishable_key'] : '',
                     'description' => __('Enter your Stripe sandbox publishable key', 'giftflowwp'),
                 ],
-                'stripe_live_publishable_key' => [
-                    'id' => 'giftflowwp_stripe_live_publishable_key',
-                    'type' => 'textfield',
-                    'label' => __('Stripe Live Publishable Key', 'giftflowwp'),
-                    'value' => isset($payment_options['stripe']['stripe_live_publishable_key']) ? $payment_options['stripe']['stripe_live_publishable_key'] : '',
-                    'description' => __('Enter your Stripe live publishable key', 'giftflowwp'),
-                ],
                 'stripe_sandbox_secret_key' => [
                     'id' => 'giftflowwp_stripe_sandbox_secret_key',
                     'type' => 'textfield',
@@ -497,6 +490,13 @@ function giftflowwp_payment_methods_options_stripe($payment_fields) {
                     'value' => isset($payment_options['stripe']['stripe_sandbox_secret_key']) ? $payment_options['stripe']['stripe_sandbox_secret_key'] : '',
                     'input_type' => 'password',
                     'description' => __('Enter your Stripe sandbox secret key', 'giftflowwp'),
+                ],
+                'stripe_live_publishable_key' => [
+                    'id' => 'giftflowwp_stripe_live_publishable_key',
+                    'type' => 'textfield',
+                    'label' => __('Stripe Live Publishable Key', 'giftflowwp'),
+                    'value' => isset($payment_options['stripe']['stripe_live_publishable_key']) ? $payment_options['stripe']['stripe_live_publishable_key'] : '',
+                    'description' => __('Enter your Stripe live publishable key', 'giftflowwp'),
                 ],
                 'stripe_live_secret_key' => [
                     'id' => 'giftflowwp_stripe_live_secret_key',

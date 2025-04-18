@@ -103,6 +103,52 @@ $payment_methods = array(
 		// 'callback_html' => 'giftflowwp_bank_payment_method_callback',
 	),
 );
+
+// get one-time donation
+$one_time_donation = get_post_meta($campaign_id, '_one_time', true);
+// var_dump($one_time_donation);
+
+// get recurring donation
+$recurring_donation = get_post_meta($campaign_id, '_recurring', true);
+// var_dump($recurring_donation);
+
+// array of donation types
+$donation_types = array();
+
+// if one-time donation is on, add it to the array
+if ($one_time_donation) {
+	$donation_types[] = [
+		'name' => 'one_time',
+		'icon' => '',
+		'label' => __('One-time Donation', 'giftflowwp'),
+		'description' => __('Make a single donation', 'giftflowwp'),
+	];
+}
+
+// if recurring donation is on, add it to the array
+if ($recurring_donation) {
+	// get recurring interval
+	$recurring_interval = get_post_meta($campaign_id, '_recurring_interval', true);
+	// var_dump($recurring_interval);
+
+	$recurring_label_array = [
+		'daily' => __('Daily Donation', 'giftflowwp'),
+		'weekly' => __('Weekly Donation', 'giftflowwp'),
+		'monthly' => __('Monthly Donation', 'giftflowwp'),
+		'yearly' => __('Yearly Donation', 'giftflowwp'),
+	];
+
+	$recurring_label = $recurring_label_array[$recurring_interval];
+
+	$donation_types[] = [
+		'name' => 'recurring',
+		'icon' => $icons['loop'],
+		'label' => $recurring_label,
+		'description' => __('Make a recurring donation', 'giftflowwp'),
+	];
+}
+
+// var_dump($donation_types);
 ?>
 
 <form class="donation-form" id="donation-form">
@@ -151,8 +197,23 @@ $payment_methods = array(
                     <fieldset class="donation-form__fieldset">
                         <legend class="donation-form__legend"><?php _e('Select donation type, one-time or monthly', 'giftflowwp'); ?></legend>
                         <div class="donation-form__radio-group donation-form__radio-group--donation-type">
-                            <input type="radio" name="donation_type" value="once" checked id="donation_type_once">
-                            <label class="donation-form__radio-label" for="donation_type_once">
+														<?php // foreach donation types ?>
+														<?php foreach ($donation_types as $donation_type) : ?>
+															<input type="radio" name="donation_type" value="<?php echo esc_attr($donation_type['name']); ?>" id="donation_type_<?php echo esc_attr($donation_type['name']); ?>">
+															<label class="donation-form__radio-label" for="donation_type_<?php echo esc_attr($donation_type['name']); ?>">
+																<span class="donation-form__radio-content">
+																	<span class="donation-form__radio-title">
+																		<?php echo $donation_type['icon']; ?>	
+																		<?php echo esc_html($donation_type['label']); ?>
+																	</span>
+																	<span class="donation-form__radio-description"><?php echo esc_html($donation_type['description']); ?></span>
+																</span>
+															</label>
+														<?php endforeach; ?>
+
+
+                            <!-- <input type="radio" name="donation_type" value="one-time" checked id="donation_type_one-time">
+                            <label class="donation-form__radio-label" for="donation_type_one-time">
                                 
                                 <span class="donation-form__radio-content">
                                     <span class="donation-form__radio-title"><?php _e('One-time Donation', 'giftflowwp'); ?></span>
@@ -170,7 +231,7 @@ $payment_methods = array(
                                     </span>
                                     <span class="donation-form__radio-description"><?php _e('Make a recurring monthly donation', 'giftflowwp'); ?></span>
                                 </span>
-                            </label>
+                            </label> -->
                         </div>
                     </fieldset>
 
@@ -321,9 +382,10 @@ $payment_methods = array(
                 </div>
 
                 <div class="donation-form__step-actions">
-										<?php // hidden fields campaign id, wp nonce, form nonce ?>
+										<?php // hidden fields campaign id, wp nonce, form nonce, recurring interval ?>
 										<input type="hidden" name="campaign_id" value="<?php echo esc_attr($campaign_id); ?>">
 										<input type="hidden" name="wp_nonce" value="<?php echo wp_create_nonce('giftflowwp_donation_form'); ?>">
+										<input type="hidden" name="recurring_interval" value="<?php echo esc_attr($recurring_interval); ?>">
 
 										<button type="button" class="donation-form__button donation-form__button--back" data-prev-step="donation-information">
 											<?php echo $icons['prev']; ?>

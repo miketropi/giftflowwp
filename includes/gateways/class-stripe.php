@@ -21,11 +21,15 @@ use Omnipay\Stripe\Gateway as StripeGateway;
  * - payment_method
  */
 function giftflowwp_process_payment_stripe( $data ) {
-
     // Get Stripe settings
     $payment_options = get_option('giftflowwp_payment_options');
-    $stripe_secret_key = isset($payment_options['stripe_secret_key']) ? $payment_options['stripe_secret_key'] : '';
-		
+		$mode = isset($payment_options['stripe_mode']) ? $payment_options['stripe_mode'] : 'sandbox';
+	
+		if ($mode === 'sandbox') {
+			$stripe_secret_key = $payment_options['stripe']['stripe_sandbox_secret_key'];
+		} else {
+			$stripe_secret_key = $payment_options['stripe']['stripe_live_secret_key']; 
+		}
 
     if (empty($stripe_secret_key)) {
         return new WP_Error('stripe_error', __('Stripe secret key is not configured', 'giftflowwp'));
@@ -86,3 +90,50 @@ function giftflowwp_process_payment_stripe( $data ) {
 			return new WP_Error('stripe_error', $e->getMessage());
     }
 }
+
+// wp enqueue stripe scripts 
+function giftflowwp_enqueue_stripe_scripts() {
+	$script_handle = 'giftflowwp-stripe-donation';
+
+	/**
+	 * stripe-donation.bundle.js
+	 * 
+	 * dependencies:
+	 * - jquery
+	 * - giftflowwp-donation-forms
+	 */
+	wp_enqueue_script(
+		$script_handle,
+		GIFTFLOWWP_PLUGIN_URL . 'assets/js/stripe-donation.bundle.js', 
+		array('jquery', 'giftflowwp-donation-forms'), 
+		GIFTFLOWWP_VERSION, 
+		true);
+
+	// get payment options
+	$payment_options = get_option('giftflowwp_payment_options');
+	$enabled = isset($payment_options['stripe']['stripe_enabled']) ? $payment_options['stripe']['stripe_enabled'] : false;
+	
+	if (!$enabled) {
+		return;
+	}
+
+	$mode = isset($payment_options['stripe_mode']) ? $payment_options['stripe_mode'] : 'sandbox';
+
+	if ($mode === 'sandbox') {
+		$stripe_publishable_key = $payment_options['stripe']['stripe_sandbox_publishable_key'];
+	} else {
+		$stripe_publishable_key = $payment_options['stripe']['stripe_live_publishable_key'];
+	}
+
+	wp_localize_script(
+			$script_handle, 
+			'giftflowwpStripeDonation',
+			array(
+					'ajaxurl' => admin_url( 'admin-ajax.php' ),
+					'stripe_publishable_key' => $stripe_publishable_key,
+					'mode' => $mode,
+			)
+	);
+}
+
+add_action('wp_enqueue_scripts', 'giftflowwp_enqueue_stripe_scripts');
