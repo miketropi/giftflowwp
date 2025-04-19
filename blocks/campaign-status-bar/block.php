@@ -132,6 +132,12 @@ function giftflowwp_campaign_status_bar_block_render($attributes, $content, $blo
                         <?php _e('Not started', 'giftflowwp'); ?>
                       <?php elseif ($days_left === true) : ?>
                         <?php _e('Ended', 'giftflowwp'); ?>
+                      <?php elseif ($days_left === '') : ?>
+                        
+                        <?php 
+                            // return message not limited time for campaign
+                            _e('Not limited time', 'giftflowwp'); 
+                        ?>
                       <?php else : ?>
                         <?php echo $days_left; ?> <?php echo _n('day left', 'days left', $days_left, 'giftflowwp'); ?>
                       <?php endif; ?>

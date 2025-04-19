@@ -147,8 +147,6 @@ if ($recurring_donation) {
 		'description' => __('Make a recurring donation', 'giftflowwp'),
 	];
 }
-
-// var_dump($donation_types);
 ?>
 
 <form class="donation-form" id="donation-form">
@@ -198,8 +196,15 @@ if ($recurring_donation) {
                         <legend class="donation-form__legend"><?php _e('Select donation type, one-time or monthly', 'giftflowwp'); ?></legend>
                         <div class="donation-form__radio-group donation-form__radio-group--donation-type">
 														<?php // foreach donation types ?>
-														<?php foreach ($donation_types as $donation_type) : ?>
-															<input type="radio" name="donation_type" value="<?php echo esc_attr($donation_type['name']); ?>" id="donation_type_<?php echo esc_attr($donation_type['name']); ?>">
+														<?php foreach ($donation_types as $index => $donation_type) : 
+															$is_checked = $index === 0 ? 'checked' : '';
+															?>
+															<input 
+																type="radio" 
+																name="donation_type" 
+																value="<?php echo esc_attr($donation_type['name']); ?>"   
+																id="donation_type_<?php echo esc_attr($donation_type['name']); ?>" 
+																<?php echo $is_checked; ?>>
 															<label class="donation-form__radio-label" for="donation_type_<?php echo esc_attr($donation_type['name']); ?>">
 																<span class="donation-form__radio-content">
 																	<span class="donation-form__radio-title">

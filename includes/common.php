@@ -343,7 +343,7 @@ function giftflowwp_get_campaign_days_left($campaign_id) {
   $start_date = get_post_meta($campaign_id, '_start_date', true);
   $end_date = get_post_meta($campaign_id, '_end_date', true);
   
-  if (!$start_date || !$end_date) {
+  if (!$start_date) {
     return 0;
   }
   
@@ -359,6 +359,12 @@ function giftflowwp_get_campaign_days_left($campaign_id) {
     return false;
   }
 
+  // if end date empty, return ''
+  if (!$end_date) {
+    return '';
+  }
+
+  
   // if end date is in the past, return true
   if ($end_date < $current_date) {
     return true;
