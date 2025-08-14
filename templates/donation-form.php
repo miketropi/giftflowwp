@@ -313,22 +313,22 @@ if ($recurring_donation) {
                     <fieldset class="donation-form__fieldset">
                         <legend class="donation-form__legend"><?php _e('Select Payment Method', 'giftflowwp'); ?></legend>
                         <div class="donation-form__payment-methods">
-														<?php foreach ($payment_methods as $method) : 
-															// if callback html is set, show the callback html
-															if (isset($method['callback_html'])) {
-																// call the callback html and send all args
-																echo call_user_func($method['callback_html'], $method);
-																continue;
-															}
-															?>
-															<label class="donation-form__payment-method">
-																<input type="radio" checked name="payment_method" value="<?php echo esc_attr($method['name']); ?>">
-																<span class="donation-form__payment-method-content">
-																	<?php echo $method['icon']; ?>
-																	<span class="donation-form__payment-method-title"><?php echo esc_html($method['label']); ?></span>
-																</span>
-															</label>
-														<?php endforeach; ?>
+                            <?php foreach ($payment_methods as $method) : 
+                                // if callback html is set, show the callback html
+                                if (isset($method['callback_html'])) {
+                                    // call the callback html and send all args
+                                    echo call_user_func($method['callback_html'], $method);
+                                    continue;
+                                }
+                                ?>
+                                <label class="donation-form__payment-method">
+                                    <input type="radio" checked name="payment_method" value="<?php echo esc_attr($method['name']); ?>">
+                                    <span class="donation-form__payment-method-content">
+                                        <?php echo $method['icon']; ?>
+                                        <span class="donation-form__payment-method-title"><?php echo esc_html($method['label']); ?></span>
+                                    </span>
+                                </label>
+                            <?php endforeach; ?>
 
 
                             <!-- <label class="donation-form__payment-method">
@@ -387,20 +387,20 @@ if ($recurring_donation) {
                 </div>
 
                 <div class="donation-form__step-actions">
-										<?php // hidden fields campaign id, wp nonce, form nonce, recurring interval ?>
-										<input type="hidden" name="campaign_id" value="<?php echo esc_attr($campaign_id); ?>">
-										<input type="hidden" name="wp_nonce" value="<?php echo wp_create_nonce('giftflowwp_donation_form'); ?>">
-										<input type="hidden" name="recurring_interval" value="<?php echo esc_attr($recurring_interval); ?>">
+                    <?php // hidden fields campaign id, wp nonce, form nonce, recurring interval ?>
+                    <input type="hidden" name="campaign_id" value="<?php echo esc_attr($campaign_id); ?>">
+                    <input type="hidden" name="wp_nonce" value="<?php echo wp_create_nonce('giftflowwp_donation_form'); ?>">
+                    <input type="hidden" name="recurring_interval" value="<?php echo esc_attr($recurring_interval); ?>">
 
-										<button type="button" class="donation-form__button donation-form__button--back" data-prev-step="donation-information">
-											<?php echo $icons['prev']; ?>
-											<?php _e('Back', 'giftflowwp'); ?>
+                    <button type="button" class="donation-form__button donation-form__button--back" data-prev-step="donation-information">
+                        <?php echo $icons['prev']; ?>
+                        <?php _e('Back', 'giftflowwp'); ?>
                     </button>
 										
-										<?php // support class loading show icon loading when submit ?>
-										<button type="submit" class="donation-form__button donation-form__button--submit">
-											<?php _e('Complete Donation', 'giftflowwp'); ?>
-											<?php echo $icons['next']; ?>
+                    <?php // support class loading show icon loading when submit ?>
+                    <button type="submit" class="donation-form__button donation-form__button--submit">
+                        <?php _e('Complete Donation', 'giftflowwp'); ?>
+                        <?php echo $icons['next']; ?>
                     </button>
                 </div>
             </section>
