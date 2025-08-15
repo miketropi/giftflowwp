@@ -308,34 +308,6 @@ if ($recurring_donation) {
                                     </span>
                                 </label>
                             <?php endforeach; ?>
-
-
-                            <!-- <label class="donation-form__payment-method">
-                                <input type="radio" checked name="payment_method" value="credit_card" required>
-                                <span class="donation-form__payment-method-content">
-                                    <?php echo $icons['credit-card']; ?>
-                                    <span class="donation-form__payment-method-title"><?php _e('Credit Card', 'giftflowwp'); ?></span>
-                                </span>
-                            </label>
-                            <div class="donation-form__payment-method-description donation-form__payment-method-description--stripe">
-                                <?php _e('We use Stripe to process payments. Your payment information is encrypted and never stored on our servers.', 'giftflowwp'); ?>
-                                <div id="STRIPE-CARD-ELEMENT"></div>
-                            </div>
-
-                            <label class="donation-form__payment-method">
-                                <input type="radio" name="payment_method" value="paypal">
-                                <span class="donation-form__payment-method-content">
-                                    <?php echo $icons['paypal']; ?>
-                                    <span class="donation-form__payment-method-title"><?php _e('PayPal', 'giftflowwp'); ?></span>
-                                </span>
-                            </label>
-                            <label class="donation-form__payment-method">
-                                <input type="radio" name="payment_method" value="bank_transfer">
-                                <span class="donation-form__payment-method-content">
-                                    <?php echo $icons['bank']; ?>
-                                    <span class="donation-form__payment-method-title"><?php _e('Bank Transfer', 'giftflowwp'); ?></span>
-                                </span>
-                            </label> -->
                         </div>
                     </fieldset>
 
