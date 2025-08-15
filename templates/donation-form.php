@@ -64,10 +64,10 @@ $icons = array(
     'shield' => '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>',
     'phone' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>',
     'message' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>',
-		'shield-check' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check-icon lucide-shield-check"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>',
-		'error' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert-icon lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>',
-		'next' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>',
-		'prev' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>'
+    'shield-check' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check-icon lucide-shield-check"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>',
+    'error' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert-icon lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>',
+    'next' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>',
+    'prev' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>'
 );
 
 // Get default donation amount (first preset amount or 10)
@@ -195,48 +195,27 @@ if ($recurring_donation) {
                     <fieldset class="donation-form__fieldset">
                         <legend class="donation-form__legend"><?php _e('Select donation type, one-time or monthly', 'giftflowwp'); ?></legend>
                         <div class="donation-form__radio-group donation-form__radio-group--donation-type">
-														<?php // foreach donation types ?>
-														<?php foreach ($donation_types as $index => $donation_type) : 
-															$is_checked = $index === 0 ? 'checked' : '';
-															?>
-															<input 
-																type="radio" 
-																name="donation_type" 
-																value="<?php echo esc_attr($donation_type['name']); ?>"   
-																id="donation_type_<?php echo esc_attr($donation_type['name']); ?>" 
-																<?php echo $is_checked; ?>>
-															<label class="donation-form__radio-label" for="donation_type_<?php echo esc_attr($donation_type['name']); ?>">
-																<span class="donation-form__radio-content">
-																	<span class="donation-form__radio-title">
-																		<?php echo $donation_type['icon']; ?>	
-																		<?php echo esc_html($donation_type['label']); ?>
-																	</span>
-																	<span class="donation-form__radio-description"><?php echo esc_html($donation_type['description']); ?></span>
-																</span>
-															</label>
-														<?php endforeach; ?>
-
-
-                            <!-- <input type="radio" name="donation_type" value="one-time" checked id="donation_type_one-time">
-                            <label class="donation-form__radio-label" for="donation_type_one-time">
-                                
-                                <span class="donation-form__radio-content">
-                                    <span class="donation-form__radio-title"><?php _e('One-time Donation', 'giftflowwp'); ?></span>
-                                    <span class="donation-form__radio-description"><?php _e('Make a single donation', 'giftflowwp'); ?></span>
-                                </span>
-                            </label>
-
-                            <input type="radio" name="donation_type" value="monthly" id="donation_type_monthly">
-                            <label class="donation-form__radio-label" for="donation_type_monthly">
-                                
-                                <span class="donation-form__radio-content">
-                                    <span class="donation-form__radio-title">
-                                        <?php echo $icons['loop']; ?>
-                                        <?php _e('Monthly Donation', 'giftflowwp'); ?>
+                            <?php // foreach donation types ?>
+                            <?php foreach ($donation_types as $index => $donation_type) : 
+                                $is_checked = $index === 0 ? 'checked' : '';
+                                ?>
+                                <input 
+                                    type="radio" 
+                                    name="donation_type" 
+                                    value="<?php echo esc_attr($donation_type['name']); ?>"   
+                                    id="donation_type_<?php echo esc_attr($donation_type['name']); ?>" 
+                                    <?php echo $is_checked; ?>>
+                                <label class="donation-form__radio-label" for="donation_type_<?php echo esc_attr($donation_type['name']); ?>">
+                                    <span class="donation-form__radio-content">
+                                        <span class="donation-form__radio-title">
+                                            <?php echo $donation_type['icon']; ?>	
+                                            <?php echo esc_html($donation_type['label']); ?>
+                                        </span>
+                                        <span class="donation-form__radio-description"><?php echo esc_html($donation_type['description']); ?></span>
                                     </span>
-                                    <span class="donation-form__radio-description"><?php _e('Make a recurring monthly donation', 'giftflowwp'); ?></span>
-                                </span>
-                            </label> -->
+                                </label>
+                            <?php endforeach; ?>
+
                         </div>
                     </fieldset>
 
