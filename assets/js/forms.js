@@ -106,6 +106,23 @@
 		}
 
 		async onSendData(data) {
+
+			const res = await jQuery.ajax({
+				url: window.giftflowwpDonationForms.ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'giftflowwp_donation_form',
+					wp_nonce: data.wp_nonce,
+					data
+				},
+				error: function (xhr, status, error) {
+					console.error('Error:', [error, status]);
+				}
+			})
+
+			return res;
+
+			return;
 			let ajaxurl = `${window.giftflowwpDonationForms.ajaxurl}?action=giftflowwp_donation_form&wp_nonce=${data.wp_nonce}`;
 
 			const response = await fetch(ajaxurl, {

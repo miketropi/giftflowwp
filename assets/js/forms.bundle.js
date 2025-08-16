@@ -199,29 +199,30 @@ __webpack_require__.r(__webpack_exports__);
               key: "onSendData",
               value: function () {
                 var _onSendData = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(data) {
-                  var ajaxurl, response;
+                  var res, ajaxurl, response;
                   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
                     while (1) switch (_context2.prev = _context2.next) {
                       case 0:
-                        ajaxurl = "".concat(window.giftflowwpDonationForms.ajaxurl, "?action=giftflowwp_donation_form&wp_nonce=").concat(data.wp_nonce);
-                        _context2.next = 3;
-                        return fetch(ajaxurl, {
-                          method: 'POST',
-                          body: JSON.stringify(data),
-                          headers: {
-                            'Content-Type': 'application/json'
+                        _context2.next = 2;
+                        return jQuery.ajax({
+                          url: window.giftflowwpDonationForms.ajaxurl,
+                          type: 'POST',
+                          data: {
+                            action: 'giftflowwp_donation_form',
+                            wp_nonce: data.wp_nonce,
+                            data: data
+                          },
+                          error: function error(xhr, status, _error) {
+                            console.error('Error:', [_error, status]);
                           }
-                        }).then(function (response) {
-                          return response.json();
-                        }).then(function (data) {
-                          return console.log(data);
-                        })["catch"](function (error) {
-                          return console.error('Error:', error);
                         });
-                      case 3:
+                      case 2:
+                        res = _context2.sent;
+                        return _context2.abrupt("return", res);
+                      case 8:
                         response = _context2.sent;
                         return _context2.abrupt("return", response);
-                      case 5:
+                      case 10:
                       case "end":
                         return _context2.stop();
                     }
