@@ -58,6 +58,10 @@ class Forms extends Base {
      * - payment_method: string (payment method)
      */
     public function process_donation() {
+        wp_send_json( array(
+            'message' => __( 'Processing donation...', 'giftflowwp' ),
+        ) );
+
         // get fields from fetch post data
         $fields = json_decode( file_get_contents( 'php://input' ), true );
 
