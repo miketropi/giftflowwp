@@ -95,7 +95,15 @@
 			}
 
 			// do hooks before submit support async function after submit
-			await self.onDoHooks();
+			// await self.onDoHooks();
+			try {
+				await self.onDoHooks();
+			} catch (error) {
+				console.error('Error in onDoHooks:', error);
+				self.onSetLoading(false);
+				return;
+			}
+			
 
 			// send data
 			const response = await self.onSendData(self.fields);
@@ -107,22 +115,22 @@
 
 		async onSendData(data) {
 
-			const res = await jQuery.ajax({
-				url: window.giftflowwpDonationForms.ajaxurl,
-				type: 'POST',
-				data: {
-					action: 'giftflowwp_donation_form',
-					wp_nonce: data.wp_nonce,
-					data
-				},
-				error: function (xhr, status, error) {
-					console.error('Error:', [error, status]);
-				}
-			})
+			// const res = await jQuery.ajax({
+			// 	url: window.giftflowwpDonationForms.ajaxurl,
+			// 	type: 'POST',
+			// 	data: {
+			// 		action: 'giftflowwp_donation_form',
+			// 		wp_nonce: data.wp_nonce,
+			// 		data
+			// 	},
+			// 	error: function (xhr, status, error) {
+			// 		console.error('Error:', [error, status]);
+			// 	}
+			// })
 
-			return res;
+			// return res;
 
-			return;
+			// return;
 			let ajaxurl = `${window.giftflowwpDonationForms.ajaxurl}?action=giftflowwp_donation_form&wp_nonce=${data.wp_nonce}`;
 
 			const response = await fetch(ajaxurl, {
@@ -216,6 +224,8 @@
 				self.fields[event.target.name] = event.target.value;
 				let value = event.target.value;
 
+				console.log(event.target.name, value);
+
 				// validate event.target is checkbox field
 				if (event.target.type === 'checkbox') {
 					value = event.target.checked;
@@ -230,7 +240,7 @@
 				// update UI by field
 				self.onUpdateUIByField(event.target.name, value);
 
-				// console.log('fields', self.fields);
+				console.log('fields', self.fields);
 			});
 		}
 
@@ -291,6 +301,10 @@
 			const self = this;
 			const amount = event.target.dataset.amount;
 			self.form.querySelector('input[name="donation_amount"]').value = amount;
+			self.form.querySelector('input[name="donation_amount"]').setAttribute('value', amount);
+
+			const changeEvent = new Event('change', { bubbles: true });
+			self.form.querySelector('input[name="donation_amount"]').dispatchEvent(changeEvent);
 			
 			// Update UI by field
 			this.onUpdateUIByField('donation_amount', amount);

@@ -68,6 +68,11 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
                 'options' => $this->get_donors(),
                 'description' => __( 'Select the donor of the donation', 'giftflowwp' ),
             ),
+            'donor_message' => array(
+                'label' => __( 'Donor Message', 'giftflowwp' ),
+                'type'  => 'textarea',
+                'description' => __( 'Enter a message from the donor', 'giftflowwp' ),
+            ),
             'campaign_id' => array(
                 'label' => __( 'Campaign', 'giftflowwp' ),
                 'type'  => 'select',

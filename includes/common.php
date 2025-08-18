@@ -263,6 +263,7 @@ function giftflowwp_get_currency_name($currency) {
  * @return string
  */
 function giftflowwp_render_currency_formatted_amount($amount, $decimals = 2, $currency = null, $template = '') {
+  
   if (!$currency) {
     $currency = giftflowwp_get_current_currency();
   }

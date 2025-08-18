@@ -40,6 +40,11 @@ class Forms extends Base {
     
         // forms.bundle.js
         wp_enqueue_script('giftflowwp-donation-forms', $this->get_plugin_url() . 'assets/js/forms.bundle.js', array('jquery'), $this->get_version(), true);
+    
+        wp_localize_script( 'giftflowwp-donation-forms', 'giftflowwpDonationForms', array(
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            'nonce'    => wp_create_nonce( 'giftflowwp_donation_form' ),
+        ) );
     }
 
     /**
@@ -58,12 +63,12 @@ class Forms extends Base {
      * - payment_method: string (payment method)
      */
     public function process_donation() {
-        wp_send_json( array(
-            'message' => __( 'Processing donation...', 'giftflowwp' ),
-        ) );
+        // wp_send_json( $_POST );
 
         // get fields from fetch post data
         $fields = json_decode( file_get_contents( 'php://input' ), true );
+
+        // wp_send_json( $fields );
 
         // convert amout to float
         $fields['donation_amount'] = floatval( $fields['donation_amount'] );
@@ -76,7 +81,6 @@ class Forms extends Base {
         // giftflowwp_donation_form
         check_ajax_referer( 'giftflowwp_donation_form', 'wp_nonce' );
 
-        // wp_send_json_success( $fields );
 
         // Validate data
         if ( ! $this->validate_donation_data( $fields ) ) {
@@ -84,6 +88,8 @@ class Forms extends Base {
                 'message' => __( 'Invalid donation data', 'giftflowwp' ),
             ) );
         }
+
+        // wp_send_json_success( [$fields] );
 
         // Create donation record
         $donation_id = $this->create_donation( $fields );
@@ -106,6 +112,7 @@ class Forms extends Base {
         wp_send_json_success( array(
             'message' => __( 'Donation processed successfully', 'giftflowwp' ),
             'donation_id' => $donation_id,
+            'payment_result' => $payment_result,
         ) );
     }
 
@@ -163,7 +170,7 @@ class Forms extends Base {
         // get donor record by email
         $donor = get_posts( array(
             'post_type' => 'donor',
-            'meta_key' => '_donor_email',
+            'meta_key' => '_email',
             'meta_value' => $data['donor_email'],
         ) );
 
@@ -196,7 +203,9 @@ class Forms extends Base {
      * @param mixed $payment_result Payment processing result
      * @return int|WP_Error
      */
-    private function create_donation( $data, $payment_result ) {
+    private function create_donation( $data, $payment_result = '' ) {
+        // wp_send_json( $data );
+
         $donation_data = array(
             'post_title' => sprintf(
                 __( 'Donation from %s', 'giftflowwp' ),
@@ -213,14 +222,49 @@ class Forms extends Base {
         }
 
         // Save donation meta
-        update_post_meta( $donation_id, '_donation_amount', $data['donation_amount'] );
-        update_post_meta( $donation_id, '_donation_campaign_id', $data['campaign_id'] );
-        update_post_meta( $donation_id, '_donation_payment_method', $data['payment_method'] );
-        update_post_meta( $donation_id, '_donation_type', $data['donation_type'] );
-        update_post_meta( $donation_id, '_donation_anonymous', $data['anonymous_donation'] );
-        update_post_meta( $donation_id, '_donation_donor_id', $this->get_donor_id( $data['donor_email'], $data ) );
+        // Amount is required
+        update_post_meta($donation_id, '_amount', $data['donation_amount']);
+
+        // Campaign ID
+        if (!empty($data['campaign_id'])) {
+            update_post_meta($donation_id, '_campaign_id', $data['campaign_id']);
+        }
+
+        // Payment method
+        if (!empty($data['payment_method'])) {
+            update_post_meta($donation_id, '_payment_method', $data['payment_method']);
+        }
+
+        // Donation type
+        if (!empty($data['donation_type'])) {
+            update_post_meta($donation_id, '_donation_type', $data['donation_type']);
+        }
+
+        // Recurring interval
+        if (!empty($data['recurring_interval'])) {
+            update_post_meta($donation_id, '_recurring_interval', $data['recurring_interval']);
+        }
+
+        // Anonymous donation
+        if (isset($data['anonymous_donation'])) {
+            update_post_meta($donation_id, '_anonymous', $data['anonymous_donation']);
+        }
+
+        // Donor ID
+        if (!empty($data['donor_email'])) {
+            $donor_id = $this->get_donor_id(trim($data['donor_email']), $data);
+            if ($donor_id) {
+            update_post_meta($donation_id, '_donor_id', $donor_id);
+            }
+        }
+
+        // donor_message
+        if (!empty($data['donor_message'])) {
+            update_post_meta($donation_id, '_donor_message', $data['donor_message']);
+        }
+        
         // custom field status
-        update_post_meta( $donation_id, '_donation_status', 'pending' ); 
+        update_post_meta( $donation_id, '_status', 'pending' ); 
 
         do_action( 'giftflowwp_donation_created', $donation_id );
 

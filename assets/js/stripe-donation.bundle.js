@@ -504,7 +504,7 @@ var STRIPE_PUBLIC_KEY = giftflowwpStripeDonation.stripe_publishable_key;
       value: function () {
         var _init = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee3() {
           var _this = this;
-          var self, cardElement, $element, $wrapper, $validateWrapper, $errorMessage;
+          var self, cardElement, $element, $wrapper, $wrapperField, $validateWrapper, $errorMessage;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee3$(_context3) {
             while (1) switch (_context3.prev = _context3.next) {
               case 0:
@@ -517,8 +517,9 @@ var STRIPE_PUBLIC_KEY = giftflowwpStripeDonation.stripe_publishable_key;
                 cardElement = this.stripeElements.create('card');
                 $element = this.form.querySelector('#STRIPE-CARD-ELEMENT');
                 $wrapper = $element.closest('.donation-form__payment-method-description');
-                $validateWrapper = $wrapper.querySelector('[data-custom-validate="true"]');
-                $errorMessage = $wrapper.querySelector('.custom-error-message .custom-error-message-text');
+                $wrapperField = $element.closest('.donation-form__field');
+                $validateWrapper = $wrapperField; //$wrapperField.querySelector('[data-custom-validate="true"]');
+                $errorMessage = $wrapperField.querySelector('.custom-error-message .custom-error-message-text');
                 cardElement.mount($element);
                 cardElement.on('change', /*#__PURE__*/function () {
                   var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee(event) {
@@ -575,7 +576,15 @@ var STRIPE_PUBLIC_KEY = giftflowwpStripeDonation.stripe_publishable_key;
                           _yield$_this$getSelf$ = _context2.sent;
                           token = _yield$_this$getSelf$.token;
                           error = _yield$_this$getSelf$.error;
+                          // console.log('token', token);
+                          // console.log('error', error);
+
                           if (error) {
+                            $validateWrapper.classList.add('error', 'custom-error');
+                            // $validateWrapper.querySelector('.custom-error-message-text').textContent = error.message;
+                            $errorMessage.textContent = error.message;
+                            // console.log('Stripe error:', error.message, $errorMessage);
+
                             reject(error);
                           } else {
                             self.onSetField('stripe_payment_token_id', token.id);
@@ -591,7 +600,7 @@ var STRIPE_PUBLIC_KEY = giftflowwpStripeDonation.stripe_publishable_key;
                     return _ref2.apply(this, arguments);
                   };
                 }());
-              case 13:
+              case 14:
               case "end":
                 return _context3.stop();
             }

@@ -118,7 +118,7 @@ $donation_types = array();
 // if one-time donation is on, add it to the array
 if ($one_time_donation) {
 	$donation_types[] = [
-		'name' => 'one_time',
+		'name' => 'one-time',
 		'icon' => '',
 		'label' => __('One-time Donation', 'giftflowwp'),
 		'description' => __('Make a single donation', 'giftflowwp'),
@@ -147,6 +147,7 @@ if ($recurring_donation) {
 		'description' => __('Make a recurring donation', 'giftflowwp'),
 	];
 }
+var_dump($donation_types)
 ?>
 
 <form class="donation-form" id="donation-form">

@@ -58,10 +58,10 @@ function giftflowwp_process_payment_stripe( $data ) {
 				]
 			])->send();
 
-			wp_send_json_success( [
-				'step' => 'process_payment_stripe',
-				'data' => $response,
-			] );
+			// wp_send_json_success( [
+			// 	'step' => 'process_payment_stripe',
+			// 	'data' => $response,
+			// ] );
 
 			if ($response->isSuccessful()) {
 

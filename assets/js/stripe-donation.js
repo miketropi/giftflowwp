@@ -30,8 +30,10 @@ const STRIPE_PUBLIC_KEY = giftflowwpStripeDonation.stripe_publishable_key;
       const cardElement = this.stripeElements.create('card');
       const $element = this.form.querySelector('#STRIPE-CARD-ELEMENT');
       const $wrapper = $element.closest('.donation-form__payment-method-description');
-      const $validateWrapper = $wrapper.querySelector('[data-custom-validate="true"]');
-      const $errorMessage = $wrapper.querySelector('.custom-error-message .custom-error-message-text');
+      const $wrapperField = $element.closest('.donation-form__field');
+      const $validateWrapper = $wrapperField; //$wrapperField.querySelector('[data-custom-validate="true"]');
+      const $errorMessage = $wrapperField.querySelector('.custom-error-message .custom-error-message-text');
+      
       cardElement.mount($element);
 
       cardElement.on('change', async (event) => {
@@ -71,7 +73,15 @@ const STRIPE_PUBLIC_KEY = giftflowwpStripeDonation.stripe_publishable_key;
           }
         });
 
+        // console.log('token', token);
+        // console.log('error', error);
+
         if(error) {
+          $validateWrapper.classList.add('error', 'custom-error');
+          // $validateWrapper.querySelector('.custom-error-message-text').textContent = error.message;
+          $errorMessage.textContent = error.message;
+          // console.log('Stripe error:', error.message, $errorMessage);
+          
           reject(error);
         } else {
           self.onSetField('stripe_payment_token_id', token.id);
