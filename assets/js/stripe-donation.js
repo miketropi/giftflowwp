@@ -65,13 +65,22 @@ const STRIPE_PUBLIC_KEY = giftflowwpStripeDonation.stripe_publishable_key;
       this.form.addEventListener('donationFormBeforeSubmit', async (e) => {
         const { self, fields, resolve, reject } = e.detail;
 
-        // create token method
-        const { token, error } = await this.getSelf().stripe.createToken(cardElement, {
+        // create token method (Old)
+        // const { token, error } = await this.getSelf().stripe.createToken(cardElement, {
+        //   type: 'card',
+        //   billing_details: {
+        //     name: fields.card_name,
+        //   }
+        // });
+
+        // new
+        const {paymentMethod, error} = await this.getSelf().stripe.createPaymentMethod({
           type: 'card',
+          card: cardElement,
           billing_details: {
             name: fields.card_name,
-          }
-        });
+            // email: fields.card_email,
+          }});
 
         // console.log('token', token);
         // console.log('error', error);
@@ -84,8 +93,11 @@ const STRIPE_PUBLIC_KEY = giftflowwpStripeDonation.stripe_publishable_key;
           
           reject(error);
         } else {
-          self.onSetField('stripe_payment_token_id', token.id);
-          resolve(token);
+          // console.log('Stripe payment method created:', paymentMethod);
+          // self.onSetField('stripe_payment_token_id', token.id);
+          self.onSetField('stripe_payment_method_id', paymentMethod.id);
+          resolve(paymentMethod)
+          // resolve(token);
         }
       });
     }

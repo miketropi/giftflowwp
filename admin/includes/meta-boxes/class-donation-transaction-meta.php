@@ -57,11 +57,7 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
                 ),
                 'description' => __( 'Select the status of the donation', 'giftflowwp' ),
             ),
-            'transaction_id' => array(
-                'label' => __( 'Transaction ID', 'giftflowwp' ),
-                'type'  => 'textfield',
-                'description' => __( 'Enter the transaction ID of the donation', 'giftflowwp' ),
-            ),
+            
             'donor_id' => array(
                 'label' => __( 'Donor', 'giftflowwp' ),
                 'type'  => 'select',
@@ -99,6 +95,16 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
                     'yearly'  => __( 'Yearly', 'giftflowwp' ),
                 ),
                 'description' => __( 'Select the recurring interval of the donation', 'giftflowwp' ),
+            ),
+            'transaction_id' => array(
+                'label' => __( 'Transaction ID', 'giftflowwp' ),
+                'type'  => 'textfield',
+                'description' => __( 'Enter the transaction ID of the donation', 'giftflowwp' ),
+            ),
+            'transaction_raw_data' => array(
+                'label' => __( 'Transaction Raw Data', 'giftflowwp' ),
+                'type'  => 'textarea',
+                'description' => __( 'Raw data of the transaction, useful for debugging', 'giftflowwp' ),
             ),
         );
     }

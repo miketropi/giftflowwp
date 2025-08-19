@@ -112,7 +112,7 @@ class Forms extends Base {
         wp_send_json_success( array(
             'message' => __( 'Donation processed successfully', 'giftflowwp' ),
             'donation_id' => $donation_id,
-            // 'payment_result' => $payment_result,
+            'payment_result' => $payment_result,
         ) );
     }
 
@@ -152,8 +152,8 @@ class Forms extends Base {
 
         // call function based on payment method, allow 3rd party to process payment
         // check if function exists
-        if ( function_exists( 'giftflowwp_process_payment_' . $data['payment_method'] ) ) {
-            return call_user_func( 'giftflowwp_process_payment_' . $data['payment_method'], $data, $donation_id );
+        if ( function_exists( 'GiftFlowWp\Gateways\giftflowwp_process_payment_' . $data['payment_method'] ) ) {
+            return call_user_func( 'GiftFlowWp\Gateways\giftflowwp_process_payment_' . $data['payment_method'], $data, $donation_id );
         }
 
         return false;

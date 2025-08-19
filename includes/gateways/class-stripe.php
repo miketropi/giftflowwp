@@ -15,25 +15,13 @@ use Omnipay\Stripe\Gateway as StripeGateway;
  * Stripe Gateway Class
  */
 class Stripe_Gateway {
+		private $gateway;
     
     /**
      * Initialize gateway
      */
     public function __construct() {
-        $this->id = 'stripe';
-        $this->title = __('Stripe', 'giftflowwp');
-        $this->description = __('Accept payments via Stripe using credit cards', 'giftflowwp');
-    }
-    
-    /**
-     * Process payment
-     *
-     * @param array $data Payment data
-     * @param int $donation_id Donation ID
-     * @return mixed
-     */
-    public function process_payment($data, $donation_id = 0) {
-        // Get Stripe settings
+			// Get Stripe settings
         $payment_options = get_option('giftflowwp_payment_options');
         $mode = isset($payment_options['stripe_mode']) ? $payment_options['stripe_mode'] : 'sandbox';
         
@@ -47,64 +35,68 @@ class Stripe_Gateway {
             return new \WP_Error('stripe_error', __('Stripe secret key is not configured', 'giftflowwp'));
         }
 
+        $this->gateway = \Omnipay\Omnipay::create('Stripe\PaymentIntents');
+        $this->gateway->setApiKey($stripe_secret_key);
+    }
+    
+    /**
+     * Process payment
+     *
+     * @param array $data Payment data
+     * @param int $donation_id Donation ID
+     * @return mixed
+     */
+    public function process_payment($data, $donation_id = 0) {
+
+				if (!$donation_id) {
+					return new \WP_Error('stripe_error', __('Donation ID is required', 'giftflowwp'));
+				}
+        
         try {
             // Initialize Stripe gateway
             /** @var StripeGateway $gateway */
-            $gateway = Omnipay::create('Stripe\PaymentIntents');
-            $gateway->setApiKey($stripe_secret_key);
+            // $gateway = Omnipay::create('Stripe\PaymentIntents');
+            // $gateway->setApiKey($stripe_secret_key);
 
             // Create purchase request
-            $response = $gateway->purchase([
+						$authData = [
                 'amount' => floatval($data['donation_amount']),
                 'currency' => 'USD',
-                'paymentMethod' => $data['stripe_payment_token_id'], 
+                'paymentMethod' => $data['stripe_payment_method_id'], 
                 'description' => sprintf(
-                    __('Donation from %s for campaign %s', 'giftflowwp'),
-                    $data['donor_name'],
-                    $data['campaign_id']
+									__('Donation from %s for campaign %s', 'giftflowwp'),
+									$data['donor_name'],
+									$data['campaign_id']
                 ),
+								'customer' => [
+									'name' => sanitize_text_field($data['donor_name']),
+									'email' => sanitize_email($data['donor_email']),
+								],
                 'metadata' => [
-                    'campaign_id' => $data['campaign_id'],
-                    'donor_email' => $data['donor_email'],
-                    'donor_name' => $data['donor_name']
+									'campaign_id' => $data['campaign_id'],
+									'donor_email' => $data['donor_email'],
+									'donor_name' => $data['donor_name']
                 ],
                 'confirm' => true,
                 'returnUrl' => add_query_arg('giftflow_stripe_return', '1', home_url())
-            ])->send();
-
+						];
+						// return $authData;
+            // $response = $this->gateway->authorize($authData)->send();
+            $response = $this->gateway->purchase($authData)->send();
+						// return $response->isSuccessful();
             if ($response->isSuccessful()) {
-
-                $transaction_id = $response->getTransactionReference();
+								// return $response->getTransactionReference();
+								$allData = $response->getData();
+                $payment_intent_id = $response->getPaymentIntentReference();
 
                 // update transaction ID in donation post meta
-                if (!empty($donation_id)) {
-                    update_post_meta($donation_id, '_transaction_id', $transaction_id);
-                    update_post_meta($donation_id, '_payment_method', 'stripe');
-                    update_post_meta($donation_id, '_status', 'completed');
-                }
+                update_post_meta($donation_id, '_transaction_id', $payment_intent_id);
+								update_post_meta($donation_id, '_transaction_raw_data', wp_json_encode($allData));
+								update_post_meta($donation_id, '_payment_method', 'stripe');
+								update_post_meta($donation_id, '_status', 'completed');
 
                 // Payment successful
-                return [
-                    'success' => true,
-                    'transaction_id' => $transaction_id,
-                    'message' => __('Payment processed successfully', 'giftflowwp')
-                ];
-            } elseif ($response->isRedirect()) {
-                    // 3D Secure authentication required
-                return [
-                    'success' => false,
-                    'redirect' => true,
-                    'redirect_url' => $response->getRedirectUrl(),
-                    'message' => __('3D Secure authentication required', 'giftflowwp')
-                ];
-            } elseif ($response->requiresAction()) {
-                // Payment requires additional action (e.g., 3D Secure)
-                return [
-                    'success' => false,
-                    'requires_action' => true,
-                    'client_secret' => $response->getPaymentIntentClientSecret(),
-                    'message' => __('Payment requires additional authentication', 'giftflowwp')
-                ];
+                return true;
             } else {
                 // Payment failed
                 return new \WP_Error(
