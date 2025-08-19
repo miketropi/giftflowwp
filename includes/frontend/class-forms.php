@@ -112,7 +112,7 @@ class Forms extends Base {
         wp_send_json_success( array(
             'message' => __( 'Donation processed successfully', 'giftflowwp' ),
             'donation_id' => $donation_id,
-            'payment_result' => $payment_result,
+            // 'payment_result' => $payment_result,
         ) );
     }
 
