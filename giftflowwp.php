@@ -78,7 +78,7 @@ function giftflowwp_load_files() {
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/frontend/class-template.php';
     
     // Payment gateways
-    // require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-gateway-base.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-gateway-base.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-stripe.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-paypal.php';
 

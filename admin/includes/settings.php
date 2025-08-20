@@ -505,7 +505,30 @@ function giftflowwp_payment_methods_options_stripe($payment_fields) {
                     'value' => isset($payment_options['stripe']['stripe_live_secret_key']) ? $payment_options['stripe']['stripe_live_secret_key'] : '',
                     'input_type' => 'password',
                     'description' => __('Enter your Stripe live secret key', 'giftflowwp'),
-                ]
+                ],
+                // stripe_capture
+                'stripe_capture' => [
+                    'id' => 'giftflowwp_stripe_capture',
+                    'type' => 'select',
+                    'label' => __('Capture Payment', 'giftflowwp'),
+                    'value' => isset($payment_options['stripe']['stripe_capture']) ? $payment_options['stripe']['stripe_capture'] : 'yes',
+                    'options' => [
+                        'yes' => __('Capture immediately', 'giftflowwp'),
+                        'no' => __('Authorize only (capture later)', 'giftflowwp')
+                    ],
+                    'description' => __('Capture payment immediately or authorize for later capture', 'giftflowwp'),
+                ],
+                // stripe_webhook_enabled
+                'stripe_webhook_enabled' => [
+                    'id' => 'giftflowwp_stripe_webhook_enabled',
+                    'type' => 'switch',
+                    'label' => __('Enable Webhook Notifications', 'giftflowwp'),
+                    'value' => isset($payment_options['stripe']['stripe_webhook_enabled']) ? $payment_options['stripe']['stripe_webhook_enabled'] : false,
+                    'description' => sprintf(
+                        __('Enable webhooks for payment status updates. Webhook URL: %s', 'giftflowwp'),
+                        '<code>' . admin_url('admin-ajax.php?action=giftflowwp_stripe_webhook') . '</code>'
+                    ),
+                ],
             ]
         ]
     ];

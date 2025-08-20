@@ -105,6 +105,8 @@ class Loader extends Base {
         // Initialize frontend components
         new \GiftFlowWp\Frontend\Shortcodes();
         new \GiftFlowWp\Frontend\Forms(); 
+
+        \GiftFlowWp\Gateways\Gateway_Base::init_gateways();
     }
 
     public function activate() {

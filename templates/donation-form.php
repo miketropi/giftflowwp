@@ -147,7 +147,8 @@ if ($recurring_donation) {
 		'description' => __('Make a recurring donation', 'giftflowwp'),
 	];
 }
-var_dump($donation_types)
+$payment_options = get_option('giftflowwp_payment_options');
+echo '<pre>'; var_dump($payment_options); echo '</pre>';
 ?>
 
 <form class="donation-form" id="donation-form">
@@ -249,21 +250,21 @@ var_dump($donation_types)
                                 <label for="donor_name"><?php _e('Full Name', 'giftflowwp'); ?></label>
                                 <input type="text" id="donor_name" name="donor_name" required data-validate="required">
 
-																<?php // error message ?>
-																<div class="donation-form__field-error">
-																	<?php echo $icons['error']; ?>
-																	<?php _e('This field is required, please enter your name', 'giftflowwp'); ?>
-																</div> 
+                                <?php // error message ?>
+                                <div class="donation-form__field-error">
+                                    <?php echo $icons['error']; ?>
+                                    <?php _e('This field is required, please enter your name', 'giftflowwp'); ?>
+                                </div> 
                             </div>
                             <div class="donation-form__field">
                                 <label for="donor_email"><?php _e('Email Address', 'giftflowwp'); ?></label>
                                 <input type="email" id="donor_email" name="donor_email" required data-validate="email">
 
-																<?php // error message ?>
-																<div class="donation-form__field-error">
-																	<?php echo $icons['error']; ?>
-																	<?php _e('This field is required, please enter your email', 'giftflowwp'); ?>
-																</div> 
+                                <?php // error message ?>
+                                <div class="donation-form__field-error">
+                                    <?php echo $icons['error']; ?>
+                                    <?php _e('This field is required, please enter your email', 'giftflowwp'); ?>
+                                </div> 
                             </div>
                             <div class="donation-form__field">
                                 <label for="donor_message"><?php _e('Message (Optional)', 'giftflowwp'); ?></label>
@@ -281,7 +282,7 @@ var_dump($donation_types)
                 <div class="donation-form__step-actions">
                     <button type="button" class="donation-form__button donation-form__button--next" data-next-step="payment-method">
                         <?php _e('Continue to Payment', 'giftflowwp'); ?>
-												<?php echo $icons['next']; ?>
+						<?php echo $icons['next']; ?>
                     </button>
                 </div>
             </section>
