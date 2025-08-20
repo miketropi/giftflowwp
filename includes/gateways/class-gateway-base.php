@@ -40,7 +40,7 @@
  *         ));
  *     }
  *     
- *     protected function get_settings_fields() {
+ *     protected function register_settings_fields() {
  *         return array(
  *             'enabled' => array(
  *                 'title' => __('Enable', 'giftflowwp'),
@@ -102,11 +102,6 @@
  * 
  * Filters:
  * - giftflowwp_payment_gateways - Modify gateways list
- * - giftflowwp_gateway_settings_fields - Modify settings fields
- * - giftflowwp_gateway_settings_fields_{gateway_id} - Gateway-specific fields
- * - giftflowwp_gateway_save_settings - Filter settings before save
- * - giftflowwp_gateway_save_settings_{gateway_id} - Gateway-specific save
- * - giftflowwp_gateway_settings_template - Modify settings template path
  * - giftflowwp_gateway_should_enqueue_assets - Control asset loading
  * 
  * 5. ASSET MANAGEMENT:
@@ -135,11 +130,6 @@
  * ));
  * ```
  * 
- * 6. SETTINGS FIELD TYPES:
- * ------------------------
- * - text, password, email, url, textarea
- * - number, checkbox, select, multiselect
- * All fields are automatically sanitized based on type
  * 
  * 7. EXTENDING FUNCTIONALITY:
  * ---------------------------
@@ -235,6 +225,8 @@ abstract class Gateway_Base extends Base {
      */
     protected $styles = array();
 
+    protected $template = '';
+
     /**
      * Static registry for all gateways
      *
@@ -267,7 +259,11 @@ abstract class Gateway_Base extends Base {
     protected function init_settings() {
         $opts = get_option('giftflowwp_payment_options', []); // all options of payment gateways
         $this->settings = $opts[$this->id]; // get_option('giftflowwp_gateway_' . $this->id, array());
-        $this->enabled = isset($this->settings[$this->id . '_enabled']) ? $this->settings[$this->id . '_enabled'] == '1' : false;
+        
+        $enabledFieldName = $this->id . '_enabled';
+        $enabled = isset($this->settings[$enabledFieldName]) ? $this->settings[$enabledFieldName] == '1' : false;
+        $this->enabled =  $enabled;
+        $this->template = $this->template();
     }
 
     /**
@@ -276,9 +272,8 @@ abstract class Gateway_Base extends Base {
     protected function init_hooks() {
         // Core gateway hooks
         add_filter('giftflowwp_payment_gateways', array($this, 'add_gateway_to_list'));
-        // add_action('giftflowwp_settings_gateways', array($this, 'render_settings'));
-        // add_action('giftflowwp_save_gateway_settings', array($this, 'save_settings'));
-        
+        add_action('giftflowwp_payment_methods_settings', array($this, 'register_settings_fields'));
+
         // Asset hooks
         add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_assets'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_assets'));
@@ -330,18 +325,6 @@ abstract class Gateway_Base extends Base {
         return $gateways;
     }
 
-    /**
-     * Render gateway settings
-     */
-    public function render_settings() {
-        $fields = $this->get_settings_fields();
-        
-        // Allow filtering of settings fields
-        $fields = apply_filters('giftflowwp_gateway_settings_fields', $fields, $this->id);
-        $fields = apply_filters('giftflowwp_gateway_settings_fields_' . $this->id, $fields);
-        
-        include $this->get_settings_template();
-    }
 
     /**
      * Enqueue frontend assets
@@ -514,7 +497,9 @@ abstract class Gateway_Base extends Base {
      *
      * @return array
      */
-    abstract protected function get_settings_fields();
+    abstract protected function register_settings_fields();
+
+    abstract public function template();
 
     /**
      * Process payment

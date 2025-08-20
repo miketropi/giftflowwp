@@ -147,8 +147,11 @@ if ($recurring_donation) {
 		'description' => __('Make a recurring donation', 'giftflowwp'),
 	];
 }
-$payment_options = get_option('giftflowwp_payment_options');
-echo '<pre>'; var_dump($payment_options); echo '</pre>';
+// $payment_options = get_option('giftflowwp_payment_options');
+// echo '<pre>'; var_dump($payment_options); echo '</pre>';
+
+$gateways = \GiftFlowWp\Gateways\Gateway_Base::get_registered_gateways();
+echo '<pre>'; print_r($gateways); echo '</pre>';
 ?>
 
 <form class="donation-form" id="donation-form">
