@@ -152,11 +152,28 @@ class Forms extends Base {
 
         // call function based on payment method, allow 3rd party to process payment
         // check if function exists
-        if ( function_exists( 'GiftFlowWp\Gateways\giftflowwp_process_payment_' . $data['payment_method'] ) ) {
-            return call_user_func( 'GiftFlowWp\Gateways\giftflowwp_process_payment_' . $data['payment_method'], $data, $donation_id );
+        $payment_method = $data['payment_method'];
+        $pm_obj =  \GiftFlowWp\Gateways\Gateway_Base::get_gateway( $payment_method );  
+        if ( ! $pm_obj ) {
+            return new \WP_Error( 'invalid_payment_method', __( 'Invalid payment method', 'giftflowwp' ) );
         }
 
-        return false;
+        // Process payment using the gateway class
+        if ( method_exists( $pm_obj, 'process_payment' ) ) {
+            $payment_result = $pm_obj->process_payment( $data, $donation_id );
+            if ( is_wp_error( $payment_result ) ) {
+                return $payment_result; // Return error if payment processing fails
+            }
+            return $payment_result; // Return successful payment result
+        }
+
+        return false; // Return false if no process_payment method exists
+
+        // if ( function_exists( 'GiftFlowWp\Gateways\giftflowwp_process_payment_' . $data['payment_method'] ) ) {
+        //     return call_user_func( 'GiftFlowWp\Gateways\giftflowwp_process_payment_' . $data['payment_method'], $data, $donation_id );
+        // }
+
+        // return false;
     }
 
     /**

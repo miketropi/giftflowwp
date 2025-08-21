@@ -102,7 +102,6 @@
  * 
  * Filters:
  * - giftflowwp_payment_gateways - Modify gateways list
- * - giftflowwp_gateway_should_enqueue_assets - Control asset loading
  * 
  * 5. ASSET MANAGEMENT:
  * --------------------
@@ -140,11 +139,6 @@
  *     add_filter('my_gateway_custom_filter', array($this, 'custom_filter'));
  * }
  * 
- * // Control asset loading
- * protected function should_enqueue_assets() {
- *     return is_page('donation') || parent::should_enqueue_assets();
- * }
- * ```
  */
 
 namespace GiftFlowWp\Gateways;
@@ -225,7 +219,7 @@ abstract class Gateway_Base extends Base {
      */
     protected $styles = array();
 
-    protected $template = '';
+    protected $template_html = '';
 
     /**
      * Static registry for all gateways
@@ -241,6 +235,7 @@ abstract class Gateway_Base extends Base {
         parent::__construct();
         $this->init_gateway();
         $this->init_settings();
+        $this->ready(); // Allow child classes to do additional initialization
         $this->init_hooks();
         $this->register_gateway();
     }
@@ -253,6 +248,10 @@ abstract class Gateway_Base extends Base {
         // Override in child classes
     }
 
+    protected function ready() {
+
+    }
+
     /**
      * Initialize gateway settings
      */
@@ -263,7 +262,7 @@ abstract class Gateway_Base extends Base {
         $enabledFieldName = $this->id . '_enabled';
         $enabled = isset($this->settings[$enabledFieldName]) ? $this->settings[$enabledFieldName] == '1' : false;
         $this->enabled =  $enabled;
-        $this->template = $this->template();
+        $this->template_html = $this->template_html();
     }
 
     /**
@@ -330,7 +329,7 @@ abstract class Gateway_Base extends Base {
      * Enqueue frontend assets
      */
     public function enqueue_frontend_assets() {
-        if (!$this->enabled || !$this->should_enqueue_assets()) {
+        if (!$this->enabled) {
             return;
         }
 
@@ -413,31 +412,6 @@ abstract class Gateway_Base extends Base {
     }
 
     /**
-     * Check if assets should be enqueued
-     *
-     * @return bool
-     */
-    protected function should_enqueue_assets() {
-        // Check if on donation page or relevant pages
-        global $post;
-        
-        if (is_admin()) {
-            return false;
-        }
-        
-        // Check for donation forms or shortcodes
-        if ($post && (
-            has_shortcode($post->post_content, 'giftflow_donation_form') ||
-            has_block('giftflowwp/donation-form', $post->post_content)
-        )) {
-            return true;
-        }
-        
-        // Allow filtering
-        return apply_filters('giftflowwp_gateway_should_enqueue_assets', false, $this->id);
-    }
-
-    /**
      * Add script to be enqueued
      *
      * @param string $handle
@@ -499,7 +473,7 @@ abstract class Gateway_Base extends Base {
      */
     abstract protected function register_settings_fields();
 
-    abstract public function template();
+    abstract public function template_html();
 
     /**
      * Process payment

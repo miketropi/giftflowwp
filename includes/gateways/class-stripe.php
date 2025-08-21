@@ -47,7 +47,9 @@ class Stripe_Gateway extends Gateway_Base {
             'payment_intents',
             // 'customer_creation'
         );
+    }
 
+    protected function ready() {
         // Initialize Omnipay gateway
         $this->init_omnipay_gateway();
         
@@ -134,6 +136,7 @@ class Stripe_Gateway extends Gateway_Base {
      * @return array
      */
     private function get_script_data() {
+        
         return array(
             'ajaxurl' => admin_url('admin-ajax.php'),
             'stripe_publishable_key' => $this->get_publishable_key(),
@@ -215,17 +218,17 @@ class Stripe_Gateway extends Gateway_Base {
                         'description' => __('Enter your Stripe live secret key', 'giftflowwp'),
                     ],
                     // stripe_capture
-                    'stripe_capture' => [
-                        'id' => 'giftflowwp_stripe_capture',
-                        'type' => 'select',
-                        'label' => __('Capture Payment', 'giftflowwp'),
-                        'value' => isset($payment_options['stripe']['stripe_capture']) ? $payment_options['stripe']['stripe_capture'] : 'yes',
-                        'options' => [
-                            'yes' => __('Capture immediately', 'giftflowwp'),
-                            'no' => __('Authorize only (capture later)', 'giftflowwp')
-                        ],
-                        'description' => __('Capture payment immediately or authorize for later capture', 'giftflowwp'),
-                    ],
+                    // 'stripe_capture' => [
+                    //     'id' => 'giftflowwp_stripe_capture',
+                    //     'type' => 'select',
+                    //     'label' => __('Capture Payment', 'giftflowwp'),
+                    //     'value' => isset($payment_options['stripe']['stripe_capture']) ? $payment_options['stripe']['stripe_capture'] : 'yes',
+                    //     'options' => [
+                    //         'yes' => __('Capture immediately', 'giftflowwp'),
+                    //         'no' => __('Authorize only (capture later)', 'giftflowwp')
+                    //     ],
+                    //     'description' => __('Capture payment immediately or authorize for later capture', 'giftflowwp'),
+                    // ],
                     // stripe_webhook_enabled
                     'stripe_webhook_enabled' => [
                         'id' => 'giftflowwp_stripe_webhook_enabled',
@@ -244,7 +247,7 @@ class Stripe_Gateway extends Gateway_Base {
         return $payment_fields;
     }
 
-    public function template() {
+    public function template_html() {
         ob_start();
         $icons = array(
             'error' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert-icon lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>',
@@ -335,11 +338,13 @@ class Stripe_Gateway extends Gateway_Base {
         try {
             $payment_data = $this->prepare_payment_data($data, $donation_id);
             
-            if ($this->get_setting('stripe_capture', '1') === '1') {
-                $response = $this->gateway->purchase($payment_data)->send();
-            } else {
-                $response = $this->gateway->authorize($payment_data)->send();
-            }
+            // if ($this->get_setting('stripe_capture', 'yes') === 'yes') {
+            //     $response = $this->gateway->purchase($payment_data)->send();
+            // } else {
+            //     $response = $this->gateway->authorize($payment_data)->send();
+            // }
+
+            $response = $this->gateway->purchase($payment_data)->send();
 
             return $this->handle_payment_response($response, $donation_id);
             
@@ -382,7 +387,7 @@ class Stripe_Gateway extends Gateway_Base {
             ),
             'confirm' => true,
             'returnUrl' => $this->get_return_url($donation_id),
-            'statementDescriptor' => $statement_descriptor
+            'statement_descriptor_suffix' => $statement_descriptor
         );
     }
 
@@ -420,17 +425,19 @@ class Stripe_Gateway extends Gateway_Base {
         update_post_meta($donation_id, '_transaction_id', $payment_intent_id);
         update_post_meta($donation_id, '_transaction_raw_data', wp_json_encode($all_data));
         update_post_meta($donation_id, '_payment_method', 'stripe');
-        update_post_meta($donation_id, '_payment_status', 'completed');
+        update_post_meta($donation_id, '_status', 'completed');
 
         $this->log_success($payment_intent_id, $donation_id);
 
         do_action('giftflowwp_stripe_payment_completed', $donation_id, $payment_intent_id, $all_data);
 
-        return array(
-            'success' => true,
-            'transaction_id' => $payment_intent_id,
-            'message' => __('Payment processed successfully', 'giftflowwp')
-        );
+        return true;
+
+        // return array(
+        //     'success' => true,
+        //     'transaction_id' => $payment_intent_id,
+        //     'message' => __('Payment processed successfully', 'giftflowwp')
+        // );
     }
 
     /**
@@ -526,6 +533,12 @@ class Stripe_Gateway extends Gateway_Base {
         $payload = file_get_contents('php://input');
         $event = json_decode($payload, true);
 
+        // wp_mail(
+        //     'mike.beplus@gmail.com',
+        //     'Stripe Webhook Received',
+        //     sprintf('Received event: %s with payload: %s', $event['type'], wp_json_encode($event))
+        // );
+
         if (!$event || !isset($event['type'])) {
             status_header(400);
             exit;
@@ -538,6 +551,10 @@ class Stripe_Gateway extends Gateway_Base {
                     break;
                 case 'payment_intent.payment_failed':
                     $this->handle_payment_intent_failed($event['data']['object']);
+                    break;
+                case 'charge.refunded':
+                    // Handle charge refunded if needed
+                    $this->handle_payment_charge_refunded($event['data']['object']);
                     break;
             }
             
@@ -606,8 +623,8 @@ class Stripe_Gateway extends Gateway_Base {
             : 0;
 
         if ($donation_id) {
-            update_post_meta($donation_id, '_payment_status', 'completed');
-            update_post_meta($donation_id, '_transaction_id', $payment_intent['id']);
+            update_post_meta($donation_id, '_status', 'completed');
+            // update_post_meta($donation_id, '_transaction_id', $payment_intent['id']);
             
             do_action('giftflowwp_stripe_webhook_payment_completed', $donation_id, $payment_intent);
         }
@@ -628,10 +645,23 @@ class Stripe_Gateway extends Gateway_Base {
                 ? $payment_intent['last_payment_error']['message'] 
                 : __('Payment failed', 'giftflowwp');
                 
-            update_post_meta($donation_id, '_payment_status', 'failed');
+            update_post_meta($donation_id, '_status', 'failed');
             update_post_meta($donation_id, '_payment_error', $error_message);
             
             do_action('giftflowwp_stripe_webhook_payment_failed', $donation_id, $payment_intent);
+        }
+    }
+
+    private function handle_payment_charge_refunded($charge) {
+        $donation_id = isset($charge['metadata']['donation_id']) 
+            ? intval($charge['metadata']['donation_id']) 
+            : 0;
+
+        if ($donation_id) {
+            update_post_meta($donation_id, '_status', 'refunded');
+            // update_post_meta($donation_id, '_refund_transaction_id', $charge['id']);
+            
+            do_action('giftflowwp_stripe_webhook_charge_refunded', $donation_id, $charge);
         }
     }
 
