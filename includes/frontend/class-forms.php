@@ -167,13 +167,7 @@ class Forms extends Base {
             return $payment_result; // Return successful payment result
         }
 
-        return false; // Return false if no process_payment method exists
-
-        // if ( function_exists( 'GiftFlowWp\Gateways\giftflowwp_process_payment_' . $data['payment_method'] ) ) {
-        //     return call_user_func( 'GiftFlowWp\Gateways\giftflowwp_process_payment_' . $data['payment_method'], $data, $donation_id );
-        // }
-
-        // return false;
+        return false; 
     }
 
     /**

@@ -55,6 +55,7 @@ function giftflowwp_load_files() {
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-wp-block-custom-hooks.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'blocks/index.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/common.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/hooks.php';
 
     
     // Admin files

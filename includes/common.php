@@ -25,7 +25,11 @@ function giftflowwp_svg_icon($name) {
     'shield-check' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check-icon lucide-shield-check"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>',
     'error' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert-icon lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>',
     'next' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>',
-    'prev' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>'
+    'prev' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>',
+    'checkmark-circle' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-icon lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>',
+    'error-circle' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x-icon lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>',
+    'refresh' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw-icon lucide-rotate-ccw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>',
+    'help' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-life-buoy-icon lucide-life-buoy"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></svg>',
   );
 
   return isset($icons[$name]) ? $icons[$name] : '';
@@ -507,3 +511,101 @@ function giftflowwp_stripe_payment_method_callback($method) {
   <?php
 }
 
+/**
+ * Donation form thank you template
+ */
+function giftflowwp_donation_form_thank_you_section_html($args = array()) {
+  ?>
+  <section id="donation-thank-you" class="donation-form__step-panel step-thank-you ">
+      <div class="donation-form__step-panel-content donation-form__thank-you">
+          <?php echo giftflowwp_svg_icon('checkmark-circle'); // Add success icon ?>
+          
+          <div class="donation-form__thank-you-content">
+              <h2 class="donation-form__thank-you-title">
+                  <?php _e('Thank You for Your Generous Support!', 'giftflowwp'); ?>
+              </h2>
+              
+              <div class="donation-form__thank-you-details">
+                  <p class="donation-form__thank-you-message">
+                      <?php _e('Your donation makes a real difference. A confirmation email has been sent to your inbox.', 'giftflowwp'); ?>
+                  </p>
+                  
+                  <div class="donation-form__thank-you-summary">
+                      <div class="donation-form__thank-you-amount">
+                          <span data-output="donation_amount" data-format-template="<?php echo $args['currency_format_template']; ?>"></span>
+                      </div>
+                      <div class="donation-form__thank-you-campaign">
+                          <?php echo esc_html($args['campaign_title']); ?>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="donation-form__thank-you-actions">
+                  <a href="<?php echo get_permalink($args['campaign_id']); ?>" class="donation-form__button">
+                      <?php _e('Return to Campaign', 'giftflowwp'); ?>
+                  </a>
+                  <button type="button" class="donation-form__button donation-form__button--share">
+                      <?php echo giftflowwp_svg_icon('share'); ?>
+                      <?php _e('Share This Campaign', 'giftflowwp'); ?>
+                  </button>
+              </div>
+          </div>
+      </div>
+  </section>
+  <?php
+}
+
+// donation form error section
+function giftflowwp_donation_form_error_section_html() {
+  ?>
+  <!-- Error -->
+  <section id="donation-error" class="donation-form__step-panel step-error">
+      <div class="donation-form__step-panel-content donation-form__error">
+          <?php echo giftflowwp_svg_icon('error-circle'); ?>
+          
+          <div class="donation-form__error-content">
+              <h2 class="donation-form__error-title">
+                  <?php _e('Oops! Something Went Wrong', 'giftflowwp'); ?>
+              </h2>
+              
+              <div class="donation-form__error-details">
+                  <p class="donation-form__error-message"></p>
+                  <p class="donation-form__error-help">
+                      <?php _e('Don\'t worry - your donation wasn\'t processed. You can try the following:', 'giftflowwp'); ?>
+                  </p>
+                  
+                  <ul class="donation-form__error-tips">
+                      <li>
+                          <?php _e('Check your internet connection and refresh the page', 'giftflowwp'); ?>
+                          <small><?php _e('A stable connection is required for secure payment processing', 'giftflowwp'); ?></small>
+                      </li>
+                      <li>
+                          <?php _e('Verify your payment information is correct', 'giftflowwp'); ?>
+                          <small><?php _e('Double-check your card number, expiration date, and CVV code', 'giftflowwp'); ?></small>
+                      </li>
+                      <li>
+                          <?php _e('Try a different payment method or card', 'giftflowwp'); ?>
+                          <small><?php _e('We accept credit cards, PayPal, and bank transfers', 'giftflowwp'); ?></small>
+                      </li>
+                      <li>
+                          <?php _e('Clear your browser cache and cookies', 'giftflowwp'); ?>
+                          <small><?php _e('This can resolve common payment form issues', 'giftflowwp'); ?></small>
+                      </li>
+                  </ul>
+
+                  <div class="donation-form__error-actions">
+                      <button type="button" class="donation-form__button donation-form__button--retry">
+                          <?php echo giftflowwp_svg_icon('refresh'); ?>
+                          <?php _e('Try Again', 'giftflowwp'); ?>
+                      </button>
+                      <a href="#" class="donation-form__button donation-form__button--support">
+                          <?php echo giftflowwp_svg_icon('help'); ?>
+                          <?php _e('Contact Support', 'giftflowwp'); ?>
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <?php
+}

@@ -33,7 +33,10 @@ Donation form template 2 steps:
             - campaign title
         - Back button
         - Donate button
+    thank you message:
+    error message:
 */
+
 ?>
 
 <form class="donation-form" id="donation-form">
@@ -229,6 +232,15 @@ Donation form template 2 steps:
                     </button>
                 </div>
             </section>
+            
+            <?php 
+            // do action to allow other plugins to add custom content after the payment method step
+            /**
+             * @see giftflowwp_donation_form_thank_you_section_html - 20
+             * @see giftflowwp_donation_form_error_section_html - 22
+             */
+            do_action('giftflowwp_donation_form_after_payment_method', $args); 
+            ?>
         </div>
     </div>
 </form>

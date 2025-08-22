@@ -163,7 +163,7 @@ class Stripe_Gateway extends Gateway_Base {
             'id' => 'giftflowwp_stripe',
             'name' => 'giftflowwp_payment_options[stripe]',
             'type' => 'accordion',
-            'label' => __('Stripe', 'giftflowwp'),
+            'label' => __('Stripe (Credit Card)', 'giftflowwp'),
             'description' => __('Configure Stripe payment settings', 'giftflowwp'),
             'accordion_settings' => [
                 'label' => __('Stripe Settings', 'giftflowwp'),

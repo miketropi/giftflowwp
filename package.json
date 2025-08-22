@@ -19,8 +19,11 @@
     "react": "^19.1.0"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.28.3",
     "@babel/preset-react": "^7.26.3",
+    "@babel/runtime": "^7.28.3",
     "@wordpress/babel-preset-default": "^8.21.0",
+    "regenerator-runtime": "^0.14.1",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.86.2",
     "sass-loader": "^12.6.0"
