@@ -431,6 +431,7 @@ class Stripe_Gateway extends Gateway_Base {
 
         do_action('giftflowwp_stripe_payment_completed', $donation_id, $payment_intent_id, $all_data);
 
+        // return true when payment is successful
         return true;
 
         // return array(
@@ -532,12 +533,6 @@ class Stripe_Gateway extends Gateway_Base {
 
         $payload = file_get_contents('php://input');
         $event = json_decode($payload, true);
-
-        // wp_mail(
-        //     'mike.beplus@gmail.com',
-        //     'Stripe Webhook Received',
-        //     sprintf('Received event: %s with payload: %s', $event['type'], wp_json_encode($event))
-        // );
 
         if (!$event || !isset($event['type'])) {
             status_header(400);
