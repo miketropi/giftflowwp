@@ -111,6 +111,16 @@ class Shortcodes extends Base {
             ];
         }
 
+        $user_fullname = '';
+        $user_email = '';
+        $user_info_readonly = false;
+        if (is_user_logged_in()) {
+            $current_user = wp_get_current_user();
+            $user_fullname = $current_user->display_name;
+            $user_email = $current_user->user_email;
+            $user_info_readonly = true;
+        }
+
         ob_start();
 
         $atts['gateways'] = $gateways;
@@ -123,6 +133,9 @@ class Shortcodes extends Base {
         $atts['currency_format_template'] = $currency_format_template;
         $atts['recurring_interval'] = $recurring_interval;
         $atts['donation_types'] = $donation_types;
+        $atts['user_fullname'] = $user_fullname;
+        $atts['user_email'] = $user_email;
+        $atts['user_info_readonly'] = $user_info_readonly;
 
         // load the donation form template use class-template.php
         $template = new Template();

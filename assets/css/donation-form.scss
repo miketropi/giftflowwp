@@ -55,6 +55,12 @@ $mobile: 480px;
     outline: none;
     border-color: $primary-color;
   }
+
+  // readonly style
+  &[readonly] {
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+  }
 }
 
 @mixin tablet {

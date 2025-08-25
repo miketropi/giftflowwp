@@ -273,6 +273,13 @@ class Forms extends Base {
         if (!empty($data['donor_message'])) {
             update_post_meta($donation_id, '_donor_message', $data['donor_message']);
         }
+
+        // anonymous donation
+        if (!empty($data['anonymous_donation'])) {
+            update_post_meta($donation_id, '_anonymous_donation', 'yes');
+        } else {
+            update_post_meta($donation_id, '_anonymous_donation', 'no');
+        }
         
         // custom field status
         update_post_meta( $donation_id, '_status', 'pending' ); 

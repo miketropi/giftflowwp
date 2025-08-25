@@ -36,7 +36,6 @@ Donation form template 2 steps:
     thank you message:
     error message:
 */
-
 ?>
 
 <form class="donation-form" id="donation-form">
@@ -136,7 +135,7 @@ Donation form template 2 steps:
                         <div class="donation-form__fields">
                             <div class="donation-form__field">
                                 <label for="donor_name"><?php _e('Full Name', 'giftflowwp'); ?></label>
-                                <input type="text" id="donor_name" name="donor_name" required data-validate="required">
+                                <input type="text" id="donor_name" name="donor_name" value="<?php echo $user_fullname; ?>" required data-validate="required" <?php echo $user_info_readonly ? 'readonly' : ''; ?>>
 
                                 <?php // error message ?>
                                 <div class="donation-form__field-error">
@@ -146,7 +145,7 @@ Donation form template 2 steps:
                             </div>
                             <div class="donation-form__field">
                                 <label for="donor_email"><?php _e('Email Address', 'giftflowwp'); ?></label>
-                                <input type="email" id="donor_email" name="donor_email" required data-validate="email">
+                                <input type="email" id="donor_email" name="donor_email" value="<?php echo $user_email; ?>" required data-validate="email" <?php echo $user_info_readonly ? 'readonly' : ''; ?>>
 
                                 <?php // error message ?>
                                 <div class="donation-form__field-error">

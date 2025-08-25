@@ -325,6 +325,10 @@
   outline: none;
   border-color: var(--giftflowwp-primary-color);
 }
+.donation-form__amount-input input[readonly] {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+}
 @media (max-width: 480px) {
   .donation-form__amount-input input {
     font-size: 1rem;
@@ -393,6 +397,10 @@
 .donation-form__field input[type=text]:focus, .donation-form__field input[type=email]:focus, .donation-form__field input[type=tel]:focus, .donation-form__field textarea:focus {
   outline: none;
   border-color: var(--giftflowwp-primary-color);
+}
+.donation-form__field input[type=text][readonly], .donation-form__field input[type=email][readonly], .donation-form__field input[type=tel][readonly], .donation-form__field textarea[readonly] {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
 }
 .donation-form__field.error label {
   color: var(--giftflowwp-error-color);

@@ -149,17 +149,28 @@ function giftflowwp_campaign_single_content_tab_donations($content, $post_id) {
     <!-- description -->
     <strong><?php _e('Below are the donations for this campaign.', 'giftflowwp'); ?></strong>
 
-    <div class="__campaign-post-donations-list" data-campaign-id="<?php echo $post_id; ?>">
-      <!-- template load by javascript -->
+    <div class="__campaign-post-donations-list __donations-list-by-campaign-<?php echo $post_id ?>">
+      <?php
+        // get all donations for the campaign
+        // meta query status = completed
+        $args = array(
+          'meta_query' => array(
+            array(
+              'key' => '_status',
+              'value' => 'completed',
+              'compare' => '='
+            )
+          )
+        );
+        $_paged = 2;
+        $results = giftflowwp_get_campaign_donations($post_id, $args, $_paged);
+        giftflowwp_load_template('donation-list-of-campaign.php', array(
+          'donations' => $results,
+          'paged' => $_paged,
+          'campaign_id' => $post_id,
+        ));
+      ?>
     </div>
-
-    <?php
-      // get all donations for the campaign
-      // $results = giftflowwp_get_campaign_donations($post_id);
-      // echo '<pre>';
-      // print_r($results);
-      // echo '</pre>';
-    ?>
   </div>
   <?php
   return ob_get_clean();

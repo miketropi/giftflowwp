@@ -1,4 +1,9 @@
 <?php 
+use GiftFlowWP\Frontend\Template;
+
+if ( ! defined( 'ABSPATH' ) ) {
+  exit; // Exit if accessed directly.
+}
 /**
  * Common functions for the plugin
  * 
@@ -410,11 +415,11 @@ function giftflowwp_get_campaign_days_left($campaign_id) {
 }
 
 // get all donations for the campaign id  
-function giftflowwp_get_campaign_donations($campaign_id, $args = array()) {
+function giftflowwp_get_campaign_donations($campaign_id, $args = array(), $paged = 1) {
 
   $args = wp_parse_args($args, array(
-    'posts_per_page' => 20,
-    'paged' => 1,
+    'posts_per_page' => 3,
+    'paged' => $paged,
     'orderby' => 'date',
     'order' => 'DESC',
     'post_status' => 'publish',
@@ -429,6 +434,8 @@ function giftflowwp_get_campaign_donations($campaign_id, $args = array()) {
   // return donation posts, total, and pagination
   return array(
     'posts' => array_map(function($post) {
+      $is_anonymous = get_post_meta($post->ID, '_anonymous_donation', true);
+
       $donor_meta = [];
       $donor_meta['id'] = get_post_meta($post->ID, '_donor_id', true);
       $donor_meta['name'] = get_the_title($donor_meta['id']);
@@ -440,6 +447,17 @@ function giftflowwp_get_campaign_donations($campaign_id, $args = array()) {
       $donor_meta['postal_code'] = get_post_meta($donor_meta['id'], '_postal_code', true);
       $donor_meta['country'] = get_post_meta($donor_meta['id'], '_country', true);
 
+      if ($is_anonymous) {
+        $donor_meta['name'] = __('Anonymous', 'giftflowwp');
+        $donor_meta['email'] = '***';
+        $donor_meta['phone'] = '***';
+        $donor_meta['address'] = '***';
+        $donor_meta['city'] = '***';
+        $donor_meta['state'] = '***';
+        $donor_meta['postal_code'] = '***';
+        $donor_meta['country'] = '***';
+      }
+
       return array(
         'id' => $post->ID,
         'amount' => get_post_meta($post->ID, '_amount', true),
@@ -450,6 +468,11 @@ function giftflowwp_get_campaign_donations($campaign_id, $args = array()) {
         'donor_id' => get_post_meta($post->ID, '_donor_id', true),
         'donor_meta' => $donor_meta,
         'campaign_id' => get_post_meta($post->ID, '_campaign_id', true),
+        'message' => get_post_meta($post->ID, '_donor_message', true),
+        // anonymous
+        'is_anonymous' => get_post_meta($post->ID, '_anonymous_donation', true),
+        'date' => get_the_date('', $post->ID),
+        'date_gmt' => get_gmt_from_date(get_the_date('Y-m-d H:i:s', $post->ID))
       );
     }, $donations->posts),
     'total' => $donations->found_posts,
@@ -515,97 +538,19 @@ function giftflowwp_stripe_payment_method_callback($method) {
  * Donation form thank you template
  */
 function giftflowwp_donation_form_thank_you_section_html($args = array()) {
-  ?>
-  <section id="donation-thank-you" class="donation-form__step-panel step-thank-you ">
-      <div class="donation-form__step-panel-content donation-form__thank-you">
-          <?php echo giftflowwp_svg_icon('checkmark-circle'); // Add success icon ?>
-          
-          <div class="donation-form__thank-you-content">
-              <h2 class="donation-form__thank-you-title">
-                  <?php _e('Thank You for Your Generous Support!', 'giftflowwp'); ?>
-              </h2>
-              
-              <div class="donation-form__thank-you-details">
-                  <p class="donation-form__thank-you-message">
-                      <?php _e('Your donation makes a real difference. A confirmation email has been sent to your inbox.', 'giftflowwp'); ?>
-                  </p>
-                  
-                  <div class="donation-form__thank-you-summary">
-                      <div class="donation-form__thank-you-amount">
-                          <span data-output="donation_amount" data-format-template="<?php echo $args['currency_format_template']; ?>"></span>
-                      </div>
-                      <div class="donation-form__thank-you-campaign">
-                          <?php echo esc_html($args['campaign_title']); ?>
-                      </div>
-                  </div>
-              </div>
-
-              <div class="donation-form__thank-you-actions">
-                  <a href="<?php echo get_permalink($args['campaign_id']); ?>" class="donation-form__button">
-                      <?php _e('Return to Campaign', 'giftflowwp'); ?>
-                  </a>
-                  <button type="button" class="donation-form__button donation-form__button--share">
-                      <?php echo giftflowwp_svg_icon('share'); ?>
-                      <?php _e('Share This Campaign', 'giftflowwp'); ?>
-                  </button>
-              </div>
-          </div>
-      </div>
-  </section>
-  <?php
+  // load template thank you
+  $template = new Template();
+  $template->load_template('donation-form-thank-you.php', $args);
 }
 
 // donation form error section
 function giftflowwp_donation_form_error_section_html() {
-  ?>
-  <!-- Error -->
-  <section id="donation-error" class="donation-form__step-panel step-error">
-      <div class="donation-form__step-panel-content donation-form__error">
-          <?php echo giftflowwp_svg_icon('error-circle'); ?>
-          
-          <div class="donation-form__error-content">
-              <h2 class="donation-form__error-title">
-                  <?php _e('Oops! Something Went Wrong', 'giftflowwp'); ?>
-              </h2>
-              
-              <div class="donation-form__error-details">
-                  <p class="donation-form__error-message"></p>
-                  <p class="donation-form__error-help">
-                      <?php _e('Don\'t worry - your donation wasn\'t processed. You can try the following:', 'giftflowwp'); ?>
-                  </p>
-                  
-                  <ul class="donation-form__error-tips">
-                      <li>
-                          <?php _e('Check your internet connection and refresh the page', 'giftflowwp'); ?>
-                          <small><?php _e('A stable connection is required for secure payment processing', 'giftflowwp'); ?></small>
-                      </li>
-                      <li>
-                          <?php _e('Verify your payment information is correct', 'giftflowwp'); ?>
-                          <small><?php _e('Double-check your card number, expiration date, and CVV code', 'giftflowwp'); ?></small>
-                      </li>
-                      <li>
-                          <?php _e('Try a different payment method or card', 'giftflowwp'); ?>
-                          <small><?php _e('We accept credit cards, PayPal, and bank transfers', 'giftflowwp'); ?></small>
-                      </li>
-                      <li>
-                          <?php _e('Clear your browser cache and cookies', 'giftflowwp'); ?>
-                          <small><?php _e('This can resolve common payment form issues', 'giftflowwp'); ?></small>
-                      </li>
-                  </ul>
+  // load template error
+  $template = new Template();
+  $template->load_template('donation-form-error.php');
+}
 
-                  <div class="donation-form__error-actions">
-                      <button type="button" class="donation-form__button donation-form__button--retry">
-                          <?php echo giftflowwp_svg_icon('refresh'); ?>
-                          <?php _e('Try Again', 'giftflowwp'); ?>
-                      </button>
-                      <a href="#" class="donation-form__button donation-form__button--support">
-                          <?php echo giftflowwp_svg_icon('help'); ?>
-                          <?php _e('Contact Support', 'giftflowwp'); ?>
-                      </a>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
-  <?php
+function giftflowwp_load_template($template_name, $args = array()) {
+  $template = new Template();
+  $template->load_template($template_name, $args);
 }

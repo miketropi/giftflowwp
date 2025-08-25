@@ -69,6 +69,15 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
                 'type'  => 'textarea',
                 'description' => __( 'Enter a message from the donor', 'giftflowwp' ),
             ),
+            'anonymous_donation' => array(
+                'label' => __( 'Anonymous', 'giftflowwp' ),
+                'type'  => 'select',
+                'options' => array(
+                    'no'  => __( 'No', 'giftflowwp' ),
+                    'yes' => __( 'Yes', 'giftflowwp' ),
+                ),
+                'description' => __( 'Check if the donor wants to remain anonymous', 'giftflowwp' ),
+            ),
             'campaign_id' => array(
                 'label' => __( 'Campaign', 'giftflowwp' ),
                 'type'  => 'select',
