@@ -116,6 +116,19 @@ function giftflowwp_campaign_single_content_block_render($attributes, $content, 
           
         });
       });
+
+      // set init active tab
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        console.log('hash', hash);
+        // if hash include comment then active comments tab
+        if (hash.includes('comment')) {
+          const commentsTab = tabWidget.querySelector('.giftflowwp-tab-widget-tab-item[data-tab-id="comments"]');
+          if (commentsTab) {
+            commentsTab.click();
+          }
+        }
+      }
     });
   </script>
   <?php
@@ -149,17 +162,50 @@ function giftflowwp_campaign_single_content_tab_donations($content, $post_id) {
     <!-- description -->
     <strong><?php _e('Below are the donations for this campaign.', 'giftflowwp'); ?></strong>
 
-    <div class="__campaign-post-donations-list" data-campaign-id="<?php echo $post_id; ?>">
-      <!-- template load by javascript -->
+    <div class="__campaign-post-donations-list __donations-list-by-campaign-<?php echo $post_id ?>">
+      <?php
+        // get all donations for the campaign
+        // meta query status = completed
+        $args = array(
+          'meta_query' => array(
+            array(
+              'key' => '_status',
+              'value' => 'completed',
+              'compare' => '='
+            )
+          )
+        );
+        $_paged = 1;
+        $results = giftflowwp_get_campaign_donations($post_id, $args, $_paged);
+        giftflowwp_load_template('donation-list-of-campaign.php', array(
+          'donations' => $results,
+          'paged' => $_paged,
+          'campaign_id' => $post_id,
+        ));
+      ?>
     </div>
+  </div>
+  <?php
+  return ob_get_clean();
+}
 
-    <?php
-      // get all donations for the campaign
-      // $results = giftflowwp_get_campaign_donations($post_id);
-      // echo '<pre>';
-      // print_r($results);
-      // echo '</pre>';
-    ?>
+add_filter('campaign_single_content_tab_comments', 'giftflowwp_campaign_single_content_tab_comments', 10, 2);
+
+function giftflowwp_campaign_single_content_tab_comments($content, $post_id) {
+  ob_start();
+  ?>
+  <div class="campaign-post-comments">
+    <!-- description -->
+    <strong><?php _e('Below are the comments for this campaign.', 'giftflowwp'); ?></strong>
+
+    <div class="campaign-post-comments-content">
+      <?php
+        // load comments template
+        giftflowwp_load_template('campaign-comment.php', array(
+          'post_id' => $post_id,
+        ));
+      ?>
+    </div>
   </div>
   <?php
   return ob_get_clean();

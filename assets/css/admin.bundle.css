@@ -706,6 +706,10 @@
   background-color: #fff8e1;
   color: #f57c00;
 }
+.campaign-status.status-closed {
+  background-color: #f5f5f5;
+  color: #757575;
+}
 .campaign-status.status-unknown {
   background-color: #f5f5f5;
   color: #666;

@@ -1,0 +1,400 @@
+.gfw-campaign-comments-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  .comment {
+    margin-bottom: 30px;
+
+    // Add styling for nested comments
+    .children {
+      list-style: none;
+      margin: 30px 0 0 40px; // Add left margin for nesting
+      padding: 0;
+
+      .comment {
+        margin-bottom: 20px; // Slightly less margin for nested comments
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .comment-body {
+      padding: 0;
+
+      .comment-meta {
+        margin-bottom: .5rem;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        .comment-author {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 5px;
+          flex: 1;
+          min-width: 200px;
+
+          .avatar {
+            border-radius: 50%;
+            width: 32px; // Match HTML size
+            height: 32px;
+            flex-shrink: 0;
+          }
+
+          .fn {
+            font-weight: 600;
+            
+            a {
+              text-decoration: none;
+              // color: #333;
+              
+              &:hover {
+                opacity: .6;
+              }
+            }
+          }
+
+          .says {
+            color: #666;
+            font-style: italic;
+          }
+        }
+
+        .comment-metadata {
+          font-size: 0.875rem;
+          color: #666;
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          flex-wrap: wrap;
+
+          a {
+            text-decoration: none;
+            color: inherit;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
+          .edit-link {
+            &::before {
+              content: '•';
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+
+      .comment-content {
+        padding: 1.5rem 2rem;
+        background: white;
+        border: 1px solid var(--giftflowwp-border-color);
+        border-radius: var(--giftflowwp-border-radius);
+        font-size: 1rem;
+
+        p {
+          margin: 0 0 15px;
+          line-height: 1.6;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .reply {
+        margin-top: 15px;
+        text-align: right;
+
+        .comment-reply-link {
+          display: inline-block;
+          padding: 5px 0;
+          color: #666;
+          font-size: 0.875rem;
+          text-decoration: none;
+
+          &:hover {
+            color: #333;
+          }
+        }
+      }
+    }
+  }
+}
+
+.gfw-no-comments {
+  font-size: 13px;
+  opacity: .6;
+}
+
+.gfw-campaign-comments-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 2rem 0 1rem 0;
+  font-size: 1rem;
+
+  .page-numbers {
+    display: inline-block;
+    min-width: 2.2em;
+    padding: 0.4em 0.8em;
+    margin: 0 2px;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--giftflowwp-primary, #333);
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: background 0.15s, color 0.15s, border 0.15s;
+
+    &:hover,
+    &:focus {
+      background: var(--giftflowwp-primary-light, #f5f5f5);
+      color: var(--giftflowwp-primary, #222);
+      border: 1px solid var(--giftflowwp-border-color, #e0e0e0);
+      text-decoration: none;
+    }
+
+    &.current,
+    &[aria-current="page"] {
+      background: var(--giftflowwp-primary, #333);
+      color: #fff;
+      border: 1px solid var(--giftflowwp-primary, #333);
+      cursor: default;
+      pointer-events: none;
+    }
+
+    &.prev,
+    &.next {
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      background: transparent;
+      color: var(--giftflowwp-primary, #333);
+      border: 1px solid transparent;
+
+      &:hover,
+      &:focus {
+        background: var(--giftflowwp-primary-light, #f5f5f5);
+        border: 1px solid var(--giftflowwp-border-color, #e0e0e0);
+      }
+    }
+  }
+}
+
+// Tablet styles (768px and below)
+@media (max-width: 768px) {
+  .gfw-campaign-comments-list {
+    .comment {
+      margin-bottom: 25px;
+
+      .children {
+        margin: 25px 0 0 25px; // Reduce nesting margin on tablet
+      }
+
+      .comment-body {
+        .comment-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+
+          .comment-author {
+            min-width: auto;
+            width: 100%;
+          }
+
+          .comment-metadata {
+            width: 100%;
+            justify-content: flex-start;
+          }
+        }
+
+        .comment-content {
+          padding: 1.25rem 1.5rem; // Reduce padding on tablet
+          font-size: 0.95rem;
+        }
+
+        .reply {
+          text-align: left; // Left align reply on tablet for better UX
+          margin-top: 12px;
+
+          .comment-reply-link {
+            padding: 8px 12px; // Larger touch target
+            background: var(--giftflowwp-primary-light, #f5f5f5);
+            border-radius: 4px;
+            transition: background 0.15s;
+
+            &:hover {
+              background: var(--giftflowwp-border-color, #e0e0e0);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .gfw-campaign-comments-pagination {
+    margin: 1.5rem 0 1rem 0;
+    gap: 0.4rem;
+
+    .page-numbers {
+      min-width: 2em;
+      padding: 0.5em 0.7em; // Slightly larger touch targets
+      font-size: 0.95rem;
+    }
+  }
+}
+
+// Mobile styles (480px and below)
+@media (max-width: 480px) {
+  .gfw-campaign-comments-list {
+    .comment {
+      margin-bottom: 20px;
+
+      .children {
+        margin: 20px 0 0 15px; // Further reduce nesting margin on mobile
+      }
+
+      .comment-body {
+        .comment-meta {
+          gap: 6px;
+
+          .comment-author {
+            gap: 8px;
+
+            .avatar {
+              width: 28px; // Slightly smaller avatar on mobile
+              height: 28px;
+            }
+
+            .fn {
+              font-size: 0.95rem;
+            }
+
+            .says {
+              font-size: 0.85rem;
+            }
+          }
+
+          .comment-metadata {
+            font-size: 0.8rem;
+            gap: 8px;
+          }
+        }
+
+        .comment-content {
+          padding: 1rem 1.25rem; // Minimal padding on mobile
+          font-size: 0.9rem;
+          border-radius: 6px; // Slightly smaller border radius
+
+          p {
+            margin: 0 0 12px;
+            line-height: 1.5;
+          }
+        }
+
+        .reply {
+          margin-top: 10px;
+
+          .comment-reply-link {
+            padding: 10px 16px; // Even larger touch targets on mobile
+            font-size: 0.9rem;
+            width: 100%; // Full width button on mobile
+            text-align: center;
+            box-sizing: border-box;
+          }
+        }
+      }
+    }
+  }
+
+  .gfw-campaign-comments-pagination {
+    margin: 1.25rem 0 0.75rem 0;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+
+    .page-numbers {
+      min-width: 1.8em;
+      padding: 0.6em 0.6em; // Square-ish buttons on mobile
+      font-size: 0.9rem;
+      margin: 0 1px;
+
+      &.prev,
+      &.next {
+        min-width: auto;
+        padding: 0.6em 0.8em;
+      }
+    }
+  }
+
+  .gfw-no-comments {
+    font-size: 12px;
+    text-align: center;
+    padding: 1rem;
+  }
+}
+
+// Large mobile and small tablet (481px - 767px)
+@media (min-width: 481px) and (max-width: 767px) {
+  .gfw-campaign-comments-list {
+    .comment {
+      .comment-body {
+        .comment-content {
+          padding: 1.25rem 1.75rem;
+        }
+
+        .reply {
+          .comment-reply-link {
+            padding: 8px 14px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Touch device optimizations
+@media (hover: none) and (pointer: coarse) {
+  .gfw-campaign-comments-list {
+    .comment {
+      .comment-body {
+        .comment-meta {
+          .comment-author {
+            .fn a {
+              padding: 4px 0; // Larger touch target for links
+            }
+          }
+
+          .comment-metadata {
+            a {
+              padding: 2px 4px; // Larger touch targets
+            }
+          }
+        }
+
+        .reply {
+          .comment-reply-link {
+            min-height: 44px; // iOS recommended minimum touch target
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+
+  .gfw-campaign-comments-pagination {
+    .page-numbers {
+      min-height: 44px; // iOS recommended minimum touch target
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

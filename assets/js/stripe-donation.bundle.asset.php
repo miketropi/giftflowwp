@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('regenerator-runtime'), 'version' => '67ad7b33c058d9a6');
+<?php return array('dependencies' => array(), 'version' => '6959765b46b98d20');

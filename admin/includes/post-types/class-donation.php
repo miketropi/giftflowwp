@@ -50,7 +50,7 @@ class Donation extends Base_Post_Type {
             'has_archive'        => false,
             'hierarchical'       => false,
             'menu_position'      => null,
-            'supports'           => array( 'title', ),
+            'supports'           => array( 'title' ),
             'menu_icon'          => 'dashicons-money-alt',
             'show_in_rest'       => true,
         );

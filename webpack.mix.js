@@ -50,4 +50,21 @@ mix.react()
 
 // for admin 
 mix.js('admin/js/admin.js', 'assets/js/admin.bundle.js')
-   .sass('admin/css/admin.scss', 'assets/css/admin.bundle.css');
+    .sass('admin/css/admin.scss', 'assets/css/admin.bundle.css');
+
+
+mix.override(config => {
+    config.module.rules.forEach(rule => {
+        if (String(rule.test).includes('js')) {
+            rule.use.forEach(loader => {
+                if (loader.loader === 'babel-loader') {
+                    loader.options.plugins = (loader.options.plugins || []).concat([
+                        ["@babel/plugin-transform-runtime", {
+                            "regenerator": true
+                        }]
+                    ]);
+                }
+            });
+        }
+    });
+});

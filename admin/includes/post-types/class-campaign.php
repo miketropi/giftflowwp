@@ -52,7 +52,7 @@ class Campaign extends Base_Post_Type {
             'has_archive'        => true,
             'hierarchical'       => false,
             'menu_position'      => null,
-            'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
+            'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),
             'menu_icon'          => 'dashicons-megaphone',
             'show_in_rest'       => true,
         );
@@ -158,6 +158,9 @@ class Campaign extends Base_Post_Type {
                 break;
                 
             case 'start_date':
+                echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $meta_value ) ) );
+                break;
+                
             case 'end_date':
                 echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $meta_value ) ) );
                 break;
@@ -178,6 +181,10 @@ class Campaign extends Base_Post_Type {
                     case 'pending':
                         $status_text = __( 'Pending', 'giftflowwp' );
                         $status_class = 'status-pending';
+                        break;
+                    case 'closed':
+                        $status_text = __( 'Closed', 'giftflowwp' );
+                        $status_class = 'status-closed';
                         break;
                     default:
                         $status_text = __( 'Unknown', 'giftflowwp' );

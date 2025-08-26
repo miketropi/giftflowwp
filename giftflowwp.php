@@ -9,7 +9,7 @@
  * Text Domain: giftflowwp
  * Domain Path: /languages
  * Requires at least: 5.8
- * Requires PHP: 8.2
+ * Requires PHP: 7.4
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -55,6 +55,7 @@ function giftflowwp_load_files() {
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-wp-block-custom-hooks.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'blocks/index.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/common.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/hooks.php';
 
     
     // Admin files
@@ -78,7 +79,7 @@ function giftflowwp_load_files() {
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/frontend/class-template.php';
     
     // Payment gateways
-    // require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-gateway-base.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-gateway-base.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-stripe.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/gateways/class-paypal.php';
 

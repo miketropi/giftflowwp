@@ -219,7 +219,7 @@ var registerWrapper = function registerWrapper(stripe, startTime) {
 
   stripe._registerWrapper({
     name: 'stripe-js',
-    version: "7.0.0",
+    version: "7.8.0",
     startTime: startTime
   });
 };
@@ -315,7 +315,7 @@ var initStripe = function initStripe(maybeStripe, args, startTime) {
   var expectedVersion = RELEASE_TRAIN;
 
   if (isTestKey && version !== expectedVersion) {
-    console.warn("Stripe.js@".concat(version, " was loaded on the page, but @stripe/stripe-js@").concat("7.0.0", " expected Stripe.js@").concat(expectedVersion, ". This may result in unexpected behavior. For more information, see https://docs.stripe.com/sdks/stripejs-versioning"));
+    console.warn("Stripe.js@".concat(version, " was loaded on the page, but @stripe/stripe-js@").concat("7.8.0", " expected Stripe.js@").concat(expectedVersion, ". This may result in unexpected behavior. For more information, see https://docs.stripe.com/sdks/stripejs-versioning"));
   }
 
   var stripe = maybeStripe.apply(undefined, args);
@@ -380,16 +380,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/***/ }),
-
-/***/ "@babel/runtime/regenerator":
-/*!*************************************!*\
-  !*** external "regeneratorRuntime" ***!
-  \*************************************/
-/***/ ((module) => {
-
-module.exports = window["regeneratorRuntime"];
-
 /***/ })
 
 /******/ 	});
@@ -419,18 +409,6 @@ module.exports = window["regeneratorRuntime"];
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -470,19 +448,123 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _stripe_stripe_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @stripe/stripe-js */ "./node_modules/@stripe/stripe-js/lib/index.mjs");
+/* harmony import */ var _stripe_stripe_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @stripe/stripe-js */ "./node_modules/@stripe/stripe-js/lib/index.mjs");
 
 
 
-
+function _regenerator() {
+  /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */var e,
+    t,
+    r = "function" == typeof Symbol ? Symbol : {},
+    n = r.iterator || "@@iterator",
+    o = r.toStringTag || "@@toStringTag";
+  function i(r, n, o, i) {
+    var c = n && n.prototype instanceof Generator ? n : Generator,
+      u = Object.create(c.prototype);
+    return _regeneratorDefine2(u, "_invoke", function (r, n, o) {
+      var i,
+        c,
+        u,
+        f = 0,
+        p = o || [],
+        y = !1,
+        G = {
+          p: 0,
+          n: 0,
+          v: e,
+          a: d,
+          f: d.bind(e, 4),
+          d: function d(t, r) {
+            return i = t, c = 0, u = e, G.n = r, a;
+          }
+        };
+      function d(r, n) {
+        for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) {
+          var o,
+            i = p[t],
+            d = G.p,
+            l = i[2];
+          r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0));
+        }
+        if (o || r > 1) return a;
+        throw y = !0, n;
+      }
+      return function (o, p, l) {
+        if (f > 1) throw TypeError("Generator is already running");
+        for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) {
+          i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u);
+          try {
+            if (f = 2, i) {
+              if (c || (o = "next"), t = i[o]) {
+                if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object");
+                if (!t.done) return t;
+                u = t.value, c < 2 && (c = 0);
+              } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1);
+              i = e;
+            } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break;
+          } catch (t) {
+            i = e, c = 1, u = t;
+          } finally {
+            f = 1;
+          }
+        }
+        return {
+          value: t,
+          done: y
+        };
+      };
+    }(r, o, i), !0), u;
+  }
+  var a = {};
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+  t = Object.getPrototypeOf;
+  var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () {
+      return this;
+    }), t),
+    u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c);
+  function f(e) {
+    return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e;
+  }
+  return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () {
+    return this;
+  }), _regeneratorDefine2(u, "toString", function () {
+    return "[object Generator]";
+  }), (_regenerator = function _regenerator() {
+    return {
+      w: i,
+      m: f
+    };
+  })();
+}
+function _regeneratorDefine2(e, r, n, t) {
+  var i = Object.defineProperty;
+  try {
+    i({}, "", {});
+  } catch (e) {
+    i = 0;
+  }
+  _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) {
+    function o(r, n) {
+      _regeneratorDefine2(e, r, function (e) {
+        return this._invoke(r, n, e);
+      });
+    }
+    r ? i ? i(e, r, {
+      value: n,
+      enumerable: !t,
+      configurable: !t,
+      writable: !t
+    }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2));
+  }, _regeneratorDefine2(e, r, n, t);
+}
 /**
  * Stripe Donation 
  * 
  */
 
-var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY9lOPy403ifo5p89vrcviO4p3SJPkPEejxi2xIpiv9A00JfVSw8VW';
+var STRIPE_PUBLIC_KEY = giftflowwpStripeDonation.stripe_publishable_key;
 (function (w) {
   'use strict';
 
@@ -502,28 +584,29 @@ var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY
     }, {
       key: "init",
       value: function () {
-        var _init = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee3() {
+        var _init = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_regenerator().m(function _callee3() {
           var _this = this;
-          var self, cardElement, $element, $wrapper, $validateWrapper, $errorMessage;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee3$(_context3) {
-            while (1) switch (_context3.prev = _context3.next) {
+          var self, cardElement, $element, $wrapper, $wrapperField, $validateWrapper, $errorMessage;
+          return _regenerator().w(function (_context3) {
+            while (1) switch (_context3.n) {
               case 0:
                 self = this;
-                _context3.next = 3;
-                return (0,_stripe_stripe_js__WEBPACK_IMPORTED_MODULE_4__.loadStripe)(STRIPE_PUBLIC_KEY);
-              case 3:
-                this.stripe = _context3.sent;
+                _context3.n = 1;
+                return (0,_stripe_stripe_js__WEBPACK_IMPORTED_MODULE_3__.loadStripe)(STRIPE_PUBLIC_KEY);
+              case 1:
+                this.stripe = _context3.v;
                 this.stripeElements = this.stripe.elements();
                 cardElement = this.stripeElements.create('card');
                 $element = this.form.querySelector('#STRIPE-CARD-ELEMENT');
                 $wrapper = $element.closest('.donation-form__payment-method-description');
-                $validateWrapper = $wrapper.querySelector('[data-custom-validate="true"]');
-                $errorMessage = $wrapper.querySelector('.custom-error-message .custom-error-message-text');
+                $wrapperField = $element.closest('.donation-form__field');
+                $validateWrapper = $wrapperField; //$wrapperField.querySelector('[data-custom-validate="true"]');
+                $errorMessage = $wrapperField.querySelector('.custom-error-message .custom-error-message-text');
                 cardElement.mount($element);
                 cardElement.on('change', /*#__PURE__*/function () {
-                  var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee(event) {
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee$(_context) {
-                      while (1) switch (_context.prev = _context.next) {
+                  var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_regenerator().m(function _callee(event) {
+                    return _regenerator().w(function (_context) {
+                      while (1) switch (_context.n) {
                         case 0:
                           console.log('event', event);
                           if (event.complete) {
@@ -545,9 +628,8 @@ var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY
                               $errorMessage.textContent = '';
                             }
                           }
-                        case 2:
-                        case "end":
-                          return _context.stop();
+                        case 1:
+                          return _context.a(2);
                       }
                     }, _callee);
                   }));
@@ -558,32 +640,51 @@ var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY
 
                 // add event listener to form
                 this.form.addEventListener('donationFormBeforeSubmit', /*#__PURE__*/function () {
-                  var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(e) {
-                    var _e$detail, self, fields, resolve, reject, _yield$_this$getSelf$, token, error;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
-                      while (1) switch (_context2.prev = _context2.next) {
+                  var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_regenerator().m(function _callee2(e) {
+                    var _e$detail, self, fields, resolve, reject, _yield$_this$getSelf$, paymentMethod, error;
+                    return _regenerator().w(function (_context2) {
+                      while (1) switch (_context2.n) {
                         case 0:
-                          _e$detail = e.detail, self = _e$detail.self, fields = _e$detail.fields, resolve = _e$detail.resolve, reject = _e$detail.reject; // create token method
-                          _context2.next = 3;
-                          return _this.getSelf().stripe.createToken(cardElement, {
+                          _e$detail = e.detail, self = _e$detail.self, fields = _e$detail.fields, resolve = _e$detail.resolve, reject = _e$detail.reject; // create token method (Old)
+                          // const { token, error } = await this.getSelf().stripe.createToken(cardElement, {
+                          //   type: 'card',
+                          //   billing_details: {
+                          //     name: fields.card_name,
+                          //   }
+                          // });
+                          // new
+                          _context2.n = 1;
+                          return _this.getSelf().stripe.createPaymentMethod({
                             type: 'card',
+                            card: cardElement,
                             billing_details: {
                               name: fields.card_name
+                              // email: fields.card_email,
                             }
                           });
-                        case 3:
-                          _yield$_this$getSelf$ = _context2.sent;
-                          token = _yield$_this$getSelf$.token;
+                        case 1:
+                          _yield$_this$getSelf$ = _context2.v;
+                          paymentMethod = _yield$_this$getSelf$.paymentMethod;
                           error = _yield$_this$getSelf$.error;
+                          // console.log('token', token);
+                          // console.log('error', error);
+
                           if (error) {
+                            $validateWrapper.classList.add('error', 'custom-error');
+                            // $validateWrapper.querySelector('.custom-error-message-text').textContent = error.message;
+                            $errorMessage.textContent = error.message;
+                            // console.log('Stripe error:', error.message, $errorMessage);
+
                             reject(error);
                           } else {
-                            self.onSetField('stripe_payment_token_id', token.id);
-                            resolve(token);
+                            // console.log('Stripe payment method created:', paymentMethod);
+                            // self.onSetField('stripe_payment_token_id', token.id);
+                            self.onSetField('stripe_payment_method_id', paymentMethod.id);
+                            resolve(paymentMethod);
+                            // resolve(token);
                           }
-                        case 7:
-                        case "end":
-                          return _context2.stop();
+                        case 2:
+                          return _context2.a(2);
                       }
                     }, _callee2);
                   }));
@@ -591,9 +692,8 @@ var STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY
                     return _ref2.apply(this, arguments);
                   };
                 }());
-              case 13:
-              case "end":
-                return _context3.stop();
+              case 2:
+                return _context3.a(2);
             }
           }, _callee3, this);
         }));

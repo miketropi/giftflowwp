@@ -17,11 +17,11 @@ if (!defined('ABSPATH')) {
 function giftflowwp_register_dashboard_page() {
     add_menu_page(
         __('GiftFlow Dashboard', 'giftflowwp'),
-        __('GiftFlow', 'giftflowwp'),
+        __('Gift Flow', 'giftflowwp'),
         'manage_options',
         'giftflowwp-dashboard',
         'giftflowwp_dashboard_page',
-        'dashicons-megaphone',
+        'dashicons-heart',
         30
     );
 

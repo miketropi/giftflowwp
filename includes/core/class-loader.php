@@ -44,11 +44,22 @@ class Loader extends Base {
 
     // enqueue blocks
     public function enqueue_blocks() {
+        wp_enqueue_style('giftflowwp-common', $this->get_plugin_url() . 'assets/css/common.bundle.css', array(), $this->get_version());
+
         $args = require($this->get_plugin_dir() . '/blocks-build/index.asset.php');
         wp_enqueue_script('giftflowwp-blocks', $this->get_plugin_url() . '/blocks-build/index.js', $args['dependencies'], $args['version'], true);
         wp_enqueue_style('giftflowwp-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version());
-
         wp_enqueue_style('giftflowwp-block-campaign-single-content', $this->get_plugin_url() . 'assets/css/block-campaign-single-content.bundle.css', array(), $this->get_version());
+        
+        // load common js
+        $args_common = require($this->get_plugin_dir() . '/assets/js/common.bundle.asset.php');
+        wp_enqueue_script('giftflowwp-common', $this->get_plugin_url() . 'assets/js/common.bundle.js', array('jquery'), $args_common['version'], true);
+        
+        // localize script
+        wp_localize_script('giftflowwp-common', 'giftflowwp_common', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce'    => wp_create_nonce('giftflowwp_common_nonce'),
+        ));
     }
 
     // Creating a new (custom) block category
@@ -105,6 +116,8 @@ class Loader extends Base {
         // Initialize frontend components
         new \GiftFlowWp\Frontend\Shortcodes();
         new \GiftFlowWp\Frontend\Forms(); 
+
+        \GiftFlowWp\Gateways\Gateway_Base::init_gateways();
     }
 
     public function activate() {

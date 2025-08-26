@@ -2,7 +2,7 @@
  * Donation Form
  */
 (async (w) => {
-   'use strict';
+	'use strict';
 	const donationForm = class {
 
     constructor(donationForm, options) {
@@ -84,7 +84,13 @@
 		}
 
 		async onSubmitForm() {
+
 			const self = this;
+
+			// self.form.querySelector('.donation-form__step-panel.is-active').classList.remove('is-active');
+			// self.form.querySelector('#donation-thank-you').classList.add('is-active');
+			// return;
+
 			self.onSetLoading(true);
 
 			// validate fields
@@ -95,17 +101,70 @@
 			}
 
 			// do hooks before submit support async function after submit
-			await self.onDoHooks();
+			// await self.onDoHooks();
+			try {
+				await self.onDoHooks();
+			} catch (error) {
+				console.error('Error in onDoHooks:', error);
+				self.onSetLoading(false);
+				return;
+			}
+			
 
 			// send data
 			const response = await self.onSendData(self.fields);
-
 			console.log('onSubmitForm', response);
+
+			if(!response || !response.success) {
+				// console.error('Error response:', response);
+				// show error section
+				self.form.querySelector('.donation-form__step-panel.is-active').classList.remove('is-active');
+				self.form.querySelector('#donation-error').classList.add('is-active');
+
+				// set error message
+				const errorMessage = self.form.querySelector('#donation-error .donation-form__error-message');
+				if (errorMessage) {
+					errorMessage.innerHTML = `
+						<h3 class="donation-form__error-title">Error</h3>
+						<p class="donation-form__error-text">${response?.data?.message || 'An error occurred. Please try again.'}</p>
+					`;
+				}
+
+				self.onSetLoading(false);
+				return;
+			}
+
+			if (response && response.success) {
+				// console.log('Success response:', response);
+				// show thank you section
+				self.form.querySelector('.donation-form__step-panel.is-active').classList.remove('is-active');
+				self.form.querySelector('#donation-thank-you').classList.add('is-active');
+				self.onSetLoading(false);
+				return;
+			}
+			
 
 			self.onSetLoading(false);
 		}
 
 		async onSendData(data) {
+
+			// const res = await jQuery.ajax({
+			// 	url: window.giftflowwpDonationForms.ajaxurl,
+			// 	type: 'POST',
+			// 	data: {
+			// 		action: 'giftflowwp_donation_form',
+			// 		wp_nonce: data.wp_nonce,
+			// 		data
+			// 	},
+			// 	error: function (xhr, status, error) {
+			// 		console.error('Error:', [error, status]);
+			// 	}
+			// })
+
+			// return res;
+
+			// return;
 			let ajaxurl = `${window.giftflowwpDonationForms.ajaxurl}?action=giftflowwp_donation_form&wp_nonce=${data.wp_nonce}`;
 
 			const response = await fetch(ajaxurl, {
@@ -115,8 +174,7 @@
 					'Content-Type': 'application/json'
 				}
 			}).then(response => response.json())
-				.then(data => console.log(data))
-				.catch(error => console.error('Error:', error));
+				.catch(error => error);
 
 			return response;
 		}
@@ -199,6 +257,8 @@
 				self.fields[event.target.name] = event.target.value;
 				let value = event.target.value;
 
+				console.log(event.target.name, value);
+
 				// validate event.target is checkbox field
 				if (event.target.type === 'checkbox') {
 					value = event.target.checked;
@@ -213,7 +273,7 @@
 				// update UI by field
 				self.onUpdateUIByField(event.target.name, value);
 
-				// console.log('fields', self.fields);
+				console.log('fields', self.fields);
 			});
 		}
 
@@ -254,15 +314,45 @@
 		}
 
 		onUpdateOutputField(field, value) {
-			const outputField = this.form.querySelector(`[data-output="${field}"]`);
-			const formatTemplate = outputField?.dataset?.formatTemplate;
-
-			if (formatTemplate) {
-				value = formatTemplate.replace('{{value}}', value);
+			const outputField = this.form.querySelectorAll(`[data-output="${field}"]`);
+			if (!outputField || outputField.length === 0) {
+				return;
 			}
 
-			if (outputField) {
-				outputField.textContent = value;
+			// if outputField is array, loop through it
+			if (outputField.length > 1) {
+				outputField.forEach((output) => {
+					const formatTemplate = output.dataset.formatTemplate;
+					let __v = value;
+					if (formatTemplate) {
+						__v = formatTemplate.replace('{{value}}', value);
+					}
+
+					// update output value
+					this.updateOutputValue(output, __v);
+				});
+				return;
+			}
+
+			// const formatTemplate = outputField?.dataset?.formatTemplate;
+
+			// if (formatTemplate) {
+			// 	value = formatTemplate.replace('{{value}}', value);
+			// }
+
+			// if (outputField) {
+			// 	outputField.textContent = value;
+			// }
+		}
+
+		updateOutputValue(output, value) {
+			if (output.tagName === 'INPUT' || output.tagName === 'TEXTAREA') {
+				// if output is input or textarea, set value
+				output.value = value;
+				output.setAttribute('value', value);
+			} else {
+				// if output is not input or textarea, set text content
+				output.textContent = value;
 			}
 		}
 
@@ -274,6 +364,10 @@
 			const self = this;
 			const amount = event.target.dataset.amount;
 			self.form.querySelector('input[name="donation_amount"]').value = amount;
+			self.form.querySelector('input[name="donation_amount"]').setAttribute('value', amount);
+
+			const changeEvent = new Event('change', { bubbles: true });
+			self.form.querySelector('input[name="donation_amount"]').dispatchEvent(changeEvent);
 			
 			// Update UI by field
 			this.onUpdateUIByField('donation_amount', amount);
@@ -400,6 +494,6 @@
 		initDonationForm('.donation-form', {
 			paymentMethodSelected: 'stripe',
 		});
- 	});
+	});
 
 })(window)

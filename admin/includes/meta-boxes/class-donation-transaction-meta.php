@@ -57,22 +57,63 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
                 ),
                 'description' => __( 'Select the status of the donation', 'giftflowwp' ),
             ),
-            'transaction_id' => array(
-                'label' => __( 'Transaction ID', 'giftflowwp' ),
-                'type'  => 'textfield',
-                'description' => __( 'Enter the transaction ID of the donation', 'giftflowwp' ),
-            ),
+            
             'donor_id' => array(
                 'label' => __( 'Donor', 'giftflowwp' ),
                 'type'  => 'select',
                 'options' => $this->get_donors(),
                 'description' => __( 'Select the donor of the donation', 'giftflowwp' ),
             ),
+            'donor_message' => array(
+                'label' => __( 'Donor Message', 'giftflowwp' ),
+                'type'  => 'textarea',
+                'description' => __( 'Enter a message from the donor', 'giftflowwp' ),
+            ),
+            'anonymous_donation' => array(
+                'label' => __( 'Anonymous', 'giftflowwp' ),
+                'type'  => 'select',
+                'options' => array(
+                    'no'  => __( 'No', 'giftflowwp' ),
+                    'yes' => __( 'Yes', 'giftflowwp' ),
+                ),
+                'description' => __( 'Check if the donor wants to remain anonymous', 'giftflowwp' ),
+            ),
             'campaign_id' => array(
                 'label' => __( 'Campaign', 'giftflowwp' ),
                 'type'  => 'select',
                 'options' => $this->get_campaigns(),
                 'description' => __( 'Select the campaign of the donation', 'giftflowwp' ),
+            ),
+            'donation_type' => array(
+                'label' => __( 'Donation Type', 'giftflowwp' ),
+                'type'  => 'select',
+                'options' => array(
+                    'one-time' => __( 'One-Time', 'giftflowwp' ),
+                    'recurring'  => __( 'Recurring', 'giftflowwp' ),
+                ),
+                'description' => __( 'Select the type of donation', 'giftflowwp' ),
+            ),
+            'recurring_interval' => array(
+                'label' => __( 'Recurring Interval', 'giftflowwp' ),
+                'type'  => 'select',
+                'options' => array(
+                    'daily'   => __( 'Daily', 'giftflowwp' ),
+                    'weekly'  => __( 'Weekly', 'giftflowwp' ),
+                    'monthly' => __( 'Monthly', 'giftflowwp' ),
+                    'quarterly' => __( 'Quarterly', 'giftflowwp' ),
+                    'yearly'  => __( 'Yearly', 'giftflowwp' ),
+                ),
+                'description' => __( 'Select the recurring interval of the donation', 'giftflowwp' ),
+            ),
+            'transaction_id' => array(
+                'label' => __( 'Transaction ID', 'giftflowwp' ),
+                'type'  => 'textfield',
+                'description' => __( 'Enter the transaction ID of the donation', 'giftflowwp' ),
+            ),
+            'transaction_raw_data' => array(
+                'label' => __( 'Transaction Raw Data', 'giftflowwp' ),
+                'type'  => 'textarea',
+                'description' => __( 'Raw data of the transaction, useful for debugging', 'giftflowwp' ),
             ),
         );
     }

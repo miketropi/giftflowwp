@@ -3,7 +3,7 @@
  * 
  */
 import {loadStripe} from '@stripe/stripe-js';
-const STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8YY9lOPy403ifo5p89vrcviO4p3SJPkPEejxi2xIpiv9A00JfVSw8VW';
+const STRIPE_PUBLIC_KEY = giftflowwpStripeDonation.stripe_publishable_key;
 
 ((w) => {
   'use strict';
@@ -30,8 +30,10 @@ const STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8
       const cardElement = this.stripeElements.create('card');
       const $element = this.form.querySelector('#STRIPE-CARD-ELEMENT');
       const $wrapper = $element.closest('.donation-form__payment-method-description');
-      const $validateWrapper = $wrapper.querySelector('[data-custom-validate="true"]');
-      const $errorMessage = $wrapper.querySelector('.custom-error-message .custom-error-message-text');
+      const $wrapperField = $element.closest('.donation-form__field');
+      const $validateWrapper = $wrapperField; //$wrapperField.querySelector('[data-custom-validate="true"]');
+      const $errorMessage = $wrapperField.querySelector('.custom-error-message .custom-error-message-text');
+      
       cardElement.mount($element);
 
       cardElement.on('change', async (event) => {
@@ -63,19 +65,39 @@ const STRIPE_PUBLIC_KEY = 'pk_test_51RCupsGHehBuaAbSrAjpuxwEqiigNhCXMvcHexzqd2v8
       this.form.addEventListener('donationFormBeforeSubmit', async (e) => {
         const { self, fields, resolve, reject } = e.detail;
 
-        // create token method
-        const { token, error } = await this.getSelf().stripe.createToken(cardElement, {
+        // create token method (Old)
+        // const { token, error } = await this.getSelf().stripe.createToken(cardElement, {
+        //   type: 'card',
+        //   billing_details: {
+        //     name: fields.card_name,
+        //   }
+        // });
+
+        // new
+        const {paymentMethod, error} = await this.getSelf().stripe.createPaymentMethod({
           type: 'card',
+          card: cardElement,
           billing_details: {
             name: fields.card_name,
-          }
-        });
+            // email: fields.card_email,
+          }});
+
+        // console.log('token', token);
+        // console.log('error', error);
 
         if(error) {
+          $validateWrapper.classList.add('error', 'custom-error');
+          // $validateWrapper.querySelector('.custom-error-message-text').textContent = error.message;
+          $errorMessage.textContent = error.message;
+          // console.log('Stripe error:', error.message, $errorMessage);
+          
           reject(error);
         } else {
-          self.onSetField('stripe_payment_token_id', token.id);
-          resolve(token);
+          // console.log('Stripe payment method created:', paymentMethod);
+          // self.onSetField('stripe_payment_token_id', token.id);
+          self.onSetField('stripe_payment_method_id', paymentMethod.id);
+          resolve(paymentMethod)
+          // resolve(token);
         }
       });
     }
