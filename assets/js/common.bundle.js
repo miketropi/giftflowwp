@@ -1,5 +1,4 @@
 /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./admin/css/admin.scss":
@@ -8,6 +7,7 @@
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -20,6 +20,7 @@ __webpack_require__.r(__webpack_exports__);
   \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -32,6 +33,7 @@ __webpack_require__.r(__webpack_exports__);
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -44,6 +46,7 @@ __webpack_require__.r(__webpack_exports__);
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -56,6 +59,7 @@ __webpack_require__.r(__webpack_exports__);
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -68,9 +72,12 @@ __webpack_require__.r(__webpack_exports__);
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _util_helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util/helpers.js */ "./assets/js/util/helpers.js");
+/* harmony import */ var _util_comment_form_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./util/comment-form.js */ "./assets/js/util/comment-form.js");
+/* harmony import */ var _util_comment_form_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_util_comment_form_js__WEBPACK_IMPORTED_MODULE_2__);
 
 function _regenerator() {
   /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */var e,
@@ -183,6 +190,7 @@ function _regeneratorDefine2(e, r, n, t) {
  * GiftFlow Common JS
  */
 
+
 (function (w, $) {
   "use strict";
 
@@ -195,12 +203,28 @@ function _regeneratorDefine2(e, r, n, t) {
   // load donation list
   gfw.loadDonationListPaginationTemplate_Handle = /*#__PURE__*/function () {
     var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_regenerator().m(function _callee(elem) {
-      var _elem$dataset, campaign, page, res, _res$data, __html, __replace_content_selector;
+      var _elem$dataset, campaign, page, container, res, _res$data, __html, __replace_content_selector;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.n) {
           case 0:
             _elem$dataset = elem.dataset, campaign = _elem$dataset.campaign, page = _elem$dataset.page;
-            _context.n = 1;
+            if (!(!campaign || !page)) {
+              _context.n = 1;
+              break;
+            }
+            console.error('Missing campaign or page data attributes');
+            return _context.a(2);
+          case 1:
+            container = elem.closest(".__donations-list-by-campaign-".concat(campaign));
+            if (container) {
+              _context.n = 2;
+              break;
+            }
+            console.error('Container element not found');
+            return _context.a(2);
+          case 2:
+            container.classList.add('gfw-loading-spinner');
+            _context.n = 3;
             return $.ajax({
               url: ajax_url,
               type: 'POST',
@@ -211,8 +235,10 @@ function _regeneratorDefine2(e, r, n, t) {
                 nonce: nonce
               }
             });
-          case 1:
+          case 3:
             res = _context.v;
+            container.classList.remove('gfw-loading-spinner');
+
             // res successful
             if (res.success) {
               _res$data = res.data, __html = _res$data.__html, __replace_content_selector = _res$data.__replace_content_selector;
@@ -222,7 +248,7 @@ function _regeneratorDefine2(e, r, n, t) {
             } else {
               console.error('Error loading donation list pagination template');
             }
-          case 2:
+          case 4:
             return _context.a(2);
         }
       }, _callee);
@@ -235,12 +261,90 @@ function _regeneratorDefine2(e, r, n, t) {
 
 /***/ }),
 
+/***/ "./assets/js/util/comment-form.js":
+/*!****************************************!*\
+  !*** ./assets/js/util/comment-form.js ***!
+  \****************************************/
+/***/ (() => {
+
+/**
+ * Comment Form JS
+ */
+
+(function (w, $) {
+  'use strict';
+
+  var replyCommentHandle = function replyCommentHandle() {
+    var originalFormPosition = null;
+    var originalFormTitle = null;
+    var cancelReplyHtml = "<small><a rel=\"nofollow\" id=\"cancel-comment-reply-link\" href=\"#\">Cancel reply</a></small>";
+    $(document).on('click', '.gfw-campaign-comments-list .comment-reply-link', function (e) {
+      e.preventDefault();
+      var commentId = $(this).data('commentid');
+      var titleReply = $(this).data('replyto') || 'Leave a Reply';
+      var form = $('#respond');
+      var parentInput = form.find('input[name="comment_parent"]');
+      if (!commentId || !form.length || !parentInput.length) {
+        console.error('Missing comment ID or form elements');
+        return;
+      }
+
+      // Store original position if not already stored
+      if (!originalFormPosition) {
+        originalFormPosition = form.parent();
+      }
+      if (!originalFormTitle) {
+        originalFormTitle = form.find('#reply-title').html();
+      }
+
+      // set parent comment ID
+      parentInput.val(commentId);
+
+      // set form title titleReply
+      form.find('#reply-title').html("".concat(titleReply, " ").concat(cancelReplyHtml));
+
+      // move form
+      var commentElement = $("#comment-".concat(commentId, " > .comment-body"));
+      if (commentElement.length) {
+        commentElement.after(form);
+        form.find('textarea').focus();
+      }
+    });
+
+    // Add cancel reply handler
+    $(document).on('click', '#cancel-comment-reply-link', function (e) {
+      e.preventDefault();
+      var form = $('#respond');
+      var parentInput = form.find('input[name="comment_parent"]');
+
+      // Reset parent comment ID
+      parentInput.val('0');
+
+      // Return form to original position
+      if (originalFormPosition) {
+        originalFormPosition.append(form);
+      }
+
+      // Reset form title
+      if (originalFormTitle) {
+        form.find('#reply-title').html(originalFormTitle);
+      }
+    });
+  };
+  $(function () {
+    replyCommentHandle();
+  });
+})(window, jQuery);
+
+/***/ }),
+
 /***/ "./assets/js/util/helpers.js":
 /*!***********************************!*\
   !*** ./assets/js/util/helpers.js ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   replaceContentBySelector: () => (/* binding */ replaceContentBySelector)
@@ -262,6 +366,7 @@ var replaceContentBySelector = function replaceContentBySelector(selector, conte
   \*********************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ _asyncToGenerator)
@@ -354,6 +459,18 @@ function _asyncToGenerator(n) {
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	

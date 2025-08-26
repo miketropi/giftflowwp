@@ -1,0 +1,66 @@
+.gfw-campaign-comments {
+  margin: 1rem 0 2rem;
+}
+
+.gfw-campaign-comments-form {
+  padding: 1rem 0;
+
+  .comment-reply-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    > a {
+      margin-left: 4px;
+      margin-right: auto;
+    }
+
+    > small {
+      font-size: 0.8rem;
+      color: #666;
+      align-self: center;
+    }
+  }
+
+  .comment-notes {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+
+  .comment-form-comment,
+  .comment-form-author,
+  .comment-form-email,
+  .comment-form-url {
+    margin-bottom: 1rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--giftflowwp-border-color);
+      border-radius: var(--giftflowwp-border-radius);
+      box-sizing: border-box;
+    }
+  }
+
+  .comment-form-cookies-consent {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .form-submit {
+    margin-top: 1rem;
+
+    
+  }
+}

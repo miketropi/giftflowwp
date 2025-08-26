@@ -116,6 +116,19 @@ function giftflowwp_campaign_single_content_block_render($attributes, $content, 
           
         });
       });
+
+      // set init active tab
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        console.log('hash', hash);
+        // if hash include comment then active comments tab
+        if (hash.includes('comment')) {
+          const commentsTab = tabWidget.querySelector('.giftflowwp-tab-widget-tab-item[data-tab-id="comments"]');
+          if (commentsTab) {
+            commentsTab.click();
+          }
+        }
+      }
     });
   </script>
   <?php
@@ -162,12 +175,34 @@ function giftflowwp_campaign_single_content_tab_donations($content, $post_id) {
             )
           )
         );
-        $_paged = 2;
+        $_paged = 1;
         $results = giftflowwp_get_campaign_donations($post_id, $args, $_paged);
         giftflowwp_load_template('donation-list-of-campaign.php', array(
           'donations' => $results,
           'paged' => $_paged,
           'campaign_id' => $post_id,
+        ));
+      ?>
+    </div>
+  </div>
+  <?php
+  return ob_get_clean();
+}
+
+add_filter('campaign_single_content_tab_comments', 'giftflowwp_campaign_single_content_tab_comments', 10, 2);
+
+function giftflowwp_campaign_single_content_tab_comments($content, $post_id) {
+  ob_start();
+  ?>
+  <div class="campaign-post-comments">
+    <!-- description -->
+    <strong><?php _e('Below are the comments for this campaign.', 'giftflowwp'); ?></strong>
+
+    <div class="campaign-post-comments-content">
+      <?php
+        // load comments template
+        giftflowwp_load_template('campaign-comment.php', array(
+          'post_id' => $post_id,
         ));
       ?>
     </div>

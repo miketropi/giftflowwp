@@ -26,11 +26,7 @@ $pagination = $donations['pagination'] ?? 1;
                     <div class="gfw-donation-row">
                         <div class="gfw-donation-left">
                             <div class="gfw-donor-info">
-                                <?php if ($donation['is_anonymous'] === 'yes'): ?>
-                                    Anonymous
-                                <?php else: ?>
-                                    <?php echo esc_html($donation['donor_meta']['name']); ?>
-                                <?php endif; ?>
+                                <?php echo esc_html($donation['donor_meta']['name']); ?>
                                 <?php if ($donation['is_anonymous'] !== 'yes' && !empty($donation['donor_meta']['city']) && !empty($donation['donor_meta']['country'])): ?>
                                     <span class="gfw-location">from <?php echo esc_html($donation['donor_meta']['city']); ?>, <?php echo esc_html($donation['donor_meta']['country']); ?></span>
                                 <?php endif; ?>

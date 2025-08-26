@@ -418,7 +418,7 @@ function giftflowwp_get_campaign_days_left($campaign_id) {
 function giftflowwp_get_campaign_donations($campaign_id, $args = array(), $paged = 1) {
 
   $args = wp_parse_args($args, array(
-    'posts_per_page' => 3,
+    'posts_per_page' => apply_filters('giftflowwp_campaign_donations_per_page', 20),
     'paged' => $paged,
     'orderby' => 'date',
     'order' => 'DESC',
@@ -448,7 +448,7 @@ function giftflowwp_get_campaign_donations($campaign_id, $args = array(), $paged
       $donor_meta['country'] = get_post_meta($donor_meta['id'], '_country', true);
 
       if ($is_anonymous) {
-        $donor_meta['name'] = __('Anonymous', 'giftflowwp');
+        $donor_meta['name'] = __('Anonymous 🍀', 'giftflowwp');
         $donor_meta['email'] = '***';
         $donor_meta['phone'] = '***';
         $donor_meta['address'] = '***';

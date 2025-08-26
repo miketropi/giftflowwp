@@ -1,3 +1,31 @@
+@charset "UTF-8";
+.gfw-loading-spinner {
+  position: relative;
+  pointer-events: none;
+}
+.gfw-loading-spinner > * {
+  opacity: 0.5;
+}
+.gfw-loading-spinner::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 12px);
+  left: calc(50% - 12px);
+  display: block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  -webkit-animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .gfw-donation-list-container {
   border-radius: 1px;
 }
@@ -117,4 +145,364 @@
   .gfw-donation-list-container .gfw-donation-empty {
     padding: 30px 15px;
   }
+}
+.gfw-campaign-comments-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.gfw-campaign-comments-list .comment {
+  margin-bottom: 30px;
+}
+.gfw-campaign-comments-list .comment .children {
+  list-style: none;
+  margin: 30px 0 0 40px;
+  padding: 0;
+}
+.gfw-campaign-comments-list .comment .children .comment {
+  margin-bottom: 20px;
+}
+.gfw-campaign-comments-list .comment .children .comment:last-child {
+  margin-bottom: 0;
+}
+.gfw-campaign-comments-list .comment .comment-body {
+  padding: 0;
+}
+.gfw-campaign-comments-list .comment .comment-body .comment-meta {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+  flex: 1;
+  min-width: 200px;
+}
+.gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-author .avatar {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+.gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-author .fn {
+  font-weight: 600;
+}
+.gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-author .fn a {
+  text-decoration: none;
+}
+.gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-author .fn a:hover {
+  opacity: 0.6;
+}
+.gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-author .says {
+  color: #666;
+  font-style: italic;
+}
+.gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-metadata {
+  font-size: 0.875rem;
+  color: #666;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-metadata a {
+  text-decoration: none;
+  color: inherit;
+}
+.gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-metadata a:hover {
+  text-decoration: underline;
+}
+.gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-metadata .edit-link::before {
+  content: "•";
+  margin-right: 10px;
+}
+.gfw-campaign-comments-list .comment .comment-body .comment-content {
+  padding: 1.5rem 2rem;
+  background: white;
+  border: 1px solid var(--giftflowwp-border-color);
+  border-radius: var(--giftflowwp-border-radius);
+  font-size: 1rem;
+}
+.gfw-campaign-comments-list .comment .comment-body .comment-content p {
+  margin: 0 0 15px;
+  line-height: 1.6;
+}
+.gfw-campaign-comments-list .comment .comment-body .comment-content p:last-child {
+  margin-bottom: 0;
+}
+.gfw-campaign-comments-list .comment .comment-body .reply {
+  margin-top: 15px;
+  text-align: right;
+}
+.gfw-campaign-comments-list .comment .comment-body .reply .comment-reply-link {
+  display: inline-block;
+  padding: 5px 0;
+  color: #666;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+.gfw-campaign-comments-list .comment .comment-body .reply .comment-reply-link:hover {
+  color: #333;
+}
+
+.gfw-no-comments {
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+.gfw-campaign-comments-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 2rem 0 1rem 0;
+  font-size: 1rem;
+}
+.gfw-campaign-comments-pagination .page-numbers {
+  display: inline-block;
+  min-width: 2.2em;
+  padding: 0.4em 0.8em;
+  margin: 0 2px;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--giftflowwp-primary, #333);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background 0.15s, color 0.15s, border 0.15s;
+}
+.gfw-campaign-comments-pagination .page-numbers:hover, .gfw-campaign-comments-pagination .page-numbers:focus {
+  background: var(--giftflowwp-primary-light, #f5f5f5);
+  color: var(--giftflowwp-primary, #222);
+  border: 1px solid var(--giftflowwp-border-color, #e0e0e0);
+  text-decoration: none;
+}
+.gfw-campaign-comments-pagination .page-numbers.current, .gfw-campaign-comments-pagination .page-numbers[aria-current=page] {
+  background: var(--giftflowwp-primary, #333);
+  color: #fff;
+  border: 1px solid var(--giftflowwp-primary, #333);
+  cursor: default;
+  pointer-events: none;
+}
+.gfw-campaign-comments-pagination .page-numbers.prev, .gfw-campaign-comments-pagination .page-numbers.next {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  background: transparent;
+  color: var(--giftflowwp-primary, #333);
+  border: 1px solid transparent;
+}
+.gfw-campaign-comments-pagination .page-numbers.prev:hover, .gfw-campaign-comments-pagination .page-numbers.prev:focus, .gfw-campaign-comments-pagination .page-numbers.next:hover, .gfw-campaign-comments-pagination .page-numbers.next:focus {
+  background: var(--giftflowwp-primary-light, #f5f5f5);
+  border: 1px solid var(--giftflowwp-border-color, #e0e0e0);
+}
+
+@media (max-width: 768px) {
+  .gfw-campaign-comments-list .comment {
+    margin-bottom: 25px;
+  }
+  .gfw-campaign-comments-list .comment .children {
+    margin: 25px 0 0 25px;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .comment-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-author {
+    min-width: auto;
+    width: 100%;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-metadata {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .comment-content {
+    padding: 1.25rem 1.5rem;
+    font-size: 0.95rem;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .reply {
+    text-align: left;
+    margin-top: 12px;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .reply .comment-reply-link {
+    padding: 8px 12px;
+    background: var(--giftflowwp-primary-light, #f5f5f5);
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .reply .comment-reply-link:hover {
+    background: var(--giftflowwp-border-color, #e0e0e0);
+  }
+  .gfw-campaign-comments-pagination {
+    margin: 1.5rem 0 1rem 0;
+    gap: 0.4rem;
+  }
+  .gfw-campaign-comments-pagination .page-numbers {
+    min-width: 2em;
+    padding: 0.5em 0.7em;
+    font-size: 0.95rem;
+  }
+}
+@media (max-width: 480px) {
+  .gfw-campaign-comments-list .comment {
+    margin-bottom: 20px;
+  }
+  .gfw-campaign-comments-list .comment .children {
+    margin: 20px 0 0 15px;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .comment-meta {
+    gap: 6px;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-author {
+    gap: 8px;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-author .avatar {
+    width: 28px;
+    height: 28px;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-author .fn {
+    font-size: 0.95rem;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-author .says {
+    font-size: 0.85rem;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-metadata {
+    font-size: 0.8rem;
+    gap: 8px;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .comment-content {
+    padding: 1rem 1.25rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .comment-content p {
+    margin: 0 0 12px;
+    line-height: 1.5;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .reply {
+    margin-top: 10px;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .reply .comment-reply-link {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .gfw-campaign-comments-pagination {
+    margin: 1.25rem 0 0.75rem 0;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+  .gfw-campaign-comments-pagination .page-numbers {
+    min-width: 1.8em;
+    padding: 0.6em 0.6em;
+    font-size: 0.9rem;
+    margin: 0 1px;
+  }
+  .gfw-campaign-comments-pagination .page-numbers.prev, .gfw-campaign-comments-pagination .page-numbers.next {
+    min-width: auto;
+    padding: 0.6em 0.8em;
+  }
+  .gfw-no-comments {
+    font-size: 12px;
+    text-align: center;
+    padding: 1rem;
+  }
+}
+@media (min-width: 481px) and (max-width: 767px) {
+  .gfw-campaign-comments-list .comment .comment-body .comment-content {
+    padding: 1.25rem 1.75rem;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .reply .comment-reply-link {
+    padding: 8px 14px;
+  }
+}
+@media (hover: none) and (pointer: coarse) {
+  .gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-author .fn a {
+    padding: 4px 0;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .comment-meta .comment-metadata a {
+    padding: 2px 4px;
+  }
+  .gfw-campaign-comments-list .comment .comment-body .reply .comment-reply-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gfw-campaign-comments-pagination .page-numbers {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.gfw-campaign-comments {
+  margin: 1rem 0 2rem;
+}
+
+.gfw-campaign-comments-form {
+  padding: 1rem 0;
+}
+.gfw-campaign-comments-form .comment-reply-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.gfw-campaign-comments-form .comment-reply-title > a {
+  margin-left: 4px;
+  margin-right: auto;
+}
+.gfw-campaign-comments-form .comment-reply-title > small {
+  font-size: 0.8rem;
+  color: #666;
+  align-self: center;
+}
+.gfw-campaign-comments-form .comment-notes {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+.gfw-campaign-comments-form .comment-form-comment,
+.gfw-campaign-comments-form .comment-form-author,
+.gfw-campaign-comments-form .comment-form-email,
+.gfw-campaign-comments-form .comment-form-url {
+  margin-bottom: 1rem;
+}
+.gfw-campaign-comments-form .comment-form-comment label,
+.gfw-campaign-comments-form .comment-form-author label,
+.gfw-campaign-comments-form .comment-form-email label,
+.gfw-campaign-comments-form .comment-form-url label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.gfw-campaign-comments-form .comment-form-comment input,
+.gfw-campaign-comments-form .comment-form-comment textarea,
+.gfw-campaign-comments-form .comment-form-author input,
+.gfw-campaign-comments-form .comment-form-author textarea,
+.gfw-campaign-comments-form .comment-form-email input,
+.gfw-campaign-comments-form .comment-form-email textarea,
+.gfw-campaign-comments-form .comment-form-url input,
+.gfw-campaign-comments-form .comment-form-url textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--giftflowwp-border-color);
+  border-radius: var(--giftflowwp-border-radius);
+  box-sizing: border-box;
+}
+.gfw-campaign-comments-form .comment-form-cookies-consent {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+.gfw-campaign-comments-form .form-submit {
+  margin-top: 1rem;
 }

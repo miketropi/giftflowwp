@@ -52,7 +52,7 @@ class Campaign extends Base_Post_Type {
             'has_archive'        => true,
             'hierarchical'       => false,
             'menu_position'      => null,
-            'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
+            'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),
             'menu_icon'          => 'dashicons-megaphone',
             'show_in_rest'       => true,
         );

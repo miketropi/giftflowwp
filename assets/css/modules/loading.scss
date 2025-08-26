@@ -1,0 +1,29 @@
+.gfw-loading-spinner {
+  position: relative;
+  pointer-events: none;
+
+  > * {
+    opacity: .5;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: calc(50% - 12px);
+    left: calc(50% - 12px);
+    display: block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid #ccc;
+    border-top-color: #333;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    -webkit-animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
