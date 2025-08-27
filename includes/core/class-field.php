@@ -1379,7 +1379,7 @@ class GiftFlowWP_Field {
 		
 		<!-- Styles for accordion -->
 		<style type="text/css">
-			.giftflowwp-accordion-section {
+			 {
 				border: 1px solid #ddd;
 				margin-bottom: 10px;
 				border-radius: 4px;
@@ -1407,6 +1407,7 @@ class GiftFlowWP_Field {
 			.giftflowwp-accordion-content {
 				padding: 15px;
 				display: none;
+				background: #fafafa;
 			}
 			
 			.giftflowwp-accordion-content .description {
