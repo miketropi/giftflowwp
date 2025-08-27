@@ -1,0 +1,26 @@
+:root {
+  --giftflowwp-primary-color: #000000;
+  --giftflowwp-secondary-color: #10B981;
+  --giftflowwp-text-color: black;
+  --giftflowwp-text-light: #6B7280;
+  --giftflowwp-border-color: #E5E7EB;
+  --giftflowwp-background-color: #F9FAFB;
+  --giftflowwp-error-color: #EF4444;
+  --giftflowwp-success-color: #10B981;
+  --giftflowwp-border-radius: 6px;
+  --giftflowwp-transition: all 0.3s ease;
+  --giftflowwp-disabled: #fafafa;
+  --giftflowwp-disabled-text: #999;
+}
+
+// SCSS Variables (referencing CSS Custom Properties)
+$primary-color: var(--giftflowwp-primary-color);
+$secondary-color: var(--giftflowwp-secondary-color);
+$text-color: var(--giftflowwp-text-color);
+$text-light: var(--giftflowwp-text-light);
+$border-color: var(--giftflowwp-border-color);
+$background-color: var(--giftflowwp-background-color);
+$error-color: var(--giftflowwp-error-color);
+$success-color: var(--giftflowwp-success-color);
+$border-radius: var(--giftflowwp-border-radius);
+$transition: var(--giftflowwp-transition);

@@ -10,6 +10,8 @@
   --giftflowwp-success-color: #10B981;
   --giftflowwp-border-radius: 6px;
   --giftflowwp-transition: all 0.3s ease;
+  --giftflowwp-disabled: #fafafa;
+  --giftflowwp-disabled-text: #999;
 }
 
 .donation-form {

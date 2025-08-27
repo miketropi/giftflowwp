@@ -42,7 +42,8 @@ class Shortcodes extends Base {
 
         $campaign_id = intval($atts['campaign_id']);
         if (!$campaign_id) {
-            return '<div class="giftflowwp-error">' . __('Invalid campaign ID', 'giftflowwp') . '</div>';
+            return;
+            // return '<div class="giftflowwp-error">' . __('Invalid campaign ID', 'giftflowwp') . '</div>';
         }
 
         // gateways

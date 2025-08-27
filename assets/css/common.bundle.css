@@ -1,4 +1,19 @@
 @charset "UTF-8";
+:root {
+  --giftflowwp-primary-color: #000000;
+  --giftflowwp-secondary-color: #10B981;
+  --giftflowwp-text-color: black;
+  --giftflowwp-text-light: #6B7280;
+  --giftflowwp-border-color: #E5E7EB;
+  --giftflowwp-background-color: #F9FAFB;
+  --giftflowwp-error-color: #EF4444;
+  --giftflowwp-success-color: #10B981;
+  --giftflowwp-border-radius: 6px;
+  --giftflowwp-transition: all 0.3s ease;
+  --giftflowwp-disabled: #fafafa;
+  --giftflowwp-disabled-text: #999;
+}
+
 .gfw-loading-spinner {
   position: relative;
   pointer-events: none;
@@ -505,4 +520,377 @@
 }
 .gfw-campaign-comments-form .form-submit {
   margin-top: 1rem;
+}
+
+.giftflowwp-donation-button {
+  margin: 1.5rem 0;
+}
+.giftflowwp-donation-button .donation-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  border: none;
+  font-family: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  min-height: 48px;
+  font-size: 1rem;
+}
+.giftflowwp-donation-button .donation-btn--full-width {
+  width: 100% !important;
+  max-width: none !important;
+  display: flex;
+  justify-content: center;
+}
+.giftflowwp-donation-button .donation-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  opacity: 0.8;
+}
+.giftflowwp-donation-button .donation-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+.giftflowwp-donation-button .donation-btn--disabled {
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+.giftflowwp-donation-button .donation-btn--disabled:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+.giftflowwp-donation-button .donation-btn:focus {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  outline-color: rgba(59, 130, 246, 0.8);
+}
+.giftflowwp-donation-button .donation-btn:focus:not(:disabled) {
+  outline-color: rgba(59, 130, 246, 0.8);
+}
+.giftflowwp-donation-button .donation-button-info {
+  margin-top: 0.5rem;
+}
+.giftflowwp-donation-button .donation-button-info .campaign-progress-text {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+.giftflowwp-donation-button .donation-button-status {
+  font-size: 0.875rem;
+  color: #f59e0b;
+  margin: 0.5rem 0 0 0;
+  padding: 0.75rem;
+  background: #fef3c7;
+  border-radius: 8px;
+  border: 1px solid #fbbf24;
+}
+.giftflowwp-donation-button .donation-button-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--giftflowwp-error-color);
+  font-weight: 600;
+  margin-top: 0.25rem;
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  line-height: 1.2rem;
+}
+.giftflowwp-donation-button .donation-button-error svg {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  color: currentColor;
+}
+
+.block-editor-block-inspector input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #007cba;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.block-editor-block-inspector input[type=range]::-webkit-slider-thumb:hover {
+  background: #005a87;
+  transform: scale(1.1);
+}
+.block-editor-block-inspector input[type=range]::-webkit-slider-thumb:active {
+  background: #004a73;
+  transform: scale(0.95);
+}
+.block-editor-block-inspector input[type=range]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #007cba;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  -moz-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.block-editor-block-inspector input[type=range]::-moz-range-thumb:hover {
+  background: #005a87;
+}
+.block-editor-block-inspector input[type=range]::-moz-range-thumb:active {
+  background: #004a73;
+}
+.block-editor-block-inspector input[type=range]::-webkit-slider-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  background: #e2e8f0;
+  border-radius: 3px;
+  border: none;
+}
+.block-editor-block-inspector input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  background: #e2e8f0;
+  border-radius: 3px;
+  border: none;
+}
+.block-editor-block-inspector input[type=range]:focus {
+  outline: none;
+}
+@media (max-width: 768px) {
+  .giftflowwp-donation-button {
+    margin: 1.25rem 0;
+    gap: 0.875rem;
+  }
+  .giftflowwp-donation-button .donation-btn {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.875rem 1.75rem;
+    min-height: 48px;
+  }
+  .giftflowwp-donation-button .donation-btn--full-width {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}
+@media (max-width: 480px) {
+  .giftflowwp-donation-button {
+    margin: 1rem 0;
+    gap: 0.75rem;
+  }
+  .giftflowwp-donation-button .donation-btn {
+    border-radius: 6px !important;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.5rem;
+    min-height: 44px;
+  }
+  .giftflowwp-donation-button .donation-button-info .campaign-progress-text {
+    font-size: 0.8rem;
+  }
+  .giftflowwp-donation-button .donation-button-status,
+  .giftflowwp-donation-button .donation-button-error {
+    font-size: 0.8rem;
+    padding: 0.625rem;
+    border-radius: 6px;
+  }
+}
+@media (hover: none) and (pointer: coarse) {
+  .giftflowwp-donation-button .donation-btn {
+    min-height: 44px;
+  }
+  .giftflowwp-donation-button .donation-btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  .giftflowwp-donation-button .donation-btn:active:not(:disabled) {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+}
+@media (prefers-contrast: high) {
+  .giftflowwp-donation-button .donation-btn {
+    border: 2px solid currentColor;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .giftflowwp-donation-button .donation-btn {
+    transition: none;
+  }
+  .giftflowwp-donation-button .donation-btn:hover:not(:disabled) {
+    transform: none;
+  }
+  .giftflowwp-donation-button .donation-btn:active:not(:disabled) {
+    transform: none;
+  }
+}
+.giftflowwp-share__title {
+  font-weight: 600;
+  color: var(--giftflowwp-text-color, #1f2937);
+  margin: 0 0 0.5rem 0;
+  display: inline-block;
+  line-height: normal;
+}
+.giftflowwp-share__buttons {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.giftflowwp-share__button {
+  font-size: 11px;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: solid 1px;
+  line-height: normal;
+  cursor: pointer;
+}
+.giftflowwp-share__button:hover {
+  opacity: 0.8;
+}
+.giftflowwp-share__text {
+  font-weight: 600;
+  white-space: nowrap;
+}
+.giftflowwp-share__copy-feedback {
+  margin-top: 0.75rem;
+  background: none;
+  border: none;
+  border-radius: 0;
+  color: var(--giftflowwp-success-dark, #065f46);
+  font-weight: bold;
+  animation: none;
+  font-size: 11px;
+  text-align: right;
+  position: absolute;
+}
+.giftflowwp-share__copy-message {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+.giftflowwp-share__copy-message svg {
+  width: 16px;
+  min-width: 16px;
+  height: 16px;
+  line-height: 0;
+}
+
+@keyframes giftflowwpShareFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 768px) {
+  .giftflowwp-share {
+    margin: 1.5rem 0;
+  }
+  .giftflowwp-share__title {
+    font-size: 1.125rem;
+    margin-bottom: 0.875rem;
+  }
+  .giftflowwp-share__buttons {
+    gap: 0.625rem;
+  }
+  .giftflowwp-share__button {
+    padding: 0.625rem 1rem;
+    font-size: 0.8rem;
+    min-height: 40px;
+    min-width: 44px;
+  }
+}
+@media (max-width: 480px) {
+  .giftflowwp-share {
+    margin: 1.25rem 0;
+  }
+  .giftflowwp-share__title {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .giftflowwp-share__buttons {
+    gap: 0.5rem;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .giftflowwp-share__buttons .giftflowwp-share__button {
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+  .giftflowwp-share__button {
+    border-radius: 6px;
+    font-size: 0.75rem;
+    padding: 0.5rem 0.875rem;
+    min-height: 36px;
+  }
+  .giftflowwp-share__copy-feedback {
+    font-size: 0.8rem;
+    padding: 0.375rem 0.875rem;
+  }
+}
+@media (hover: none) and (pointer: coarse) {
+  .giftflowwp-share__button {
+    min-height: 44px;
+  }
+  .giftflowwp-share__button:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  .giftflowwp-share__button:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+}
+@media (prefers-contrast: high) {
+  .giftflowwp-share__button {
+    border-width: 2px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .giftflowwp-share__button {
+    transition: none;
+  }
+  .giftflowwp-share__button:hover {
+    transform: none;
+  }
+  .giftflowwp-share__button:active {
+    transform: none;
+  }
+  .giftflowwp-share__copy-feedback {
+    animation: none;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  .giftflowwp-share__title {
+    color: var(--giftflowwp-text-color-dark, #f9fafb);
+  }
+  .giftflowwp-share__button {
+    background: var(--giftflowwp-bg-dark, #1f2937);
+    border-color: var(--giftflowwp-border-color-dark, #4b5563);
+    color: var(--giftflowwp-text-color-dark, #f9fafb);
+  }
+  .giftflowwp-share__button:hover {
+    background: var(--giftflowwp-bg-hover-dark, #374151);
+    border-color: var(--giftflowwp-border-hover-dark, #6b7280);
+  }
 }
