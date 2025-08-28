@@ -58,43 +58,45 @@ function giftflowwp_settings_page() {
     // $email_options = get_option('giftflowwp_email_options');
     // $design_options = get_option('giftflowwp_design_options');
     ?>
-    <div class="wrap">
-        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-        
-        <h2 class="nav-tab-wrapper">
-            <?php foreach ($tabs as $tab_key => $tab_label) : ?>
-                <a href="?page=giftflowwp-settings&tab=<?php echo $tab_key; ?>" class="nav-tab <?php echo $active_tab === $tab_key ? 'nav-tab-active' : ''; ?>">
-                    <?php echo $tab_label; ?>
-                </a>
-            <?php endforeach; ?>
-        </h2>
+    <div class="giftflow_page_giftflowwp-settings">
+        <div class="wrap">
+            <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+            
+            <h2 class="nav-tab-wrapper">
+                <?php foreach ($tabs as $tab_key => $tab_label) : ?>
+                    <a href="?page=giftflowwp-settings&tab=<?php echo $tab_key; ?>" class="nav-tab <?php echo $active_tab === $tab_key ? 'nav-tab-active' : ''; ?>">
+                        <?php echo $tab_label; ?>
+                    </a>
+                <?php endforeach; ?>
+            </h2>
 
-        <form method="post" action="options.php">
-            <?php
-            switch ($active_tab) {
-                case 'general':
-                    settings_fields('giftflowwp_general_options');
-                    do_settings_sections('giftflowwp-dashboard');
-                    break;
-                case 'payment':
-                    settings_fields('giftflowwp_payment_options');
-                    do_settings_sections('giftflowwp-payment');
-                    break;
-                case 'email':
-                    settings_fields('giftflowwp_email_options');
-                    do_settings_sections('giftflowwp-email');
-                    break;
-                case 'design':
-                    settings_fields('giftflowwp_design_options');
-                    do_settings_sections('giftflowwp-design');
-                    break;
-            }
+            <form method="post" action="options.php">
+                <?php
+                switch ($active_tab) {
+                    case 'general':
+                        settings_fields('giftflowwp_general_options');
+                        do_settings_sections('giftflowwp-dashboard');
+                        break;
+                    case 'payment':
+                        settings_fields('giftflowwp_payment_options');
+                        do_settings_sections('giftflowwp-payment');
+                        break;
+                    case 'email':
+                        settings_fields('giftflowwp_email_options');
+                        do_settings_sections('giftflowwp-email');
+                        break;
+                    case 'design':
+                        settings_fields('giftflowwp_design_options');
+                        do_settings_sections('giftflowwp-design');
+                        break;
+                }
 
-            do_action('giftflowwp_settings_tabs', $active_tab);
+                do_action('giftflowwp_settings_tabs', $active_tab);
 
-            submit_button(__('Save Settings', 'giftflowwp'));
-            ?>
-        </form>
+                submit_button(__('Save Settings', 'giftflowwp'));
+                ?>
+            </form>
+        </div>
     </div>
     <?php
 }

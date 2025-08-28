@@ -143,7 +143,7 @@ function giftflowwp_campaign_single_content_tab_campaign($content, $post_id) {
   ?>
   <div class="campaign-post-content">
 
-    <?php echo do_shortcode('[giftflow_donation_form campaign_id="' . $post_id . '"]'); ?>
+    <!-- <?php // echo do_shortcode('[giftflow_donation_form campaign_id="' . $post_id . '"]'); ?> -->
 
     <!-- campaign post content by id -->
     <?php echo get_the_content($post_id); ?>

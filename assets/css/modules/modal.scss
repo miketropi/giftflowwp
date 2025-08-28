@@ -1,0 +1,659 @@
+/**
+ * GiftFlowWP Modal Styles
+ * Clean, simple, and smooth modal styling
+ */
+
+// Modal overlay
+.giftflowwp-modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+
+  overflow: auto;
+  
+  &--open {
+    opacity: 1;
+  }
+}
+
+// Main modal container
+.giftflowwp-modal {
+  position: relative;
+  background: #ffffff;
+  border-radius: var(--giftflowwp-border-radius);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  display: none;
+  overflow: hidden;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+
+  &.modal-transparent-wrapper {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+
+    overflow: visible;
+
+    .giftflowwp-modal__content {
+      max-height: none;
+    }
+  }
+  
+  // Animation variants
+  &--fade {
+    transform: scale(1);
+    opacity: 0;
+    
+    &.giftflowwp-modal--open {
+      opacity: 1;
+    }
+  }
+  
+  &--slide {
+    transform: translateY(50px);
+    opacity: 0;
+    
+    &.giftflowwp-modal--open {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  &--zoom {
+    transform: scale(0.9);
+    opacity: 0;
+    
+    &.giftflowwp-modal--open {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  // Position variants
+  &--center {
+    margin: auto;
+  }
+  
+  &--top {
+    align-self: flex-start;
+    margin-top: 2rem;
+  }
+  
+  &--bottom {
+    align-self: flex-end;
+    margin-bottom: 2rem;
+  }
+  
+  // Size presets
+  &--small {
+    max-width: 400px;
+  }
+  
+  &--medium {
+    max-width: 600px;
+  }
+  
+  &--large {
+    max-width: 800px;
+  }
+  
+  &--full {
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+}
+
+// Modal content
+.giftflowwp-modal__content {
+  padding: 1.5rem;
+  overflow-y: auto;
+  max-height: calc(90vh - 3rem);
+  
+  // Custom scrollbar
+  // &::-webkit-scrollbar {
+  //   width: 6px;
+  // }
+  
+  // &::-webkit-scrollbar-track {
+  //   background: #f1f5f9;
+  //   border-radius: 3px;
+  // }
+  
+  // &::-webkit-scrollbar-thumb {
+  //   background: #cbd5e1;
+  //   border-radius: 3px;
+    
+  //   &:hover {
+  //     background: #94a3b8;
+  //   }
+  // }
+
+  // h1 to h6
+  h1, h2, h3, h4, h5, h6 {
+    
+  }
+}
+
+// Close button
+.giftflowwp-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: black;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  transition: all 0.2s ease-in-out;
+  z-index: 10;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  
+  &:hover {
+    
+    transform: scale(1.1);
+    opacity: .8;
+  }
+  
+  &:focus {
+    // outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Modal header
+.giftflowwp-modal__header {
+  margin: -1.5rem -1.5rem 1rem -1.5rem;
+  padding: 1.5rem 1.5rem 0 1.5rem;
+  
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.4;
+  }
+}
+
+// Modal body
+.giftflowwp-modal__body {
+  margin-bottom: 1rem;
+  
+  p {
+    margin: 0 0 1rem 0;
+    color: #475569;
+    line-height: 1.6;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Modal footer
+.giftflowwp-modal__footer {
+  margin: 1rem -1.5rem -1.5rem -1.5rem;
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  align-items: center;
+  
+  // Reverse order for better mobile experience
+  @media (max-width: 480px) {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    
+    .giftflowwp-modal__btn {
+      width: 100%;
+    }
+  }
+}
+
+// Modal buttons
+.giftflowwp-modal__btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--giftflowwp-border-radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  
+  &:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+  
+  // Primary button
+  &--primary {
+    background: #3b82f6;
+    color: #ffffff;
+    
+    &:hover {
+      background: #2563eb;
+      transform: translateY(-1px);
+      // box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+    
+    &:active {
+      transform: translateY(0);
+      // box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+    }
+  }
+  
+  // Secondary button
+  &--secondary {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    
+    &:hover {
+      background: #e2e8f0;
+      color: #1e293b;
+      border-color: #cbd5e1;
+    }
+  }
+  
+  // Danger button
+  &--danger {
+    background: #ef4444;
+    color: #ffffff;
+    
+    &:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+      // box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+    
+    &:active {
+      transform: translateY(0);
+      // box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+    }
+  }
+  
+  // Success button
+  &--success {
+    background: #10b981;
+    color: #ffffff;
+    
+    &:hover {
+      background: #059669;
+      transform: translateY(-1px);
+      // box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    
+    &:active {
+      transform: translateY(0);
+      // box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+    }
+  }
+  
+  // Disabled state
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}
+
+// Modal input
+.giftflowwp-modal__input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--giftflowwp-border-color);
+  border-radius: var(--giftflowwp-border-radius);
+  // font-size: 0.875rem;
+  // transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  
+  &:focus {
+    outline: none;
+    // border-color: #3b82f6;
+    // box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  &::placeholder {
+    color: #9ca3af;
+  }
+}
+
+// Loading state
+.giftflowwp-modal__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: #64748b;
+  font-size: 0.875rem;
+  
+  &::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e2e8f0;
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: giftflowwpModalSpin 1s linear infinite;
+    margin-right: 0.75rem;
+  }
+}
+
+// Error state
+.giftflowwp-modal__error {
+  padding: 1rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  color: #dc2626;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+// Success message
+.giftflowwp-modal__success {
+  padding: 1rem;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 6px;
+  color: #16a34a;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+// Info message
+.giftflowwp-modal__info {
+  padding: 1rem;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  color: #2563eb;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+// Warning message
+.giftflowwp-modal__warning {
+  padding: 1rem;
+  background: #fffbeb;
+  border: 1px solid #fed7aa;
+  border-radius: 6px;
+  color: #d97706;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+// Animations
+@keyframes giftflowwpModalSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .giftflowwp-modal {
+    margin: 1rem;
+    max-width: calc(100vw - 2rem);
+    max-height: calc(100vh - 2rem);
+    
+    &__content {
+      padding: 1rem;
+      max-height: calc(100vh - 4rem);
+    }
+    
+    &__header {
+      margin: -1rem -1rem 0.75rem -1rem;
+      padding: 1rem 1rem 0 1rem;
+      
+      h1, h2, h3, h4, h5, h6 {
+        font-size: 1.125rem;
+      }
+    }
+    
+    &__footer {
+      margin: 0.75rem -1rem -1rem -1rem;
+      padding: 0.75rem 1rem 1rem 1rem;
+    }
+    
+    &__close {
+      top: 0.75rem;
+      right: 0.75rem;
+      width: 28px;
+      height: 28px;
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .giftflowwp-modal {
+    margin: 0.5rem;
+    max-width: calc(100vw - 1rem);
+    max-height: calc(100vh - 1rem);
+    border-radius: 6px;
+    
+    &__content {
+      padding: 0.75rem;
+      max-height: calc(100vh - 2.5rem);
+    }
+    
+    &__header {
+      margin: -0.75rem -0.75rem 0.5rem -0.75rem;
+      padding: 0.75rem 0.75rem 0 0.75rem;
+      
+      h1, h2, h3, h4, h5, h6 {
+        font-size: 1rem;
+      }
+    }
+    
+    &__footer {
+      margin: 0.5rem -0.75rem -0.75rem -0.75rem;
+      padding: 0.5rem 0.75rem 0.75rem 0.75rem;
+    }
+    
+    &__btn {
+      padding: 0.625rem 1.25rem;
+      font-size: 0.8rem;
+      min-height: 40px;
+    }
+    
+    &__close {
+      top: 0.5rem;
+      right: 0.5rem;
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
+    }
+  }
+}
+
+// Touch device optimizations
+@media (hover: none) and (pointer: coarse) {
+  .giftflowwp-modal {
+    &__btn {
+      min-height: 44px; // iOS recommended minimum touch target
+      
+      &:hover {
+        transform: none !important;
+        box-shadow: none !important;
+      }
+      
+      &:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+      }
+    }
+    
+    &__close {
+      min-height: 44px;
+      min-width: 44px;
+      
+      &:hover {
+        transform: none !important;
+      }
+      
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .giftflowwp-modal {
+    border: 2px solid #000000;
+    
+    &__close {
+      border: 2px solid #000000;
+    }
+    
+    &__btn {
+      border: 2px solid #000000;
+    }
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .giftflowwp-modal {
+    transition: none;
+    
+    &__overlay {
+      transition: none;
+    }
+    
+    &--fade,
+    &--slide,
+    &--zoom {
+      transition: none;
+      
+      &.giftflowwp-modal--open {
+        transform: none;
+        opacity: 1;
+      }
+    }
+    
+    &__btn {
+      transition: none;
+      
+      &:hover {
+        transform: none;
+        box-shadow: none;
+      }
+      
+      &:active {
+        transform: none;
+        box-shadow: none;
+      }
+    }
+    
+    &__close {
+      transition: none;
+      
+      &:hover {
+        transform: none;
+      }
+      
+      &:active {
+        transform: none;
+      }
+    }
+  }
+  
+  @keyframes giftflowwpModalSpin {
+    to {
+      transform: none;
+    }
+  }
+}
+
+// Dark mode support (if CSS custom properties are available)
+@media (prefers-color-scheme: dark) {
+  .giftflowwp-modal {
+    background: #1f2937;
+    color: #f9fafb;
+    
+    &__header {
+      h1, h2, h3, h4, h5, h6 {
+        color: #f9fafb;
+      }
+    }
+    
+    &__body {
+      p {
+        color: #d1d5db;
+      }
+    }
+    
+    &__footer {
+      border-top-color: #374151;
+    }
+    
+    &__close {
+      background: #374151;
+      color: #d1d5db;
+      
+      &:hover {
+        background: #4b5563;
+        color: #f9fafb;
+      }
+    }
+    
+    &__input {
+      background: #374151;
+      border-color: #4b5563;
+      color: #f9fafb;
+      
+      &::placeholder {
+        color: #9ca3af;
+      }
+    }
+    
+    &__btn {
+      &--secondary {
+        background: #374151;
+        color: #d1d5db;
+        border-color: #4b5563;
+        
+        &:hover {
+          background: #4b5563;
+          color: #f9fafb;
+          border-color: #6b7280;
+        }
+      }
+    }
+  }
+}

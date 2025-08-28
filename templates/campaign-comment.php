@@ -60,6 +60,20 @@ $comments = get_comments($args);
       echo '</nav> <!-- .gfw-campaign-comments-pagination -->';
     }
   } else {
+
+    // check post comment is closed
+    $comment_status = comments_open(get_the_ID());
+   
+    if($comment_status !== true) {
+      // return message that comment is closed
+      ?>
+      <div class="gfw-no-comments">
+        <p>
+          <?php esc_html_e('Comments are closed for this campaign.', 'giftflowwp'); ?>
+        </p>
+      </div>
+      <?php
+    } else {
     ?>
     <div class="gfw-no-comments">
       <p>
@@ -67,6 +81,7 @@ $comments = get_comments($args);
       </p>
     </div>
     <?php
+    }
   }
   ?>
 

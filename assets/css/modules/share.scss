@@ -1,0 +1,67 @@
+.giftflowwp-share {
+
+  &__title {
+    font-weight: 600;
+    color: var(--giftflowwp-text-color, #1f2937);
+    margin: 0 0 .5rem 0;
+    display: inline-block;
+    line-height: normal;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    // justify-content: center;
+    align-items: center;
+  }
+
+  &__button {
+    font-size: 11px;
+    // font-weight: bold;
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: solid 1px;
+    line-height: normal;
+    cursor: pointer;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+
+  &__text {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  &__copy-feedback {
+    margin-top: 0.75rem;
+    background: none;
+    border: none;
+    border-radius: 0;
+    color: var(--giftflowwp-success-dark, #065f46);
+    font-weight: bold;
+    animation: none;
+    font-size: 11px;
+    text-align: right;
+    position: absolute;
+  }
+
+  &__copy-message {
+    display: flex;
+    gap: .3rem;
+    align-items: center;
+
+    svg {
+      width: 16px;
+      min-width: 16px;
+      height: 16px;
+      line-height: 0;
+    }
+  }
+}

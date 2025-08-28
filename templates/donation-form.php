@@ -38,7 +38,7 @@ Donation form template 2 steps:
 */
 ?>
 
-<form class="donation-form" id="donation-form">
+<form class="donation-form" id="donation-form-<?php echo esc_attr($campaign_id); ?>">
     <!-- Campaign Header -->
     <div class="donation-form__header">
         <div class="donation-form__campaign">
@@ -88,20 +88,22 @@ Donation form template 2 steps:
                             <?php foreach ($donation_types as $index => $donation_type) : 
                                 $is_checked = $index === 0 ? 'checked' : '';
                                 ?>
-                                <input 
-                                    type="radio" 
-                                    name="donation_type" 
-                                    value="<?php echo esc_attr($donation_type['name']); ?>"   
-                                    id="donation_type_<?php echo esc_attr($donation_type['name']); ?>" 
-                                    <?php echo $is_checked; ?>>
-                                <label class="donation-form__radio-label" for="donation_type_<?php echo esc_attr($donation_type['name']); ?>">
-                                    <span class="donation-form__radio-content">
-                                        <span class="donation-form__radio-title">
-                                            <?php echo $donation_type['icon']; ?>	
-                                            <?php echo esc_html($donation_type['label']); ?>
+                                <label>
+                                    <input 
+                                        type="radio" 
+                                        name="donation_type" 
+                                        value="<?php echo esc_attr($donation_type['name']); ?>"   
+                                        id="donation_type_<?php echo esc_attr($donation_type['name']); ?>" 
+                                        <?php echo $is_checked; ?>>
+                                    <div class="donation-form__radio-label" for="donation_type_<?php echo esc_attr($donation_type['name']); ?>">
+                                        <span class="donation-form__radio-content">
+                                            <span class="donation-form__radio-title">
+                                                <?php echo $donation_type['icon']; ?>	
+                                                <?php echo esc_html($donation_type['label']); ?>
+                                            </span>
+                                            <span class="donation-form__radio-description"><?php echo esc_html($donation_type['description']); ?></span>
                                         </span>
-                                        <span class="donation-form__radio-description"><?php echo esc_html($donation_type['description']); ?></span>
-                                    </span>
+                                    </div>
                                 </label>
                             <?php endforeach; ?>
 
@@ -197,7 +199,9 @@ Donation form template 2 steps:
                             </div>
                             <div class="donation-form__summary-item">
                                 <dt><?php _e('Email', 'giftflowwp'); ?></dt>
-                                <dd class="donation-form__summary-email" data-output="donor_email"></dd>
+                                <dd class="donation-form__summary-email" data-output="donor_email">
+                                    <?php echo $user_email; ?>
+                                </dd>
                             </div>
                             <div class="donation-form__summary-item">
                                 <dt><?php _e('Campaign', 'giftflowwp'); ?></dt>

@@ -1,0 +1,192 @@
+.giftflowwp-donation-button {
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // gap: 1rem;
+  margin: 1.5rem 0;
+  // text-align: center;
+
+  .donation-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    border: none;
+    font-family: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    min-height: 48px;
+    font-size: 1rem;
+    // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    // Full width option
+    &--full-width {
+      width: 100% !important;
+      max-width: none !important;
+      display: flex;
+      justify-content: center;
+    }
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      opacity: .8;
+      // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      // box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    // Disabled state - now handled by inline styles in PHP
+    &--disabled {
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+
+      &:hover {
+        transform: none !important;
+        box-shadow: none !important;
+      }
+    }
+
+    // Focus states for accessibility - using CSS custom properties for better color support
+    &:focus {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+      outline-color: rgba(59, 130, 246, 0.8);
+    }
+
+    // Focus state with custom colors
+    &:focus:not(:disabled) {
+      outline-color: rgba(59, 130, 246, 0.8);
+    }
+  }
+
+  .donation-button-info {
+    margin-top: 0.5rem;
+
+    .campaign-progress-text {
+      font-size: 0.875rem;
+      color: #64748b;
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+
+  .donation-button-status {
+    font-size: 0.875rem;
+    color: #f59e0b;
+    margin: 0.5rem 0 0 0;
+    padding: 0.75rem;
+    background: #fef3c7;
+    border-radius: 8px;
+    border: 1px solid #fbbf24;
+  }
+
+  .donation-button-error {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--giftflowwp-error-color);
+    font-weight: 600;
+    margin-top: 0.25rem;
+    background: none;
+    border: none;
+    padding: 0;
+    border-radius: 0;
+    line-height: 1.2rem;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      color: currentColor;
+    }
+  }
+}
+
+// Custom range slider styles for the block editor
+.block-editor-block-inspector {
+  input[type="range"] {
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #007cba;
+      cursor: pointer;
+      border: 2px solid #ffffff;
+      // box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #005a87;
+        transform: scale(1.1);
+      }
+
+      &:active {
+        background: #004a73;
+        transform: scale(0.95);
+      }
+    }
+
+    &::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #007cba;
+      cursor: pointer;
+      border: 2px solid #ffffff;
+      // box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #005a87;
+      }
+
+      &:active {
+        background: #004a73;
+      }
+    }
+
+    &::-webkit-slider-track {
+      width: 100%;
+      height: 6px;
+      cursor: pointer;
+      background: #e2e8f0;
+      border-radius: 3px;
+      border: none;
+    }
+
+    &::-moz-range-track {
+      width: 100%;
+      height: 6px;
+      cursor: pointer;
+      background: #e2e8f0;
+      border-radius: 3px;
+      border: none;
+    }
+
+    &:focus {
+      outline: none;
+
+      &::-webkit-slider-thumb {
+        // box-shadow: 0 0 0 3px rgba(0, 124, 186, 0.2);
+      }
+
+      &::-moz-range-thumb {
+        // box-shadow: 0 0 0 3px rgba(0, 124, 186, 0.2);
+      }
+    }
+  }
+}

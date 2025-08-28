@@ -1,8 +1,11 @@
 /**
  * GiftFlow Common JS
  */
-import { replaceContentBySelector } from './util/helpers.js';
 import './util/comment-form.js';
+import './util/modal.js';
+
+import { replaceContentBySelector } from './util/helpers.js';
+import donationButton_Handle from './util/donation-button.js';
 
 ((w, $) => {
   "use strict"
@@ -52,5 +55,7 @@ import './util/comment-form.js';
       console.error('Error loading donation list pagination template');
     }
   }
+
+  gfw.donationButton_Handle = donationButton_Handle;
 
 })(window, jQuery)
