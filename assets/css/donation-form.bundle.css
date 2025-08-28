@@ -62,8 +62,8 @@
   }
 }
 .donation-form__campaign-thumbnail {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   overflow: hidden;
   border: 1px solid var(--giftflowwp-border-color);
   border-radius: var(--giftflowwp-border-radius);
@@ -241,7 +241,7 @@
 .donation-form__radio-group--donation-type input[type=radio] {
   display: none;
 }
-.donation-form__radio-group--donation-type input[type=radio]:checked + label {
+.donation-form__radio-group--donation-type input[type=radio]:checked + .donation-form__radio-label {
   border-color: var(--giftflowwp-primary-color);
   background-color: var(--giftflowwp-primary-color);
   color: white;

@@ -447,6 +447,8 @@
 		}
 	}
 
+	w.donationForm_Class = donationForm;
+
 	// make custom event trigger donation form and how to use it	
 	/**
 	* Custom event to trigger donation form initialization

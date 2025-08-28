@@ -450,13 +450,13 @@ function giftflowwp_get_campaign_donations($campaign_id, $args = array(), $paged
 
       if ($is_anonymous) {
         $donor_meta['name'] = __('Anonymous 🍀', 'giftflowwp');
-        $donor_meta['email'] = '***';
-        $donor_meta['phone'] = '***';
-        $donor_meta['address'] = '***';
-        $donor_meta['city'] = '***';
-        $donor_meta['state'] = '***';
-        $donor_meta['postal_code'] = '***';
-        $donor_meta['country'] = '***';
+        $donor_meta['email'] = '';
+        $donor_meta['phone'] = '';
+        $donor_meta['address'] = '';
+        $donor_meta['city'] = '';
+        $donor_meta['state'] = '';
+        $donor_meta['postal_code'] = '';
+        $donor_meta['country'] = '';
       }
 
       return array(

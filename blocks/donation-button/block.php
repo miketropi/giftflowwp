@@ -132,6 +132,7 @@ function giftflowwp_donation_button_block_render($attributes, $content, $block) 
             <?php echo $is_active ? '' : 'disabled'; ?>
             data-campaign-id="<?php echo esc_attr($campaign_id); ?>"
             data-campaign-title="<?php echo esc_attr($campaign_title); ?>"
+            onclick="giftflowwp.donationButton_Handle(this)"
         >
             <?php echo esc_html($button_text); ?>
         </button>

@@ -95,7 +95,7 @@ function giftflowwp_share_block_render($attributes, $content, $block) {
     }
 
     // Default social platforms (Facebook, X/Twitter, LinkedIn)
-    $social_platforms = array('facebook', 'twitter', 'linkedin');
+    $social_platforms = array('twitter', 'facebook', 'linkedin');
 
     ob_start();
     ?>

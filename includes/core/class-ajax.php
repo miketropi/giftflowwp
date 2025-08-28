@@ -28,6 +28,9 @@ class GiftFlowWP_Ajax {
 		add_action( 'wp_ajax_giftflowwp_get_gallery_images', array( $this, 'get_gallery_images' ) );
 		
 		add_action('wp_ajax_giftflowwp_get_pagination_donation_list_html', array($this, 'get_pagination_donation_list_html'));
+	
+		// giftflowwp_get_campaign_donation_form
+		add_action('wp_ajax_giftflowwp_get_campaign_donation_form', array($this, 'get_campaign_donation_form'));
 	}
 
 	/**
@@ -104,6 +107,16 @@ class GiftFlowWP_Ajax {
 			'__html' => $html, 
 			'__replace_content_selector' => '.__donations-list-by-campaign-' . $campaign ) 
 		);
+	}
+
+	public function get_campaign_donation_form() {
+		// ajax check nonce
+		if ( ! isset( $_GET['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'giftflowwp_common_nonce' ) ) {
+			wp_send_json_error( __( 'Security check failed', 'giftflowwp' ) );
+		}
+		
+		echo do_shortcode('[giftflow_donation_form campaign_id="' . $_GET['campaign_id'] . '"]');
+		die();
 	}
 }
 
