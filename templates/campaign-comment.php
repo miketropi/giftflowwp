@@ -12,7 +12,7 @@ $args = [
   'number'  => $per_page,
   'offset'  => ($paged - 1) * $per_page,
   'orderby' => 'comment_date_gmt',
-  'order'   => 'ASC',
+  'order'   => 'DESC',
 ];
 
 $comments = get_comments($args);
