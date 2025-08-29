@@ -36,6 +36,13 @@ class Block_Template {
                 'postTypes' => array( 'page' ),
                 'template' => 'archive-campaign'
             ),
+            'taxonomy-campaign-tax' => array(
+                'title' => 'Category Campaign Archive',
+                'description' => 'A template for the category campaign archive page.',
+                'postTypes' => array( 'campaign' ),
+                'categories' => array( 'campaign-tax' ),
+                'template' => 'category-campaign-archive'
+            ),
             'single-campaign' => array(
                 'title' => 'Single Campaign',
                 'description' => 'A template for the single campaign page.',
@@ -59,16 +66,19 @@ class Block_Template {
         foreach ( $templates as $slug => $template ) {
 
             $content = file_get_contents(GIFTFLOWWP_PLUGIN_DIR . 'block-templates/' . $template['template'] . '.html');
+            $template['content'] = apply_filters('giftflowwp_block_template_content', $content, $template);
 
             register_block_template(
                 'giftflowwp//' . $slug,
-                array(
-                    'title' => $template['title'],
-                    'description' => $template['description'] ?? '',
-                    'postTypes' => $template['postTypes'],
-                    'template' => $template['template'],
-                    'content' => apply_filters('giftflowwp_block_template_content', $content, $template)
-                )
+                $template
+                // array(
+                //     'title' => $template['title'],
+                //     'description' => $template['description'] ?? '',
+                //     'postTypes' => $template['postTypes'],
+                //     'taxonomies' => $template['taxonomies'] ?? '',
+                //     'template' => $template['template'],
+                //     'content' => apply_filters('giftflowwp_block_template_content', $content, $template)
+                // )
             );
         }
     }

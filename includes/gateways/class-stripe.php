@@ -237,7 +237,8 @@ class Stripe_Gateway extends Gateway_Base {
                         'value' => isset($payment_options['stripe']['stripe_webhook_enabled']) ? $payment_options['stripe']['stripe_webhook_enabled'] : false,
                         'description' => sprintf(
                             __('Enable webhooks for payment status updates. Webhook URL: %s', 'giftflowwp'),
-                            '<code>' . admin_url('admin-ajax.php?action=giftflowwp_stripe_webhook') . '</code>'
+                            '<code>' . admin_url('admin-ajax.php?action=giftflowwp_stripe_webhook') . '</code><br>' .
+                            __('Recommended Stripe events to send: <strong>payment_intent.succeeded</strong>, <strong>payment_intent.payment_failed</strong>, <strong>charge.refunded</strong>.', 'giftflowwp')
                         ),
                     ],
                 ]
