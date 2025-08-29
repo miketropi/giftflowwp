@@ -48,7 +48,7 @@ function giftflowwp_settings_page() {
         'general' => __('General', 'giftflowwp'),
         'payment' => __('Payment', 'giftflowwp'),
         'email' => __('Email', 'giftflowwp'),
-        'design' => __('Design', 'giftflowwp'),
+        // 'design' => __('Design', 'giftflowwp'),
     ]);
     
 
@@ -85,10 +85,10 @@ function giftflowwp_settings_page() {
                         settings_fields('giftflowwp_email_options');
                         do_settings_sections('giftflowwp-email');
                         break;
-                    case 'design':
-                        settings_fields('giftflowwp_design_options');
-                        do_settings_sections('giftflowwp-design');
-                        break;
+                    // case 'design':
+                    //     settings_fields('giftflowwp_design_options');
+                    //     do_settings_sections('giftflowwp-design');
+                    //     break;
                 }
 
                 do_action('giftflowwp_settings_tabs', $active_tab);
@@ -170,27 +170,27 @@ function giftflowwp_initialize_settings() {
             'option_name' => 'giftflowwp_email_options',
             'page' => 'giftflowwp-email',
             'section' => 'giftflowwp_email_settings',
-            'section_title' => __('Email Templates', 'giftflowwp'),
+            'section_title' => __('Email', 'giftflowwp'),
             'section_callback' => 'giftflowwp_email_settings_callback',
             'fields' => [
-                'donation_receipt' => [
-                    'id' => 'giftflowwp_donation_receipt',
-                    'name' => 'giftflowwp_email_options[donation_receipt]',
-                    'type' => 'textarea',
-                    'label' => __('Donation Receipt Template', 'giftflowwp'),
-                    'value' => isset($email_options['donation_receipt']) ? $email_options['donation_receipt'] : '',
-                    'rows' => 5,
-                    'description' => __('Use the following placeholders: {donor_name}, {amount}, {date}, {transaction_id}', 'giftflowwp'),
-                ],
-                'donation_notification' => [
-                    'id' => 'giftflowwp_donation_notification',
-                    'name' => 'giftflowwp_email_options[donation_notification]',
-                    'type' => 'textarea',
-                    'label' => __('Admin Notification Template', 'giftflowwp'),
-                    'value' => isset($email_options['donation_notification']) ? $email_options['donation_notification'] : '',
-                    'rows' => 5,
-                    'description' => __('Use the following placeholders: {donor_name}, {amount}, {date}, {transaction_id}', 'giftflowwp'),
-                ],
+                // 'donation_receipt' => [
+                //     'id' => 'giftflowwp_donation_receipt',
+                //     'name' => 'giftflowwp_email_options[donation_receipt]',
+                //     'type' => 'textarea',
+                //     'label' => __('Donation Receipt Template', 'giftflowwp'),
+                //     'value' => isset($email_options['donation_receipt']) ? $email_options['donation_receipt'] : '',
+                //     'rows' => 5,
+                //     'description' => __('Use the following placeholders: {donor_name}, {amount}, {date}, {transaction_id}', 'giftflowwp'),
+                // ],
+                // 'donation_notification' => [
+                //     'id' => 'giftflowwp_donation_notification',
+                //     'name' => 'giftflowwp_email_options[donation_notification]',
+                //     'type' => 'textarea',
+                //     'label' => __('Admin Notification Template', 'giftflowwp'),
+                //     'value' => isset($email_options['donation_notification']) ? $email_options['donation_notification'] : '',
+                //     'rows' => 5,
+                //     'description' => __('Use the following placeholders: {donor_name}, {amount}, {date}, {transaction_id}', 'giftflowwp'),
+                // ],
                 'email_from_name' => [
                     'id' => 'giftflowwp_email_from_name',
                     'name' => 'giftflowwp_email_options[email_from_name]',
@@ -199,71 +199,71 @@ function giftflowwp_initialize_settings() {
                     'value' => isset($email_options['email_from_name']) ? $email_options['email_from_name'] : get_bloginfo('name'),
                     'description' => __('The name that appears in the From field of emails', 'giftflowwp'),
                 ],
-                'email_from_address' => [
-                    'id' => 'giftflowwp_email_from_address',
-                    'name' => 'giftflowwp_email_options[email_from_address]',
+                'email_admin_address' => [
+                    'id' => 'giftflowwp_email_admin_address',
+                    'name' => 'giftflowwp_email_options[email_admin_address]',
                     'type' => 'textfield',
-                    'label' => __('Email From Address', 'giftflowwp'),
-                    'value' => isset($email_options['email_from_address']) ? $email_options['email_from_address'] : get_bloginfo('admin_email'),
+                    'label' => __('Email Admin Address', 'giftflowwp'),
+                    'value' => isset($email_options['email_admin_address']) ? $email_options['email_admin_address'] : get_bloginfo('admin_email'),
                     'input_type' => 'email',
-                    'description' => __('The email address that appears in the From field of emails', 'giftflowwp'),
+                    'description' => __('Admin notification email address', 'giftflowwp'),
                 ],
             ],
         ],
-        'design' => [
-            'option_name' => 'giftflowwp_design_options',
-            'page' => 'giftflowwp-design',
-            'section' => 'giftflowwp_design_settings',
-            'section_title' => __('Design Settings', 'giftflowwp'),
-            'section_callback' => 'giftflowwp_design_settings_callback',
-            'fields' => [
-                // primary color
-                'primary_color' => [
-                    'id' => 'giftflowwp_primary_color',
-                    'name' => 'giftflowwp_design_options[primary_color]',
-                    'type' => 'color',
-                    'label' => __('Primary Color', 'giftflowwp'),
-                    'value' => isset($design_options['primary_color']) ? $design_options['primary_color'] : '#0073aa',
-                    'description' => __('The primary color used throughout the plugin', 'giftflowwp'),
-                ],
-                // button style
-                'button_style' => [
-                    'id' => 'giftflowwp_button_style',
-                    'name' => 'giftflowwp_design_options[button_style]',
-                    'type' => 'select',
-                    'label' => __('Button Style', 'giftflowwp'),
-                    'value' => isset($design_options['button_style']) ? $design_options['button_style'] : 'default',
-                    'options' => [
-                        'default' => __('Default', 'giftflowwp'),
-                        'rounded' => __('Rounded', 'giftflowwp'),
-                        'outline' => __('Outline', 'giftflowwp'),
-                    ],
-                    'description' => __('Choose the style for buttons', 'giftflowwp'),
-                ],
-                'form_layout' => [
-                    'id' => 'giftflowwp_form_layout',
-                    'name' => 'giftflowwp_design_options[form_layout]',
-                    'type' => 'select',
-                    'label' => __('Form Layout', 'giftflowwp'),
-                    'value' => isset($design_options['form_layout']) ? $design_options['form_layout'] : 'default',
-                    'options' => [
-                        'default' => __('Default', 'giftflowwp'),
-                        'compact' => __('Compact', 'giftflowwp'),
-                        'modern' => __('Modern', 'giftflowwp'),
-                    ],
-                    'description' => __('Choose the layout for donation forms', 'giftflowwp'),
-                ],
-                'custom_css' => [
-                    'id' => 'giftflowwp_custom_css',
-                    'name' => 'giftflowwp_design_options[custom_css]',
-                    'type' => 'textarea',
-                    'label' => __('Custom CSS', 'giftflowwp'),
-                    'value' => isset($design_options['custom_css']) ? $design_options['custom_css'] : '',
-                    'rows' => 10,
-                    'description' => __('Add custom CSS to style the plugin', 'giftflowwp'),
-                ],
-            ],
-        ],
+        // 'design' => [
+        //     'option_name' => 'giftflowwp_design_options',
+        //     'page' => 'giftflowwp-design',
+        //     'section' => 'giftflowwp_design_settings',
+        //     'section_title' => __('Design Settings', 'giftflowwp'),
+        //     'section_callback' => 'giftflowwp_design_settings_callback',
+        //     'fields' => [
+        //         // primary color
+        //         'primary_color' => [
+        //             'id' => 'giftflowwp_primary_color',
+        //             'name' => 'giftflowwp_design_options[primary_color]',
+        //             'type' => 'color',
+        //             'label' => __('Primary Color', 'giftflowwp'),
+        //             'value' => isset($design_options['primary_color']) ? $design_options['primary_color'] : '#0073aa',
+        //             'description' => __('The primary color used throughout the plugin', 'giftflowwp'),
+        //         ],
+        //         // button style
+        //         'button_style' => [
+        //             'id' => 'giftflowwp_button_style',
+        //             'name' => 'giftflowwp_design_options[button_style]',
+        //             'type' => 'select',
+        //             'label' => __('Button Style', 'giftflowwp'),
+        //             'value' => isset($design_options['button_style']) ? $design_options['button_style'] : 'default',
+        //             'options' => [
+        //                 'default' => __('Default', 'giftflowwp'),
+        //                 'rounded' => __('Rounded', 'giftflowwp'),
+        //                 'outline' => __('Outline', 'giftflowwp'),
+        //             ],
+        //             'description' => __('Choose the style for buttons', 'giftflowwp'),
+        //         ],
+        //         'form_layout' => [
+        //             'id' => 'giftflowwp_form_layout',
+        //             'name' => 'giftflowwp_design_options[form_layout]',
+        //             'type' => 'select',
+        //             'label' => __('Form Layout', 'giftflowwp'),
+        //             'value' => isset($design_options['form_layout']) ? $design_options['form_layout'] : 'default',
+        //             'options' => [
+        //                 'default' => __('Default', 'giftflowwp'),
+        //                 'compact' => __('Compact', 'giftflowwp'),
+        //                 'modern' => __('Modern', 'giftflowwp'),
+        //             ],
+        //             'description' => __('Choose the layout for donation forms', 'giftflowwp'),
+        //         ],
+        //         'custom_css' => [
+        //             'id' => 'giftflowwp_custom_css',
+        //             'name' => 'giftflowwp_design_options[custom_css]',
+        //             'type' => 'textarea',
+        //             'label' => __('Custom CSS', 'giftflowwp'),
+        //             'value' => isset($design_options['custom_css']) ? $design_options['custom_css'] : '',
+        //             'rows' => 10,
+        //             'description' => __('Add custom CSS to style the plugin', 'giftflowwp'),
+        //         ],
+        //     ],
+        // ],
     ];
 
     // Register settings and add sections/fields
@@ -324,7 +324,7 @@ function giftflowwp_payment_settings_callback() {
 }
 
 function giftflowwp_email_settings_callback() {
-    echo '<p>' . __('Customize email templates for notifications.', 'giftflowwp') . '</p>';
+    echo '<p>' . __('Configure email for notifications.', 'giftflowwp') . '</p>';
 }
 
 function giftflowwp_design_settings_callback() {
