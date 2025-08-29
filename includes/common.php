@@ -448,7 +448,7 @@ function giftflowwp_get_campaign_donations($campaign_id, $args = array(), $paged
       $donor_meta['postal_code'] = get_post_meta($donor_meta['id'], '_postal_code', true);
       $donor_meta['country'] = get_post_meta($donor_meta['id'], '_country', true);
 
-      if ($is_anonymous) {
+      if ($is_anonymous == 'yes') {
         $donor_meta['name'] = __('Anonymous 🍀', 'giftflowwp');
         $donor_meta['email'] = '';
         $donor_meta['phone'] = '';

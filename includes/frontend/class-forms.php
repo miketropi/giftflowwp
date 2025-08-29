@@ -198,8 +198,8 @@ class Forms extends Base {
             $donor_id = wp_insert_post( $donor_data );
 
             // save donor email
-            update_post_meta( $donor_id, '_donor_email', $data['donor_email'] ); 
-            update_post_meta( $donor_id, '_donor_first_name', $data['donor_name'] );
+            update_post_meta( $donor_id, '_email', $data['donor_email'] ); 
+            update_post_meta( $donor_id, '_first_name', $data['donor_name'] );
 
             return $donor_id;
         }   

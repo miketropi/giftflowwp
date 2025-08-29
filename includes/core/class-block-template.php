@@ -39,8 +39,8 @@ class Block_Template {
             'taxonomy-campaign-tax' => array(
                 'title' => 'Category Campaign Archive',
                 'description' => 'A template for the category campaign archive page.',
-                'postTypes' => array( 'campaign' ),
-                'categories' => array( 'campaign-tax' ),
+                // 'postTypes' => array( 'campaign' ),
+                // 'categories' => array( 'campaign-tax' ),
                 'template' => 'category-campaign-archive'
             ),
             'single-campaign' => array(
