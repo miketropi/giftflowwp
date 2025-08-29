@@ -28,9 +28,11 @@ class GiftFlowWP_Ajax {
 		add_action( 'wp_ajax_giftflowwp_get_gallery_images', array( $this, 'get_gallery_images' ) );
 		
 		add_action('wp_ajax_giftflowwp_get_pagination_donation_list_html', array($this, 'get_pagination_donation_list_html'));
+		add_action('wp_ajax_nopriv_giftflowwp_get_pagination_donation_list_html', array($this, 'get_pagination_donation_list_html'));
 	
 		// giftflowwp_get_campaign_donation_form
 		add_action('wp_ajax_giftflowwp_get_campaign_donation_form', array($this, 'get_campaign_donation_form'));
+		add_action('wp_ajax_nopriv_giftflowwp_get_campaign_donation_form', array($this, 'get_campaign_donation_form'));
 	}
 
 	/**
