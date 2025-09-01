@@ -15,13 +15,15 @@ if (!defined('ABSPATH')) {
  * Register the GiftFlowWP dashboard page
  */
 function giftflowwp_register_dashboard_page() {
+    $icon_base64 = base64_encode(giftflowwp_svg_icon('plgicon'));
     add_menu_page(
         __('GiftFlow Dashboard', 'giftflowwp'),
         __('Gift Flow', 'giftflowwp'),
         'manage_options',
         'giftflowwp-dashboard',
         'giftflowwp_dashboard_page',
-        'dashicons-heart',
+        'data:image/svg+xml;base64,' . $icon_base64,
+        // 'dashicons-heart',
         30
     );
 
