@@ -360,7 +360,12 @@ function _regeneratorDefine2(e, r, n, t) {
                 var self = this;
 
                 // set default payment method selected
-                this.form.querySelector("input[name=\"payment_method\"][value=\"".concat(options.paymentMethodSelected, "\"]")).checked = true;
+                var methodSelected = this.form.querySelector("input[name=\"payment_method\"][value=\"".concat(options.paymentMethodSelected, "\"]"));
+                if (methodSelected) {
+                  methodSelected.checked = true;
+                }
+                // this.form.querySelector(`input[name="payment_method"][value="${options.paymentMethodSelected}"]`).checked = true;
+
                 this.setInitFields(_donationForm2);
                 this.onListenerFormFieldUpdate();
 

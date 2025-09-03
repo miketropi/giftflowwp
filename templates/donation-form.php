@@ -183,9 +183,16 @@ Donation form template 2 steps:
                     <fieldset class="donation-form__fieldset">
                         <legend class="donation-form__legend"><?php _e('Select Payment Method', 'giftflowwp'); ?></legend>
                         <div class="donation-form__payment-methods">
-							<?php foreach ($gateways as $method) {
-								echo $method->template_html();
-							} ?>
+                            <?php // echo '<pre>'; print_r($gateways); echo '</pre>'; ?>
+							<?php 
+                            if (!empty($gateways)) {
+                                foreach ($gateways as $method) {
+                                    if($method->is_enabled()) {
+                                        echo $method->template_html();
+                                    }
+                                }
+                            } 
+                            ?>
                         </div>
                     </fieldset>
 

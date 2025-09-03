@@ -56,6 +56,7 @@ function giftflowwp_load_files() {
     require_once GIFTFLOWWP_PLUGIN_DIR . 'blocks/index.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/common.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/hooks.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/mail.php';
 
     
     // Admin files
@@ -157,4 +158,52 @@ function giftflowwp_deactivate() {
     // Deactivate plugin
     $plugin = new \GiftFlowWp\Core\Loader();
     $plugin->deactivate();
+}
+
+add_action('admin_bar_menu', 'giftflowwp_admin_bar_item', 100);
+
+function giftflowwp_admin_bar_item($wp_admin_bar) {
+    // Add parent item
+    $args = [
+        'id'    => 'giftflowwp_admin_bar_item',
+        'title' => esc_html__('Gift Flow Dashboard', 'giftflowwp'),
+        'href'  => admin_url('admin.php?page=giftflowwp-dashboard'), // or any URL
+        'meta'  => [
+            'class' => 'giftflowwp_admin_bar_item',
+            'title' => esc_html__('Go to Gift Flow Dashboard', 'giftflowwp'), // Tooltip
+        ],
+    ];
+    $wp_admin_bar->add_node($args);
+
+    
+    // $wp_admin_bar->add_node([
+    //     'id'     => 'giftflowwp_admin_bar_item_donations',
+    //     'title'  => esc_html__('Donations', 'giftflowwp'),
+    //     'href'   => admin_url('edit.php?post_type=donation'),
+    //     'parent' => 'giftflowwp_admin_bar_item',
+    // ]);
+
+    
+    // $wp_admin_bar->add_node([
+    //     'id'     => 'giftflowwp_admin_bar_item_donors',
+    //     'title'  => esc_html__('Donors', 'giftflowwp'),
+    //     'href'   => admin_url('edit.php?post_type=donor'),
+    //     'parent' => 'giftflowwp_admin_bar_item',
+    // ]);
+
+    
+    // $wp_admin_bar->add_node([
+    //     'id'     => 'giftflowwp_admin_bar_item_campaigns',
+    //     'title'  => esc_html__('Campaigns', 'giftflowwp'),
+    //     'href'   => admin_url('edit.php?post_type=campaign'),
+    //     'parent' => 'giftflowwp_admin_bar_item',
+    // ]);
+
+    // Add child item
+    $wp_admin_bar->add_node([
+        'id'     => 'giftflowwp_admin_bar_item_settings',
+        'title'  => esc_html__('Settings', 'giftflowwp'),
+        'href'   => admin_url('admin.php?page=giftflowwp-settings'),
+        'parent' => 'giftflowwp_admin_bar_item',
+    ]);
 }
