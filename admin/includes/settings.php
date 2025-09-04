@@ -320,16 +320,16 @@ function giftflowwp_test_mail_html() {
     $notification_buttons = [
         [
             'id'    => 'admin_new_donation',
-            'label' => __('Notification: New Donation for Admin', 'giftflowwp'),
-        ],
-        [
-            'id'    => 'donor_new_donation',
-            'label' => __('Notification: New Donation for Donor', 'giftflowwp'),
+            'label' => esc_html__('Send: Notification New Donation to Admin', 'giftflowwp'),
         ],
         [
             'id'    => 'donor_thanks',
-            'label' => __('Thanks Mail for Donor (Donation Successful)', 'giftflowwp'),
+            'label' => esc_html__('Send: Thanks Mail to Donor (Donation Successful)', 'giftflowwp'),
         ],
+        [
+            'id'    => 'new_user_first_time_donation',
+            'label' => esc_html__('Send: New User Account to Donor (First Time Donation)', 'giftflowwp'),
+        ]
     ];
 
     /**
@@ -346,7 +346,7 @@ function giftflowwp_test_mail_html() {
         printf(
             '<button 
                 type="button" 
-                class="button giftflowwp-email-btn" 
+                class="button giftflowwp-email-btn button-primary" 
                 id="%s" 
                 onclick="window.giftflowwp.testSendMail_Handle(\'%s\')">%s</button> ',
             esc_attr($button['id']),

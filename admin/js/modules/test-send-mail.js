@@ -3,6 +3,9 @@
 
   w.giftflowwp = {};
   w.giftflowwp.testSendMail_Handle = async (name) => {
+    let r = confirm('Are you sure you want to send the test email?');
+    if (!r) return;
+    
     const res = await $.ajax({
       url: giftflowwp_admin.ajax_url,
       type: 'POST',

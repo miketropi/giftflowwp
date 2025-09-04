@@ -124,11 +124,18 @@ function _regeneratorDefine2(e, r, n, t) {
   w.giftflowwp = {};
   w.giftflowwp.testSendMail_Handle = /*#__PURE__*/function () {
     var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_regenerator().m(function _callee(name) {
-      var res;
+      var r, res;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.n) {
           case 0:
-            _context.n = 1;
+            r = confirm('Are you sure you want to send the test email?');
+            if (r) {
+              _context.n = 1;
+              break;
+            }
+            return _context.a(2);
+          case 1:
+            _context.n = 2;
             return $.ajax({
               url: giftflowwp_admin.ajax_url,
               type: 'POST',
@@ -141,10 +148,10 @@ function _regeneratorDefine2(e, r, n, t) {
                 console.error(status, _error);
               }
             });
-          case 1:
+          case 2:
             res = _context.v;
             console.log(res);
-          case 2:
+          case 3:
             return _context.a(2);
         }
       }, _callee);

@@ -24,8 +24,10 @@ $accent_color = '#0b57d0';
     <?php esc_html_e('New Donation Received', 'giftflowwp'); ?>
 </h2>
 
-<p style="margin: 0 0 1.8rem 0;     line-height: 1.6;     opacity: .8;     font-size: .9rem;">
-    <?php esc_html_e('A new donation has been received on your website.', 'giftflowwp'); ?>
+<p style="margin: 0 0 1.8rem 0; line-height: 1.6; opacity: .8; font-size: .9rem;">
+    <?php esc_html_e('A new donation has been received on your website! Below are the details of the donation. Please review and take any necessary action.', 'giftflowwp'); ?>
+    <br><br>
+    <?php esc_html_e('This notification helps you stay up to date with the latest support from your community. Keeping track of donations ensures transparency and allows you to thank your donors promptly.', 'giftflowwp'); ?>
 </p>
 
 <table id="giftflowwp-email-table" width="100%" cellpadding="0" cellspacing="0" role="presentation" style="width: 100%; border-collapse: collapse; margin: 1.8rem 0 0; background: #ffffff; border: 1px solid #e9ecef; border-radius: 0.3rem; overflow: hidden;">

@@ -65,6 +65,7 @@ function giftflowwp_test_send_mail_action($name) {
   $admin_email = $email_opts['email_admin_address'];
 
   switch ($name) {
+
     case 'admin_new_donation':
       ob_start();
       giftflowwp_load_template('email/new-donation-admin.php', array(
@@ -85,18 +86,42 @@ function giftflowwp_test_send_mail_action($name) {
         'content' => $content
       ));
       break;
-    case 'donor_new_donation':
+
+    case 'donor_thanks':
+      ob_start();
+      giftflowwp_load_template('email/thanks-donor.php', array(
+        'campaign_name' => '<Campaign Name>',
+        'campaign_url' => '#',
+        'donor_name' => '<Donor Name>',
+        'donor_email' => '<Donor Email>',
+        'amount' => '<Amount>',
+        'date' => '<Date>',
+        'donor_dashboard_url' => '#',
+      ));
+      $content = ob_get_clean();
+
       return giftflowwp_send_mail_template(array(
         'to' => $admin_email,
-        'subject' => 'New Donation',
-        'content' => 'New donation received'
+        'subject' => 'Hi <Donor Name>, Thanks for Your Donation',
+        'header' => 'Thanks for Your Donation',
+        'content' => $content
       ));
       break;
-    case 'donor_thanks':
+    
+    case 'new_user_first_time_donation':
+      ob_start();
+      giftflowwp_load_template('email/new-user.php', array(
+        'name' => '<Name>',
+        'username' => '<Username>',
+        'password' => '<Password>',
+        'login_url' => '<Login URL>',
+      ));
+      $content = ob_get_clean();
       return giftflowwp_send_mail_template(array(
         'to' => $admin_email,
-        'subject' => 'New Donation',
-        'content' => 'New donation received'
+        'subject' => 'New User Registered',
+        'header' => 'New User Registered',
+        'content' => $content
       ));
       break;
   }
