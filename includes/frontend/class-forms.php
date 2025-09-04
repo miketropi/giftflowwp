@@ -109,6 +109,12 @@ class Forms extends Base {
             ) );
         }
 
+        // add hook after payment processed
+        /**
+         * @see giftflowwp_send_mail_notification_donation_to_admin - 10
+         */
+        do_action( 'giftflowwp_donation_after_payment_processed', $donation_id, $payment_result );
+
         wp_send_json_success( array(
             'message' => __( 'Donation processed successfully', 'giftflowwp' ),
             'donation_id' => $donation_id,

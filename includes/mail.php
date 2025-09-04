@@ -34,13 +34,6 @@ function giftflowwp_send_mail_template($args = array()) {
   return wp_mail($args['to'], $args['subject'], $__html, $headers);
 }
 
-function giftflowwp_send_mail_notification_donation_to_admin() {
-  $email_opts = get_option('giftflowwp_email_options');
-  $admin_email = $email_opts['email_admin_address'];
-
-  giftflowwp_send_mail_template($admin_email, 'New Donation', 'New donation received');
-}
-
 // test mail ajax
 add_action('wp_ajax_giftflowwp_test_send_mail', 'giftflowwp_test_send_mail_ajax');
 function giftflowwp_test_send_mail_ajax() {
@@ -125,4 +118,43 @@ function giftflowwp_test_send_mail_action($name) {
       ));
       break;
   }
+}
+
+add_action('giftflowwp_donation_after_payment_processed', 'giftflowwp_send_mail_notification_donation_to_admin', 10, 2);
+function giftflowwp_send_mail_notification_donation_to_admin($donation_id, $payment_result) {
+  $email_opts = get_option('giftflowwp_email_options');
+  $admin_email = $email_opts['email_admin_address'];
+
+  // get donation data
+  $donation_data = giftflowwp_get_donation_data_by_id($donation_id);
+
+  ob_start();
+  giftflowwp_load_template('email/new-donation-admin.php', array(
+    'donation_id' => $donation_id,
+    'campaign_name' => $donation_data->campaign_name,
+    'campaign_url' => $donation_data->campaign_url,
+    'donor_name' => $donation_data->donor_name,
+    'donor_email' => $donation_data->donor_email,
+    'amount' => $donation_data->__amount_formatted,
+    'date' => $donation_data->__date,
+    'status' => $donation_data->status,
+    'payment_method' => $donation_data->payment_method
+  ));
+  $content = ob_get_clean();
+
+  return giftflowwp_send_mail_template(array(
+    'to' => $admin_email,
+    'subject' => sprintf( esc_html__('New Donation: %s', 'giftflowwp'), $donation_data->campaign_name ),
+    'header' => esc_html__('New donation received', 'giftflowwp'),
+    'content' => $content
+  ));
+}
+
+add_action('giftflowwp_donation_after_payment_processed', 'giftflowwp_send_mail_thank_you_to_donor_payment_successful', 12, 2);
+function giftflowwp_send_mail_thank_you_to_donor_payment_successful($donation_id, $payment_result) {
+  if($payment_result != true) {
+    return;
+  }
+
+  
 }

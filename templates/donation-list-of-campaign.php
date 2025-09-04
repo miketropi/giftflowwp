@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 $posts = $donations['posts'] ?? [];
 $total = $donations['total'] ?? 0;
 $pagination = $donations['pagination'] ?? 1;
+
+echo '<pre>'; print_r(giftflowwp_get_donation_data_by_id(238)); echo '</pre>';
 ?>
 
 <div class="gfw-donation-list-container">

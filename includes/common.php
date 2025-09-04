@@ -556,3 +556,31 @@ function giftflowwp_load_template($template_name, $args = array()) {
   $template = new Template();
   $template->load_template($template_name, $args);
 }
+
+// get donation data by donation id
+function giftflowwp_get_donation_data_by_id($donation_id) {
+  $donation_data = get_post($donation_id);
+
+  if(!$donation_data) {
+    return false;
+  }
+
+  $campaign_id = get_post_meta($donation_id, '_campaign_id', true);
+  $donation_data->campaign_name = $campaign_id ? get_the_title($campaign_id) : '???';
+  $donation_data->campaign_url = $campaign_id ? get_the_permalink($campaign_id) : '#';
+
+  $donor_id = get_post_meta($donation_id, '_donor_id', true);
+  // donor_name = first name + last name
+  $donation_data->donor_name = $donor_id ? get_post_meta($donor_id, '_first_name', true) . ' ' . get_post_meta($donor_id, '_last_name', true) : '???';
+  $donation_data->donor_email = $donor_id ? get_post_meta($donor_id, '_email', true) : '';
+
+  $donation_data->amount = get_post_meta($donation_id, '_amount', true);
+  $donation_data->__amount_formatted = giftflowwp_render_currency_formatted_amount($donation_data->amount);
+
+  $donation_data->status = get_post_meta($donation_id, '_status', true);
+  $donation_data->payment_method = get_post_meta($donation_id, '_payment_method', true);
+  $donation_data->__date = get_the_date('', $donation_id);
+  $donation_data->__date_gmt = get_gmt_from_date(get_the_date('Y-m-d H:i:s', $donation_id));
+
+  return $donation_data;
+}

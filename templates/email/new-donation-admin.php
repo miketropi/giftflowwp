@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit; // Exit if accessed directly.
 }
 
+$donation_id = $donation_id ?? '';
 $campaign_name = $campaign_name ?? '';
 $campaign_url = $campaign_url ?? '';
 $donor_name = $donor_name ?? '';
