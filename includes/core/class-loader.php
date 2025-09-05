@@ -126,8 +126,49 @@ class Loader extends Base {
     }
 
     public function activate() {
+
+        $this->create_pages_init();
+
         // reset permalinks
         flush_rewrite_rules();
+    }
+
+    public function create_pages_init() {
+
+        // create 2 pages donor-account and thank-donor & set template for there 
+        $donor_account_page = get_page_by_path('donor-account');
+        if (!$donor_account_page) {
+
+            $donor_account_page = wp_insert_post(array(
+                'post_title' => esc_html__('Donor Account', 'giftflowwp'),
+                'post_content' => '',
+                'post_status' => 'publish',
+                'post_type' => 'page',
+            ));
+
+            update_post_meta(
+                $donor_account_page,
+                '_wp_page_template',
+                'donor-account'
+            );
+        }
+
+        $thank_donor_page = get_page_by_path('thank-donor');
+        if (!$thank_donor_page) {
+
+            $thank_donor_page = wp_insert_post(array(
+                'post_title' => esc_html__('Thank Donor', 'giftflowwp'),
+                'post_content' => '',
+                'post_status' => 'publish',
+                'post_type' => 'page',
+            ));
+
+            update_post_meta(
+                $thank_donor_page,
+                '_wp_page_template',
+                'thank-donor'
+            );
+        }
     }
 
     public function deactivate() {

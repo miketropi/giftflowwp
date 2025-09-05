@@ -129,8 +129,16 @@ function giftflowwp_send_mail_notification_donation_to_admin($donation_id, $paym
   $donation_data = giftflowwp_get_donation_data_by_id($donation_id);
 
   ob_start();
-  giftflowwp_load_template('email/new-donation-admin.php', array(
+  /**
+   * Allow filtering/modifying the arguments passed to the admin new donation email template.
+   *
+   * @param array $args The arguments for the email template.
+   * @param int $donation_id The donation ID.
+   * @param object $donation_data The donation data object.
+   */
+  $admin_email_args = apply_filters('giftflowwp_new_donation_admin_email_args', array(
     'donation_id' => $donation_id,
+    'donation_edit_url' => $donation_data->donation_edit_url,
     'campaign_name' => $donation_data->campaign_name,
     'campaign_url' => $donation_data->campaign_url,
     'donor_name' => $donation_data->donor_name,
@@ -139,12 +147,14 @@ function giftflowwp_send_mail_notification_donation_to_admin($donation_id, $paym
     'date' => $donation_data->__date,
     'status' => $donation_data->status,
     'payment_method' => $donation_data->payment_method
-  ));
+  ), $donation_id, $donation_data);
+
+  giftflowwp_load_template('email/new-donation-admin.php', $admin_email_args);
   $content = ob_get_clean();
 
   return giftflowwp_send_mail_template(array(
     'to' => $admin_email,
-    'subject' => sprintf( esc_html__('New Donation: %s', 'giftflowwp'), $donation_data->campaign_name ),
+    'subject' => sprintf( esc_html__('New Donation — %s', 'giftflowwp'), $donation_data->campaign_name ),
     'header' => esc_html__('New donation received', 'giftflowwp'),
     'content' => $content
   ));
@@ -156,5 +166,39 @@ function giftflowwp_send_mail_thank_you_to_donor_payment_successful($donation_id
     return;
   }
 
-  
+  // get giftflowwp_get_donor_account_page() url
+  $donor_account_url = get_permalink(giftflowwp_get_donor_account_page());
+
+  // get donation data
+  $donation_data = giftflowwp_get_donation_data_by_id($donation_id);
+
+  // send thanks email 
+  ob_start();
+  /**
+   * Allow filtering/modifying the arguments passed to the donor thank you email template.
+   *
+   * @param array $args The arguments for the email template.
+   * @param int $donation_id The donation ID.
+   * @param object $donation_data The donation data object.
+   */
+  $thanks_donor_args = apply_filters('giftflowwp_thanks_donor_email_args', array(
+    'donation_id' => $donation_id,
+    'campaign_name' => $donation_data->campaign_name,
+    'campaign_url' => $donation_data->campaign_url,
+    'donor_name' => $donation_data->donor_name,
+    'donor_email' => $donation_data->donor_email,
+    'amount' => $donation_data->__amount_formatted,
+    'date' => $donation_data->__date,
+    'donor_dashboard_url' => $donor_account_url,
+  ), $donation_id, $donation_data);
+
+  giftflowwp_load_template('email/thanks-donor.php', $thanks_donor_args);
+  $content = ob_get_clean();
+
+  return giftflowwp_send_mail_template(array(
+    'to' => $donation_data->donor_email,
+    'subject' => sprintf( esc_html__('Thank You for Your Donation — %s', 'giftflowwp'), $donation_data->campaign_name ),
+    'header' => esc_html__('Thank You for Your Donation', 'giftflowwp'),
+    'content' => $content
+  ));
 }

@@ -565,6 +565,8 @@ function giftflowwp_get_donation_data_by_id($donation_id) {
     return false;
   }
 
+  $donation_data->donation_edit_url = get_edit_post_link($donation_id);
+
   $campaign_id = get_post_meta($donation_id, '_campaign_id', true);
   $donation_data->campaign_name = $campaign_id ? get_the_title($campaign_id) : '???';
   $donation_data->campaign_url = $campaign_id ? get_the_permalink($campaign_id) : '#';
@@ -583,4 +585,32 @@ function giftflowwp_get_donation_data_by_id($donation_id) {
   $donation_data->__date_gmt = get_gmt_from_date(get_the_date('Y-m-d H:i:s', $donation_id));
 
   return $donation_data;
+}
+
+// get donor account page
+function giftflowwp_get_donor_account_page() {
+  $options = get_option('giftflowwp_general_options');
+  $donor_account_page = isset($options['donor_account_page']) ? $options['donor_account_page'] : '';
+
+  // if empty please search by path 'donor-account'
+  if (!$donor_account_page) {
+    $donor_account_page = get_page_by_path('donor-account');
+    $donor_account_page = $donor_account_page->ID;
+  }
+
+  return $donor_account_page;
+}
+
+// get thank donor page
+function giftflowwp_get_thank_donor_page() {
+  $options = get_option('giftflowwp_general_options');
+  $thank_donor_page = isset($options['thank_donor_page']) ? $options['thank_donor_page'] : '';
+
+  // if empty please search by path 'thank-donor'
+  if (!$thank_donor_page) {
+    $thank_donor_page = get_page_by_path('thank-donor');
+    $thank_donor_page = $thank_donor_page->ID;
+  }
+
+  return $thank_donor_page;
 }

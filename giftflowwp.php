@@ -121,10 +121,10 @@ register_activation_hook( __FILE__, 'giftflowwp_activate' );
  */
 function giftflowwp_activate() {
     // Check PHP version
-    if ( version_compare( PHP_VERSION, '8.2', '<' ) ) {
+    if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
         deactivate_plugins( plugin_basename( __FILE__ ) );
         wp_die(
-            __( 'GiftFlowWp requires PHP 8.2 or higher.', 'giftflowwp' ),
+            __( 'GiftFlowWp requires PHP 7.4 or higher.', 'giftflowwp' ),
             'Plugin Activation Error',
             [ 'back_link' => true ]
         );

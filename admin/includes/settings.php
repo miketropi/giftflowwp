@@ -163,6 +163,25 @@ function giftflowwp_initialize_settings() {
                     'step' => '0.01',
                     'description' => __('Set the minimum amount that can be donated', 'giftflowwp'),
                 ],
+                // donor account page
+                'donor_account_page' => [
+                    'id' => 'giftflowwp_donor_account_page',
+                    'name' => 'giftflowwp_general_options[donor_account_page]',
+                    'type' => 'select',
+                    'options' => giftflowwp_get_pages(),
+                    'value' => giftflowwp_get_donor_account_page(),
+                    'label' => __('Donor Account Page', 'giftflowwp'),
+                    'description' => __('Select the donor account page', 'giftflowwp'),
+                ],
+                'thank_donor_page' => [
+                    'id' => 'giftflowwp_thank_donor_page',
+                    'name' => 'giftflowwp_general_options[thank_donor_page]',
+                    'type' => 'select',
+                    'options' => giftflowwp_get_pages(),
+                    'value' => giftflowwp_get_thank_donor_page(),
+                    'label' => __('Thank Donor Page', 'giftflowwp'),
+                    'description' => __('Select the thank donor page', 'giftflowwp'),
+                ],
             ],
         ],
         'payment_methods' => giftflowwp_payment_methods_options(),
@@ -173,24 +192,6 @@ function giftflowwp_initialize_settings() {
             'section_title' => __('Email', 'giftflowwp'),
             'section_callback' => 'giftflowwp_email_settings_callback',
             'fields' => [
-                // 'donation_receipt' => [
-                //     'id' => 'giftflowwp_donation_receipt',
-                //     'name' => 'giftflowwp_email_options[donation_receipt]',
-                //     'type' => 'textarea',
-                //     'label' => __('Donation Receipt Template', 'giftflowwp'),
-                //     'value' => isset($email_options['donation_receipt']) ? $email_options['donation_receipt'] : '',
-                //     'rows' => 5,
-                //     'description' => __('Use the following placeholders: {donor_name}, {amount}, {date}, {transaction_id}', 'giftflowwp'),
-                // ],
-                // 'donation_notification' => [
-                //     'id' => 'giftflowwp_donation_notification',
-                //     'name' => 'giftflowwp_email_options[donation_notification]',
-                //     'type' => 'textarea',
-                //     'label' => __('Admin Notification Template', 'giftflowwp'),
-                //     'value' => isset($email_options['donation_notification']) ? $email_options['donation_notification'] : '',
-                //     'rows' => 5,
-                //     'description' => __('Use the following placeholders: {donor_name}, {amount}, {date}, {transaction_id}', 'giftflowwp'),
-                // ],
                 'email_from_name' => [
                     'id' => 'giftflowwp_email_from_name',
                     'name' => 'giftflowwp_email_options[email_from_name]',
@@ -362,4 +363,19 @@ function giftflowwp_test_mail_html() {
     echo '<u>' . $admin_email . '</u>';
     echo '</div>';
     return ob_get_clean();
+}
+
+function giftflowwp_get_pages() {
+    $pages = get_pages();
+    
+    // return [key => value]
+    return array_combine(
+        array_column($pages, 'ID'),
+        array_map(
+            function($page) {
+                return $page->post_title . ' (#' . $page->ID . ')';
+            },
+            $pages
+        )
+    );
 }

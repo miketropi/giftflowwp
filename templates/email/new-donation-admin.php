@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $donation_id = $donation_id ?? '';
+$donation_edit_url = $donation_edit_url ?? '';
 $campaign_name = $campaign_name ?? '';
 $campaign_url = $campaign_url ?? '';
 $donor_name = $donor_name ?? '';
@@ -54,7 +55,7 @@ $accent_color = '#0b57d0';
                     </td>
                     <td style="width: 70%; padding: 0; vertical-align: top;">
                         <span style="color: <?php echo esc_attr($accent_color); ?>; font-weight: 600;">
-                            <?php echo esc_html($amount); ?>
+                            <?php echo $amount; ?>
                         </span>
                     </td>
                 </tr>
@@ -193,3 +194,11 @@ $accent_color = '#0b57d0';
     </tr>
     
 </table>
+
+<?php if (!empty($donation_edit_url)): ?>
+    <p style="margin: 2rem 0 0 0; font-size: 0.95rem; text-align: center;">
+        <a href="<?php echo esc_url($donation_edit_url); ?>" style="color: <?php echo esc_attr($accent_color); ?>; text-decoration: underline; font-weight: 500;" target="_blank" rel="noopener">
+            👉 <?php esc_html_e('View this Donation in Admin', 'giftflowwp'); ?>
+        </a>
+    </p>
+<?php endif; ?>
