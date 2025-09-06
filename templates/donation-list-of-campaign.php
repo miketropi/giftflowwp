@@ -6,17 +6,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 $posts = $donations['posts'] ?? [];
 $total = $donations['total'] ?? 0;
 $pagination = $donations['pagination'] ?? 1;
-
-echo '<pre>'; print_r(giftflowwp_get_donation_data_by_id(238)); echo '</pre>';
 ?>
 
 <div class="gfw-donation-list-container">
     <div class="gfw-donation-list-header">
         <span class="gfw-donation-count">
-            <?php if ($total > 0): ?>
-          <?php echo esc_html($total); ?> donations
-            <?php else: ?>
-          Be the first to donate
+            <?php if ( $total > 0 ) : ?>
+                <?php
+                /* translators: %s: number of donations */
+                printf( esc_html__( '%s donations', 'giftflowwp' ), esc_html( $total ) );
+                ?>
+            <?php else : ?>
+                <?php esc_html_e( 'Be the first to donate', 'giftflowwp' ); ?>
             <?php endif; ?>
         </span>
     </div>

@@ -50,6 +50,7 @@ function giftflowwp_load_files() {
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-base.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-loader.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-field.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-role.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-ajax.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-block-template.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-wp-block-custom-hooks.php';

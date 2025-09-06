@@ -107,6 +107,7 @@ class Loader extends Base {
     public function init() {
         // core
         new \GiftFlowWp\Core\Block_Template();
+        \GiftFlowWp\Core\Role::get_instance();
 
         // Initialize post types
         new \GiftFlowWp\Admin\PostTypes\Donation();
@@ -172,6 +173,9 @@ class Loader extends Base {
     }
 
     public function deactivate() {
-
+        // Clean up roles and capabilities
+        $role_manager = \GiftFlowWp\Core\Role::get_instance();
+        $role_manager->remove_roles();
+        $role_manager->remove_capabilities();
     }
 } 

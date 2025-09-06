@@ -112,6 +112,7 @@ class Forms extends Base {
         // add hook after payment processed
         /**
          * @see giftflowwp_send_mail_notification_donation_to_admin - 10
+         * @see giftflowwp_auto_create_user_on_donation - 10
          */
         do_action( 'giftflowwp_donation_after_payment_processed', $donation_id, $payment_result );
 
@@ -189,9 +190,21 @@ class Forms extends Base {
             'post_type' => 'donor',
             'meta_key' => '_email',
             'meta_value' => $data['donor_email'],
+            // get only one record
+            'posts_per_page' => 1,
         ) );
 
         if ( $donor ) {
+
+            // check user exists by email
+            // $user = get_user_by( 'email', $data['donor_email'] );
+
+            // if ( ! $user ) {
+            //     // run hook if donor exists but user not exists
+            //     do_action( 'giftflowwp_add_user_on_donation', $donor[0]->ID );
+            // }
+            
+            // return donor id
             return $donor[0]->ID;
         } else {
             // create new donor record
@@ -206,6 +219,9 @@ class Forms extends Base {
             // save donor email
             update_post_meta( $donor_id, '_email', $data['donor_email'] ); 
             update_post_meta( $donor_id, '_first_name', $data['donor_name'] );
+
+            // hook after create donor record
+            do_action( 'giftflowwp_donor_added', $donor_id );
 
             return $donor_id;
         }   

@@ -1,5 +1,6 @@
 <?php 
 use GiftFlowWP\Frontend\Template;
+use GiftFlowWp\Core\Role;
 
 if ( ! defined( 'ABSPATH' ) ) {
   exit; // Exit if accessed directly.
@@ -9,6 +10,47 @@ if ( ! defined( 'ABSPATH' ) ) {
  * 
  * @package GiftFlowWP
  */
+
+// Global helper functions for easy access
+
+/**
+ * Assign donor role to user
+ *
+ * @param int $user_id User ID
+ * @return bool True if role was assigned, false otherwise
+ */
+function giftflowwp_assign_donor_role($user_id) {
+  return \GiftFlowWp\Core\Role::get_instance()->assign_donor_role($user_id);
+}
+
+/**
+* Remove donor role from user
+*
+* @param int $user_id User ID
+* @return bool True if role was removed, false otherwise
+*/
+function giftflowwp_remove_donor_role($user_id) {
+  return \GiftFlowWp\Core\Role::get_instance()->remove_donor_role($user_id);
+}
+
+/**
+* Check if user has donor role
+*
+* @param int $user_id User ID
+* @return bool True if user has donor role, false otherwise
+*/
+function giftflowwp_user_has_donor_role($user_id) {
+  return \GiftFlowWp\Core\Role::get_instance()->user_has_donor_role($user_id);
+}
+
+/**
+* Get the Role instance (for advanced usage)
+*
+* @return \GiftFlowWp\Core\Role
+*/
+function giftflowwp_get_role_manager() {
+  return \GiftFlowWp\Core\Role::get_instance();
+}
 
 function giftflowwp_svg_icon($name) {
   $icons = array(
@@ -613,4 +655,112 @@ function giftflowwp_get_thank_donor_page() {
   }
 
   return $thank_donor_page;
+}
+
+/**
+ * 
+ * 
+ * @param int $donation_id
+ * @param mixed $payment_result
+ * @return void
+ */
+function giftflowwp_auto_create_user_on_donation( $donation_id, $payment_result ) {
+
+  // get donor id 
+  $donor_id = get_post_meta($donation_id, '_donor_id', true);
+
+  // get donor data
+  $donor_data = giftflowwp_get_donor_data_by_id($donor_id);
+
+  // check if user exists by email
+  $user = get_user_by('email', $donor_data->email);
+  if ($user) {
+    return;
+  }
+
+  // create new user, update first name, last name, and set role is subscriber
+  $password = wp_generate_password();
+  $user_id = wp_create_user($donor_data->email, $password, $donor_data->email);
+  if ( is_wp_error( $user_id ) ) {
+    return;
+  }
+
+  // update user data
+  wp_update_user(array(
+    'ID' => $user_id,
+    'first_name' => $donor_data->first_name,
+    'last_name' => $donor_data->last_name,
+  ));
+
+  // assign donor role 
+  giftflowwp_assign_donor_role($user_id);
+
+  // add hook after create new user
+  do_action('giftflowwp_new_user_on_first_time_donation', $user_id);
+
+  // get donor account url 
+  $donor_account_url = get_permalink(giftflowwp_get_donor_account_page());
+
+  // load content mail template 
+  ob_start();
+  $new_user_email_data = array(
+    'name' => $donor_data->first_name . ' ' . $donor_data->last_name,
+    'username' => $donor_data->email,
+    'password' => $password,
+    'login_url' => $donor_account_url,
+  );
+
+  /**
+   * Filter the data passed to the new user email template.
+   *
+   * @param array $new_user_email_data
+   * @param object $donor_data
+   * @param int $user_id
+   * @param int $donor_id
+   */
+  $new_user_email_data = apply_filters(
+    'giftflowwp_new_user_email_data',
+    $new_user_email_data,
+    $donor_data,
+    $user_id,
+    $donor_id
+  );
+
+  giftflowwp_load_template('email/new-user.php', $new_user_email_data);
+  $content = ob_get_clean();
+
+  // send mail to new user
+  giftflowwp_send_mail_template(array(
+    'to' => $donor_data->email,
+    'subject' => sprintf( esc_html__('Welcome to %s', 'giftflowwp'), get_bloginfo('name') ),
+    'header' => esc_html__('🍀 Your donor account has been created.', 'giftflowwp'),
+    'content' => $content,
+  ));
+}
+
+/**
+ * get donor data by id
+ * 
+ * @param int $donor_id
+ * @return object|null
+ */
+function giftflowwp_get_donor_data_by_id($donor_id = 0) {
+  $donor_data = get_post($donor_id);
+
+  if ( ! $donor_data || is_wp_error( $donor_data ) ) {
+    return null;
+  }
+
+  // get meta fields
+  $donor_data->email = get_post_meta($donor_id, '_email', true);
+  $donor_data->first_name = get_post_meta($donor_id, '_first_name', true);
+  $donor_data->last_name = get_post_meta($donor_id, '_last_name', true);
+  $donor_data->phone = get_post_meta($donor_id, '_phone', true);
+  $donor_data->address = get_post_meta($donor_id, '_address', true);
+  $donor_data->city = get_post_meta($donor_id, '_city', true);
+  $donor_data->state = get_post_meta($donor_id, '_state', true);
+  $donor_data->postal_code = get_post_meta($donor_id, '_postal_code', true);
+  $donor_data->country = get_post_meta($donor_id, '_country', true);
+
+  return $donor_data;
 }
