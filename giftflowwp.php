@@ -50,12 +50,14 @@ function giftflowwp_load_files() {
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-base.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-loader.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-field.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-role.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-ajax.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-block-template.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/core/class-wp-block-custom-hooks.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'blocks/index.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/common.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/hooks.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'includes/mail.php';
 
     
     // Admin files
@@ -120,10 +122,10 @@ register_activation_hook( __FILE__, 'giftflowwp_activate' );
  */
 function giftflowwp_activate() {
     // Check PHP version
-    if ( version_compare( PHP_VERSION, '8.2', '<' ) ) {
+    if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
         deactivate_plugins( plugin_basename( __FILE__ ) );
         wp_die(
-            __( 'GiftFlowWp requires PHP 8.2 or higher.', 'giftflowwp' ),
+            __( 'GiftFlowWp requires PHP 7.4 or higher.', 'giftflowwp' ),
             'Plugin Activation Error',
             [ 'back_link' => true ]
         );
@@ -157,4 +159,52 @@ function giftflowwp_deactivate() {
     // Deactivate plugin
     $plugin = new \GiftFlowWp\Core\Loader();
     $plugin->deactivate();
+}
+
+add_action('admin_bar_menu', 'giftflowwp_admin_bar_item', 100);
+
+function giftflowwp_admin_bar_item($wp_admin_bar) {
+    // Add parent item
+    $args = [
+        'id'    => 'giftflowwp_admin_bar_item',
+        'title' => esc_html__('Gift Flow Dashboard', 'giftflowwp'),
+        'href'  => admin_url('admin.php?page=giftflowwp-dashboard'), // or any URL
+        'meta'  => [
+            'class' => 'giftflowwp_admin_bar_item',
+            'title' => esc_html__('Go to Gift Flow Dashboard', 'giftflowwp'), // Tooltip
+        ],
+    ];
+    $wp_admin_bar->add_node($args);
+
+    
+    // $wp_admin_bar->add_node([
+    //     'id'     => 'giftflowwp_admin_bar_item_donations',
+    //     'title'  => esc_html__('Donations', 'giftflowwp'),
+    //     'href'   => admin_url('edit.php?post_type=donation'),
+    //     'parent' => 'giftflowwp_admin_bar_item',
+    // ]);
+
+    
+    // $wp_admin_bar->add_node([
+    //     'id'     => 'giftflowwp_admin_bar_item_donors',
+    //     'title'  => esc_html__('Donors', 'giftflowwp'),
+    //     'href'   => admin_url('edit.php?post_type=donor'),
+    //     'parent' => 'giftflowwp_admin_bar_item',
+    // ]);
+
+    
+    // $wp_admin_bar->add_node([
+    //     'id'     => 'giftflowwp_admin_bar_item_campaigns',
+    //     'title'  => esc_html__('Campaigns', 'giftflowwp'),
+    //     'href'   => admin_url('edit.php?post_type=campaign'),
+    //     'parent' => 'giftflowwp_admin_bar_item',
+    // ]);
+
+    // Add child item
+    $wp_admin_bar->add_node([
+        'id'     => 'giftflowwp_admin_bar_item_settings',
+        'title'  => esc_html__('Settings', 'giftflowwp'),
+        'href'   => admin_url('admin.php?page=giftflowwp-settings'),
+        'parent' => 'giftflowwp_admin_bar_item',
+    ]);
 }

@@ -189,6 +189,13 @@ class GiftFlowWP_Field {
 	private $color_format = 'hex';
 
 	/**
+	 * Field html (for html)
+	 *
+	 * @var string
+	 */
+	private $html = '';
+
+	/**
 	 * Field gallery settings (for gallery)
 	 *
 	 * @var array
@@ -280,6 +287,11 @@ class GiftFlowWP_Field {
 
 		// Set field step value.
 		$this->step = isset( $args['step'] ) ? $args['step'] : null;
+		
+		// set field html
+		if ( 'html' === $type ) {
+			$this->html = $args['html'];
+		}
 
 
     // default currency symbol
@@ -383,6 +395,9 @@ class GiftFlowWP_Field {
 				break;
 			case 'accordion':
 				$output .= $this->render_accordion();
+				break;
+			case 'html':
+				$output .= $this->render_html();
 				break;
 			default:
 				$output .= $this->render_textfield();
@@ -490,6 +505,10 @@ class GiftFlowWP_Field {
 		}
 
 		return implode( ' ', $attributes );
+	}
+
+	private function render_html() {
+		return '<div class="giftflowwp-html-field">' . $this->html . '</div>';
 	}
 
 	/**

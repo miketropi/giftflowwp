@@ -24,8 +24,13 @@ class Loader extends Base {
      * Enqueue styles
      */
     public function admin_enqueue_scripts() {
-        wp_enqueue_script('giftflowwp-dashboard', $this->get_plugin_url() . 'assets/js/admin.bundle.js', array(), $this->get_version(), true);
-        wp_enqueue_style('giftflowwp-dashboard', $this->get_plugin_url() . 'assets/css/admin.bundle.css', array(), $this->get_version());
+        wp_enqueue_script('giftflowwp-admin', $this->get_plugin_url() . 'assets/js/admin.bundle.js', array(), $this->get_version(), true);
+        wp_enqueue_style('giftflowwp-admin', $this->get_plugin_url() . 'assets/css/admin.bundle.css', array(), $this->get_version());
+    
+        wp_localize_script('giftflowwp-admin', 'giftflowwp_admin', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce'    => wp_create_nonce('giftflowwp_admin_nonce'),
+        ));
     }
 
     public function enqueue_scripts() {
@@ -102,6 +107,7 @@ class Loader extends Base {
     public function init() {
         // core
         new \GiftFlowWp\Core\Block_Template();
+        \GiftFlowWp\Core\Role::get_instance();
 
         // Initialize post types
         new \GiftFlowWp\Admin\PostTypes\Donation();
@@ -121,11 +127,55 @@ class Loader extends Base {
     }
 
     public function activate() {
+
+        $this->create_pages_init();
+
         // reset permalinks
         flush_rewrite_rules();
     }
 
-    public function deactivate() {
+    public function create_pages_init() {
 
+        // create 2 pages donor-account and thank-donor & set template for there 
+        $donor_account_page = get_page_by_path('donor-account');
+        if (!$donor_account_page) {
+
+            $donor_account_page = wp_insert_post(array(
+                'post_title' => esc_html__('Donor Account', 'giftflowwp'),
+                'post_content' => '',
+                'post_status' => 'publish',
+                'post_type' => 'page',
+            ));
+
+            update_post_meta(
+                $donor_account_page,
+                '_wp_page_template',
+                'donor-account'
+            );
+        }
+
+        $thank_donor_page = get_page_by_path('thank-donor');
+        if (!$thank_donor_page) {
+
+            $thank_donor_page = wp_insert_post(array(
+                'post_title' => esc_html__('Thank Donor', 'giftflowwp'),
+                'post_content' => '',
+                'post_status' => 'publish',
+                'post_type' => 'page',
+            ));
+
+            update_post_meta(
+                $thank_donor_page,
+                '_wp_page_template',
+                'thank-donor'
+            );
+        }
+    }
+
+    public function deactivate() {
+        // Clean up roles and capabilities
+        $role_manager = \GiftFlowWp\Core\Role::get_instance();
+        $role_manager->remove_roles();
+        $role_manager->remove_capabilities();
     }
 } 

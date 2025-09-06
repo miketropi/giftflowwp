@@ -31,35 +31,33 @@ class Block_Template {
         // Register templates for pages
         $templates = array(
             'archive-campaign' => array(
-                'title' => 'Campaign Archive',
-                'description' => 'A template for the campaign archive page.',
-                'postTypes' => array( 'page' ),
+                'title' => esc_html__('Campaign Archive', 'giftflowwp'),
+                'description' => esc_html__('A template for the campaign archive page.', 'giftflowwp'),
+                // 'post_types' => array( 'page' ),
                 'template' => 'archive-campaign'
             ),
             'taxonomy-campaign-tax' => array(
-                'title' => 'Category Campaign Archive',
-                'description' => 'A template for the category campaign archive page.',
-                // 'postTypes' => array( 'campaign' ),
-                // 'categories' => array( 'campaign-tax' ),
+                'title' => esc_html__('Category Campaign Archive', 'giftflowwp'),
+                'description' => esc_html__('A template for the category campaign archive page.', 'giftflowwp'),
                 'template' => 'category-campaign-archive'
             ),
             'single-campaign' => array(
-                'title' => 'Single Campaign',
-                'description' => 'A template for the single campaign page.',
-                'postTypes' => array( 'campaign' ),
+                'title' => esc_html__('Single Campaign', 'giftflowwp'),
+                'description' => esc_html__('A template for the single campaign page.', 'giftflowwp'),
+                'post_types' => array( 'campaign' ),
                 'template' => 'single-campaign'
             ),
-            'donor-dashboard' => array(
-                'title' => 'Donor Dashboard',
-                'description' => 'A template for the donor dashboard page.',
-                'postTypes' => array( 'page' ),
-                'template' => 'donor-dashboard'
+            'donor-account' => array(
+                'title' => esc_html__('Donor Account', 'giftflowwp'),
+                'description' => esc_html__('A template for the donor account page.', 'giftflowwp'),
+                'post_types' => array( 'page' ),
+                'template' => 'donor-account'
             ),
-            'thank-you' => array(
-                'title' => 'Thank You',
-                'description' => 'A template for the thank you page.',
-                'postTypes' => array( 'page' ),
-                'template' => 'thank-you'
+            'thank-donor' => array(
+                'title' => esc_html__('Thank Donor', 'giftflowwp'),
+                'description' => esc_html__('A template for the thank donor page.', 'giftflowwp'),
+                'post_types' => array( 'page' ),
+                'template' => 'thank-donor'
             )
         );
 
@@ -71,14 +69,6 @@ class Block_Template {
             register_block_template(
                 'giftflowwp//' . $slug,
                 $template
-                // array(
-                //     'title' => $template['title'],
-                //     'description' => $template['description'] ?? '',
-                //     'postTypes' => $template['postTypes'],
-                //     'taxonomies' => $template['taxonomies'] ?? '',
-                //     'template' => $template['template'],
-                //     'content' => apply_filters('giftflowwp_block_template_content', $content, $template)
-                // )
             );
         }
     }

@@ -11,10 +11,13 @@ $pagination = $donations['pagination'] ?? 1;
 <div class="gfw-donation-list-container">
     <div class="gfw-donation-list-header">
         <span class="gfw-donation-count">
-            <?php if ($total > 0): ?>
-          <?php echo esc_html($total); ?> donations
-            <?php else: ?>
-          Be the first to donate
+            <?php if ( $total > 0 ) : ?>
+                <?php
+                /* translators: %s: number of donations */
+                printf( esc_html__( '%s donations', 'giftflowwp' ), esc_html( $total ) );
+                ?>
+            <?php else : ?>
+                <?php esc_html_e( 'Be the first to donate', 'giftflowwp' ); ?>
             <?php endif; ?>
         </span>
     </div>

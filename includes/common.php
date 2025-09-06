@@ -1,5 +1,6 @@
 <?php 
 use GiftFlowWP\Frontend\Template;
+use GiftFlowWp\Core\Role;
 
 if ( ! defined( 'ABSPATH' ) ) {
   exit; // Exit if accessed directly.
@@ -10,8 +11,50 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package GiftFlowWP
  */
 
+// Global helper functions for easy access
+
+/**
+ * Assign donor role to user
+ *
+ * @param int $user_id User ID
+ * @return bool True if role was assigned, false otherwise
+ */
+function giftflowwp_assign_donor_role($user_id) {
+  return \GiftFlowWp\Core\Role::get_instance()->assign_donor_role($user_id);
+}
+
+/**
+* Remove donor role from user
+*
+* @param int $user_id User ID
+* @return bool True if role was removed, false otherwise
+*/
+function giftflowwp_remove_donor_role($user_id) {
+  return \GiftFlowWp\Core\Role::get_instance()->remove_donor_role($user_id);
+}
+
+/**
+* Check if user has donor role
+*
+* @param int $user_id User ID
+* @return bool True if user has donor role, false otherwise
+*/
+function giftflowwp_user_has_donor_role($user_id) {
+  return \GiftFlowWp\Core\Role::get_instance()->user_has_donor_role($user_id);
+}
+
+/**
+* Get the Role instance (for advanced usage)
+*
+* @return \GiftFlowWp\Core\Role
+*/
+function giftflowwp_get_role_manager() {
+  return \GiftFlowWp\Core\Role::get_instance();
+}
+
 function giftflowwp_svg_icon($name) {
   $icons = array(
+    'plgicon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles-icon lucide-sparkles"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg>',
     'info' => '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
     'mail' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',
     'eye-off' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off-icon lucide-eye-off"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>',
@@ -554,4 +597,182 @@ function giftflowwp_donation_form_error_section_html() {
 function giftflowwp_load_template($template_name, $args = array()) {
   $template = new Template();
   $template->load_template($template_name, $args);
+}
+
+// get donation data by donation id
+function giftflowwp_get_donation_data_by_id($donation_id) {
+  $donation_data = get_post($donation_id);
+
+  if(!$donation_data) {
+    return false;
+  }
+
+  $donation_data->donation_edit_url = get_edit_post_link($donation_id);
+
+  $campaign_id = get_post_meta($donation_id, '_campaign_id', true);
+  $donation_data->campaign_name = $campaign_id ? get_the_title($campaign_id) : '???';
+  $donation_data->campaign_url = $campaign_id ? get_the_permalink($campaign_id) : '#';
+
+  $donor_id = get_post_meta($donation_id, '_donor_id', true);
+  // donor_name = first name + last name
+  $donation_data->donor_name = $donor_id ? get_post_meta($donor_id, '_first_name', true) . ' ' . get_post_meta($donor_id, '_last_name', true) : '???';
+  $donation_data->donor_email = $donor_id ? get_post_meta($donor_id, '_email', true) : '';
+
+  $donation_data->amount = get_post_meta($donation_id, '_amount', true);
+  $donation_data->__amount_formatted = giftflowwp_render_currency_formatted_amount($donation_data->amount);
+
+  $donation_data->status = get_post_meta($donation_id, '_status', true);
+  $donation_data->payment_method = get_post_meta($donation_id, '_payment_method', true);
+  $donation_data->__date = get_the_date('', $donation_id);
+  $donation_data->__date_gmt = get_gmt_from_date(get_the_date('Y-m-d H:i:s', $donation_id));
+
+  return $donation_data;
+}
+
+// get donor account page
+function giftflowwp_get_donor_account_page() {
+  $options = get_option('giftflowwp_general_options');
+  $donor_account_page = isset($options['donor_account_page']) ? $options['donor_account_page'] : '';
+
+  // if empty please search by path 'donor-account'
+  if (!$donor_account_page) {
+    $donor_account_page = get_page_by_path('donor-account');
+    // Validate that $donor_account_page is a valid WP_Post object before accessing its ID
+    if ($donor_account_page && is_a($donor_account_page, 'WP_Post')) {
+        $donor_account_page = $donor_account_page->ID;
+    } else {
+        $donor_account_page = '';
+    }
+    // $donor_account_page = $donor_account_page->ID;
+  }
+
+  return $donor_account_page;
+}
+
+// get thank donor page
+function giftflowwp_get_thank_donor_page() {
+  $options = get_option('giftflowwp_general_options');
+  $thank_donor_page = isset($options['thank_donor_page']) ? $options['thank_donor_page'] : '';
+
+  // if empty please search by path 'thank-donor'
+  if (!$thank_donor_page) {
+    $thank_donor_page = get_page_by_path('thank-donor');
+    // Validate that $thank_donor_page is a valid WP_Post object before accessing its ID
+    if ($thank_donor_page && is_a($thank_donor_page, 'WP_Post')) {
+        $thank_donor_page = $thank_donor_page->ID;
+    } else {
+        $thank_donor_page = '';
+    }
+    // $thank_donor_page = $thank_donor_page->ID;
+  }
+
+  return $thank_donor_page;
+}
+
+/**
+ * 
+ * 
+ * @param int $donation_id
+ * @param mixed $payment_result
+ * @return void
+ */
+function giftflowwp_auto_create_user_on_donation( $donation_id, $payment_result ) {
+
+  // get donor id 
+  $donor_id = get_post_meta($donation_id, '_donor_id', true);
+
+  // get donor data
+  $donor_data = giftflowwp_get_donor_data_by_id($donor_id);
+
+  // check if user exists by email
+  $user = get_user_by('email', $donor_data->email);
+  if ($user) {
+    return;
+  }
+
+  // create new user, update first name, last name, and set role is subscriber
+  $password = wp_generate_password();
+  $user_id = wp_create_user($donor_data->email, $password, $donor_data->email);
+  if ( is_wp_error( $user_id ) ) {
+    return;
+  }
+
+  // update user data
+  wp_update_user(array(
+    'ID' => $user_id,
+    'first_name' => $donor_data->first_name,
+    'last_name' => $donor_data->last_name,
+  ));
+
+  // assign donor role 
+  giftflowwp_assign_donor_role($user_id);
+
+  // add hook after create new user
+  do_action('giftflowwp_new_user_on_first_time_donation', $user_id);
+
+  // get donor account url 
+  $donor_account_url = get_permalink(giftflowwp_get_donor_account_page());
+
+  // load content mail template 
+  ob_start();
+  $new_user_email_data = array(
+    'name' => $donor_data->first_name . ' ' . $donor_data->last_name,
+    'username' => $donor_data->email,
+    'password' => $password,
+    'login_url' => $donor_account_url,
+  );
+
+  /**
+   * Filter the data passed to the new user email template.
+   *
+   * @param array $new_user_email_data
+   * @param object $donor_data
+   * @param int $user_id
+   * @param int $donor_id
+   */
+  $new_user_email_data = apply_filters(
+    'giftflowwp_new_user_email_data',
+    $new_user_email_data,
+    $donor_data,
+    $user_id,
+    $donor_id
+  );
+
+  giftflowwp_load_template('email/new-user.php', $new_user_email_data);
+  $content = ob_get_clean();
+
+  // send mail to new user
+  giftflowwp_send_mail_template(array(
+    'to' => $donor_data->email,
+    'subject' => sprintf( esc_html__('Welcome to %s', 'giftflowwp'), get_bloginfo('name') ),
+    'header' => esc_html__('🍀 Your donor account has been created.', 'giftflowwp'),
+    'content' => $content,
+  ));
+}
+
+/**
+ * get donor data by id
+ * 
+ * @param int $donor_id
+ * @return object|null
+ */
+function giftflowwp_get_donor_data_by_id($donor_id = 0) {
+  $donor_data = get_post($donor_id);
+
+  if ( ! $donor_data || is_wp_error( $donor_data ) ) {
+    return null;
+  }
+
+  // get meta fields
+  $donor_data->email = get_post_meta($donor_id, '_email', true);
+  $donor_data->first_name = get_post_meta($donor_id, '_first_name', true);
+  $donor_data->last_name = get_post_meta($donor_id, '_last_name', true);
+  $donor_data->phone = get_post_meta($donor_id, '_phone', true);
+  $donor_data->address = get_post_meta($donor_id, '_address', true);
+  $donor_data->city = get_post_meta($donor_id, '_city', true);
+  $donor_data->state = get_post_meta($donor_id, '_state', true);
+  $donor_data->postal_code = get_post_meta($donor_id, '_postal_code', true);
+  $donor_data->country = get_post_meta($donor_id, '_country', true);
+
+  return $donor_data;
 }
