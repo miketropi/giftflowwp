@@ -637,7 +637,13 @@ function giftflowwp_get_donor_account_page() {
   // if empty please search by path 'donor-account'
   if (!$donor_account_page) {
     $donor_account_page = get_page_by_path('donor-account');
-    $donor_account_page = $donor_account_page->ID;
+    // Validate that $donor_account_page is a valid WP_Post object before accessing its ID
+    if ($donor_account_page && is_a($donor_account_page, 'WP_Post')) {
+        $donor_account_page = $donor_account_page->ID;
+    } else {
+        $donor_account_page = '';
+    }
+    // $donor_account_page = $donor_account_page->ID;
   }
 
   return $donor_account_page;
@@ -651,7 +657,13 @@ function giftflowwp_get_thank_donor_page() {
   // if empty please search by path 'thank-donor'
   if (!$thank_donor_page) {
     $thank_donor_page = get_page_by_path('thank-donor');
-    $thank_donor_page = $thank_donor_page->ID;
+    // Validate that $thank_donor_page is a valid WP_Post object before accessing its ID
+    if ($thank_donor_page && is_a($thank_donor_page, 'WP_Post')) {
+        $thank_donor_page = $thank_donor_page->ID;
+    } else {
+        $thank_donor_page = '';
+    }
+    // $thank_donor_page = $thank_donor_page->ID;
   }
 
   return $thank_donor_page;
