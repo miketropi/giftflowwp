@@ -1269,15 +1269,9 @@
     flex: 0 0 auto;
     white-space: nowrap;
     padding: 12px 16px;
-    border-radius: 6px;
     border-left: none;
     border-bottom: 2px solid transparent;
     margin-bottom: 0;
-  }
-  .giftflowwp-donor-account__tab.active {
-    background: #f0f9ff;
-    color: #3b82f6;
-    border-bottom-color: #3b82f6;
   }
 }
 .giftflowwp-donor-account__tab-icon {
@@ -1401,25 +1395,11 @@
   margin-bottom: 0.4em;
   list-style: disc;
 }
-@media (max-width: 600px) {
+@media (max-width: 375px) {
   .donor-account-empty {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 1.2rem 0.8rem;
+    flex-wrap: wrap;
   }
-  .donor-account-empty .empty-icon {
-    margin: 0 auto 1rem auto;
-    width: 44px;
-    height: 44px;
-  }
-  .donor-account-empty .empty-icon svg {
-    width: 24px;
-    height: 24px;
-  }
-  .donor-account-empty .empty-message h4 {
-    font-size: 1.05rem;
-  }
-  .donor-account-empty .empty-message p, .donor-account-empty .empty-message ul {
-    font-size: 0.9rem;
+  .donor-account-empty .empty-message {
+    flex: unset;
   }
 }
