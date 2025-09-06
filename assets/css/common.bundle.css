@@ -1229,3 +1229,197 @@
     border-color: #6b7280;
   }
 }
+.giftflowwp-donor-account {
+  display: flex;
+  gap: 2rem;
+  min-height: 600px;
+  margin: 2rem 0;
+}
+.giftflowwp-donor-account__tabs {
+  flex: 0 0 280px;
+}
+@media (max-width: 768px) {
+  .giftflowwp-donor-account__tabs {
+    flex: 0 0 100%;
+    padding: 16px 0;
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+  }
+}
+.giftflowwp-donor-account__tab {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: solid #eee;
+  border-width: 1px 0 0 0;
+  opacity: 0.4;
+  font-weight: bold;
+}
+.giftflowwp-donor-account__tab:hover {
+  opacity: 1;
+}
+.giftflowwp-donor-account__tab.active {
+  opacity: 1;
+}
+@media (max-width: 768px) {
+  .giftflowwp-donor-account__tab {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 12px 16px;
+    border-radius: 6px;
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: 0;
+  }
+  .giftflowwp-donor-account__tab.active {
+    background: #f0f9ff;
+    color: #3b82f6;
+    border-bottom-color: #3b82f6;
+  }
+}
+.giftflowwp-donor-account__tab-icon {
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 768px) {
+  .giftflowwp-donor-account__tab-icon {
+    margin-right: 8px;
+  }
+  .giftflowwp-donor-account__tab-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+.giftflowwp-donor-account__tab-label {
+  font-weight: 500;
+  font-size: 14px;
+}
+@media (max-width: 768px) {
+  .giftflowwp-donor-account__tab-label {
+    font-size: 13px;
+  }
+}
+.giftflowwp-donor-account__content {
+  flex: 1;
+}
+@media (max-width: 768px) {
+  .giftflowwp-donor-account__content {
+    padding-top: 20px;
+  }
+}
+.giftflowwp-donor-account__tab-content p {
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+@media (max-width: 768px) {
+  .giftflowwp-donor-account {
+    flex-direction: column;
+    min-height: auto;
+    gap: 1rem;
+  }
+  .giftflowwp-donor-account__tab-content .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  .giftflowwp-donor-account__tab-content .stats-grid .stat-card {
+    padding: 20px;
+  }
+  .giftflowwp-donor-account__tab-content .stats-grid .stat-card .stat-value {
+    font-size: 24px;
+  }
+  .giftflowwp-donor-account__tab-content .data-table {
+    font-size: 14px;
+  }
+  .giftflowwp-donor-account__tab-content .data-table th, .giftflowwp-donor-account__tab-content .data-table td {
+    padding: 12px 8px;
+  }
+}
+@media (max-width: 480px) {
+  .giftflowwp-donor-account__tab-content .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .giftflowwp-donor-account__tab-content .stats-grid .stat-card {
+    padding: 16px;
+  }
+  .giftflowwp-donor-account__tab-content .stats-grid .stat-card .stat-value {
+    font-size: 20px;
+  }
+  .giftflowwp-donor-account__tab-content .stats-grid .stat-card .stat-label {
+    font-size: 12px;
+  }
+}
+
+.donor-account-empty {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  background: #f5f5f5;
+  border-radius: 1px;
+  padding: 2rem 1.5rem;
+  margin: 0 0 2rem;
+}
+.donor-account-empty .empty-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  margin-right: 0.5rem;
+  background: #fafafa;
+  border: solid 1px #eee;
+  border-radius: 100%;
+}
+.donor-account-empty .empty-icon svg {
+  width: 28px;
+}
+.donor-account-empty .empty-message {
+  flex: 1;
+}
+.donor-account-empty .empty-message h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.donor-account-empty .empty-message p {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.donor-account-empty .empty-message ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.9rem;
+}
+.donor-account-empty .empty-message ul li {
+  margin-bottom: 0.4em;
+  list-style: disc;
+}
+@media (max-width: 600px) {
+  .donor-account-empty {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.2rem 0.8rem;
+  }
+  .donor-account-empty .empty-icon {
+    margin: 0 auto 1rem auto;
+    width: 44px;
+    height: 44px;
+  }
+  .donor-account-empty .empty-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+  .donor-account-empty .empty-message h4 {
+    font-size: 1.05rem;
+  }
+  .donor-account-empty .empty-message p, .donor-account-empty .empty-message ul {
+    font-size: 0.9rem;
+  }
+}
