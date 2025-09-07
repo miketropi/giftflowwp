@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $current_user = wp_get_current_user();
 
 // get name user
-$name = $current_user->first_name . ' ' . $current_user->last_name;
+$name = implode(' ', [$current_user->first_name, $current_user->last_name]);
 if ( empty( trim( $name ) ) ) { $name = 'donor'; }
 ?>
 <div class="giftflowwp-donor-account-dashboard">
