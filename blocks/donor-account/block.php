@@ -119,42 +119,6 @@ function giftflowwp_donor_account_page_url($tab) {
 }
 
 function giftflowwp_donor_account_dashboard_callback() {
-  ?>
-  <div class="giftflowwp-donor-account-dashboard">
-    <div class="giftflowwp-donor-account-dashboard__welcome">
-      <h2><?php esc_html_e('Welcome, Donor!', 'giftflowwp'); ?></h2>
-      <p>
-        <?php esc_html_e('Thank you for your generous support. Your contributions make a real difference!', 'giftflowwp'); ?>
-      </p>
-    </div>
-    <div class="giftflowwp-donor-account-dashboard__quick-actions">
-      <h3><?php esc_html_e('Quick Actions', 'giftflowwp'); ?></h3>
-      <ul>
-        <li>
-          <a href="<?php echo esc_url( giftflowwp_donor_account_page_url('donations') ); ?>" class="giftflowwp-dashboard-action">
-            <?php echo giftflowwp_svg_icon('money'); ?>
-            <span><?php esc_html_e('View My Donations', 'giftflowwp'); ?></span>
-          </a>
-        </li>
-        <li>
-          <a href="<?php echo esc_url( giftflowwp_donor_account_page_url('profile') ); ?>" class="giftflowwp-dashboard-action">
-            <?php echo giftflowwp_svg_icon('user'); ?>
-            <span><?php esc_html_e('Edit Profile', 'giftflowwp'); ?></span>
-          </a>
-        </li>
-        <li>
-          <a href="<?php echo esc_url( giftflowwp_donor_account_page_url('receipts') ); ?>" class="giftflowwp-dashboard-action">
-            <?php echo giftflowwp_svg_icon('document'); ?>
-            <span><?php esc_html_e('Download Receipts', 'giftflowwp'); ?></span>
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div class="giftflowwp-donor-account-dashboard__message">
-      <p>
-        <?php esc_html_e('Stay tuned for new features and updates to your donor account. We appreciate your ongoing commitment!', 'giftflowwp'); ?>
-      </p>
-    </div>
-  </div>
-  <?php
+  // load template donor-account--dashboard
+  giftflowwp_load_template('block/donor-account--dashboard.php');
 }

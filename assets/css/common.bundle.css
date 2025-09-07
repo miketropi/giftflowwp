@@ -1229,6 +1229,91 @@
     border-color: #6b7280;
   }
 }
+.giftflowwp-donor-account-dashboard__welcome {
+  margin-bottom: 3rem;
+}
+.giftflowwp-donor-account-dashboard__welcome h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+.giftflowwp-donor-account-dashboard__welcome p {
+  margin: 0;
+}
+.giftflowwp-donor-account-dashboard__quick-actions {
+  margin-bottom: 3rem;
+}
+.giftflowwp-donor-account-dashboard__quick-actions h3 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+.giftflowwp-donor-account-dashboard__quick-actions ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (max-width: 768px) {
+  .giftflowwp-donor-account-dashboard__quick-actions ul {
+    grid-template-columns: 1fr;
+  }
+}
+.giftflowwp-donor-account-dashboard__quick-actions li {
+  margin: 0 0 0.5rem;
+}
+.giftflowwp-donor-account-dashboard__message {
+  padding: 1.5rem 0;
+  border-top: 1px solid #eee;
+}
+.giftflowwp-donor-account-dashboard__message p {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.6;
+}
+
+.giftflowwp-dashboard-action {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: solid 2px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.giftflowwp-dashboard-action:hover, .giftflowwp-dashboard-action:focus {
+  background: none;
+  outline: none;
+  opacity: 0.5;
+}
+.giftflowwp-dashboard-action svg {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-right: 0.6rem;
+  color: inherit;
+}
+.giftflowwp-dashboard-action span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: inherit;
+}
+@media (max-width: 480px) {
+  .giftflowwp-dashboard-action svg {
+    width: 18px;
+    height: 18px;
+    margin-right: 0.5rem;
+  }
+  .giftflowwp-dashboard-action span {
+    font-size: 0.95rem;
+  }
+}
+
 .giftflowwp-donor-account {
   display: flex;
   gap: 2rem;
