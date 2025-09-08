@@ -83,6 +83,13 @@ class Donor_Contact_Meta extends Base_Meta_Box {
                 'type'  => 'textfield',
                 'description' => __( 'Enter the country of the donor', 'giftflowwp' ),
             ),
+            // donor username 
+            // 'wp_user' => array(
+            //     'label' => __( 'WP User', 'giftflowwp' ),
+            //     'type'  => 'select',
+            //     'description' => __( 'Enter the WP user of the donor', 'giftflowwp' ),
+            //     'options' => $this->get_all_usernames(),
+            // ),
         );
     }
 
@@ -97,7 +104,7 @@ class Donor_Contact_Meta extends Base_Meta_Box {
         $fields = $this->get_fields();
         foreach ( $fields as $field_id => $field ) {
             $value = get_post_meta( $post->ID, '_' . $field_id, true );
-            
+            $options = isset( $field['options'] ) ? $field['options'] : array();
             // Create field instance with all necessary parameters
             $field_instance = new \GiftFlowWP_Field(
                 $field_id,                    // id
@@ -109,6 +116,7 @@ class Donor_Contact_Meta extends Base_Meta_Box {
                     'description' => $field['description'],
                     'wrapper_classes' => array('giftflowwp-field-wrapper'),
                     'classes' => array('giftflowwp-field-input'),
+                    'options' => $options,
                     'attributes' => array(
                         'id' => $field_id,
                         'name' => $field_id,
@@ -158,4 +166,25 @@ class Donor_Contact_Meta extends Base_Meta_Box {
             }
         }
     }
+
+    // get all user names for select field
+    private function get_all_usernames() {
+        $__users = get_users(
+            array(
+                'fields' => array('ID', 'user_login'),
+            )
+        );
+
+        $u = array();
+
+        // add empty option
+        // $u[''] = esc_html__('Select a username', 'giftflowwp');
+
+        foreach ( $__users as $__user ) {
+            $u[ $__user->ID ] = $__user->user_login . ' (#' . $__user->ID . ')';
+        }
+        
+        return $u;
+    }
 } 
+

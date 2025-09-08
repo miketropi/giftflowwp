@@ -120,5 +120,75 @@ function giftflowwp_donor_account_page_url($tab) {
 
 function giftflowwp_donor_account_dashboard_callback() {
   // load template donor-account--dashboard
-  giftflowwp_load_template('block/donor-account--dashboard.php');
+  $current_user = wp_get_current_user();
+  giftflowwp_load_template('block/donor-account--dashboard.php', array(
+    'current_user' => $current_user,
+  ));
+}
+
+function giftflowwp_donor_account_my_donations_callback() {
+  // get current user
+  $current_user = wp_get_current_user();
+
+  $id = isset($_GET['_id']) ? intval($_GET['_id']) : null;
+
+  if ($id) {
+
+    // validate post type 
+    if (get_post_type($id) != 'donation') {
+      // return template not found
+      giftflowwp_load_template('block/donor-account--not-found.php', array(
+        'current_user' => $current_user,
+        'id' => $id,
+      ));
+      return;
+    }
+
+    // get donation data by id 
+    $donation = giftflowwp_get_donation_data_by_id($id);
+
+    // check $donation is exist
+    if (!$donation) {
+      // return template not found
+      giftflowwp_load_template('block/donor-account--not-found.php', array(
+        'current_user' => $current_user,
+        'id' => $id,
+      ));
+      return;
+    }
+
+    // check $donation donor_email is equal to current user email
+    if ($donation->donor_email != $current_user->user_email) {
+      // return template not allowed to view this donation
+      giftflowwp_load_template('block/donor-account--not-allowed.php', array(
+        'current_user' => $current_user,
+        'id' => $id,
+      ));
+      return;
+    }
+    
+
+    // view donation template 
+    giftflowwp_load_template('block/donor-account--my-donations--detail.php', array(
+      'current_user' => $current_user,
+      'id' => $id,
+      'donation' => $donation,
+    ));
+    return;
+  }
+
+  $page = isset($_GET['_page']) ? intval($_GET['_page']) : 1;
+  if ($page < 1) {
+    $page = 1;
+  }
+
+  // query donations by donor id
+  $donations = giftflowwp_get_donations_by_user($current_user->ID, $page, 20);
+
+  // load template donor-account--my-donations
+  giftflowwp_load_template('block/donor-account--my-donations.php', array(
+    'current_user' => $current_user,
+    'donations' => $donations,
+    'page' => $page,
+  ));
 }

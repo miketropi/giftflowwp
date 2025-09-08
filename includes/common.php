@@ -58,6 +58,7 @@ function giftflowwp_svg_icon($name) {
     'info' => '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
     'mail' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',
     'eye-off' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off-icon lucide-eye-off"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>',
+    'eye' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>',
     'loop' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-repeat-icon lucide-repeat"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>',
     'switch' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-toggle-left-icon lucide-toggle-left"><rect width="20" height="12" x="2" y="6" rx="6" ry="6"/><circle cx="8" cy="12" r="2"/></svg>',
     'star' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star-icon lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>',
@@ -83,6 +84,8 @@ function giftflowwp_svg_icon($name) {
     'clipboard-clock' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-clock-icon lucide-clipboard-clock"><path d="M16 14v2.2l1.6 1"/><path d="M16 4h2a2 2 0 0 1 2 2v.832"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2"/><circle cx="16" cy="16" r="6"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>',
     'bookmark' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bookmark-icon lucide-bookmark"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>',
     'folder-code' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-code-icon lucide-folder-code"><path d="M10 10.5 8 13l2 2.5"/><path d="m14 10.5 2 2.5-2 2.5"/><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/></svg>',
+    'arrow-up-right' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right-icon lucide-arrow-up-right"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>',
+    'link' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link-icon lucide-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
   );
 
   return isset($icons[$name]) ? $icons[$name] : '';
@@ -622,6 +625,11 @@ function giftflowwp_get_donation_data_by_id($donation_id) {
   $donation_data->donor_name = $donor_id ? get_post_meta($donor_id, '_first_name', true) . ' ' . get_post_meta($donor_id, '_last_name', true) : '???';
   $donation_data->donor_email = $donor_id ? get_post_meta($donor_id, '_email', true) : '';
 
+  // message 
+  $donation_data->message = get_post_meta($donation_id, '_donor_message', true);
+  // anonymous
+  $donation_data->anonymous = get_post_meta($donation_id, '_anonymous_donation', true);
+
   $donation_data->amount = get_post_meta($donation_id, '_amount', true);
   $donation_data->__amount_formatted = giftflowwp_render_currency_formatted_amount($donation_data->amount);
 
@@ -779,4 +787,73 @@ function giftflowwp_get_donor_data_by_id($donor_id = 0) {
   $donor_data->country = get_post_meta($donor_id, '_country', true);
 
   return $donor_data;
+}
+
+/**
+ * query donations by donor id, use wp_query
+ * 
+ * @param string $donor_id
+ * @param int $page
+ * @param int $per_page
+ * @return array
+ */
+function giftflowwp_query_donation_by_donor_id($donor_id, $page = 1, $per_page = 20) {
+  $donations = new WP_Query(array(
+    'post_type' => 'donation',
+    'meta_key' => '_donor_id',
+    'meta_value' => $donor_id,
+    'posts_per_page' => $per_page,
+    'paged' => $page,
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'post_status' => 'publish',
+  ));
+
+  return $donations;
+}
+
+// get donor id by email
+function giftflowwp_get_donor_id_by_email($email) {
+  $donor = get_posts(array(
+    'post_type' => 'donor',
+    'meta_key' => '_email',
+    'meta_value' => $email,
+    'posts_per_page' => 1,
+  ));
+
+  if ($donor) {
+    return $donor[0]->ID;
+  }
+
+  return 0;
+}
+
+/**
+ * get donations by user id
+ * 
+ * @param int $user_id
+ * @param int $page
+ * @param int $per_page
+ * @return wp_query
+ */
+function giftflowwp_get_donations_by_user($user_id, $page = 1, $per_page = 20) {
+  $user_email = get_user_by('id', $user_id)->user_email;
+  $donor_id = giftflowwp_get_donor_id_by_email($user_email);
+  $donations = giftflowwp_query_donation_by_donor_id($donor_id, $page, $per_page);
+  return $donations;
+}
+
+function giftflowwp_process_bar_of_campaign_donations($campaign_id) {
+  $progress_percentage = giftflowwp_get_campaign_progress_percentage($campaign_id);
+
+  ?>
+  <div class="giftflowwp-campaign-progress-bar" title="<?php echo esc_attr($progress_percentage); ?>%" style="max-wdith: 100%; margin: 0 0 .5em;"> 
+    <div class="progress-bar" style="height: 3px; background-color: #f1f5f9; overflow: hidden; width: 100%; border-radius: 1px;">
+      <div class="progress" style="width: <?php echo esc_attr($progress_percentage); ?>%; height: 100%; background: linear-gradient(90deg, #22c55e, #4ade80);"></div>
+    </div>
+    <!-- <div class="progress-label" style="margin-top: 0.5em; font-size: 0.95em;">
+      <?php echo esc_html($progress_percentage); ?>%
+    </div> -->
+  </div>
+  <?php
 }

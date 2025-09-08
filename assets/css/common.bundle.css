@@ -1314,6 +1314,257 @@
   }
 }
 
+.gfw-my-donations-table .giftflowwp-currency-formatted-amount {
+  font-weight: bold;
+  font-family: monospace;
+}
+.gfw-my-donations-table .gfw-campaign-title-link {
+  font-weight: 600;
+}
+.gfw-my-donations-table .gfw-donation-date {
+  font-family: monospace;
+  opacity: 0.8;
+}
+
+.gfw-my-donations-header {
+  margin-bottom: 2rem;
+}
+
+.gfw-view-detail-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2em;
+  text-decoration: none;
+  border-bottom: 2px solid;
+}
+.gfw-view-detail-link:hover {
+  opacity: 0.5;
+}
+
+.donation-status {
+  display: inline-block;
+  padding: 0.25em 0.75em;
+  font-size: 0.8em;
+  border-radius: 16px;
+  font-weight: 500;
+  background: #f3f4f6;
+  color: #444;
+  border: 1px solid #e5e7eb;
+  vertical-align: middle;
+  text-transform: capitalize;
+  transition: background 0.15s, color 0.15s, border 0.15s;
+  font-family: monospace;
+}
+.donation-status.status-completed {
+  background: #e6f9ed;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+.donation-status.status-refunded {
+  background: #fef3c7;
+  color: #b45309;
+  border-color: #fde68a;
+}
+.donation-status.status-pending {
+  background: #f3f4f6;
+  color: #6366f1;
+  border-color: #c7d2fe;
+}
+.donation-status.status-failed {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+
+.gfw-donation-detail-actions {
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+}
+
+.gfw-my-donations-detail {
+  margin: 0 auto;
+}
+.gfw-my-donations-detail .gfw-donation-detail-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+.gfw-my-donations-detail .gfw-donation-detail-header .gfw-donation-detail-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+.gfw-my-donations-detail .gfw-donation-detail-header .gfw-donation-detail-meta {
+  display: flex;
+  gap: 1rem;
+  opacity: 0.6;
+}
+.gfw-my-donations-detail .gfw-donation-detail-header .gfw-donation-detail-meta .gfw-donation-id {
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+.gfw-my-donations-detail .gfw-donation-detail-header .gfw-donation-detail-meta .gfw-donation-date {
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+.gfw-my-donations-detail .gfw-donation-detail-content {
+  margin-bottom: 2rem;
+}
+.gfw-my-donations-detail .gfw-donation-detail-content .gfw-donation-detail-amount-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 1px;
+}
+.gfw-my-donations-detail .gfw-donation-detail-content .gfw-donation-detail-amount-section .gfw-amount-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.gfw-my-donations-detail .gfw-donation-detail-content .gfw-donation-detail-amount-section .gfw-amount-display .gfw-amount {
+  font-weight: bold;
+  font-family: monospace;
+}
+.gfw-my-donations-detail .gfw-donation-detail-content .gfw-donation-detail-amount-section .gfw-amount-display .donation-status {
+  display: inline-block;
+  padding: 0.25em 0.75em;
+  font-size: 0.8em;
+  border-radius: 16px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  vertical-align: middle;
+  text-transform: capitalize;
+  transition: background 0.15s, color 0.15s, border 0.15s;
+  font-family: monospace;
+}
+.gfw-my-donations-detail .gfw-donation-detail-content .gfw-donation-detail-amount-section .gfw-amount-display .donation-status.status-completed {
+  background: #e6f9ed;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+.gfw-my-donations-detail .gfw-donation-detail-content .gfw-donation-detail-amount-section .gfw-amount-display .donation-status.status-refunded {
+  background: #fef3c7;
+  color: #b45309;
+  border-color: #fde68a;
+}
+.gfw-my-donations-detail .gfw-donation-detail-content .gfw-donation-detail-amount-section .gfw-amount-display .donation-status.status-pending {
+  background: #f3f4f6;
+  color: #6366f1;
+  border-color: #c7d2fe;
+}
+.gfw-my-donations-detail .gfw-donation-detail-content .gfw-donation-detail-amount-section .gfw-amount-display .donation-status.status-failed {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+.gfw-my-donations-detail .gfw-donation-detail-content .gfw-donation-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+@media (max-width: 600px) {
+  .gfw-my-donations-detail .gfw-donation-detail-content .gfw-donation-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+.gfw-my-donations-detail .gfw-donation-detail-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+.gfw-my-donations-detail .gfw-donation-detail-actions .gfw-view-detail-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2em;
+  text-decoration: none;
+  border-bottom: 2px solid;
+  color: #1a1a1a;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+.gfw-my-donations-detail .gfw-donation-detail-actions .gfw-view-detail-link:hover {
+  opacity: 0.5;
+}
+
+.gfw-donation-detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 0.9rem;
+  margin: 0 0 2rem 0;
+  overflow: hidden;
+  border: 1px solid #f0f0f0;
+}
+.gfw-donation-detail-table th, .gfw-donation-detail-table td {
+  padding: 1em;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+  background: none;
+  font-weight: normal;
+  vertical-align: top;
+}
+.gfw-donation-detail-table th {
+  background: #f8fafc;
+  font-weight: 600;
+  font-size: 1;
+  color: #1a1a1a;
+  border-bottom: 2px solid #e5e7eb;
+  letter-spacing: 0;
+  text-align: left;
+}
+.gfw-donation-detail-table tr:first-child th {
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 1.1em;
+  text-align: left;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+.gfw-donation-detail-table tr:last-child td {
+  border-bottom: none;
+}
+.gfw-donation-detail-table .gfw-detail-label {
+  font-weight: 500;
+  width: 160px;
+}
+.gfw-donation-detail-table .gfw-detail-value {
+  font-weight: 400;
+  font-size: 1em;
+  word-break: break-word;
+}
+.gfw-donation-detail-table .gfw-donation-date {
+  font-family: monospace;
+  font-size: 0.9em;
+}
+@media (max-width: 600px) {
+  .gfw-donation-detail-table {
+    font-size: 0.9em;
+  }
+  .gfw-donation-detail-table th, .gfw-donation-detail-table td {
+    padding: 0.7em 0.7em;
+  }
+  .gfw-donation-detail-table .gfw-detail-label {
+    width: 110px;
+    font-size: 0.9em;
+  }
+}
+
+.gfw-donor-account__title {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
 .giftflowwp-donor-account {
   display: flex;
   gap: 2rem;
@@ -1486,5 +1737,151 @@
   }
   .donor-account-empty .empty-message {
     flex: unset;
+  }
+}
+
+.giftflow-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 15px;
+  overflow: hidden;
+  border: 1px solid #f0f0f0;
+}
+.giftflow-table th, .giftflow-table td {
+  padding: 1em;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: top;
+  background: none;
+  font-weight: normal;
+}
+.giftflow-table th {
+  background: #f8fafc;
+  font-weight: 600;
+  font-size: 15px;
+}
+.giftflow-table tr:last-child td {
+  border-bottom: none;
+}
+.giftflow-table tbody tr {
+  transition: background 0.15s;
+}
+.giftflow-table tbody tr:hover {
+  background: #f3f4f6;
+}
+.giftflow-table tbody td {
+  font-size: 0.9em;
+}
+.giftflow-table tbody tr:nth-child(even) {
+  background: #fcfcfc;
+}
+@media (max-width: 900px) {
+  .giftflow-table {
+    font-size: 14px;
+  }
+  .giftflow-table th, .giftflow-table td {
+    padding: 12px 8px;
+  }
+}
+@media (max-width: 600px) {
+  .giftflow-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 0;
+  }
+  .giftflow-table thead, .giftflow-table tbody, .giftflow-table tr {
+    display: block;
+    width: 100%;
+  }
+  .giftflow-table th, .giftflow-table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .giftflow-table th {
+    background: #f8fafc;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .giftflow-table tr {
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background: #fff;
+  }
+  .giftflow-table tbody tr:nth-child(even) {
+    background: #fafbfc;
+  }
+}
+
+.gfw-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+  margin: 24px 0 0 0;
+  font-family: inherit;
+  font-size: 0.9em;
+}
+.gfw-pagination .page-numbers {
+  display: inline;
+  background: none;
+  font-size: 1rem;
+  text-decoration: underline;
+  border: none;
+  border-radius: 0;
+  padding: 0 6px;
+  margin: 0 2px;
+  cursor: pointer;
+  transition: color 0.15s, -webkit-text-decoration 0.15s;
+  transition: color 0.15s, text-decoration 0.15s;
+  transition: color 0.15s, text-decoration 0.15s, -webkit-text-decoration 0.15s;
+  text-decoration: none;
+}
+.gfw-pagination .page-numbers:hover, .gfw-pagination .page-numbers:focus {
+  text-decoration: underline;
+  outline: none;
+}
+.gfw-pagination .page-numbers.current,
+.gfw-pagination .page-numbers[aria-current=page] {
+  text-decoration: none;
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.5;
+}
+.gfw-pagination .page-numbers.next,
+.gfw-pagination .page-numbers.prev {
+  background: none;
+  border: none;
+}
+.gfw-pagination .page-numbers.next:hover, .gfw-pagination .page-numbers.next:focus,
+.gfw-pagination .page-numbers.prev:hover,
+.gfw-pagination .page-numbers.prev:focus {
+  text-decoration: underline;
+}
+
+/* Responsive styles for tablet and mobile */
+@media (max-width: 768px) {
+  .gfw-pagination {
+    gap: 4px;
+    margin-top: 16px;
+  }
+  .gfw-pagination .page-numbers {
+    font-size: 0.95rem;
+    padding: 0 4px;
+  }
+}
+@media (max-width: 480px) {
+  .gfw-pagination {
+    gap: 2px;
+    margin-top: 12px;
+  }
+  .gfw-pagination .page-numbers {
+    font-size: 0.9rem;
+    padding: 0 2px;
   }
 }
