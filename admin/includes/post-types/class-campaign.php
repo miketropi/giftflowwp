@@ -109,6 +109,11 @@ class Campaign extends Base_Post_Type {
 
         // Register submenu page for campaign taxonomy
         add_action( 'admin_menu', array( $this, 'register_campaign_taxonomy_submenu' ) );
+        
+        // Add filters
+        add_action( 'restrict_manage_posts', array( $this, 'add_status_filter' ) );
+        add_action( 'restrict_manage_posts', array( $this, 'add_category_filter' ) );
+        add_filter( 'parse_query', array( $this, 'filter_campaigns' ) );
     }
 
     /**
@@ -246,5 +251,104 @@ class Campaign extends Base_Post_Type {
         }
         
         return $submenu_file;
+    }
+
+    /**
+     * Add status filter dropdown
+     */
+    public function add_status_filter() {
+        global $typenow;
+        
+        if ( $typenow === 'campaign' ) {
+            $selected = isset( $_GET['campaign_status'] ) ? $_GET['campaign_status'] : '';
+            $statuses = array( 'active', 'completed', 'closed', 'pending' );
+            
+            echo '<select name="campaign_status">';
+            echo '<option value="">' . __( 'All Statuses', 'giftflowwp' ) . '</option>';
+            
+            foreach ( $statuses as $status ) {
+                $status_label = ucfirst( $status );
+                $selected_attr = selected( $selected, $status, false );
+                echo '<option value="' . esc_attr( $status ) . '" ' . $selected_attr . '>' . esc_html( $status_label ) . '</option>';
+            }
+            
+            echo '</select>';
+        }
+    }
+
+    /**
+     * Add category filter dropdown
+     */
+    public function add_category_filter() {
+        global $typenow;
+        
+        if ( $typenow === 'campaign' ) {
+            $selected = isset( $_GET['campaign_category'] ) ? $_GET['campaign_category'] : '';
+            
+            // Get all campaign categories
+            $categories = get_terms( array(
+                'taxonomy' => 'campaign-tax',
+                'hide_empty' => false,
+                'orderby' => 'name',
+                'order' => 'ASC'
+            ) );
+            
+            if ( !empty( $categories ) && !is_wp_error( $categories ) ) {
+                echo '<select name="campaign_category">';
+                echo '<option value="">' . __( 'All Categories', 'giftflowwp' ) . '</option>';
+                
+                foreach ( $categories as $category ) {
+                    $selected_attr = selected( $selected, $category->term_id, false );
+                    echo '<option value="' . esc_attr( $category->term_id ) . '" ' . $selected_attr . '>' . esc_html( $category->name ) . '</option>';
+                }
+                
+                echo '</select>';
+            }
+        }
+    }
+
+    /**
+     * Filter campaigns by status and category
+     *
+     * @param WP_Query $query The WP_Query instance
+     */
+    public function filter_campaigns( $query ) {
+        global $pagenow, $typenow;
+        
+        if ( $pagenow === 'edit.php' && $typenow === 'campaign' ) {
+            $meta_query = array();
+            $tax_query = array();
+            
+            // Filter by status
+            if ( isset( $_GET['campaign_status'] ) && $_GET['campaign_status'] !== '' ) {
+                $status = sanitize_text_field( $_GET['campaign_status'] );
+                $meta_query[] = array(
+                    'key'     => '_status',
+                    'value'   => $status,
+                    'compare' => '='
+                );
+            }
+            
+            // Filter by category
+            if ( isset( $_GET['campaign_category'] ) && $_GET['campaign_category'] !== '' ) {
+                $category_id = intval( $_GET['campaign_category'] );
+                $tax_query[] = array(
+                    'taxonomy' => 'campaign-tax',
+                    'field'    => 'term_id',
+                    'terms'    => $category_id,
+                    'operator' => 'IN'
+                );
+            }
+            
+            // Apply meta query if we have status filter
+            if ( !empty( $meta_query ) ) {
+                $query->set( 'meta_query', $meta_query );
+            }
+            
+            // Apply tax query if we have category filter
+            if ( !empty( $tax_query ) ) {
+                $query->set( 'tax_query', $tax_query );
+            }
+        }
     }
 } 
