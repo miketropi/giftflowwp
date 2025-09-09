@@ -1,0 +1,220 @@
+// My Account Form Styles - Clean & Simple
+.giftflowwp-donor-account-my-account {
+  max-width: 700px;
+  margin: 0 auto;
+
+  // Messages
+  .gfw-message {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: 0.9rem;
+
+    &--success {
+      background: #f0f9ff;
+      border-color: #0ea5e9;
+      color: #0c4a6e;
+    }
+
+    &--error {
+      background: #fef2f2;
+      border-color: #fca5a5;
+      color: #991b1b;
+
+      ul {
+        margin: 0;
+        padding-left: 1.2rem;
+      }
+    }
+  }
+
+  // Form Styles
+  .gfw-account-form {
+    padding: 2rem;
+    background: #fafafa;
+    border: solid 1px #eee;
+    border-radius: 1px;
+
+    .gfw-form-section {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #eee;
+
+      &:last-of-type {
+        border-bottom: none;
+        margin-bottom: 1rem;
+      }
+
+      .gfw-form-section-title {
+        margin: 0 0 1rem 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+
+        svg {
+          width: 16px;
+          height: 16px;
+          min-width: 16px;
+        }
+      }
+    }
+
+    .gfw-form-fields {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+
+      @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+    }
+
+    .gfw-form-field {
+      display: flex;
+      flex-direction: column;
+
+      &--full {
+        grid-column: 1 / -1;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        // font-weight: 500;
+        font-size: 0.9rem;
+        // color: #666;
+
+        .required {
+          color: #dc2626;
+          margin-left: 2px;
+        }
+      }
+
+      input[type="text"],
+      input[type="password"],
+      input[type="email"],
+      input[type="tel"],
+      textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid #d1d5db;
+        border-radius: 1px;
+        background-color: #fff;
+        // color: #1a1a1a;
+        font-size: 0.9rem;
+        transition: border-color 0.2s ease;
+        box-sizing: border-box;
+
+        &:focus {
+          outline: none;
+          border-color: black;
+        }
+
+        &:disabled {
+          background-color: #f9fafb;
+          cursor: not-allowed;
+          opacity: 0.7;
+        }
+
+        &::placeholder {
+          color: #9ca3af;
+        }
+      }
+
+      input[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+        cursor: not-allowed;
+        opacity: 0.85;
+      }
+
+      textarea {
+        min-height: 80px;
+        resize: vertical;
+        font-family: inherit;
+        line-height: 1.5;
+      }
+    }
+
+    .gfw-form-actions {
+      display: flex;
+      justify-content: flex-end;
+      // padding-top: .5rem;
+      // border-top: 1px solid #eee;
+
+      .gfw-btn {
+        padding: 1rem 1.5rem;
+        border: none;
+        border-radius: 1px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        &.gfw-btn-primary {
+          background: black;
+          color: #fff;
+
+          &:hover {
+            opacity: 0.7;
+          }
+
+          &:focus {
+            outline: 2px solid black;
+            outline-offset: 2px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .giftflowwp-donor-account-my-account {
+    margin: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .giftflowwp-donor-account-my-account {
+    margin: 0 0.5rem;
+
+    .gfw-account-form {
+      padding: 1rem;
+
+      .gfw-form-fields {
+        gap: 0.5rem;
+      }
+
+      .gfw-form-field {
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+          padding: 0.6rem;
+          font-size: 0.85rem;
+        }
+      }
+
+      .gfw-form-actions {
+        .gfw-btn {
+          padding: 0.6rem 1.2rem;
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+}

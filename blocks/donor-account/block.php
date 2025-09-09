@@ -192,3 +192,16 @@ function giftflowwp_donor_account_my_donations_callback() {
     'page' => $page,
   ));
 }
+
+// giftflowwp_donor_account_my_account_callback
+function giftflowwp_donor_account_my_account_callback() {
+  // load template donor-account--my-account
+  $current_user = wp_get_current_user();
+
+  // giftflowwp_get_donor_user_information
+  $donor = giftflowwp_get_donor_user_information($current_user->ID);
+  giftflowwp_load_template('block/donor-account--my-account.php', array(
+    'current_user' => $current_user,
+    'donor' => $donor,
+  ));
+}

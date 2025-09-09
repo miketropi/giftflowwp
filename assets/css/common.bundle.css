@@ -1558,6 +1558,199 @@
   }
 }
 
+.giftflowwp-donor-account-my-account {
+  max-width: 700px;
+  margin: 0 auto;
+}
+.giftflowwp-donor-account-my-account .gfw-message {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+.giftflowwp-donor-account-my-account .gfw-message--success {
+  background: #f0f9ff;
+  border-color: #0ea5e9;
+  color: #0c4a6e;
+}
+.giftflowwp-donor-account-my-account .gfw-message--error {
+  background: #fef2f2;
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+.giftflowwp-donor-account-my-account .gfw-message--error ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form {
+  padding: 2rem;
+  background: #fafafa;
+  border: solid 1px #eee;
+  border-radius: 1px;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 1rem;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-section .gfw-form-section-title {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-section .gfw-form-section-title svg {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+@media (max-width: 600px) {
+  .giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-fields {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field {
+  display: flex;
+  flex-direction: column;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field--full {
+  grid-column: 1/-1;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field label .required {
+  color: #dc2626;
+  margin-left: 2px;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=text],
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=password],
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=email],
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=tel],
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 1px;
+  background-color: #fff;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=text]:focus,
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=password]:focus,
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=email]:focus,
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=tel]:focus,
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field textarea:focus {
+  outline: none;
+  border-color: black;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=text]:disabled,
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=password]:disabled,
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=email]:disabled,
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=tel]:disabled,
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field textarea:disabled {
+  background-color: #f9fafb;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=text]::-moz-placeholder, .giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=password]::-moz-placeholder, .giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=email]::-moz-placeholder, .giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=tel]::-moz-placeholder, .giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field textarea::-moz-placeholder {
+  color: #9ca3af;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=text]::placeholder,
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=password]::placeholder,
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=email]::placeholder,
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=tel]::placeholder,
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field textarea::placeholder {
+  color: #9ca3af;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[readonly] {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field textarea {
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.5;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-actions .gfw-btn {
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 1px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-actions .gfw-btn.gfw-btn-primary {
+  background: black;
+  color: #fff;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-actions .gfw-btn.gfw-btn-primary:hover {
+  opacity: 0.7;
+}
+.giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-actions .gfw-btn.gfw-btn-primary:focus {
+  outline: 2px solid black;
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .giftflowwp-donor-account-my-account {
+    margin: 0 1rem;
+  }
+}
+@media (max-width: 480px) {
+  .giftflowwp-donor-account-my-account {
+    margin: 0 0.5rem;
+  }
+  .giftflowwp-donor-account-my-account .gfw-account-form {
+    padding: 1rem;
+  }
+  .giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-fields {
+    gap: 0.5rem;
+  }
+  .giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=text],
+  .giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=password],
+  .giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=email],
+  .giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field input[type=tel],
+  .giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-field textarea {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+  .giftflowwp-donor-account-my-account .gfw-account-form .gfw-form-actions .gfw-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+  }
+}
 .gfw-donor-account__title {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
