@@ -11,6 +11,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Include dashboard functions
+require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/dashboard-functions.php';
+
 /**
  * Register the GiftFlowWP dashboard page
  */
@@ -62,10 +65,6 @@ function giftflowwp_dashboard_page() {
                class="nav-tab <?php echo $current_tab === 'overview' ? 'nav-tab-active' : ''; ?>">
                 <?php _e('Overview', 'giftflowwp'); ?>
             </a>
-            <!-- <a href="<?php echo esc_url(admin_url('admin.php?page=giftflowwp-dashboard&tab=settings')); ?>" 
-               class="nav-tab <?php echo $current_tab === 'settings' ? 'nav-tab-active' : ''; ?>">
-                <?php _e('Settings', 'giftflowwp'); ?>
-            </a> -->
             <a href="<?php echo esc_url(admin_url('admin.php?page=giftflowwp-dashboard&tab=help')); ?>" 
                class="nav-tab <?php echo $current_tab === 'help' ? 'nav-tab-active' : ''; ?>">
                 <?php _e('Help', 'giftflowwp'); ?>
@@ -76,9 +75,6 @@ function giftflowwp_dashboard_page() {
             <?php
             // Include the appropriate tab content
             switch ($current_tab) {
-                case 'settings':
-                    giftflowwp_dashboard_settings_tab();
-                    break;
                 case 'help':
                     giftflowwp_dashboard_help_tab();
                     break;
@@ -99,130 +95,39 @@ function giftflowwp_dashboard_page() {
 function giftflowwp_dashboard_overview_tab() {
     ?>
     <div class="giftflowwp-dashboard-overview">
-        <div class="giftflowwp-dashboard-welcome">
-            <h2><?php _e('Welcome to GiftFlowWP', 'giftflowwp'); ?></h2>
-            <p><?php _e('Thank you for using GiftFlowWP. A comprehensive WordPress plugin for managing donations, donors, and campaigns with modern features and extensible architecture.', 'giftflowwp'); ?></p>
-        </div>
         
-        <div class="giftflowwp-dashboard-stats">
-            <h3><?php _e('Quick Statistics', 'giftflowwp'); ?></h3>
-            <div class="giftflowwp-stats-grid">
-                <div class="giftflowwp-stat-box">
-                    <h4><?php _e('Total Donations', 'giftflowwp'); ?></h4>
-                    <p class="giftflowwp-stat-number"><?php echo esc_html(giftflowwp_get_total_gifts()); ?></p>
-                </div>
-                <div class="giftflowwp-stat-box">
-                    <h4><?php _e('Active Campaigns', 'giftflowwp'); ?></h4>
-                    <p class="giftflowwp-stat-number"><?php echo esc_html(giftflowwp_get_active_flows()); ?></p>
-                </div>
-                <div class="giftflowwp-stat-box">
-                    <h4><?php _e('Total Donors', 'giftflowwp'); ?></h4>
-                    <p class="giftflowwp-stat-number"><?php echo esc_html(giftflowwp_get_completed_flows()); ?></p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="giftflowwp-dashboard-recent">
-            <h3><?php _e('Recent Activity', 'giftflowwp'); ?></h3>
-            <?php giftflowwp_display_recent_activity(); ?>
-        </div>
-    </div>
-    <?php
-}
+        <link rel="stylesheet" href="<?php echo GIFTFLOWWP_PLUGIN_URL; ?>assets/css/select2.min.css">
+        <script src="<?php echo GIFTFLOWWP_PLUGIN_URL; ?>assets/js/chart.js"></script>
+        <script src="<?php echo GIFTFLOWWP_PLUGIN_URL; ?>assets/js/select2.min.js"></script>
 
-/**
- * Display the settings tab content
- */
-/*
-function giftflowwp_dashboard_settings_tab() {
-    ?>
-    <div class="giftflowwp-dashboard-settings">
-        <h2><?php _e('GiftFlowWP Settings', 'giftflowwp'); ?></h2>
-        <form method="post" action="options.php">
-            <?php
-            settings_fields('giftflowwp_options');
-            do_settings_sections('giftflowwp-dashboard');
-            submit_button();
-            ?>
-        </form>
+        <!-- Widget Quick Actions -->
+        <?php giftflowwp_display_quick_actions(); ?>
+
+        <div class="giftflowwp-dashboard-grid">
+            
+            <!-- Widget Overview -->
+            <?php giftflowwp_display_overview_stats(); ?>
+
+            <!-- Widget Highlight Campaigns -->
+            <?php giftflowwp_display_highlight_campaigns(); ?>
+
+            <!-- Widget Recent Donations -->
+            <?php giftflowwp_display_recent_donations(); ?>
+
+        </div>
+
+        <!-- Widget Statistics Charts -->
+        <?php giftflowwp_display_statistics_charts(); ?>
+
     </div>
     <?php
 }
-*/
 
 /**
  * Display the help tab content
  */
 function giftflowwp_dashboard_help_tab() {
-    ?>
-    <div class="giftflowwp-dashboard-help">
-        <h2><?php _e('GiftFlowWP Help', 'giftflowwp'); ?></h2>
-        
-        <div class="giftflowwp-help-section">
-            <h3><?php _e('Getting Started', 'giftflowwp'); ?></h3>
-            <p><?php _e('To get started with GiftFlowWP, follow these steps:', 'giftflowwp'); ?></p>
-            <ol>
-                <li><?php _e('Configure your basic settings in the Settings menu', 'giftflowwp'); ?></li>
-                <li><?php _e('Create your first campaign', 'giftflowwp'); ?></li>
-                <li><?php _e('Add the donation form shortcode to your pages or posts', 'giftflowwp'); ?></li>
-            </ol>
-        </div>
-        
-        <div class="giftflowwp-help-section">
-            <h3><?php _e('Shortcodes', 'giftflowwp'); ?></h3>
-            <p><?php _e('Use the following shortcodes to display donation forms on your site:', 'giftflowwp'); ?></p>
-            <ul>
-                <li><code>[giftflowwp_donation id="1"]</code> - <?php _e('Display a specific donation form by ID', 'giftflowwp'); ?></li>
-                <li><code>[giftflowwp_campaigns]</code> - <?php _e('Display a list of all campaigns', 'giftflowwp'); ?></li>
-                <li><code>[giftflowwp_donors]</code> - <?php _e('Display a list of recent donors', 'giftflowwp'); ?></li>
-            </ul>
-        </div>
-        
-        <div class="giftflowwp-help-section">
-            <h3><?php _e('Documentation', 'giftflowwp'); ?></h3>
-            <p><?php _e('For comprehensive documentation on using GiftFlowWP, including advanced features and customization options, please visit our documentation site.', 'giftflowwp'); ?></p>
-            <p><a href="https://giftflowwp.com/docs/" class="button" target="_blank"><?php _e('View Documentation', 'giftflowwp'); ?></a></p>
-        </div>
-    </div>
-    <?php
-}
-
-/**
- * Helper function to get total gifts count
- * 
- * @return int Total number of gifts
- */
-function giftflowwp_get_total_gifts() {
-    // This is a placeholder - implement actual logic to count gifts
-    return 0;
-}
-
-/**
- * Helper function to get active flows count
- * 
- * @return int Total number of active flows
- */
-function giftflowwp_get_active_flows() {
-    // This is a placeholder - implement actual logic to count active flows
-    return 0;
-}
-
-/**
- * Helper function to get completed flows count
- * 
- * @return int Total number of completed flows
- */
-function giftflowwp_get_completed_flows() {
-    // This is a placeholder - implement actual logic to count completed flows
-    return 0;
-}
-
-/**
- * Display recent activity
- */
-function giftflowwp_display_recent_activity() {
-    // This is a placeholder - implement actual logic to display recent activity
-    echo '<p>' . __('No recent activity to display.', 'giftflowwp') . '</p>';
+    giftflowwp_load_template('admin/dashboard-helps.php');
 }
 
 
