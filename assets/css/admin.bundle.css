@@ -279,6 +279,10 @@
   margin-bottom: 15px;
 }
 
+.giftflowwp-widget-charts .giftflowwp-chart-container {
+  max-width: 100%;
+}
+
 .giftflowwp-chart-buttons {
   display: flex;
   gap: 8px;
@@ -300,6 +304,42 @@
 .giftflowwp-chart-buttons .button:hover {
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Chart Filters */
+.giftflowwp-chart-filters {
+  display: grid;
+  grid-template-columns: 1fr 120px;
+  gap: 30px;
+  align-items: end;
+  margin-bottom: 20px;
+}
+
+.giftflowwp-filter-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.giftflowwp-filter-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1d2327;
+  margin: 0;
+}
+
+.giftflowwp-filter-group .giftflowwp-form-control {
+  padding: 6px 8px;
+  font-size: 13px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.giftflowwp-filter-group .giftflowwp-form-control:focus {
+  border-color: #2271b1;
+  outline: none;
+  box-shadow: 0 0 0 1px #2271b1;
 }
 
 .giftflowwp-insights-list {
@@ -775,7 +815,59 @@
     width: 100%;
     justify-content: center;
   }
+  .giftflowwp-chart-filters {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }
+.giftflowwp-widget-charts .select2-container {
+  z-index: 9999 !important;
+}
+
+.giftflowwp-widget-charts .select2-dropdown {
+  z-index: 9999 !important;
+}
+
+.giftflowwp-widget-charts .select2-selection--single {
+  height: 38px !important;
+  border: 1px solid #ddd !important;
+  border-radius: 4px !important;
+  padding: 0 12px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.giftflowwp-widget-charts .select2-selection__rendered {
+  color: #555 !important;
+  line-height: 36px !important;
+  padding: 0 !important;
+}
+
+.giftflowwp-widget-charts .select2-selection__arrow {
+  height: 36px !important;
+  top: 1px !important;
+}
+
+.giftflowwp-widget-charts .select2-dropdown {
+  border: 1px solid #ddd !important;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.giftflowwp-widget-charts .select2-results__option {
+  padding: 8px 12px !important;
+  color: #555 !important;
+}
+
+.giftflowwp-widget-charts .select2-results__option--highlighted {
+  background-color: #f0f0f0 !important;
+  color: #333 !important;
+}
+
+.giftflowwp-widget-charts .select2-container--default .select2-selection--single .select2-selection__clear {
+  margin-right: 10px;
+}
+
 /**
  * GiftFlowWP Field Styles
  *

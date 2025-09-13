@@ -63,6 +63,7 @@ function giftflowwp_load_files() {
     // Admin files
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/dashboard.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/class-export.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/class-chart.php';
     
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/post-types/class-base-post-type.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/post-types/class-donation.php';

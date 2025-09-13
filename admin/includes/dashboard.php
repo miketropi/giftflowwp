@@ -96,9 +96,9 @@ function giftflowwp_dashboard_overview_tab() {
     ?>
     <div class="giftflowwp-dashboard-overview">
         
-        <link rel="stylesheet" href="<?php echo GIFTFLOWWP_PLUGIN_URL; ?>assets/css/select2.min.css">
-        <script src="<?php echo GIFTFLOWWP_PLUGIN_URL; ?>assets/js/chart.js"></script>
-        <script src="<?php echo GIFTFLOWWP_PLUGIN_URL; ?>assets/js/select2.min.js"></script>
+        <link rel="stylesheet" href="<?php echo GIFTFLOWWP_PLUGIN_URL; ?>assets/css/lib/select2.min.css">
+        <script src="<?php echo GIFTFLOWWP_PLUGIN_URL; ?>assets/js/lib/chart.js"></script>
+        <script src="<?php echo GIFTFLOWWP_PLUGIN_URL; ?>assets/js/lib/select2.min.js"></script>
 
         <!-- Widget Quick Actions -->
         <?php giftflowwp_display_quick_actions(); ?>
