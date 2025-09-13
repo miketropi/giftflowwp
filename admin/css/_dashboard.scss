@@ -261,11 +261,16 @@
 .giftflowwp-charts-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 60px;
 }
 
 .giftflowwp-chart-item {
   text-align: center;
+}
+
+.giftflowwp-chart-item h3 {
+  margin: 10px 0 20px 0;
+  color: #1d2327;
 }
 
 .giftflowwp-chart-item h4 {
@@ -310,9 +315,13 @@
 .giftflowwp-chart-filters {
   display: grid;
   grid-template-columns: 1fr 120px;
-  gap: 30px;
+  gap: 20px;
   align-items: end;
   margin-bottom: 20px;
+}
+.giftflowwp-chart-filters-2 {
+  max-width: 70%;
+  margin: 0 auto;
 }
 
 .giftflowwp-filter-group {

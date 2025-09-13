@@ -18,6 +18,7 @@ class GiftFlowWP_Chart {
      */
     public function __construct() {
         add_action('wp_ajax_giftflowwp_get_chart_data', array($this, 'get_chart_data'));
+        add_action('wp_ajax_giftflowwp_get_status_chart_data', array($this, 'get_status_chart_data'));
     }
     
     /**
@@ -151,6 +152,113 @@ class GiftFlowWP_Chart {
         return array(
             'labels' => $labels,
             'data' => $data
+        );
+    }
+
+    /**
+     * Get donation statuses chart data via AJAX
+     */
+    public function get_status_chart_data() {
+        // Verify nonce
+        if (!wp_verify_nonce($_POST['nonce'], 'giftflowwp_chart_nonce')) {
+            wp_send_json_error('Security check failed');
+        }
+        
+        // Check user permissions
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error('Insufficient permissions');
+        }
+        
+        $campaign_id = sanitize_text_field($_POST['campaign_id']);
+        
+        // Get status chart data
+        $chart_data = $this->get_donations_by_status($campaign_id);
+        
+        wp_send_json_success($chart_data);
+    }
+    
+    /**
+     * Get donations data grouped by payment status
+     */
+    private function get_donations_by_status($campaign_id) {
+        global $wpdb;
+        
+        // Base query - using the correct meta key '_status' instead of '_payment_status'
+        $query = "
+            SELECT 
+                COALESCE(pm_status.meta_value, 'pending') as payment_status,
+                COUNT(p.ID) as donation_count,
+                SUM(CAST(pm_amount.meta_value AS DECIMAL(10,2))) as total_amount
+            FROM {$wpdb->posts} p
+            INNER JOIN {$wpdb->postmeta} pm_amount ON p.ID = pm_amount.post_id AND pm_amount.meta_key = '_amount'
+            LEFT JOIN {$wpdb->postmeta} pm_status ON p.ID = pm_status.post_id AND pm_status.meta_key = '_status'
+            WHERE p.post_type = 'donation'
+            AND p.post_status = 'publish'
+        ";
+        
+        // Add campaign filter
+        if (!empty($campaign_id)) {
+            $query .= " AND p.ID IN (
+                SELECT post_id FROM {$wpdb->postmeta} 
+                WHERE meta_key = '_campaign_id' AND meta_value = %d
+            )";
+            $query = $wpdb->prepare($query, $campaign_id);
+        }
+        
+        $query .= " GROUP BY payment_status ORDER BY donation_count DESC";
+        
+        $results = $wpdb->get_results($query);
+        
+        // Debug: Log the results for troubleshooting
+        error_log('Donation Status Results: ' . print_r($results, true));
+        
+        // Define all possible statuses with proper mapping
+        $all_statuses = array(
+            'pending' => array('label' => 'Pending', 'count' => 0, 'amount' => 0, 'color' => '#FACC15'),
+            'completed' => array('label' => 'Completed', 'count' => 0, 'amount' => 0, 'color' => '#22C55E'),
+            'failed' => array('label' => 'Failed', 'count' => 0, 'amount' => 0, 'color' => '#EF4444'),
+            'refunded' => array('label' => 'Refunded', 'count' => 0, 'amount' => 0, 'color' => '#3B82F6'),
+            'processing' => array('label' => 'Processing', 'count' => 0, 'amount' => 0, 'color' => '#2196F3'),
+            'cancelled' => array('label' => 'Cancelled', 'count' => 0, 'amount' => 0, 'color' => '#795548')
+        );
+        
+        // Process results
+        foreach ($results as $result) {
+            $status = strtolower(trim($result->payment_status));
+            if (isset($all_statuses[$status])) {
+                $all_statuses[$status]['count'] = intval($result->donation_count);
+                $all_statuses[$status]['amount'] = floatval($result->total_amount);
+            } else {
+                // If status is not recognized, add it to pending
+                $all_statuses['pending']['count'] += intval($result->donation_count);
+                $all_statuses['pending']['amount'] += floatval($result->total_amount);
+            }
+        }
+        
+        // Generate chart data - only include statuses with donations
+        $labels = array();
+        $data = array();
+        $colors = array();
+        
+        foreach ($all_statuses as $status => $info) {
+            if ($info['count'] > 0) {
+                $labels[] = $info['label'] . ' (' . $info['count'] . ')';
+                $data[] = $info['count'];
+                $colors[] = $info['color'];
+            }
+        }
+        
+        // If no data found, return empty state
+        if (empty($data)) {
+            $labels = array('No Data');
+            $data = array(1);
+            $colors = array('#f0f0f0');
+        }
+        
+        return array(
+            'labels' => $labels,
+            'data' => $data,
+            'colors' => $colors
         );
     }
 }

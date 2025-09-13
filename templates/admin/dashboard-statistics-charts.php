@@ -15,15 +15,12 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <div class="giftflowwp-chart-filters">
                     <div class="giftflowwp-filter-group">
                         <label for="giftflowwp-chart-campaign-filter"><?php _e('Campaign', 'giftflowwp'); ?></label>
-                        <select id="giftflowwp-chart-campaign-filter" class="giftflowwp-form-control">
+                        <select id="giftflowwp-chart-campaign-filter" class="giftflowwp-form-control gf-select2">
                             <option value=""><?php _e('All Campaigns', 'giftflowwp'); ?></option>
                             <?php
                             $campaigns = get_posts(array(
-                                'post_type' => 'campaign',
-                                'post_status' => 'publish',
-                                'numberposts' => -1,
-                                'orderby' => 'title',
-                                'order' => 'ASC'
+                                'post_type' => 'campaign', 'post_status' => 'publish',
+                                'numberposts' => -1, 'orderby' => 'title', 'order' => 'ASC'
                             ));
                             foreach ($campaigns as $campaign) {
                                 echo '<option value="' . esc_attr($campaign->ID) . '">' . esc_html($campaign->post_title) . '</option>';
@@ -46,9 +43,28 @@ if ( ! defined( 'ABSPATH' ) ) {
             </div>
         </div>
         <div class="giftflowwp-chart-item">
-            <h3><?php _e('Donations by Campaign', 'giftflowwp'); ?></h3>
+            <h3><?php _e('Chart for donations statuses', 'giftflowwp'); ?></h3>
+            <div class="giftflowwp-chart-period-controls">
+                <div class="giftflowwp-chart-filters-2">
+                    <div class="giftflowwp-filter-group">
+                        <label for="giftflowwp-chart-campaign-filter-2"><?php _e('Campaign', 'giftflowwp'); ?></label>
+                        <select id="giftflowwp-chart-campaign-filter-2" class="giftflowwp-form-control gf-select2">
+                            <option value=""><?php _e('All Campaigns', 'giftflowwp'); ?></option>
+                            <?php
+                            $campaigns = get_posts(array(
+                                'post_type' => 'campaign', 'post_status' => 'publish',
+                                'numberposts' => -1, 'orderby' => 'title', 'order' => 'ASC'
+                            ));
+                            foreach ($campaigns as $campaign) {
+                                echo '<option value="' . esc_attr($campaign->ID) . '">' . esc_html($campaign->post_title) . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="giftflowwp-chart-container">
-                <canvas id="giftflowwp-donations-campaign-chart" width="400" height="200"></canvas>
+                <canvas id="giftflowwp-donations-statuses-chart" width="400" height="200"></canvas>
             </div>
         </div>
     </div>
@@ -56,7 +72,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <script type="text/javascript">
     jQuery(document).ready(function($) {
         // Initialize Select2 for campaign filter
-        $('#giftflowwp-chart-campaign-filter').select2({
+        $('.gf-select2').select2({
             placeholder: '<?php _e('Select a campaign...', 'giftflowwp'); ?>',
             allowClear: true,
             width: '100%',
@@ -99,9 +115,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        display: false
-                    },
+                    legend: { display: false },
                     tooltip: {
                         backgroundColor: 'rgba(0, 0, 0, 0.8)',
                         titleColor: '#fff',
@@ -126,23 +140,17 @@ if ( ! defined( 'ABSPATH' ) ) {
                         },
                         ticks: {
                             color: '#666',
-                            font: {
-                                size: 11
-                            },
+                            font: { size: 11 },
                             callback: function(value) {
                                 return '$' + value.toLocaleString();
                             }
                         }
                     },
                     x: {
-                        grid: {
-                            display: false
-                        },
+                        grid: { display: false },
                         ticks: {
                             color: '#666',
-                            font: {
-                                size: 11
-                            }
+                            font: { size: 11 }
                         }
                     }
                 },
@@ -207,23 +215,18 @@ if ( ! defined( 'ABSPATH' ) ) {
         // Load initial data after window loads (default: This Week)
         $(window).on('load', function() {
             loadChartData();
+            loadStatusChartData();
         });
 
-        // Donations by Campaign Pie Chart
-        var campaignCtx = document.getElementById('giftflowwp-donations-campaign-chart').getContext('2d');
-        var campaignChart = new Chart(campaignCtx, {
+        // Donations by Status Chart
+        var statusCtx = document.getElementById('giftflowwp-donations-statuses-chart').getContext('2d');
+        var statusChart = new Chart(statusCtx, {
             type: 'doughnut',
             data: {
-                labels: ['<?php _e('Education Fund', 'giftflowwp'); ?>', '<?php _e('Healthcare', 'giftflowwp'); ?>', '<?php _e('Emergency Relief', 'giftflowwp'); ?>', '<?php _e('Community Development', 'giftflowwp'); ?>', '<?php _e('Others', 'giftflowwp'); ?>'],
+                labels: [],
                 datasets: [{
-                    data: [35, 25, 20, 15, 5],
-                    backgroundColor: [
-                        '#2196F3',
-                        '#4CAF50', 
-                        '#FF9800',
-                        '#9C27B0',
-                        '#607D8B'
-                    ],
+                    data: [],
+                    backgroundColor: [],
                     borderColor: '#fff',
                     borderWidth: 2,
                     hoverOffset: 10
@@ -239,9 +242,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         labels: {
                             padding: 20,
                             usePointStyle: true,
-                            font: {
-                                size: 11
-                            },
+                            font: { size: 11 },
                             color: '#666'
                         }
                     },
@@ -257,7 +258,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             label: function(context) {
                                 var total = context.dataset.data.reduce((a, b) => a + b, 0);
                                 var percentage = ((context.parsed / total) * 100).toFixed(1);
-                                return context.label + ': ' + percentage + '%';
+                                return context.label + ': ' + context.parsed + ' donations (' + percentage + '%)';
                             }
                         }
                     }
@@ -267,6 +268,55 @@ if ( ! defined( 'ABSPATH' ) ) {
                     easing: 'easeOutQuart'
                 }
             }
+        });
+
+        // Function to load status chart data via AJAX
+        function loadStatusChartData() {
+            var campaignId = $('#giftflowwp-chart-campaign-filter-2').val();
+            
+            // Show loading state
+            statusChart.data.labels = ['<?php _e('Loading...', 'giftflowwp'); ?>'];
+            statusChart.data.datasets[0].data = [1];
+            statusChart.data.datasets[0].backgroundColor = ['#f0f0f0'];
+            statusChart.update();
+            
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'giftflowwp_get_status_chart_data',
+                    campaign_id: campaignId,
+                    nonce: '<?php echo wp_create_nonce('giftflowwp_chart_nonce'); ?>'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        statusChart.data.labels = response.data.labels;
+                        statusChart.data.datasets[0].data = response.data.data;
+                        statusChart.data.datasets[0].backgroundColor = response.data.colors;
+                        statusChart.update('active');
+                    } else {
+                        console.error('Error loading status chart data:', response.data);
+                        // Show error state
+                        statusChart.data.labels = ['<?php _e('Error loading data', 'giftflowwp'); ?>'];
+                        statusChart.data.datasets[0].data = [1];
+                        statusChart.data.datasets[0].backgroundColor = ['#f0f0f0'];
+                        statusChart.update();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX error:', error);
+                    // Show error state
+                    statusChart.data.labels = ['<?php _e('Error loading data', 'giftflowwp'); ?>'];
+                    statusChart.data.datasets[0].data = [1];
+                    statusChart.data.datasets[0].backgroundColor = ['#f0f0f0'];
+                    statusChart.update();
+                }
+            });
+        }
+
+        // Auto-update status chart when campaign filter changes
+        $('#giftflowwp-chart-campaign-filter-2').on('change', function() {
+            loadStatusChartData();
         });
     });
     </script>
