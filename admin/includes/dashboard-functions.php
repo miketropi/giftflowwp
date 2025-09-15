@@ -16,19 +16,11 @@ if (!defined('ABSPATH')) {
  */
 function giftflowwp_display_overview_stats() {
     $total_campaigns = giftflowwp_get_total_campaigns();
-    $active_campaigns = giftflowwp_count_campaigns_by_status('active');
-    $closed_campaigns = giftflowwp_count_campaigns_by_status('closed');
-    $pending_campaigns = giftflowwp_count_campaigns_by_status('pending');
-    $completed_campaigns = giftflowwp_count_campaigns_by_status('completed');
     $total_donations = giftflowwp_get_total_donations_amount();
     $total_donors = giftflowwp_get_total_donors();
     
     giftflowwp_load_template('admin/dashboard-overview-stats.php', array(
         'total_campaigns' => $total_campaigns,
-        'active_campaigns' => $active_campaigns,
-        'closed_campaigns' => $closed_campaigns,
-        'pending_campaigns' => $pending_campaigns,
-        'completed_campaigns' => $completed_campaigns,
         'total_donations' => $total_donations,
         'total_donors' => $total_donors,
     ));
@@ -60,7 +52,17 @@ function giftflowwp_display_recent_donations() {
  * Widget 4: Display statistics charts
  */
 function giftflowwp_display_statistics_charts() {
-    giftflowwp_load_template('admin/dashboard-statistics-charts.php');
+    $active_campaigns = giftflowwp_count_campaigns_by_status('active');
+    $closed_campaigns = giftflowwp_count_campaigns_by_status('closed');
+    $pending_campaigns = giftflowwp_count_campaigns_by_status('pending');
+    $completed_campaigns = giftflowwp_count_campaigns_by_status('completed');
+
+    giftflowwp_load_template('admin/dashboard-statistics-charts.php', array(
+        'active_campaigns' => $active_campaigns,
+        'closed_campaigns' => $closed_campaigns,
+        'pending_campaigns' => $pending_campaigns,
+        'completed_campaigns' => $completed_campaigns
+    ));
 }
 
 /**

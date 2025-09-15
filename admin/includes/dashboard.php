@@ -103,6 +103,9 @@ function giftflowwp_dashboard_overview_tab() {
         <!-- Widget Quick Actions -->
         <?php giftflowwp_display_quick_actions(); ?>
 
+        <!-- Widget Statistics Charts -->
+        <?php giftflowwp_display_statistics_charts(); ?>
+
         <div class="giftflowwp-dashboard-grid">
             
             <!-- Widget Overview -->
@@ -115,9 +118,6 @@ function giftflowwp_dashboard_overview_tab() {
             <?php giftflowwp_display_recent_donations(); ?>
 
         </div>
-
-        <!-- Widget Statistics Charts -->
-        <?php giftflowwp_display_statistics_charts(); ?>
 
     </div>
     <?php
