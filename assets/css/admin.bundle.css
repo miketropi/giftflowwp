@@ -292,12 +292,18 @@
 
 .giftflowwp-charts-container {
   display: grid;
-  grid-template-columns: 32% 35% 29%;
-  gap: 2%;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .giftflowwp-chart-item {
   text-align: center;
+}
+.giftflowwp-chart-item:not(:last-child) {
+  padding-right: 25px;
+  border-right: 1px solid #f0f0f1;
+}
+.giftflowwp-chart-item:not(:first-child) {
+  padding-left: 25px;
 }
 .giftflowwp-chart-item.giftflowwp-chart-item-campaigns .giftflowwp-chart-container {
   height: 280px;
@@ -350,7 +356,7 @@
 .giftflowwp-chart-filters {
   display: grid;
   grid-template-columns: 1fr 120px;
-  gap: 20px;
+  gap: 10px;
   align-items: end;
   margin-bottom: 10px;
 }
@@ -365,6 +371,8 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 5px;
+  padding: 1px;
+  overflow: hidden;
 }
 
 .giftflowwp-filter-group label {
@@ -786,6 +794,16 @@
   .giftflowwp-charts-container {
     gap: 40px;
     max-width: 800px;
+  }
+  .giftflowwp-charts-container .giftflowwp-chart-item {
+    text-align: center;
+  }
+  .giftflowwp-charts-container .giftflowwp-chart-item:not(:last-child) {
+    padding-right: 0;
+    border-right: 0;
+  }
+  .giftflowwp-charts-container .giftflowwp-chart-item:not(:first-child) {
+    padding-left: 0;
   }
 }
 @media screen and (max-width: 782px) {

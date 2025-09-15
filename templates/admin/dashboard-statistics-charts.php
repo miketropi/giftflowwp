@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <canvas id="giftflowwp-donations-period-chart" width="400" height="200"></canvas>
             </div>
         </div>
-        <div class="giftflowwp-chart-item">
+        <div class="giftflowwp-chart-item giftflowwp-chart-item-donations-status">
             <h3><?php _e('Donations statuses', 'giftflowwp'); ?></h3>
             <div class="giftflowwp-chart-period-controls">
                 <div class="giftflowwp-chart-filters-2">

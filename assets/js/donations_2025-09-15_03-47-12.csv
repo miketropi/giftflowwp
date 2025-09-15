@@ -1,0 +1,4 @@
+ID,Date,Amount,Status,"Donor Name","Donor Email",Campaign,"Payment Method"
+43,"2025-09-15 01:03:50",20,completed,"Donor Mike",mike.beplus@gmail.com,"QUBE: 3-in-1 Digital Angle, Level, Distance Meter",bank
+205,"2025-09-14 01:17:35",50,completed,"Donor Mike",mike.beplus@gmail.com,"Together We Rise: Bringing Hope and Light to Children",stripe
+192,"2025-09-13 00:46:50",10,completed,giftflow,,"Together We Rise: Bringing Hope and Light to Children",stripe
