@@ -1,0 +1,74 @@
+
+.gfw-my-donations-table {
+  .giftflowwp-currency-formatted-amount {
+    font-weight: bold;
+    font-family: monospace;
+  }
+
+  .gfw-campaign-title-link {
+    font-weight: 600;
+  }
+
+  .gfw-donation-date {
+    font-family: monospace;
+    opacity: .8;
+  }
+}
+
+.gfw-my-donations-header {
+  margin-bottom: 2rem;
+}
+
+.gfw-view-detail-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .2em;
+  text-decoration: none;
+  border-bottom: 2px solid;
+
+  &:hover {
+    opacity: .5;
+  }
+}
+
+
+.donation-status {
+  display: inline-block;
+  padding: 0.25em 0.75em;
+  font-size: 0.8em;
+  border-radius: 16px;
+  font-weight: 500;
+  background: #f3f4f6;
+  color: #444;
+  border: 1px solid #e5e7eb;
+  vertical-align: middle;
+  text-transform: capitalize;
+  transition: background 0.15s, color 0.15s, border 0.15s;
+  font-family: monospace;
+
+  &.status-completed {
+    background: #e6f9ed;
+    color: #15803d;
+    border-color: #bbf7d0;
+  }
+
+  &.status-refunded {
+    background: #fef3c7;
+    color: #b45309;
+    border-color: #fde68a;
+  }
+
+  &.status-pending {
+    background: #f3f4f6;
+    color: #6366f1;
+    border-color: #c7d2fe;
+  }
+
+  &.status-failed {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-color: #fecaca;
+  }
+} 
+

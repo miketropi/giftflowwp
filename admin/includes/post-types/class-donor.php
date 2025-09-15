@@ -60,6 +60,10 @@ class Donor extends Base_Post_Type {
         add_filter( 'manage_donor_posts_columns', array( $this, 'set_custom_columns' ) );
         add_action( 'manage_donor_posts_custom_column', array( $this, 'render_custom_columns' ), 10, 2 );
         add_filter( 'manage_edit-donor_sortable_columns', array( $this, 'set_sortable_columns' ) );
+        
+        // Add filters
+        add_action( 'restrict_manage_posts', array( $this, 'add_user_filter' ) );
+        add_filter( 'parse_query', array( $this, 'filter_donors' ) );
     }
 
     /**
@@ -139,5 +143,67 @@ class Donor extends Base_Post_Type {
         $columns['full_name'] = 'full_name';
         $columns['email'] = 'email';
         return $columns;
+    }
+
+    /**
+     * Add user filter dropdown
+     */
+    public function add_user_filter() {
+        global $typenow;
+        
+        if ( $typenow === 'donor' ) {
+            $selected = isset( $_GET['donor_user'] ) ? $_GET['donor_user'] : '';
+            
+            // Get all users who have associated donor records
+            global $wpdb;
+            $users = $wpdb->get_results( "
+                SELECT DISTINCT u.ID, u.display_name, u.user_email
+                FROM {$wpdb->users} u
+                INNER JOIN {$wpdb->postmeta} pm ON u.user_email = pm.meta_value
+                WHERE pm.meta_key = '_email'
+                AND pm.post_id IN (
+                    SELECT ID FROM {$wpdb->posts} 
+                    WHERE post_type = 'donor' 
+                    AND post_status = 'publish'
+                )
+                ORDER BY u.display_name ASC
+            " );
+            
+            if ( !empty( $users ) ) {
+                echo '<select name="donor_user">';
+                echo '<option value="">' . __( 'All Users', 'giftflowwp' ) . '</option>';
+                
+                foreach ( $users as $user ) {
+                    $user_label = $user->display_name . ' (' . $user->user_email . ')';
+                    $selected_attr = selected( $selected, $user->ID, false );
+                    echo '<option value="' . esc_attr( $user->ID ) . '" ' . $selected_attr . '>' . esc_html( $user_label ) . '</option>';
+                }
+                
+                echo '</select>';
+            }
+        }
+    }
+
+    /**
+     * Filter donors by user
+     *
+     * @param WP_Query $query The WP_Query instance
+     */
+    public function filter_donors( $query ) {
+        global $pagenow, $typenow;
+        
+        if ( $pagenow === 'edit.php' && $typenow === 'donor' && isset( $_GET['donor_user'] ) && $_GET['donor_user'] !== '' ) {
+            $user_id = intval( $_GET['donor_user'] );
+            
+            // Get the user's email
+            $user = get_user_by( 'ID', $user_id );
+            if ( $user ) {
+                $user_email = $user->user_email;
+                
+                // Filter by email meta field
+                $query->set( 'meta_key', '_email' );
+                $query->set( 'meta_value', $user_email );
+            }
+        }
     }
 } 
