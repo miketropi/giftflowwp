@@ -18,11 +18,15 @@ function giftflowwp_display_overview_stats() {
     $total_campaigns = giftflowwp_get_total_campaigns();
     $total_donations = giftflowwp_get_total_donations_amount();
     $total_donors = giftflowwp_get_total_donors();
+    $new_donors = giftflowwp_get_new_donors_count();
+    $top_donors = giftflowwp_get_top_donors();
     
     giftflowwp_load_template('admin/dashboard-overview-stats.php', array(
         'total_campaigns' => $total_campaigns,
         'total_donations' => $total_donations,
         'total_donors' => $total_donors,
+        'new_donors' => $new_donors,
+        'top_donors' => $top_donors,
     ));
 }
 
@@ -62,19 +66,6 @@ function giftflowwp_display_statistics_charts() {
         'closed_campaigns' => $closed_campaigns,
         'pending_campaigns' => $pending_campaigns,
         'completed_campaigns' => $completed_campaigns
-    ));
-}
-
-/**
- * Widget 5: Display donor insights
- */
-function giftflowwp_display_donor_insights() {
-    $top_donor = giftflowwp_get_top_donor_this_month();
-    $new_donors = giftflowwp_get_new_donors_count();
-    
-    giftflowwp_load_template('admin/dashboard-donor-insights.php', array(
-        'top_donor' => $top_donor,
-        'new_donors' => $new_donors,
     ));
 }
 
@@ -236,37 +227,44 @@ function giftflowwp_get_recent_donations() {
 /**
  * Get top donor this month
  */
-function giftflowwp_get_top_donor_this_month() {
+function giftflowwp_get_top_donors() {
     global $wpdb;
     
-    $result = $wpdb->get_row("
+    $results = $wpdb->get_results("
         SELECT 
-            d.ID as donor_id,
-            CONCAT(pm1.meta_value, ' ', pm2.meta_value) as donor_name,
+            pm1.meta_value as donor_id,
+            pm2.meta_value as donor_name,
             SUM(CAST(dm.meta_value AS DECIMAL(10,2))) as total_amount
         FROM {$wpdb->posts} d
         INNER JOIN {$wpdb->postmeta} dm ON d.ID = dm.post_id AND dm.meta_key = '_amount'
-        INNER JOIN {$wpdb->posts} donor ON dm.post_id = donor.ID AND donor.post_type = 'donation'
-        LEFT JOIN {$wpdb->postmeta} pm1 ON donor.ID = pm1.post_id AND pm1.meta_key = '_donor_id'
-        LEFT JOIN {$wpdb->postmeta} pm2 ON pm1.meta_value = pm2.post_id AND pm2.meta_key = '_first_name'
-        LEFT JOIN {$wpdb->postmeta} pm3 ON pm1.meta_value = pm3.post_id AND pm3.meta_key = '_last_name'
+        LEFT JOIN {$wpdb->postmeta} pm1 ON d.ID = pm1.post_id AND pm1.meta_key = '_donor_id'
+        LEFT JOIN {$wpdb->postmeta} pm2 ON pm1.meta_value = pm2.post_id AND pm2.meta_key = '_email'
         WHERE d.post_type = 'donation'
         AND d.post_status = 'publish'
-        AND MONTH(d.post_date) = MONTH(CURRENT_DATE())
-        AND YEAR(d.post_date) = YEAR(CURRENT_DATE())
-        GROUP BY donor_id
+        GROUP BY donor_id, donor_name
         ORDER BY total_amount DESC
-        LIMIT 1
+        LIMIT 5
     ");
     
-    if ($result) {
-        return array(
-            'name' => $result->donor_name ?: 'Anonymous',
-            'amount' => $result->total_amount
-        );
+    if ($results) {
+        $top_donors = array();
+        foreach ($results as $result) {
+            $top_donors[] = array(
+                'link' => get_edit_post_link($result->donor_id),
+                'name' => $result->donor_name ?: 'Anonymous',
+                'amount' => $result->total_amount
+            );
+        }
+        return $top_donors;
     }
     
-    return array('name' => 'N/A', 'amount' => 0);
+    return array(
+        array('name' => 'N/A', 'amount' => 0),
+        array('name' => 'N/A', 'amount' => 0),
+        array('name' => 'N/A', 'amount' => 0),
+        array('name' => 'N/A', 'amount' => 0),
+        array('name' => 'N/A', 'amount' => 0)
+    );
 }
 
 /**
