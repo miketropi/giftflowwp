@@ -24,7 +24,7 @@ class Loader extends Base {
      * Enqueue styles
      */
     public function admin_enqueue_scripts() {
-        wp_enqueue_script('giftflowwp-admin', $this->get_plugin_url() . 'assets/js/admin.bundle.js', array(), $this->get_version(), true);
+        wp_enqueue_script('giftflowwp-admin', $this->get_plugin_url() . 'assets/js/admin.bundle.js', array('jquery', 'wp-element', 'react-jsx-runtime'), $this->get_version(), true);
         wp_enqueue_style('giftflowwp-admin', $this->get_plugin_url() . 'assets/css/admin.bundle.css', array(), $this->get_version());
     
         wp_localize_script('giftflowwp-admin', 'giftflowwp_admin', array(

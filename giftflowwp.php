@@ -70,6 +70,7 @@ function giftflowwp_load_files() {
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/post-types/class-donor.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/post-types/class-campaign.php';
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/settings.php';
+    require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/api.php';
     
     // Meta boxes
     require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/meta-boxes/class-base-meta-box.php';

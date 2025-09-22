@@ -19,7 +19,7 @@
       }
     })
 
-    console.log(res);
+    // console.log(res);
   }
 
 })(window, jQuery)

@@ -1,11 +1,33 @@
 const mix = require('laravel-mix');
 require('@tinypixelco/laravel-mix-wp-blocks');
 
-mix.block('blocks/index.js', 'blocks-build');
-
 // Get all JS files in assets/js directory
 const fs = require('fs');
 const path = require('path');
+
+mix.block('blocks/index.js', 'blocks-build');
+
+mix.babelConfig({
+    presets: [
+      ['@babel/preset-env', { modules: false }],
+      ['@babel/preset-react', { runtime: 'classic' }]
+    ],
+    plugins: [
+      ['@babel/plugin-transform-runtime', { regenerator: true }]
+    ]
+});
+
+mix.webpackConfig({
+    externals: {
+        react: 'wp.element',
+        'react-dom': 'wp.element',
+        '@wordpress/element': 'wp.element',
+    }
+});
+
+
+// mix.react()
+//    .setPublicPath('assets')
 
 // Function to get all JS files in a directory
 const getJsFiles = (dir) => {
@@ -45,11 +67,10 @@ Object.keys(scssFiles).forEach(filename => {
     mix.sass(scssFiles[filename], `assets/css/${filename}.bundle.css`);
 });
 
-mix.react()
-//    .setPublicPath('assets')
 
 // for admin 
-mix.js('admin/js/admin.js', 'assets/js/admin.bundle.js')
+mix
+    .js('admin/js/admin.js', 'assets/js/admin.bundle.js')
     .sass('admin/css/admin.scss', 'assets/css/admin.bundle.css');
 
 
@@ -63,6 +84,8 @@ mix.override(config => {
                             "regenerator": true
                         }]
                     ]);
+
+                    loader.options.presets.push(['@babel/preset-react', { runtime: 'classic' }]);
                 }
             });
         }

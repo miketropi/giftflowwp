@@ -93,6 +93,8 @@ function giftflowwp_dashboard_page() {
  * Display the overview tab content
  */
 function giftflowwp_dashboard_overview_tab() {
+    giftflowwp_load_template('admin/dashboard-view.php');
+    return;
     ?>
     <div class="giftflowwp-dashboard-overview">
         
