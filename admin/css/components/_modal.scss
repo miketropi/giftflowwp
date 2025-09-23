@@ -183,11 +183,11 @@
     min-height: 36px;
 
     &--primary {
-      background: #2271b1;
+      background: black;
       color: #fff;
 
       &:hover {
-        background: #165a8f;
+        opacity: .7;
       }
 
       &:focus {

@@ -85,7 +85,7 @@
 
     &:hover {
       background: #fff;
-      border-color: #2271b1;
+      border-color: black;
       box-shadow: 0 2px 8px rgba(34, 113, 177, 0.1);
     }
   }
@@ -123,12 +123,12 @@
 
   // Recent activity section
   &__recent-activity {
-    h4 {
-      margin: 0 0 1rem 0;
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: #1e1e1e;
-    }
+    // h4 {
+    //   margin: 0 0 1rem 0;
+    //   font-size: 1.125rem;
+    //   font-weight: 600;
+    //   color: #1e1e1e;
+    // }
   }
 
   &__activity-list {
@@ -412,5 +412,37 @@
     &__campaign-progress {
       font-size: 0.7rem;
     }
+  }
+}
+
+// Skeleton loading styles for overview cards and stats
+.giftflowwp-overview {
+  &__stat-card--loading {
+    .giftflowwp-overview__stat-icon,
+    .giftflowwp-overview__stat-value,
+    .giftflowwp-overview__stat-label {
+      @extend .skeleton;
+    }
+  }
+}
+
+// Generic skeleton utility
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 37%, #f0f0f0 63%);
+  background-size: 400% 100%;
+  animation: giftflowwp-skeleton-loading 1.4s ease infinite;
+  border-radius: 4px;
+  min-height: 1em;
+  color: transparent !important;
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes giftflowwp-skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
   }
 }

@@ -173,11 +173,12 @@
 
   // Settings modal styles
   &__settings-container {
-    background: #f9f9fb;
-    border-radius: 10px;
-    padding: 24px 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    margin-top: 8px;
+    // background: #f9f9fb;
+    // border-radius: 10px;
+    // padding: 24px 20px;
+    // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    // margin-top: 8px;
+    margin-bottom: 1.5rem;
   }
 
   &__select-wrapper {
@@ -212,7 +213,7 @@
     resize: vertical;
     cursor: pointer;
     max-width: none !important;
-    font-family: 'Courier New', Courier, monospace;
+    // font-family: 'Courier New', Courier, monospace;
 
     &:focus {
       outline: none;

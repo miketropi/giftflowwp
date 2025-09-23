@@ -1,10 +1,12 @@
-import React, { useState, } from 'react';
+import React, { useState, useEffect } from 'react';
 import useCampaign from "../hooks/useCampaign";
 import { Wrench } from 'lucide-react';
 import CampaignTrackingModalSettings from './CampaignTrackingModalSettings';
+import { useDashboardStore } from '../stores/useDashboardStore';
 
 const CampaignTracking = () => {
-  const { campaigns, loading, error } = useCampaign({ per_page: 3 });
+  const { campaignsTracking, setCampaignsTracking } = useDashboardStore();
+  const { campaigns, loading, error, updateParams } = useCampaign({ per_page: 3, includeIds: campaignsTracking });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (loading) return (
@@ -22,7 +24,12 @@ const CampaignTracking = () => {
   );
 
   const onSave = (campaigns) => {
-    console.log("Save", campaigns);
+    // updateParams
+    // console.log(updateParams);
+    setCampaignsTracking(campaigns);
+    updateParams({ include: campaigns });
+    // console.log("Save", campaigns);
+    setIsModalOpen(false);
   };
 
   return (

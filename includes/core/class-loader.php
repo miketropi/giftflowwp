@@ -30,6 +30,7 @@ class Loader extends Base {
         wp_localize_script('giftflowwp-admin', 'giftflowwp_admin', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce'    => wp_create_nonce('giftflowwp_admin_nonce'),
+            'rest_nonce' => wp_create_nonce( 'wp_rest' ),
         ));
     }
 

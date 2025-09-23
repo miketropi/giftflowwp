@@ -10,7 +10,9 @@ add_action('rest_api_init', function () {
     register_rest_route('giftflowwp/v1', '/campaigns', array(
         'methods' => 'GET',
         'callback' => 'giftflowwp_get_campaigns',
-        'permission_callback' => '__return_true', // Public endpoint, adjust as needed,
+        'permission_callback' => function () {
+            return current_user_can('edit_posts'); // Editor, Author, Admin
+        }, 
         // params
         'args' => array(
             'per_page' => array(
@@ -44,6 +46,14 @@ add_action('rest_api_init', function () {
                 'default' => [],
             ),
         ),
+    ));
+
+    register_rest_route('giftflowwp/v1', '/dashboard/overview', array(
+        'methods' => 'GET',
+        'callback' => 'giftflowwp_get_dashboard_overview',
+        'permission_callback' => function () {
+            return current_user_can('edit_posts'); // Editor, Author, Admin
+        },
     ));
 });
 
@@ -81,7 +91,7 @@ function giftflowwp_get_campaigns($request) {
             $__raised_amount = giftflowwp_render_currency_formatted_amount($raised_amount);
 
             $campaigns[] = array(
-                'id'      => get_the_ID(),
+                'id'      => strval(get_the_ID()),
                 'title'   => get_the_title(),
                 'excerpt' => get_the_excerpt(),
                 'thumbnail' => get_the_post_thumbnail_url(get_the_ID(), 'medium'),
@@ -103,3 +113,17 @@ function giftflowwp_get_campaigns($request) {
     return rest_ensure_response($campaigns);
 }
 
+function giftflowwp_get_dashboard_overview($request) {
+
+    $total_raised = giftflowwp_get_total_donations_amount();
+    $data = array(
+        'total_raised' => $total_raised,
+        '__total_raised' => giftflowwp_render_currency_formatted_amount($total_raised),
+        'total_active_campaigns' => giftflowwp_get_total_campaigns_by_status('active'),
+        'total_donors' => giftflowwp_get_total_donors_count(),
+        'recent_donations' => giftflowwp_get_recent_donations(),
+        // 'recent_donors' => giftflowwp_get_recent_donors(),
+        // 'top_comments' => giftflowwp_get_top_comments_of_campaigns(),
+    );
+    return rest_ensure_response($data);
+}

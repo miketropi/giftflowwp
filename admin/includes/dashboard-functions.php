@@ -116,16 +116,18 @@ function giftflowwp_count_campaigns_by_status($status = 'active') {
  */
 function giftflowwp_get_total_donations_amount() {
     global $wpdb;
-    $total = $wpdb->get_var("
-        SELECT SUM(CAST(meta_value AS DECIMAL(10,2))) 
-        FROM {$wpdb->postmeta} 
-        WHERE meta_key = '_amount' 
-        AND post_id IN (
-            SELECT ID FROM {$wpdb->posts} 
-            WHERE post_type = 'donation' 
-            AND post_status = 'publish'
-        )
-    ");
+
+    $sql = $wpdb->prepare("
+        SELECT SUM(CAST(pm.meta_value AS DECIMAL(10,2))) 
+        FROM {$wpdb->postmeta} pm
+        INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
+        WHERE pm.meta_key = %s
+        AND p.post_type = %s
+        AND p.post_status = %s
+    ", '_amount', 'donation', 'publish');
+
+    $total = $wpdb->get_var($sql);
+
     return $total ? $total : 0;
 }
 
@@ -146,15 +148,18 @@ function giftflowwp_get_total_donors() {
  * Get highlight campaigns (top 3 by raised amount)
  */
 function giftflowwp_get_highlight_campaigns() {
-    $campaigns = get_posts(array(
+    /**
+     * Filter to allow modification of highlight campaigns query args.
+     */
+    $args = array(
         'post_type' => 'campaign',
         'post_status' => 'publish',
         'numberposts' => 5,
         'orderby' => 'date',
         'order' => 'DESC'
-        // 'orderby' => 'meta_value_num',
-        // 'meta_key' => '_goal_amount'
-    ));
+    );
+    $args = apply_filters('giftflowwp_highlight_campaigns_query_args', $args);
+    $campaigns = get_posts($args);
     
     $highlight_campaigns = array();
     
@@ -180,13 +185,18 @@ function giftflowwp_get_highlight_campaigns() {
  * Get recent donations (last 5)
  */
 function giftflowwp_get_recent_donations() {
-    $donations = get_posts(array(
+    /**
+     * Filter to allow modification of recent donations query args.
+     */
+    $args = array(
         'post_type' => 'donation',
         'post_status' => 'publish',
-        'numberposts' => 8,
+        'numberposts' => 5,
         'orderby' => 'date',
         'order' => 'DESC'
-    ));
+    );
+    $args = apply_filters('giftflowwp_recent_donations_query_args', $args);
+    $donations = get_posts($args);
     
     $recent_donations = array();
     
@@ -195,29 +205,40 @@ function giftflowwp_get_recent_donations() {
         $donor_id = get_post_meta($donation->ID, '_donor_id', true);
         $campaign_id = get_post_meta($donation->ID, '_campaign_id', true);
         
-        $donor_name = 'Anonymous';
+        $donor_name = esc_html__('??', 'giftflowwp');
+        $donor_link = '#not-found';
+        $donor_email = '#not-found';
         if ($donor_id) {
             $first_name = get_post_meta($donor_id, '_first_name', true);
             $last_name = get_post_meta($donor_id, '_last_name', true);
             $donor_name = trim($first_name . ' ' . $last_name);
+            $donor_link = esc_url(get_edit_post_link($donor_id));
+            $donor_email = get_post_meta($donor_id, '_email', true);
         }
         
-        $campaign_title = 'General';
-        $campaign_link = '';
+        $campaign_title = esc_html__('??', 'giftflowwp');
+        $campaign_link = '#not-found';
         if ($campaign_id) {
             $campaign = get_post($campaign_id);
             if ($campaign) {
                 $campaign_title = $campaign->post_title;
-                $campaign_link = get_edit_post_link($campaign_id);
+                $campaign_link = esc_url(get_edit_post_link($campaign_id));
             }
         }
         
         $recent_donations[] = array(
+            'id' => strval($donation->ID),
             'donor_name' => $donor_name,
+            'donor_id' => $donor_id,
             'amount' => $amount,
+            '__amount' => giftflowwp_render_currency_formatted_amount($amount),
+            'payment_method' => get_post_meta($donation->ID, '_payment_method', true),
+            'status' => get_post_meta($donation->ID, '_status', true),
             'campaign_title' => $campaign_title,
             'campaign_link' => $campaign_link,
-            'date' => date_i18n('d/m/Y', strtotime($donation->post_date))
+            'date' => date_i18n(get_option('date_format', 'F j, Y'), strtotime($donation->post_date)),
+            'donor_link' => $donor_link,
+            'donor_email' => $donor_email
         );
     }
     
@@ -284,4 +305,31 @@ function giftflowwp_get_new_donors_count() {
     ));
     
     return count($new_donors);
+}
+
+function giftflowwp_get_total_campaigns_by_status($status = 'active') {
+    $campaigns = get_posts(array(
+        'post_type' => 'campaign',
+        'post_status' => 'publish',
+        'numberposts' => -1,
+        'meta_query' => array(
+            array(
+                'key' => '_status',
+                'value' => $status,
+                'compare' => '='
+            )
+        ),
+        'fields' => 'ids'
+    ));
+    return count($campaigns);
+}
+
+function giftflowwp_get_total_donors_count() {
+    $donors = get_posts(array(
+        'post_type' => 'donor',
+        'post_status' => 'publish',
+        'numberposts' => -1,
+        'fields' => 'ids'
+    ));
+    return count($donors);
 }

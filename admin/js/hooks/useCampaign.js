@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { getCampaigns } from '../ulti/api';
 
 export default function useCampaign(args = {}) {
   
@@ -50,13 +51,13 @@ export default function useCampaign(args = {}) {
         return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
       })
       .join('&');
-    const urlWithParams = `/wp-json/giftflowwp/v1/campaigns${queryString ? `?${queryString}` : ''}`;
+    // const urlWithParams = `/wp-json/giftflowwp/v1/campaigns${queryString ? `?${queryString}` : ''}`;
 
     // Replace this URL with your actual API endpoint
-    fetch(urlWithParams)
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch campaigns');
-        return res.json();
+    getCampaigns(params)
+      .then((data) => {
+        if (!data) throw new Error('Failed to fetch campaigns');
+        return data;
       })
       .then((data) => {
         if (isMounted) {

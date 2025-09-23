@@ -193,7 +193,7 @@
 }
 .giftflowwp-overview__stat-card:hover {
   background: #fff;
-  border-color: #2271b1;
+  border-color: black;
   box-shadow: 0 2px 8px rgba(34, 113, 177, 0.1);
 }
 .giftflowwp-overview__stat-icon {
@@ -222,12 +222,6 @@
   font-size: 0.875rem;
   color: #6c757d;
   margin-top: 0.25rem;
-}
-.giftflowwp-overview__recent-activity h4 {
-  margin: 0 0 1rem 0;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #1e1e1e;
 }
 .giftflowwp-overview__activity-list {
   display: flex;
@@ -461,6 +455,29 @@
   }
 }
 
+.skeleton, .giftflowwp-overview__stat-card--loading .giftflowwp-overview__stat-icon,
+.giftflowwp-overview__stat-card--loading .giftflowwp-overview__stat-value,
+.giftflowwp-overview__stat-card--loading .giftflowwp-overview__stat-label {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 37%, #f0f0f0 63%);
+  background-size: 400% 100%;
+  animation: giftflowwp-skeleton-loading 1.4s ease infinite;
+  border-radius: 4px;
+  min-height: 1em;
+  color: transparent !important;
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+@keyframes giftflowwp-skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
 .giftflowwp-campaigns-list__ul {
   list-style: none;
   margin: 0;
@@ -600,11 +617,7 @@
   }
 }
 .giftflowwp-campaigns-list__settings-container {
-  background: #f9f9fb;
-  border-radius: 10px;
-  padding: 24px 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  margin-top: 8px;
+  margin-bottom: 1.5rem;
 }
 .giftflowwp-campaigns-list__select-wrapper {
   border: 1px solid #e0e0e7;
@@ -635,7 +648,6 @@
   resize: vertical;
   cursor: pointer;
   max-width: none !important;
-  font-family: "Courier New", Courier, monospace;
 }
 .giftflowwp-campaigns-list__multiselect:focus {
   outline: none;
@@ -859,11 +871,11 @@
   min-height: 36px;
 }
 .giftflowwp-modal__button--primary {
-  background: #2271b1;
+  background: black;
   color: #fff;
 }
 .giftflowwp-modal__button--primary:hover {
-  background: #165a8f;
+  opacity: 0.7;
 }
 .giftflowwp-modal__button--primary:focus {
   outline: none;
@@ -1053,6 +1065,316 @@
 .giftflowwp-modal--right {
   justify-content: flex-end;
   padding-right: 2rem;
+}
+
+.giftflowwp-recent-donations__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+.giftflowwp-recent-donations__header-left {
+  flex: 1;
+}
+.giftflowwp-recent-donations__header-right {
+  flex-shrink: 0;
+  margin-left: 0.75rem;
+}
+.giftflowwp-recent-donations__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.2;
+}
+.giftflowwp-recent-donations__subtitle {
+  font-size: 0.8rem;
+  color: #6b7280;
+  font-weight: 400;
+  margin: 0;
+}
+.giftflowwp-recent-donations__count {
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  min-width: 1.5rem;
+  text-align: center;
+}
+.giftflowwp-recent-donations__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #9ca3af;
+}
+.giftflowwp-recent-donations__empty-icon {
+  margin-bottom: 0.75rem;
+  opacity: 0.5;
+  color: #d1d5db;
+}
+.giftflowwp-recent-donations__empty-text {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+.giftflowwp-recent-donations__empty-subtext {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  max-width: 250px;
+  line-height: 1.4;
+}
+.giftflowwp-recent-donations__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.giftflowwp-recent-donations__card {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 0.75rem;
+  transition: all 0.15s ease;
+  position: relative;
+}
+.giftflowwp-recent-donations__card:hover {
+  background: #fff;
+  border-color: #d1d5db;
+}
+.giftflowwp-recent-donations__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  gap: 0.75rem;
+}
+.giftflowwp-recent-donations__donor-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+.giftflowwp-recent-donations__donor-avatar {
+  width: 32px;
+  height: 32px;
+  background: #3b82f6;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.8rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.giftflowwp-recent-donations__donor-details {
+  flex: 1;
+  min-width: 0;
+}
+.giftflowwp-recent-donations__donor-name {
+  margin: 0 0 0.125rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.2;
+  margin-bottom: 0.2rem;
+}
+.giftflowwp-recent-donations__donor-link {
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.giftflowwp-recent-donations__donor-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+.giftflowwp-recent-donations__donor-email {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #6b7280;
+  line-height: 1.2;
+  word-break: break-all;
+}
+.giftflowwp-recent-donations__amount {
+  font-size: 0.95rem;
+  white-space: nowrap;
+  font-family: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
+}
+.giftflowwp-recent-donations__amount :global(.giftflowwp-currency-formatted-amount) {
+  color: #059669;
+}
+.giftflowwp-recent-donations__card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.giftflowwp-recent-donations__campaign-info {
+  flex: 1;
+}
+.giftflowwp-recent-donations__campaign-title {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #374151;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.giftflowwp-recent-donations__campaign-link {
+  color: #374151;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.giftflowwp-recent-donations__campaign-link:hover {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+.giftflowwp-recent-donations__card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #f3f4f6;
+}
+.giftflowwp-recent-donations__status-badge {
+  flex-shrink: 0;
+}
+.giftflowwp-recent-donations__status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.giftflowwp-recent-donations__status--completed {
+  background: #d1fae5;
+  color: #065f46;
+}
+.giftflowwp-recent-donations__status--pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+.giftflowwp-recent-donations__status--failed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.giftflowwp-recent-donations__status--refunded {
+  background: #f3f4f6;
+  color: #374151;
+}
+.giftflowwp-recent-donations__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  color: #6b7280;
+}
+.giftflowwp-recent-donations__date {
+  font-weight: 500;
+}
+.giftflowwp-recent-donations__payment-method {
+  color: #9ca3af;
+  text-transform: capitalize;
+}
+@media (max-width: 768px) {
+  .giftflowwp-recent-donations {
+    padding: 0.75rem;
+  }
+  .giftflowwp-recent-donations__header {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+  }
+  .giftflowwp-recent-donations__title {
+    font-size: 1rem;
+  }
+  .giftflowwp-recent-donations__subtitle {
+    font-size: 0.75rem;
+  }
+  .giftflowwp-recent-donations__card {
+    padding: 0.625rem;
+  }
+  .giftflowwp-recent-donations__card-header {
+    margin-bottom: 0.375rem;
+  }
+  .giftflowwp-recent-donations__donor-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+  .giftflowwp-recent-donations__donor-name {
+    font-size: 0.8rem;
+  }
+  .giftflowwp-recent-donations__donor-email {
+    font-size: 0.7rem;
+  }
+  .giftflowwp-recent-donations__amount {
+    font-size: 0.9rem;
+  }
+  .giftflowwp-recent-donations__campaign-title {
+    font-size: 0.75rem;
+  }
+  .giftflowwp-recent-donations__card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.375rem;
+  }
+  .giftflowwp-recent-donations__meta {
+    font-size: 0.65rem;
+  }
+}
+@media (max-width: 480px) {
+  .giftflowwp-recent-donations {
+    padding: 0.5rem;
+  }
+  .giftflowwp-recent-donations__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.375rem;
+  }
+  .giftflowwp-recent-donations__header-right {
+    margin-left: 0;
+  }
+  .giftflowwp-recent-donations__title {
+    font-size: 0.95rem;
+  }
+  .giftflowwp-recent-donations__card {
+    padding: 0.5rem;
+  }
+  .giftflowwp-recent-donations__donor-avatar {
+    width: 24px;
+    height: 24px;
+    font-size: 0.7rem;
+  }
+  .giftflowwp-recent-donations__donor-name {
+    font-size: 0.75rem;
+  }
+  .giftflowwp-recent-donations__amount {
+    font-size: 0.85rem;
+  }
+  .giftflowwp-recent-donations__campaign-title {
+    font-size: 0.7rem;
+  }
+  .giftflowwp-recent-donations__status {
+    font-size: 0.65rem;
+    padding: 0.1rem 0.375rem;
+  }
+  .giftflowwp-recent-donations__meta {
+    font-size: 0.6rem;
+  }
 }
 
 #GFWP_DASHBOARD_VIEW_ROOT {
