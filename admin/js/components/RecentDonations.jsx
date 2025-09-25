@@ -1,3 +1,5 @@
+import { Link } from 'lucide-react';
+
 export default function RecentDonations({ donations = [] }) {
   if (!donations || donations.length === 0) {
     return (
