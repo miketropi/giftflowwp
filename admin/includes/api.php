@@ -55,6 +55,43 @@ add_action('rest_api_init', function () {
             return current_user_can('edit_posts'); // Editor, Author, Admin
         },
     ));
+
+    register_rest_route('giftflowwp/v1', '/dashboard/statistics/charts', array(
+        'methods' => 'GET',
+        'callback' => 'giftflowwp_get_dashboard_statistics_charts',
+        'permission_callback' => function () {
+            return current_user_can('edit_posts'); // Editor, Author, Admin
+        },
+        'args' => array(
+            'period' => array(
+                'type' => 'string',
+                'default' => '30d',
+            ),
+        ),
+    ));
+
+    // register route create campaign csv
+    register_rest_route('giftflowwp/v1', '/campaign/csv-export', array(
+        'methods' => 'POST',
+        'callback' => 'giftflowwp_export_campaign_csv',
+        'permission_callback' => function () {
+            return current_user_can('edit_posts'); // Editor, Author, Admin
+        },
+        'args' => array(
+            'campaign_id' => array(
+                'type' => 'integer',
+                'required' => true,
+            ),
+            'date_from' => array(
+                'type' => 'string',
+                'required' => false,
+            ),
+            'date_to' => array(
+                'type' => 'string',
+                'required' => false,
+            ),
+        ),
+    ));
 });
 
 /**
@@ -126,4 +163,28 @@ function giftflowwp_get_dashboard_overview($request) {
         // 'top_comments' => giftflowwp_get_top_comments_of_campaigns(),
     );
     return rest_ensure_response($data);
+}
+
+/**
+ * Handle GET /wp-json/giftflowwp/v1/dashboard/statistics/charts
+ * Returns the statistics charts data.
+ */
+function giftflowwp_get_dashboard_statistics_charts($request) {
+    $period = $request->get_param('period');
+    $data = array(
+        'donations_overview_chart_by_period' => giftflowwp_get_donations_overview_stats_by_period($period),
+    );
+    return rest_ensure_response($data);
+}
+
+/**
+ * Handle POST /wp-json/giftflowwp/v1/campaign/csv-export
+ * Exports the campaign CSV.
+ */
+function giftflowwp_export_campaign_csv($request) {
+    $campaign_id = $request->get_param('campaign_id');
+    $date_from = $request->get_param('date_from');
+    $date_to = $request->get_param('date_to');
+
+    
 }

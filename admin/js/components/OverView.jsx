@@ -4,6 +4,7 @@ import CampaignTracking from './CampaignTracking';
 import useBasedata from '../hooks/useBasedata';
 import Card from './Card';
 import RecentDonations from './RecentDonations';
+import DonationsOverviewChart from './DonationsOverviewChart';
 import { DollarSign, ClipboardCheck, Users } from 'lucide-react';
 
 const OverView = () => {
@@ -31,6 +32,10 @@ const OverView = () => {
     <div className="giftflowwp-overview">
       <div className="giftflowwp-overview__main">
         <h3 className="giftflowwp-overview__title">Dashboard Overview</h3>
+
+        <div className="giftflowwp-overview__chart">
+          <DonationsOverviewChart />
+        </div>
         
         <div className="giftflowwp-overview__stats">
           { cards.map((card, index) => (

@@ -218,6 +218,7 @@ function giftflowwp_get_recent_donations() {
         
         $campaign_title = esc_html__('??', 'giftflowwp');
         $campaign_link = '#not-found';
+        $campaign_id = $campaign_id ?? '';
         if ($campaign_id) {
             $campaign = get_post($campaign_id);
             if ($campaign) {
@@ -234,6 +235,7 @@ function giftflowwp_get_recent_donations() {
             '__amount' => giftflowwp_render_currency_formatted_amount($amount),
             'payment_method' => get_post_meta($donation->ID, '_payment_method', true),
             'status' => get_post_meta($donation->ID, '_status', true),
+            'campaign_id' => $campaign_id,
             'campaign_title' => $campaign_title,
             'campaign_link' => $campaign_link,
             'date' => date_i18n(get_option('date_format', 'F j, Y'), strtotime($donation->post_date)),
@@ -332,4 +334,200 @@ function giftflowwp_get_total_donors_count() {
         'fields' => 'ids'
     ));
     return count($donors);
+}
+
+/**
+ * Get donations stats by period (7 days, 30 days, 6 months, 1 year).
+ *
+ * @param string $period Allowed values: '7d', '30d', '6m', '1y'. Default: '7d'.
+ * @return array
+ */
+function giftflowwp_get_donations_overview_stats_by_period( $period = '30d' ) {
+    global $wpdb;
+
+    $post_type  = 'donation';
+    $date_field = 'post_date';
+
+    // Determine date range and grouping
+    $today = current_time('Y-m-d');
+    $dates = array();
+
+    switch ( $period ) {
+        case '30d':
+            $range_days = 30;
+            for ( $i = $range_days - 1; $i >= 0; $i-- ) {
+                $dates[] = date( 'Y-m-d', strtotime( "-$i days", strtotime( $today ) ) );
+            }
+            break;
+
+        case '6m':
+            $range_months = 6;
+            for ( $i = $range_months - 1; $i >= 0; $i-- ) {
+                $dates[] = date( 'Y-m', strtotime( "-$i months", strtotime( $today ) ) );
+            }
+            break;
+
+        case '1y':
+            $range_months = 12;
+            for ( $i = $range_months - 1; $i >= 0; $i-- ) {
+                $dates[] = date( 'Y-m', strtotime( "-$i months", strtotime( $today ) ) );
+            }
+            break;
+
+        case '7d':
+        default:
+            $range_days = 7;
+            for ( $i = $range_days - 1; $i >= 0; $i-- ) {
+                $dates[] = date( 'Y-m-d', strtotime( "-$i days", strtotime( $today ) ) );
+            }
+            break;
+    }
+
+    // Prepare results array
+    $results = array();
+    foreach ( $dates as $date ) {
+        $results[ $date ] = array(
+            'donation_amount' => 0,
+            'donors_count'    => 0,
+        );
+    }
+
+    // Define date range for SQL
+    $first_date = reset( $dates );
+    $last_date = end( $dates );
+    
+    if ( strlen( $first_date ) === 7 ) {
+        // Monthly grouping - use proper last day of month
+        $start_date = $first_date . '-01 00:00:00';
+        $end_date = date( 'Y-m-t 23:59:59', strtotime( $last_date . '-01' ) );
+    } else {
+        // Daily grouping
+        $start_date = $first_date . ' 00:00:00';
+        $end_date = $last_date . ' 23:59:59';
+    }
+
+    // Query all donations in the range
+    $donations = $wpdb->get_results(
+        $wpdb->prepare(
+            "
+            SELECT p.ID, p.{$date_field}
+            FROM {$wpdb->posts} p
+            INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+            WHERE p.post_type = %s
+              AND p.post_status = 'publish'
+              AND pm.meta_key = %s
+              AND pm.meta_value = %s
+              AND p.{$date_field} BETWEEN %s AND %s
+            ",
+            $post_type,
+            '_status',
+            'completed',
+            $start_date,
+            $end_date
+        )
+    );
+
+    // Group donations and sum donation amounts
+    foreach ( $donations as $donation ) {
+        $group_key = ( in_array( $period, array( '6m', '1y' ), true ) )
+            ? date( 'Y-m', strtotime( $donation->post_date ) )
+            : date( 'Y-m-d', strtotime( $donation->post_date ) );
+
+        if ( ! isset( $results[ $group_key ] ) ) {
+            continue;
+        }
+
+        // Sum donation amount
+        $amount = (float) get_post_meta( $donation->ID, '_amount', true );
+        $results[ $group_key ]['donation_amount'] += $amount;
+    }
+
+    // Count donors from donor post type by created date
+    foreach ( $results as $date => &$data ) {
+        if ( strlen( $date ) === 7 ) {
+            // Monthly grouping - use proper last day of month
+            $start = $date . '-01 00:00:00';
+            $end   = date( 'Y-m-t 23:59:59', strtotime( $date . '-01' ) );
+        } else {
+            // Daily grouping
+            $start = $date . ' 00:00:00';
+            $end   = $date . ' 23:59:59';
+        }
+
+        $donor_count = $wpdb->get_var(
+            $wpdb->prepare(
+                "
+                SELECT COUNT(ID)
+                FROM {$wpdb->posts}
+                WHERE post_type = %s
+                  AND post_status = 'publish'
+                  AND post_date BETWEEN %s AND %s
+                ",
+                'donor',
+                $start,
+                $end
+            )
+        );
+        $data['donors_count'] = intval( $donor_count );
+    }
+
+    // Format for chart.js
+    $labels        = array_keys( $results );
+    $donationsData = wp_list_pluck( $results, 'donation_amount' );
+    $donorsData    = wp_list_pluck( $results, 'donors_count' );
+
+    return array(
+        'labels'        => $labels,
+        'donationsData' => $donationsData,
+        'donorsData'    => $donorsData,
+    );
+}
+
+// prepare data for export campaign donations csv
+function giftflowwp_prepare_data_for_export_campaign_donations_csv($campaign_id, $date_from = '', $date_to = '') {
+
+    $args = array(
+        'post_type' => 'donation',
+        'post_status' => 'publish',
+        'numberposts' => -1,
+        'fields' => 'ids',
+    );
+    if ($campaign_id) {
+        $args['meta_query'][] = array(
+            'key' => '_campaign_id',
+            'value' => $campaign_id,
+            'compare' => '='
+        );
+    }
+    if ($date_from) {
+        $args['date_query'][] = array(
+            'after' => $date_from,
+        );
+    }
+    if ($date_to) {
+        $args['date_query'][] = array(
+            'before' => $date_to,
+        );
+    }
+
+    // query donations
+    $donation_ids = get_posts($args);
+
+    $results = array();
+
+    // put donor to item of donations
+    foreach ($donation_ids as $donation_id) {
+        $results['ID'] = $donation_id;
+        $results['date'] = get_the_date('', $donation_id);
+        $results['amount'] = get_post_meta($donation_id, '_amount', true);
+        $results['status'] = get_post_meta($donation_id, '_status', true);
+        $results['donor'] = giftflowwp_get_donor_data_by_id(get_post_meta($donation_id, '_donor_id', true));
+        // Transaction ID
+        $results['transaction_id'] = get_post_meta($donation_id, '_transaction_id', true);
+        // Payment Method
+        $results['payment_method'] = get_post_meta($donation_id, '_payment_method', true);
+
+    }
+
+    return $results;
 }

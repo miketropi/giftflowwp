@@ -121,7 +121,7 @@ const Modal = ({
   const modalClasses = [
     'giftflowwp-modal',
     isOpen ? 'giftflowwp-modal--open' : '',
-    size !== 'medium' ? `giftflowwp-modal--${size}` : '',
+    size !== 'medium' ? `giftflowwp-modal--${size}` : 'giftflowwp-modal--medium',
     variant !== 'default' ? `giftflowwp-modal--${variant}` : '',
     overlay !== 'default' ? `giftflowwp-modal-overlay--${overlay}` : '',
     position !== 'center' ? `giftflowwp-modal--${position}` : '',

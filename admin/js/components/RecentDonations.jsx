@@ -43,8 +43,9 @@ export default function RecentDonations({ donations = [] }) {
                 <div className="giftflowwp-recent-donations__donor-details">
                   <h4 className="giftflowwp-recent-donations__donor-name">
                     <a 
-                      href={donation.donor_link} 
+                      href={ giftflowwp_admin.admin_url + `post.php?post=${donation.donor_id}&action=edit` } 
                       className="giftflowwp-recent-donations__donor-link"
+                      target='_blank'
                       dangerouslySetInnerHTML={{ __html: donation.donor_name }}
                     />
                   </h4>
@@ -59,7 +60,8 @@ export default function RecentDonations({ donations = [] }) {
               <div className="giftflowwp-recent-donations__campaign-info">
                 <h5 className="giftflowwp-recent-donations__campaign-title">
                   <a 
-                    href={donation.campaign_link} 
+                    href={ giftflowwp_admin.admin_url + `post.php?post=${donation.campaign_id}&action=edit` } 
+                    target='_blank'
                     className="giftflowwp-recent-donations__campaign-link"
                     dangerouslySetInnerHTML={{ __html: donation.campaign_title }}
                   />

@@ -26,6 +26,14 @@
     }
   }
 
+  &__chart {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+  }
+
   &__widget-header-btn {
     // only icon inner
     padding: .5rem;
@@ -444,5 +452,152 @@
   }
   100% {
     background-position: 0 50%;
+  }
+}
+
+// Chart styles
+.giftflowwp-chart-container {
+  width: 100%;
+  
+  .giftflowwp-chart-wrapper {
+    position: relative;
+    height: 400px;
+    margin-bottom: 1rem;
+  }
+  
+  .giftflowwp-chart-description {
+    
+    &__select {
+      font-size: 0.95em;
+      display: inline;
+      padding: .2rem;
+      background-color: white;
+      margin: 0;
+      line-height: normal;
+      border: none;
+      border-bottom: solid 2px;
+      height: auto !important;
+      min-height: auto;
+      border-radius: 0;
+
+      background-image: url(../../images/chevron-down-icon.svg);
+      background-size: 10px;
+      background-position: right 0.5em center;
+      background-repeat: no-repeat;
+      padding-right: 1.5em !important;
+    }
+  }
+}
+
+// Chart loading state
+.giftflowwp-chart-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #6b7280;
+  
+  &__spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f3f4f6;
+    border-top: 3px solid #3b82f6;
+    border-radius: 50%;
+    animation: giftflowwp-chart-spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+  }
+}
+
+@keyframes giftflowwp-chart-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Chart error state
+.giftflowwp-chart-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #6b7280;
+  
+  &__icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+  }
+  
+  h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #dc2626;
+  }
+  
+  p {
+    margin: 0 0 1.5rem 0;
+    font-size: 0.875rem;
+    max-width: 400px;
+    line-height: 1.5;
+  }
+  
+  &__retry {
+    background: #3b82f6;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background: #2563eb;
+    }
+    
+    &:active {
+      background: #1d4ed8;
+    }
+  }
+}
+
+// Chart empty state
+.giftflowwp-chart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #6b7280;
+  
+  &__icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+  }
+  
+  h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #374151;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+    max-width: 400px;
+    line-height: 1.5;
   }
 }

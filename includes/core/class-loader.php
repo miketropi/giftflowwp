@@ -31,6 +31,8 @@ class Loader extends Base {
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce'    => wp_create_nonce('giftflowwp_admin_nonce'),
             'rest_nonce' => wp_create_nonce( 'wp_rest' ),
+            'admin_url' => admin_url(),
+            'currency_symbol' => giftflowwp_get_global_currency_symbol(),
         ));
     }
 

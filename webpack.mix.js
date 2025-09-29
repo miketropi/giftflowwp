@@ -71,7 +71,10 @@ Object.keys(scssFiles).forEach(filename => {
 // for admin 
 mix
     .js('admin/js/admin.js', 'assets/js/admin.bundle.js')
-    .sass('admin/css/admin.scss', 'assets/css/admin.bundle.css');
+    .sass('admin/css/admin.scss', 'assets/css/admin.bundle.css')
+    .options({
+        processCssUrls: false
+    });;
 
 
 mix.override(config => {

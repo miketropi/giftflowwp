@@ -2,6 +2,10 @@ import React from 'react';
 import { Sparkles } from 'lucide-react';
 
 const Welcome = () => {
+
+  const create_campaign_url = giftflowwp_admin.admin_url + 'post-new.php?post_type=campaign';
+  const settings_url = giftflowwp_admin.admin_url + 'admin.php?page=giftflowwp-settings';
+
   return (
     <div className="giftflowwp-welcome">
       <div className="giftflowwp-welcome__header">
@@ -29,13 +33,13 @@ const Welcome = () => {
         <div className="giftflowwp-welcome__right-column">
           <div className="giftflowwp-welcome__actions">
             <a
-              href="admin.php?page=giftflowwp_create_campaign"
+              href={ create_campaign_url }
               className="giftflowwp-welcome__action-btn"
             >
               <span role="img" aria-label="Create">➕</span> Create Campaign
             </a>
             <a
-              href="admin.php?page=giftflowwp_settings"
+              href={ settings_url }
               className="giftflowwp-welcome__action-btn"
             >
               <span role="img" aria-label="Settings">⚙️</span> Go to Settings
@@ -44,7 +48,7 @@ const Welcome = () => {
 
           <div className="giftflowwp-welcome__help">
             <h4>Need Help?</h4>
-            <p>Visit our <a href="https://giftflowwp.com/docs" target="_blank" rel="noopener noreferrer">documentation</a> or <a href="https://giftflowwp.com/support" target="_blank" rel="noopener noreferrer">contact support</a>.</p>
+            <p>Visit our <a href="#" target="_blank" rel="noopener noreferrer">documentation</a> or <a href="#" target="_blank" rel="noopener noreferrer">contact support</a>.</p>
           </div>
         </div>
       </div>

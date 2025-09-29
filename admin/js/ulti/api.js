@@ -60,3 +60,18 @@ export const getBasedata = async () => {
 
   return __request(urlWithParams, {});
 }
+
+export const getDashboardStatisticsCharts = async (query = {}) => {
+  const queryString = Object.entries(query)
+    .filter(([_, value]) => value !== undefined && value !== null && value !== '')
+    .map(([key, value]) => {
+      if (Array.isArray(value)) {
+        return value.map(v => `${encodeURIComponent(key)}[]=${encodeURIComponent(v)}`).join('&');
+      }
+      return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    })
+
+  const urlWithParams = `/wp-json/giftflowwp/v1/dashboard/statistics/charts${queryString ? `?${queryString}` : ''}`;
+
+  return __request(urlWithParams, {});
+}
