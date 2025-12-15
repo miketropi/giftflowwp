@@ -65,10 +65,10 @@ function giftflowwp_dashboard_page() {
                class="nav-tab <?php echo $current_tab === 'overview' ? 'nav-tab-active' : ''; ?>">
                 <?php _e('Overview', 'giftflowwp'); ?>
             </a>
-            <a href="<?php echo esc_url(admin_url('admin.php?page=giftflowwp-dashboard&tab=help')); ?>" 
+            <!-- <a href="<?php echo esc_url(admin_url('admin.php?page=giftflowwp-dashboard&tab=help')); ?>" 
                class="nav-tab <?php echo $current_tab === 'help' ? 'nav-tab-active' : ''; ?>">
                 <?php _e('Help', 'giftflowwp'); ?>
-            </a>
+            </a> -->
         </nav>
         
         <div class="tab-content">
@@ -93,34 +93,7 @@ function giftflowwp_dashboard_page() {
  * Display the overview tab content
  */
 function giftflowwp_dashboard_overview_tab() {
-    ?>
-    <div class="giftflowwp-dashboard-overview">
-        
-        <link rel="stylesheet" href="<?php echo GIFTFLOWWP_PLUGIN_URL; ?>assets/css/lib/select2.min.css">
-        <script src="<?php echo GIFTFLOWWP_PLUGIN_URL; ?>assets/js/lib/chart.js"></script>
-        <script src="<?php echo GIFTFLOWWP_PLUGIN_URL; ?>assets/js/lib/select2.min.js"></script>
-
-        <!-- Widget Quick Actions -->
-        <?php giftflowwp_display_quick_actions(); ?>
-
-        <!-- Widget Statistics Charts -->
-        <?php giftflowwp_display_statistics_charts(); ?>
-
-        <div class="giftflowwp-dashboard-grid">
-            
-            <!-- Widget Overview -->
-            <?php giftflowwp_display_overview_stats(); ?>
-
-            <!-- Widget Highlight Campaigns -->
-            <?php giftflowwp_display_highlight_campaigns(); ?>
-
-            <!-- Widget Recent Donations -->
-            <?php giftflowwp_display_recent_donations(); ?>
-
-        </div>
-
-    </div>
-    <?php
+    giftflowwp_load_template('admin/dashboard-view.php');
 }
 
 /**

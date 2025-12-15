@@ -1,0 +1,433 @@
+// GiftFlowWP Modal Component Styles
+.giftflowwp-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+
+  &--open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  // Modal content container
+  &__content {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: hidden;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .giftflowwp-modal--open & {
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  // Modal sizes
+  &--small &__content {
+    width: 400px;
+    max-width: 400px;
+  }
+
+  &--medium &__content {
+    width: 600px;
+    max-width: 600px;
+  }
+
+  &--large &__content {
+    width: 800px;
+    max-width: 800px;
+  }
+
+  &--fullscreen &__content {
+    width: 95vw;
+    height: 95vh;
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+
+  // Modal header
+  &__header {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    gap: 1.5rem;
+    padding-bottom: .5rem;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    line-height: 1.3;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    color: #6b7280;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+
+    &:hover {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #2271b1;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  // Modal body
+  &__body {
+    padding: 0 1.5rem;
+    flex: 1;
+    overflow-y: auto;
+    color: #374151;
+    line-height: 1.6;
+
+    // Custom scrollbar for webkit browsers
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+
+      &:hover {
+        background: #94a3b8;
+      }
+    }
+  }
+
+  // Modal footer
+  &__footer {
+    padding: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    flex-shrink: 0;
+    background: #f9fafb;
+
+    &--center {
+      justify-content: center;
+    }
+
+    &--space-between {
+      justify-content: space-between;
+    }
+  }
+
+  // Modal actions/buttons
+  &__actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  &__button {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 36px;
+
+    &--primary {
+      background: black;
+      color: #fff;
+
+      &:hover {
+        opacity: .7;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(34, 113, 177, 0.3);
+      }
+    }
+
+    &--secondary {
+      background: #f3f4f6;
+      color: #374151;
+      border: 1px solid #d1d5db;
+
+      &:hover {
+        background: #e5e7eb;
+        border-color: #9ca3af;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.3);
+      }
+    }
+
+    &--danger {
+      background: #ef4444;
+      color: #fff;
+
+      &:hover {
+        background: #dc2626;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3);
+      }
+    }
+
+    &--ghost {
+      background: transparent;
+      color: #6b7280;
+      border: 1px solid transparent;
+
+      &:hover {
+        background: #f3f4f6;
+        color: #374151;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.3);
+      }
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  // Modal loading state
+  &--loading {
+    .giftflowwp-modal__body {
+      position: relative;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(2px);
+        z-index: 1;
+      }
+    }
+
+    .giftflowwp-modal__spinner {
+      position: relative;
+      z-index: 2;
+      width: 40px;
+      height: 40px;
+      border: 3px solid #f3f4f6;
+      border-top: 3px solid #2271b1;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  // Modal with no padding
+  &--no-padding {
+    .giftflowwp-modal__body {
+      padding: 0;
+    }
+
+    .giftflowwp-modal__header {
+      padding: 1.5rem;
+      margin-bottom: 0;
+    }
+
+    .giftflowwp-modal__footer {
+      padding: 1.5rem;
+    }
+  }
+
+  // Modal with image
+  &--with-image {
+    .giftflowwp-modal__header {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      border-bottom: none;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .giftflowwp-modal__image {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1rem auto;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  // Responsive design
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+
+    &__content {
+      width: 100%;
+      max-width: 100%;
+      max-height: 95vh;
+      border-radius: 8px 8px 0 0;
+      margin-top: auto;
+      transform: translateY(100%);
+    }
+
+    &--open &__content {
+      transform: translateY(0);
+    }
+
+    &__header {
+      padding: 1rem 1rem 0 1rem;
+      margin-bottom: 1rem;
+    }
+
+    &__body {
+      padding: 0 1rem;
+    }
+
+    &__footer {
+      padding: 1rem;
+      flex-direction: column-reverse;
+      gap: 0.5rem;
+
+      .giftflowwp-modal__actions {
+        width: 100%;
+        flex-direction: column;
+      }
+
+      .giftflowwp-modal__button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    &--small &__content,
+    &--medium &__content,
+    &--large &__content {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    &__title {
+      font-size: 1.125rem;
+    }
+
+    &__header {
+      padding: 0.75rem 0.75rem 0 0.75rem;
+    }
+
+    &__body {
+      padding: 0 0.75rem;
+    }
+
+    &__footer {
+      padding: 0.75rem;
+    }
+  }
+}
+
+// Spinner animation
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Modal overlay variants
+.giftflowwp-modal-overlay {
+  &--blur {
+    backdrop-filter: blur(8px);
+  }
+
+  &--dark {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  &--light {
+    background: rgba(255, 255, 255, 0.8);
+  }
+}
+
+// Utility classes for modal positioning
+.giftflowwp-modal {
+  &--top {
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  &--bottom {
+    align-items: flex-end;
+    padding-bottom: 2rem;
+  }
+
+  &--left {
+    justify-content: flex-start;
+    padding-left: 2rem;
+  }
+
+  &--right {
+    justify-content: flex-end;
+    padding-right: 2rem;
+  }
+}

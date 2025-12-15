@@ -24,12 +24,15 @@ class Loader extends Base {
      * Enqueue styles
      */
     public function admin_enqueue_scripts() {
-        wp_enqueue_script('giftflowwp-admin', $this->get_plugin_url() . 'assets/js/admin.bundle.js', array(), $this->get_version(), true);
+        wp_enqueue_script('giftflowwp-admin', $this->get_plugin_url() . 'assets/js/admin.bundle.js', array('jquery', 'wp-element', 'react-jsx-runtime'), $this->get_version(), true);
         wp_enqueue_style('giftflowwp-admin', $this->get_plugin_url() . 'assets/css/admin.bundle.css', array(), $this->get_version());
     
         wp_localize_script('giftflowwp-admin', 'giftflowwp_admin', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce'    => wp_create_nonce('giftflowwp_admin_nonce'),
+            'rest_nonce' => wp_create_nonce( 'wp_rest' ),
+            'admin_url' => admin_url(),
+            'currency_symbol' => giftflowwp_get_global_currency_symbol(),
         ));
     }
 

@@ -1,0 +1,408 @@
+// GiftFlowWP Select Search Component
+.giftflowwp-select-search {
+  position: relative;
+  width: 100%;
+  font-family: inherit;
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 44px;
+    padding: 0.75rem;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+    box-sizing: border-box;
+
+    &:hover {
+      border-color: #9ca3af;
+    }
+
+    &:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+  }
+
+  &__value {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  &__value-text {
+    color: #374151;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__placeholder {
+    color: #9ca3af;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__indicators {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  &__clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    &:focus {
+      outline: none;
+      background: #f3f4f6;
+      color: #374151;
+    }
+  }
+
+  &__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    transition: transform 0.2s ease;
+  }
+
+  &__dropdown {
+    position: fixed;
+    z-index: 9999;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    animation: giftflowwp-select-search-dropdown 0.2s ease-out;
+    max-height: 300px;
+    min-width: 200px;
+  }
+
+  &__search {
+    position: relative;
+    padding: 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+    pointer-events: none;
+  }
+
+  &__search-input {
+    width: 100%;
+    padding: 0.5rem 0.5rem 0.5rem 2.5rem !important;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    color: #374151;
+    outline: none;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+
+  &__options {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0.25rem 0;
+
+    // Custom scrollbar
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  }
+
+  &__option {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    box-sizing: border-box;
+    border-bottom: solid 1px #e5e7eb;
+
+    &:hover,
+    &--highlighted {
+      background: #f3f4f6;
+    }
+
+    &--selected {
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 500;
+
+      .giftflowwp-select-search__option-label {
+        color: #1d4ed8;
+      }
+    }
+  }
+
+  &__option-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    line-height: 1.4;
+    margin-bottom: 0.125rem;
+  }
+
+  &__option-description {
+    font-size: 0.75rem;
+    color: #6b7280;
+    line-height: 1.3;
+  }
+
+  &__loading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+    justify-content: center;
+  }
+
+  &__spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #e5e7eb;
+    border-top: 2px solid #3b82f6;
+    border-radius: 50%;
+    animation: giftflowwp-select-search-spin 1s linear infinite;
+  }
+
+  &__no-options {
+    padding: 1rem;
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-style: italic;
+  }
+
+  &__error-message {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 4px;
+    color: #dc2626;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  // States
+  &--disabled {
+    .giftflowwp-select-search__trigger {
+      background: #f9fafb;
+      color: #9ca3af;
+      cursor: not-allowed;
+      border-color: #e5e7eb;
+
+      &:hover,
+      &:focus {
+        border-color: #e5e7eb;
+        box-shadow: none;
+      }
+    }
+
+    .giftflowwp-select-search__value-text,
+    .giftflowwp-select-search__placeholder {
+      color: #9ca3af;
+    }
+
+    .giftflowwp-select-search__arrow {
+      color: #d1d5db;
+    }
+  }
+
+  &--error {
+    .giftflowwp-select-search__trigger {
+      border-color: #dc2626;
+
+      &:hover {
+        border-color: #b91c1c;
+      }
+
+      &:focus {
+        border-color: #dc2626;
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+      }
+    }
+  }
+
+  // When dropdown is open
+  &.giftflowwp-select-search--open {
+    .giftflowwp-select-search__arrow {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+// Animations
+@keyframes giftflowwp-select-search-dropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes giftflowwp-select-search-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .giftflowwp-select-search {
+    &__trigger {
+      min-height: 40px;
+      padding: 0.625rem 0.875rem;
+    }
+
+    &__value-text,
+    &__placeholder {
+      font-size: 0.8rem;
+    }
+
+    &__search {
+      padding: 0.625rem;
+    }
+
+    &__search-input {
+      padding: 0.5rem 0.5rem 0.5rem 2.25rem;
+      font-size: 0.8rem;
+    }
+
+    &__option {
+      padding: 0.625rem 0.875rem;
+    }
+
+    &__option-label {
+      font-size: 0.8rem;
+    }
+
+    &__option-description {
+      font-size: 0.7rem;
+    }
+
+    &__loading {
+      padding: 0.875rem;
+      font-size: 0.8rem;
+    }
+
+    &__no-options {
+      padding: 0.875rem;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .giftflowwp-select-search {
+    &__trigger {
+      min-height: 36px;
+      padding: 0.5rem 0.75rem;
+    }
+
+    &__value-text,
+    &__placeholder {
+      font-size: 0.75rem;
+    }
+
+    &__search {
+      padding: 0.5rem;
+    }
+
+    &__search-input {
+      padding: 0.375rem 0.375rem 0.375rem 2rem;
+      font-size: 0.75rem;
+    }
+
+    &__option {
+      padding: 0.5rem 0.75rem;
+    }
+
+    &__option-label {
+      font-size: 0.75rem;
+    }
+
+    &__option-description {
+      font-size: 0.65rem;
+    }
+
+    &__loading {
+      padding: 0.75rem;
+      font-size: 0.75rem;
+    }
+
+    &__no-options {
+      padding: 0.75rem;
+      font-size: 0.75rem;
+    }
+  }
+}
