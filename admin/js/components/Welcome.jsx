@@ -1,19 +1,38 @@
 import React from 'react';
-import { Sparkles } from 'lucide-react';
+import { Waves, MousePointerClick, Settings, TrendingUp } from 'lucide-react';
 
 const Welcome = () => {
 
   const create_campaign_url = giftflowwp_admin.admin_url + 'post-new.php?post_type=campaign';
   const settings_url = giftflowwp_admin.admin_url + 'admin.php?page=giftflowwp-settings';
 
+  const features = [
+    {
+      icon: MousePointerClick,
+      title: 'Create and launch new fundraising campaigns',
+      description: 'in just a few clicks.'
+    },
+    
+    {
+      icon: Settings,
+      title: 'Customize plugin settings',
+      description: 'to match your organization\'s needs.'
+    },
+    {
+      icon: TrendingUp,
+      title: 'Track campaign progress',
+      description: 'and donor engagement from your dashboard.'
+    }
+  ];
+
   return (
     <div className="giftflowwp-welcome">
       <div className="giftflowwp-welcome__header">
         <div className="giftflowwp-welcome__logo-section">
-          <Sparkles width={48} height={48} />
+          <Waves width={48} height={48} color='black' />
           <div className="giftflowwp-welcome__title-section">
             <h2 className="giftflowwp-welcome__title">GiftFlowWP Dashboard</h2>
-            <p className="giftflowwp-welcome__subtitle __monospace">Your hub for managing fundraising campaigns and settings.</p>
+            <p className="giftflowwp-welcome__subtitle">Your hub for managing fundraising campaigns and settings.</p>
           </div>
         </div>
       </div>
@@ -22,11 +41,16 @@ const Welcome = () => {
         <div className="giftflowwp-welcome__left-column">
           <div className="giftflowwp-welcome__features">
             <h3>Key Features</h3>
-            <ul className="giftflowwp-welcome__features-list __monospace">
-              <li>🚀 <strong>Create and launch new fundraising campaigns</strong> in just a few clicks.</li>
-              <li>⚙️ <strong>Customize plugin settings</strong> to match your organization's needs.</li>
-              <li>📊 <strong>Track campaign progress</strong> and donor engagement from your dashboard.</li>
-            </ul>
+            <div className="giftflowwp-welcome__features-list ">
+              {
+                features.map((feature, index) => (
+                  <div className='giftflowwp-welcome__features-item' key={index}>
+                    <feature.icon width={16} height={16} color='black' />
+                    <div><strong>{feature.title}</strong> {feature.description}</div>
+                  </div>
+                ))
+              }
+            </div>
           </div>
         </div>
 

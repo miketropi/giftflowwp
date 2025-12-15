@@ -60,6 +60,12 @@
   font-size: 20px;
   font-weight: 600;
 }
+.giftflowwp-welcome__left-column .giftflowwp-welcome__features-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.3em 0;
+}
 .giftflowwp-welcome__features-list {
   padding-left: 0px;
   margin: 0;
