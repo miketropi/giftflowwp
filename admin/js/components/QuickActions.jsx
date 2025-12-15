@@ -22,13 +22,13 @@ export default function QuickActions() {
       <div className="giftflowwp-overview__widget">
         <h4 className="giftflowwp-overview__widget-title">Actions</h4>
         <div className="giftflowwp-overview__action-list">
-          <button className="giftflowwp-overview__action-btn __monospace" type="button" onClick={handleExportCampaign}>
+          <button className="giftflowwp-overview__action-btn" type="button" onClick={handleExportCampaign}>
             <span className="giftflowwp-overview__action-icon">
               <FileDown color='#FFF' size={20} />
             </span>
             Export Campaign (.csv)
           </button>
-          <button className="giftflowwp-overview__action-btn __monospace" type="button" onClick={handleExportDonor}>
+          <button className="giftflowwp-overview__action-btn" type="button" onClick={handleExportDonor}>
             <span className="giftflowwp-overview__action-icon">
               <FileDown color='#FFF' size={20} />
             </span>

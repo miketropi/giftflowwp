@@ -67,6 +67,13 @@
         font-weight: 600;
       }
     }
+
+    .giftflowwp-welcome__features-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: .3em 0;
+    }
   }
 
   &__features-list {
