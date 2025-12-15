@@ -72,9 +72,12 @@ add_action('rest_api_init', function () {
 
     // register route create campaign csv
     register_rest_route('giftflowwp/v1', '/campaign/csv-export', array(
-        'methods' => 'POST',
+        'methods' => 'GET',
         'callback' => 'giftflowwp_export_campaign_csv',
         'permission_callback' => function () {
+            // allow anyone create for test 
+            // return true;
+
             return current_user_can('edit_posts'); // Editor, Author, Admin
         },
         'args' => array(
@@ -182,9 +185,13 @@ function giftflowwp_get_dashboard_statistics_charts($request) {
  * Exports the campaign CSV.
  */
 function giftflowwp_export_campaign_csv($request) {
+    // ⚠️ Disable cache & buffer
+    if (ob_get_length()) {
+        ob_end_clean();
+    }
+
     $campaign_id = $request->get_param('campaign_id');
     $date_from = $request->get_param('date_from');
     $date_to = $request->get_param('date_to');
-
-    
+    $export = new GiftFlowWP_Export($campaign_id, 'all', $date_from, $date_to, true, true, 'csv');
 }

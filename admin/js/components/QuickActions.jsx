@@ -3,6 +3,7 @@ import { FileDown } from 'lucide-react';
 import Modal from './Modal';
 import useCampaign from '../hooks/useCampaign';
 import SelectSearch from './SelectSearch';
+import { __request } from '../ulti/api';
 
 export default function QuickActions() {
   const [isModalExportCampaignOpen, setIsModalExportCampaignOpen] = useState(false);
@@ -46,6 +47,7 @@ const ExportCampaignModal = ({ isModalExportCampaignOpen, setIsModalExportCampai
   
   const { campaigns, loading, error } = useCampaign({ per_page: -1 });
   const [selectedCampaign, setSelectedCampaign] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   return <Modal
       size='medium'
@@ -55,9 +57,36 @@ const ExportCampaignModal = ({ isModalExportCampaignOpen, setIsModalExportCampai
       actions={[{
         text: "Export",
         variant: "primary",
-        onClick: () => {
+        onClick: async () => {
 
           // setIsModalExportCampaignOpen(false);
+          // console.log(selectedCampaign);
+
+          try {
+            // open api to download csv 
+            const response = await __request(`/wp-json/giftflowwp/v1/campaign/csv-export?campaign_id=${selectedCampaign}`, {}, 'GET');
+
+            const blob = new Blob([response], {
+              type: 'text/csv;charset=utf-8;'
+            });
+            
+            const url = window.URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            const titleCampaign = campaigns.find(campaign => campaign.id === selectedCampaign)?.title;
+            a.download = `${titleCampaign}_${new Date().toISOString()}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+
+            // close modal
+            setIsModalExportCampaignOpen(false);
+          } catch (error) {
+            console.error('Error exporting campaign:', error);
+            setErrorMsg(error?.responseJSON?.message || 'An error occurred while exporting the campaign. Please try again.');
+          }
         }
       }, {
         text: "Close",
@@ -83,6 +112,9 @@ const ExportCampaignModal = ({ isModalExportCampaignOpen, setIsModalExportCampai
             value={selectedCampaign}
             onChange={value => {
               setSelectedCampaign(value)
+
+              // reset errorMsg
+              setErrorMsg(null);
             }}
           />
         </>
@@ -93,6 +125,8 @@ const ExportCampaignModal = ({ isModalExportCampaignOpen, setIsModalExportCampai
     <div className="__monospace">
       <strong>Export Info:</strong> Exporting a campaign will download a CSV file with all details for the selected campaign, including donations, donor information, dates, and amounts.
     </div>
+
+    {errorMsg && <div className="giftflowwp-export-campaign__error">{errorMsg}</div>}
     </div>
   </Modal>
 }
