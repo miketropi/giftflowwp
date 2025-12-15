@@ -102,7 +102,10 @@ function giftflowwp_campaign_status_bar_block_render($attributes, $content, $blo
         <div class="campaign-progress">
             <div class="progress-stats">
                 <!-- template example: $100 raised from $1000 total -->
-                <?php echo sprintf(__('%s raised from %s total', 'giftflowwp'), $raised_amount_formatted, $goal_amount_formatted); ?>
+                <?php 
+                    /* translators: 1: is the raised amount, 2: is the goal amount */
+                    echo sprintf(__('%1$s raised from %2$s total', 'giftflowwp'), $raised_amount_formatted, $goal_amount_formatted); 
+                ?>
             </div>
             <div class="progress-bar" style="height: 0.5rem; background-color: #f1f5f9; overflow: hidden; width: 100%;">
                 <div class="progress" style="width: <?php echo esc_attr($progress_percentage); ?>%; height: 100%; background: linear-gradient(90deg, #0ea5e9, #38bdf8);"></div>

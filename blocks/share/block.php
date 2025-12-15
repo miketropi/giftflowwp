@@ -87,7 +87,8 @@ function giftflowwp_share_block_render($attributes, $content, $block) {
         $share_title = get_the_date();
         $share_description = get_bloginfo('description');
     } elseif (is_search()) {
-        $share_title = sprintf(__('Search results for: %s', 'giftflowwp'), get_search_query());
+        /* translators: %s is the search query */
+        $share_title = sprintf(esc_html__('Search results for: %s', 'giftflowwp'), get_search_query());
         $share_description = get_bloginfo('description');
     } else {
         $share_title = get_bloginfo('name');
@@ -231,7 +232,10 @@ function giftflowwp_render_social_share_button($platform, $url, $title, $descrip
     ?>
     <a href="<?php echo esc_url($share_url); ?>" 
        class="giftflowwp-share__button giftflowwp-share__button--<?php echo esc_attr($platform); ?>"
-       title="<?php printf(esc_attr__('Share on %s', 'giftflowwp'), esc_attr($platform_name)); ?>"
+       title="<?php 
+       /* translators: %s is the platform name */
+       echo esc_attr( sprintf( esc_html__('Share on %s', 'giftflowwp'), esc_html($platform_name) ) ); 
+       ?>"
        target="_blank"
        rel="noopener noreferrer">
         <!-- <span class="giftflowwp-share__icon">
@@ -244,8 +248,10 @@ function giftflowwp_render_social_share_button($platform, $url, $title, $descrip
 }
 
 function giftflowwp_get_email_share_url($url, $title, $description) {
+    /* translators: %s is the title */
     $subject = sprintf(__('Check out: %s', 'giftflowwp'), $title);
-    $body = sprintf(__("I thought you might be interested in this:\n\n%s\n\n%s\n\n%s", 'giftflowwp'), $title, $description, $url);
+    /* translators: 1: is the title, 2: is the description, 3: is the URL */
+    $body = sprintf(__('I thought you might be interested in this:\n\n%1$s\n\n%2$s\n\n%3$s', 'giftflowwp'), $title, $description, $url);
     
     return 'mailto:?subject=' . urlencode($subject) . '&body=' . urlencode($body);
 }
