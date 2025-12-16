@@ -64,8 +64,8 @@ function giftflowwp_settings_page() {
             
             <h2 class="nav-tab-wrapper">
                 <?php foreach ($tabs as $tab_key => $tab_label) : ?>
-                    <a href="?page=giftflowwp-settings&tab=<?php echo $tab_key; ?>" class="nav-tab <?php echo $active_tab === $tab_key ? 'nav-tab-active' : ''; ?>">
-                        <?php echo $tab_label; ?>
+                    <a href="?page=giftflowwp-settings&tab=<?php echo esc_attr($tab_key); ?>" class="nav-tab <?php echo $active_tab === $tab_key ? 'nav-tab-active' : ''; ?>">
+                        <?php echo esc_html($tab_label); ?>
                     </a>
                 <?php endforeach; ?>
             </h2>
@@ -259,6 +259,7 @@ function giftflowwp_initialize_settings() {
                 $field['id'],
                 $field['label'],
                 function() use ($field_instance) {
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo $field_instance->render();
                 },
                 $section['page'],
@@ -271,24 +272,19 @@ add_action('admin_init', 'giftflowwp_initialize_settings');
 
 // Section Callbacks
 function giftflowwp_general_settings_callback() {
-    echo '<p>' . __('Configure general settings for GiftFlowWP.', 'giftflowwp') . '</p>';
+    echo '<p>' . esc_html__('Configure general settings for GiftFlowWP.', 'giftflowwp') . '</p>';
 }
 
 function giftflowwp_payment_settings_callback() {
-    echo '<p>' . __('Configure payment gateway settings.', 'giftflowwp') . '</p>';
+    echo '<p>' . esc_html__('Configure payment gateway settings.', 'giftflowwp') . '</p>';
 }
 
 function giftflowwp_email_settings_callback() {
-    echo '<p>' . __('Configure email for notifications.', 'giftflowwp') . '</p>';
+    echo '<p>' . esc_html__('Configure email for notifications.', 'giftflowwp') . '</p>';
 }
 
 function giftflowwp_design_settings_callback() {
-    echo '<p>' . __('Customize the appearance of donation forms.', 'giftflowwp') . '</p>';
-}
-
-// paypal content
-function giftflowwp_paypal_content() {
-    echo '<p>' . __('111', 'giftflowwp') . '</p>';
+    echo '<p>' . esc_html__('Customize the appearance of donation forms.', 'giftflowwp') . '</p>';
 }
 
 // payment methods options register
@@ -360,7 +356,7 @@ function giftflowwp_test_mail_html() {
     // Add a message to indicate the recipient of the test email
     echo '<div style="margin-top:10px; color:#666; font-size:13px;">';
     esc_html_e('Test emails will be sent to the admin email address above: ', 'giftflowwp');
-    echo '<u>' . $admin_email . '</u>';
+    echo '<u>' . wp_kses_post($admin_email) . '</u>';
     echo '</div>';
     return ob_get_clean();
 }

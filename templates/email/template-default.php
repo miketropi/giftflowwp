@@ -163,7 +163,7 @@ $accent_color = '#0b57d0';
         .social-links a {
             display: inline-block;
             margin: 0 10px;
-            color: <?php echo $accent_color; ?>;
+            color: <?php echo esc_attr($accent_color); ?>;
             text-decoration: none;
             font-size: .8rem;
         }

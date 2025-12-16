@@ -156,6 +156,8 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
                         'value' => $value,
                         
                     ) ) );
+            
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo $field_instance->render();
         }
     }

@@ -149,7 +149,7 @@ class Campaign extends Base_Post_Type {
                 // $currency_symbol = giftflowwp_get_currency_symbol(giftflowwp_get_current_currency());
                 // echo esc_html( $currency_symbol . number_format( $meta_value, 2 ) );
 
-                echo giftflowwp_render_currency_formatted_amount($meta_value);
+                echo wp_kses_post(giftflowwp_render_currency_formatted_amount($meta_value));
                 break;
                 
             case 'raised_amount':
@@ -157,9 +157,9 @@ class Campaign extends Base_Post_Type {
                 // $currency_symbol = giftflowwp_get_currency_symbol(giftflowwp_get_current_currency());
                 // echo esc_html( $currency_symbol . number_format( $meta_value, 2 ) );
 
-                echo giftflowwp_render_currency_formatted_amount($meta_value);
+                echo wp_kses_post(giftflowwp_render_currency_formatted_amount($meta_value));
                 
-                echo sprintf( ' (%s%s)', giftflowwp_get_campaign_progress_percentage( $post_id ), '%' );
+                echo sprintf( ' (%s%s)', wp_kses_post(giftflowwp_get_campaign_progress_percentage( $post_id )), '%' );
                 break;
                 
             case 'start_date':
@@ -264,12 +264,12 @@ class Campaign extends Base_Post_Type {
             $statuses = array( 'active', 'completed', 'closed', 'pending' );
             
             echo '<select name="campaign_status">';
-            echo '<option value="">' . __( 'All Statuses', 'giftflowwp' ) . '</option>';
+            echo '<option value="">' . esc_html__( 'All Statuses', 'giftflowwp' ) . '</option>';
             
             foreach ( $statuses as $status ) {
                 $status_label = ucfirst( $status );
                 $selected_attr = selected( $selected, $status, false );
-                echo '<option value="' . esc_attr( $status ) . '" ' . $selected_attr . '>' . esc_html( $status_label ) . '</option>';
+                echo '<option value="' . esc_attr( $status ) . '" ' . esc_attr($selected_attr) . '>' . esc_html( $status_label ) . '</option>';
             }
             
             echo '</select>';
@@ -295,11 +295,11 @@ class Campaign extends Base_Post_Type {
             
             if ( !empty( $categories ) && !is_wp_error( $categories ) ) {
                 echo '<select name="campaign_category">';
-                echo '<option value="">' . __( 'All Categories', 'giftflowwp' ) . '</option>';
+                echo '<option value="">' . esc_html__( 'All Categories', 'giftflowwp' ) . '</option>';
                 
                 foreach ( $categories as $category ) {
                     $selected_attr = selected( $selected, $category->term_id, false );
-                    echo '<option value="' . esc_attr( $category->term_id ) . '" ' . $selected_attr . '>' . esc_html( $category->name ) . '</option>';
+                    echo '<option value="' . esc_attr( $category->term_id ) . '" ' . esc_attr($selected_attr) . '>' . esc_html( $category->name ) . '</option>';
                 }
                 
                 echo '</select>';

@@ -65,7 +65,7 @@ $accent_color = '#0b57d0';
                     </td>
                     <td style="width: 70%; padding: 0; vertical-align: top;">
                         <span style="color: <?php echo esc_attr($accent_color); ?>; font-weight: 600;">
-                            <?php echo $amount; ?>
+                            <?php echo wp_kses_post($amount); ?>
                         </span>
                     </td>
                 </tr>

@@ -97,11 +97,11 @@ class Loader extends Base {
      * Load plugin textdomain
      */ 
     public function load_textdomain() { 
-        load_plugin_textdomain(
-            'giftflowwp',
-            false,
-            dirname( plugin_basename( GIFTFLOWWP_PLUGIN_DIR ) ) . '/languages/'
-        );
+        // load_plugin_textdomain(
+        //     'giftflowwp',
+        //     false,
+        //     dirname( plugin_basename( GIFTFLOWWP_PLUGIN_DIR ) ) . '/languages/'
+        // );
     }
 
     /**

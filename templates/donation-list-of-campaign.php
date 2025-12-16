@@ -42,12 +42,12 @@ $pagination = $donations['pagination'] ?? 1;
                             <?php endif; ?>
                             
                             <div class="gfw-donation-time">
-                                <?php echo esc_html(date('F j, Y – H:i:s', strtotime($donation['date_gmt']))); ?>
+                                <?php echo esc_html(gmdate('F j, Y – H:i:s', strtotime($donation['date_gmt']))); ?>
                             </div>
                         </div>
                         
                         <div class="gfw-donation-right">
-                            <div class="gfw-donation-amount"><?php echo $donation['amount_formatted']; ?></div>
+                            <div class="gfw-donation-amount"><?php echo wp_kses_post($donation['amount_formatted']); ?></div>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@ $pagination = $donations['pagination'] ?? 1;
                 <span>
                     <?php 
                     /* translators: 1: is paged, 2: total paged number */
-                    printf( esc_html__( 'Page %1$d of %2$d', 'giftflowwp' ), $paged, $pagination ); 
+                    printf( esc_html__( 'Page %1$d of %2$d', 'giftflowwp' ), esc_html($paged), esc_html($pagination) ); 
                     ?>
                 </span>
                 <div class="gfw-pagination-buttons">

@@ -9,16 +9,16 @@ $attributes = $attributes ?? [];
 $active_tab = $active_tab ?? $tabs[0]['slug'];
 ?>
 
-<div class="giftflowwp-donor-account" role="tablist" aria-label="<?php _e('Donor Account Navigation', 'giftflowwp'); ?>">
+<div class="giftflowwp-donor-account" role="tablist" aria-label="<?php esc_attr_e('Donor Account Navigation', 'giftflowwp'); ?>">
   <div class="giftflowwp-donor-account__tabs" role="tablist">
     <?php foreach ($tabs as $index => $tab) : ?>
       <a 
-        href="<?php echo giftflowwp_donor_account_page_url($tab['slug']); ?>" 
+        href="<?php echo esc_url(giftflowwp_donor_account_page_url($tab['slug'])); ?>" 
         class="giftflowwp-donor-account__tab<?php echo $tab['slug'] === $active_tab ? ' active' : ''; ?>"
         role="tab"
         id="tab-<?php echo esc_attr($tab['slug']); ?>"
       >
-        <span class="giftflowwp-donor-account__tab-icon" aria-hidden="true"><?php echo $tab['icon']; ?></span>
+        <span class="giftflowwp-donor-account__tab-icon" aria-hidden="true"><?php echo wp_kses(giftflowwp_svg_icon($tab['icon']), giftflowwp_allowed_svg_tags()); ?></span>
         <span class="giftflowwp-donor-account__tab-label"><?php echo esc_html($tab['label']); ?></span>
       </a>
     <?php endforeach; ?>
@@ -49,7 +49,7 @@ $active_tab = $active_tab ?? $tabs[0]['slug'];
         } else { 
           ?>
           <div class="donor-account-empty">
-            <div class="empty-icon"><?php echo giftflowwp_svg_icon('folder-code'); ?></div>
+            <div class="empty-icon"><?php echo wp_kses(giftflowwp_svg_icon('folder-code'), giftflowwp_allowed_svg_tags()); ?></div>
             <div class="empty-message">
               <h4><?php echo esc_html($tab['label']); ?></h4>
               <p>

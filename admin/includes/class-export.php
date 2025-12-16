@@ -75,7 +75,8 @@ class GiftFlowWP_Export {
         $donations = get_posts($args);
         
         if (empty($donations)) {
-            wp_die('No donations found for the selected campaign: ' . get_the_title($this->campaign_id));
+            /* translators: %s: Campaign name */
+            wp_die(sprintf(esc_html__('No donations found for the selected campaign: %s', 'giftflowwp'), esc_html(get_the_title($this->campaign_id))));
         }
         
         // Generate export based on format
@@ -138,7 +139,7 @@ class GiftFlowWP_Export {
      */
     private function export_csv($donations, $include_donor, $include_campaign) {
         $campaign_name = get_the_title($this->campaign_id);
-        $filename = sanitize_file_name($campaign_name . '_' . date('Y-m-d_H-i-s') . '.csv');
+        $filename = sanitize_file_name($campaign_name . '_' . gmdate('Y-m-d_H-i-s') . '.csv');
         
         header('Content-Type: text/csv');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
@@ -199,6 +200,7 @@ class GiftFlowWP_Export {
             fputcsv($output, $row);
         }
         
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
         fclose($output);
         exit;
     }

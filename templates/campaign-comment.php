@@ -30,14 +30,14 @@ $comments = get_comments($args);
     
     if ($total_pages > 1) {
       echo '<nav class="gfw-campaign-comments-pagination">';
-      echo paginate_links([
+      echo wp_kses_post(paginate_links([
           'base'      => add_query_arg('cpage', '%#%') . '#comment',
           'format'    => '',
           'current'   => $paged,
           'total'     => $total_pages,
           'prev_text' => __('Previous', 'giftflowwp'),
           'next_text' => __('Next', 'giftflowwp'),
-      ]);
+      ]));
       echo '</nav> <!-- .gfw-campaign-comments-pagination -->';
     }
 
@@ -49,14 +49,14 @@ $comments = get_comments($args);
 
     if ($total_pages > 1) {
       echo '<nav class="gfw-campaign-comments-pagination">';
-      echo paginate_links([
+      echo wp_kses_post(paginate_links([
           'base'      => add_query_arg('cpage', '%#%') . '#comment',
           'format'    => '',
           'current'   => $paged,
           'total'     => $total_pages,
           'prev_text' => __('Previous', 'giftflowwp'),
           'next_text' => __('Next', 'giftflowwp'),
-      ]);
+      ]));
       echo '</nav> <!-- .gfw-campaign-comments-pagination -->';
     }
   } else {

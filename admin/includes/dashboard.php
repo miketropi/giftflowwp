@@ -63,11 +63,11 @@ function giftflowwp_dashboard_page() {
         <nav class="nav-tab-wrapper">
             <a href="<?php echo esc_url(admin_url('admin.php?page=giftflowwp-dashboard&tab=overview')); ?>" 
                class="nav-tab <?php echo $current_tab === 'overview' ? 'nav-tab-active' : ''; ?>">
-                <?php _e('Overview', 'giftflowwp'); ?>
+                <?php esc_html_e('Overview', 'giftflowwp'); ?>
             </a>
             <!-- <a href="<?php echo esc_url(admin_url('admin.php?page=giftflowwp-dashboard&tab=help')); ?>" 
                class="nav-tab <?php echo $current_tab === 'help' ? 'nav-tab-active' : ''; ?>">
-                <?php _e('Help', 'giftflowwp'); ?>
+                <?php esc_html_e('Help', 'giftflowwp'); ?>
             </a> -->
         </nav>
         

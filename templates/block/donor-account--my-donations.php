@@ -61,9 +61,9 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) : ?>
                   giftflowwp_process_bar_of_campaign_donations($campaign_id);
                   $process_bar_html = ob_get_clean();
                   $cache_process_bar[$campaign_id] = $process_bar_html;
-                  echo $process_bar_html;
+                  echo wp_kses_post($process_bar_html);
                 } else {
-                  echo $cache_process_bar[$campaign_id];
+                  echo wp_kses_post($cache_process_bar[$campaign_id]);
                 }
               ?>
               <a class="gfw-campaign-title-link" href="<?php echo esc_url( get_permalink( $campaign_id ) ); ?>" target="_blank">
@@ -73,7 +73,7 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) : ?>
               <?php echo esc_html( $campaign_title ); ?>
             <?php endif; ?>
           </td>
-          <td><?php echo $amount_formatted; ?></td>
+          <td><?php echo wp_kses_post($amount_formatted); ?></td>
           <td>
             <span class="gfw-donation-date">
               <?php echo esc_html( $date ); ?>
@@ -85,8 +85,8 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) : ?>
             </span>
           </td>
           <td>
-            <a class="gfw-view-detail-link" href="<?php echo giftflowwp_donor_account_page_url('donations?_id=' . $donation_id); ?>" style="white-space: nowrap;">
-              <?php echo giftflowwp_svg_icon('eye'); ?>
+            <a class="gfw-view-detail-link" href="<?php echo esc_url(giftflowwp_donor_account_page_url('donations?_id=' . $donation_id)); ?>" style="white-space: nowrap;">
+              <?php echo wp_kses(giftflowwp_svg_icon('eye'), giftflowwp_allowed_svg_tags()); ?>
               <?php esc_html_e('View Detail', 'giftflowwp'); ?>
             </a>
           </td>
@@ -104,14 +104,14 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) : ?>
     ?>
     <div class="gfw-pagination">
       <?php
-      echo paginate_links( array(
+      echo wp_kses_post(paginate_links( array(
         'base'      => str_replace( $big, '%#%', esc_url( giftflowwp_donor_account_page_url('donations?_page=' . $big ) ) ),
         'format'    => '?_page=%#%',
         'current'   => $current_page,
         'total'     => $donations->max_num_pages,
         'prev_text' => esc_html__('Previous', 'giftflowwp'),
         'next_text' => esc_html__('Next', 'giftflowwp'),
-      ) );
+      ) ));
       ?>
     </div>
   <?php endif; ?>

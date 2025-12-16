@@ -46,11 +46,11 @@ Donation form template 2 steps:
                 <?php echo get_the_post_thumbnail($campaign_id, 'thumbnail'); ?>
             </div>
             <div class="donation-form__campaign-info">
-                <h4 class="donation-form__campaign-title"><?php _e('Donate to', 'giftflowwp'); ?>: <?php echo esc_html($campaign_title); ?></h4>
+                <h4 class="donation-form__campaign-title"><?php esc_html_e('Donate to', 'giftflowwp'); ?>: <?php echo esc_html($campaign_title); ?></h4>
                 <div class="donation-form__campaign-progress">
                     <?php 
                     // Translators: %1$s is the amount raised, %2$s is the goal amount.
-                    echo sprintf(__('%1$s raised from %2$s goal', 'giftflowwp'), giftflowwp_render_currency_formatted_amount($raised_amount), giftflowwp_render_currency_formatted_amount($goal_amount)); 
+                    echo wp_kses_post(sprintf(__('%1$s raised from %2$s goal', 'giftflowwp'), giftflowwp_render_currency_formatted_amount($raised_amount), giftflowwp_render_currency_formatted_amount($goal_amount))); 
                     ?>
                 </div>
             </div>
@@ -65,14 +65,14 @@ Donation form template 2 steps:
                 <li class="donation-form__step-item nav-step-1">
                     <a href="#donation-information" class="donation-form__step-link is-active" data-step="donation-information">
                         <span class="donation-form__step-number">1</span>
-                        <span class="donation-form__step-text"><?php _e('Donation Information', 'giftflowwp'); ?></span>
+                        <span class="donation-form__step-text"><?php esc_html_e('Donation Information', 'giftflowwp'); ?></span>
                     </a>
                 </li>
                 <li class="donation-form__step-separator"></li>
                 <li class="donation-form__step-item nav-step-2">
                     <a href="#payment-method" class="donation-form__step-link" data-step="payment-method">
                         <span class="donation-form__step-number">2</span>
-                        <span class="donation-form__step-text"><?php _e('Payment Method', 'giftflowwp'); ?></span>
+                        <span class="donation-form__step-text"><?php esc_html_e('Payment Method', 'giftflowwp'); ?></span>
                     </a>
                 </li>
             </ol>
@@ -85,7 +85,7 @@ Donation form template 2 steps:
                 <div class="donation-form__step-panel-content">
                     <!-- Donation Type -->
                     <fieldset class="donation-form__fieldset">
-                        <legend class="donation-form__legend"><?php _e('Select donation type, one-time or monthly', 'giftflowwp'); ?></legend>
+                        <legend class="donation-form__legend"><?php esc_html_e('Select donation type, one-time or monthly', 'giftflowwp'); ?></legend>
                         <div class="donation-form__radio-group donation-form__radio-group--donation-type">
                             <?php // foreach donation types ?>
                             <?php foreach ($donation_types as $index => $donation_type) : 
@@ -97,11 +97,11 @@ Donation form template 2 steps:
                                         name="donation_type" 
                                         value="<?php echo esc_attr($donation_type['name']); ?>"   
                                         id="donation_type_<?php echo esc_attr($donation_type['name']); ?>" 
-                                        <?php echo $is_checked; ?>>
+                                        <?php echo esc_attr($is_checked); ?>>
                                     <div class="donation-form__radio-label" for="donation_type_<?php echo esc_attr($donation_type['name']); ?>">
                                         <span class="donation-form__radio-content">
                                             <span class="donation-form__radio-title">
-                                                <?php echo $donation_type['icon']; ?>	
+                                                <?php echo wp_kses(giftflowwp_svg_icon($donation_type['icon']), giftflowwp_allowed_svg_tags()); ?>	
                                                 <?php echo esc_html($donation_type['label']); ?>
                                             </span>
                                             <span class="donation-form__radio-description"><?php echo esc_html($donation_type['description']); ?></span>
@@ -115,10 +115,10 @@ Donation form template 2 steps:
 
                     <!-- Donation Amount -->
                     <fieldset class="donation-form__fieldset">
-                        <legend class="donation-form__legend"><?php _e('Donation Amount', 'giftflowwp'); ?></legend>
+                        <legend class="donation-form__legend"><?php esc_html_e('Donation Amount', 'giftflowwp'); ?></legend>
                         <div class="donation-form__amount">
                             <div class="donation-form__amount-input">
-                                <span class="donation-form__currency"><?php echo $currency_symbol; ?></span>
+                                <span class="donation-form__currency"><?php echo esc_html($currency_symbol); ?></span>
                                 <input type="number" name="donation_amount" value="<?php echo esc_attr($default_amount); ?>" min="1" step="1" required data-validate="required">
                             </div>
                             <div class="donation-form__preset-amounts">
@@ -127,7 +127,7 @@ Donation form template 2 steps:
 																			type="button" 
 																			class="donation-form__preset-amount" 
 																			data-amount="<?php echo esc_attr($amount['amount']); ?>">
-                                        <?php echo giftflowwp_render_currency_formatted_amount($amount['amount']); ?>
+                                        <?php echo wp_kses_post(giftflowwp_render_currency_formatted_amount($amount['amount'])); ?>
                                     </button>
                                 <?php endforeach; ?>
                             </div>
@@ -136,36 +136,36 @@ Donation form template 2 steps:
 
                     <!-- Donor Information -->
                     <fieldset class="donation-form__fieldset">
-                        <legend class="donation-form__legend"><?php _e('Your Information', 'giftflowwp'); ?></legend>
+                        <legend class="donation-form__legend"><?php esc_html_e('Your Information', 'giftflowwp'); ?></legend>
                         <div class="donation-form__fields">
                             <div class="donation-form__field">
-                                <label for="donor_name"><?php _e('Full Name', 'giftflowwp'); ?></label>
-                                <input type="text" id="donor_name" name="donor_name" value="<?php echo $user_fullname; ?>" required data-validate="required" <?php echo $user_info_readonly ? 'readonly' : ''; ?>>
+                                <label for="donor_name"><?php esc_html_e('Full Name', 'giftflowwp'); ?></label>
+                                <input type="text" id="donor_name" name="donor_name" value="<?php echo esc_attr($user_fullname); ?>" required data-validate="required" <?php echo $user_info_readonly ? 'readonly' : ''; ?>>
 
                                 <?php // error message ?>
                                 <div class="donation-form__field-error">
-                                    <?php echo giftflowwp_svg_icon('error'); ?>
-                                    <?php _e('This field is required, please enter your name', 'giftflowwp'); ?>
+                                    <?php echo wp_kses(giftflowwp_svg_icon('error'), giftflowwp_allowed_svg_tags()); ?>
+                                    <?php esc_html_e('This field is required, please enter your name', 'giftflowwp'); ?>
                                 </div> 
                             </div>
                             <div class="donation-form__field">
-                                <label for="donor_email"><?php _e('Email Address', 'giftflowwp'); ?></label>
-                                <input type="email" id="donor_email" name="donor_email" value="<?php echo $user_email; ?>" required data-validate="email" <?php echo $user_info_readonly ? 'readonly' : ''; ?>>
+                                <label for="donor_email"><?php esc_html_e('Email Address', 'giftflowwp'); ?></label>
+                                <input type="email" id="donor_email" name="donor_email" value="<?php echo esc_attr($user_email); ?>" required data-validate="email" <?php echo $user_info_readonly ? 'readonly' : ''; ?>>
 
                                 <?php // error message ?>
                                 <div class="donation-form__field-error">
-                                    <?php echo giftflowwp_svg_icon('error'); ?>
-                                    <?php _e('This field is required, please enter your email', 'giftflowwp'); ?>
+                                    <?php echo wp_kses(giftflowwp_svg_icon('error'), giftflowwp_allowed_svg_tags()); ?>
+                                    <?php esc_html_e('This field is required, please enter your email', 'giftflowwp'); ?>
                                 </div> 
                             </div>
                             <div class="donation-form__field">
-                                <label for="donor_message"><?php _e('Message (Optional)', 'giftflowwp'); ?></label>
+                                <label for="donor_message"><?php esc_html_e('Message (Optional)', 'giftflowwp'); ?></label>
                                 <textarea id="donor_message" name="donor_message"></textarea>
                             </div>
                             <div class="donation-form__field">
                                 <label class="donation-form__checkbox-label">
                                     <input type="checkbox" name="anonymous_donation">
-                                    <span><?php _e('Make this donation anonymous', 'giftflowwp'); ?></span>
+                                    <span><?php esc_html_e('Make this donation anonymous', 'giftflowwp'); ?></span>
                                 </label>
                             </div>
                         </div>
@@ -173,8 +173,8 @@ Donation form template 2 steps:
                 </div>
                 <div class="donation-form__step-actions">
                     <button type="button" class="donation-form__button donation-form__button--next" data-next-step="payment-method">
-                        <?php _e('Continue to Payment', 'giftflowwp'); ?>
-						<?php echo giftflowwp_svg_icon('next'); ?>
+                        <?php esc_html_e('Continue to Payment', 'giftflowwp'); ?>
+						<?php echo wp_kses(giftflowwp_svg_icon('next'), giftflowwp_allowed_svg_tags()); ?>
                     </button>
                 </div>
             </section>
@@ -184,13 +184,14 @@ Donation form template 2 steps:
                 <div class="donation-form__step-panel-content">
                     <!-- Payment Methods -->
                     <fieldset class="donation-form__fieldset">
-                        <legend class="donation-form__legend"><?php _e('Select Payment Method', 'giftflowwp'); ?></legend>
+                        <legend class="donation-form__legend"><?php esc_html_e('Select Payment Method', 'giftflowwp'); ?></legend>
                         <div class="donation-form__payment-methods">
                             <?php // echo '<pre>'; print_r($gateways); echo '</pre>'; ?>
 							<?php 
                             if (!empty($gateways)) {
                                 foreach ($gateways as $method) {
                                     if($method->is_enabled()) {
+                                        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                                         echo $method->template_html();
                                     }
                                 }
@@ -201,20 +202,20 @@ Donation form template 2 steps:
 
                     <!-- Donation Summary -->
                     <div class="donation-form__summary">
-                        <h3 class="donation-form__summary-title"><?php _e('Donation Summary', 'giftflowwp'); ?></h3>
+                        <h3 class="donation-form__summary-title"><?php esc_html_e('Donation Summary', 'giftflowwp'); ?></h3>
                         <dl class="donation-form__summary-list">
                             <div class="donation-form__summary-item">
-                                <dt><?php _e('Amount', 'giftflowwp'); ?></dt>
-                                <dd class="donation-form__summary-amount" data-output="donation_amount" data-format-template="<?php echo $currency_format_template; ?>"></dd>
+                                <dt><?php esc_html_e('Amount', 'giftflowwp'); ?></dt>
+                                <dd class="donation-form__summary-amount" data-output="donation_amount" data-format-template="<?php echo esc_attr($currency_format_template); ?>"></dd>
                             </div>
                             <div class="donation-form__summary-item">
-                                <dt><?php _e('Email', 'giftflowwp'); ?></dt>
+                                <dt><?php esc_html_e('Email', 'giftflowwp'); ?></dt>
                                 <dd class="donation-form__summary-email" data-output="donor_email">
-                                    <?php echo $user_email; ?>
+                                    <?php echo esc_html($user_email); ?>
                                 </dd>
                             </div>
                             <div class="donation-form__summary-item">
-                                <dt><?php _e('Campaign', 'giftflowwp'); ?></dt>
+                                <dt><?php esc_html_e('Campaign', 'giftflowwp'); ?></dt>
                                 <dd><?php echo esc_html($campaign_title); ?></dd>
                             </div>
                         </dl>
@@ -223,25 +224,25 @@ Donation form template 2 steps:
 
                 <?php // notice scurity payment check ?>
                 <div class="donation-form__security-notice">
-                    <span class="donation-form__security-notice-icon"><?php echo giftflowwp_svg_icon('shield-check'); ?></span>
-                    <p><?php _e('We use methods of payment that are secure and trusted. Your payment information is encrypted and never stored on our servers.', 'giftflowwp'); ?></p>
+                    <span class="donation-form__security-notice-icon"><?php echo wp_kses(giftflowwp_svg_icon('shield-check'), giftflowwp_allowed_svg_tags()) ; ?></span>
+                    <p><?php esc_html_e('We use methods of payment that are secure and trusted. Your payment information is encrypted and never stored on our servers.', 'giftflowwp'); ?></p>
                 </div>
 
                 <div class="donation-form__step-actions">
                     <?php // hidden fields campaign id, wp nonce, form nonce, recurring interval ?>
                     <input type="hidden" name="campaign_id" value="<?php echo esc_attr($campaign_id); ?>">
-                    <input type="hidden" name="wp_nonce" value="<?php echo wp_create_nonce('giftflowwp_donation_form'); ?>">
+                    <input type="hidden" name="wp_nonce" value="<?php echo esc_attr(wp_create_nonce('giftflowwp_donation_form')); ?>">
                     <input type="hidden" name="recurring_interval" value="<?php echo esc_attr($recurring_interval); ?>">
 
                     <button type="button" class="donation-form__button donation-form__button--back" data-prev-step="donation-information">
-                        <?php echo giftflowwp_svg_icon('prev'); ?>
-                        <?php _e('Back', 'giftflowwp'); ?>
+                        <?php echo wp_kses(giftflowwp_svg_icon('prev'), giftflowwp_allowed_svg_tags()); ?>
+                        <?php esc_html_e('Back', 'giftflowwp'); ?>
                     </button>
 										
                     <?php // support class loading show icon loading when submit ?>
                     <button type="submit" class="donation-form__button donation-form__button--submit">
-                        <?php _e('Complete Donation', 'giftflowwp'); ?>
-                        <?php echo giftflowwp_svg_icon('next'); ?>
+                        <?php esc_html_e('Complete Donation', 'giftflowwp'); ?>
+                        <?php echo wp_kses(giftflowwp_svg_icon('next'), giftflowwp_allowed_svg_tags()); ?>
                     </button>
                 </div>
             </section>

@@ -686,7 +686,7 @@ class GiftFlowWP_Field {
 	 */
 	private function render_datetime() {
 		$attributes = $this->get_field_attributes();
-		$value = ! empty( $this->value ) ? date( $this->date_format, strtotime( $this->value ) ) : '';
+		$value = ! empty( $this->value ) ? gmdate( $this->date_format, strtotime( $this->value ) ) : '';
 
 		return '<input type="datetime-local" ' . $attributes . ' value="' . esc_attr( $value ) . '" onfocus="this.showPicker()" />';
 	}

@@ -35,19 +35,19 @@ if ( empty( trim( $name ) ) ) { $name = 'donor'; }
     <ul>
       <li>
         <a href="<?php echo esc_url( giftflowwp_donor_account_page_url('donations') ); ?>" class="giftflowwp-dashboard-action">
-          <?php echo giftflowwp_svg_icon('clipboard-clock'); ?>
+          <?php echo wp_kses(giftflowwp_svg_icon('clipboard-clock'), giftflowwp_allowed_svg_tags()); ?>
           <span><?php esc_html_e('View My Donations', 'giftflowwp'); ?></span>
         </a>
       </li>
       <li>
         <a href="<?php echo esc_url( giftflowwp_donor_account_page_url('my-account') ); ?>" class="giftflowwp-dashboard-action">
-          <?php echo giftflowwp_svg_icon('user'); ?>
+          <?php echo wp_kses(giftflowwp_svg_icon('user'), giftflowwp_allowed_svg_tags()); ?>
           <span><?php esc_html_e('Edit Profile', 'giftflowwp'); ?></span>
         </a>
       </li>
       <li>
         <a href="<?php echo esc_url( giftflowwp_donor_account_page_url('bookmarks') ); ?>" class="giftflowwp-dashboard-action">
-          <?php echo giftflowwp_svg_icon('bookmark'); ?>
+          <?php echo wp_kses(giftflowwp_svg_icon('bookmark'), giftflowwp_allowed_svg_tags()); ?>
           <span><?php esc_html_e('Bookmarks', 'giftflowwp'); ?></span>
         </a>
       </li>

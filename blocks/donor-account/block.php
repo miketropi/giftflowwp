@@ -130,6 +130,7 @@ function giftflowwp_donor_account_my_donations_callback() {
   // get current user
   $current_user = wp_get_current_user();
 
+  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
   $id = isset($_GET['_id']) ? intval($_GET['_id']) : null;
 
   if ($id) {
@@ -177,6 +178,7 @@ function giftflowwp_donor_account_my_donations_callback() {
     return;
   }
 
+  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
   $page = isset($_GET['_page']) ? intval($_GET['_page']) : 1;
   if ($page < 1) {
     $page = 1;
@@ -209,12 +211,18 @@ function giftflowwp_donor_account_my_account_callback() {
   $password_result = null;
   
   // Process account form
-  if ( isset( $_POST['giftflowwp_update_account'] ) && wp_verify_nonce( $_POST['giftflowwp_account_nonce'], 'giftflowwp_update_account' ) ) {
+  if ( 
+      isset( $_POST['giftflowwp_update_account'] ) && 
+      isset( $_POST['giftflowwp_account_nonce'] ) &&
+      wp_verify_nonce( $_POST['giftflowwp_account_nonce'], 'giftflowwp_update_account' ) ) {
     $account_result = giftflowwp_process_account_form( $current_user->ID );
   }
   
   // Process password form
-  if ( isset( $_POST['giftflowwp_update_password'] ) && wp_verify_nonce( $_POST['giftflowwp_password_nonce'], 'giftflowwp_update_password' ) ) {
+  if ( 
+    isset( $_POST['giftflowwp_update_password'] ) && 
+    isset( $_POST['giftflowwp_password_nonce'] ) &&
+    wp_verify_nonce( $_POST['giftflowwp_password_nonce'], 'giftflowwp_update_password' ) ) {
     $password_result = giftflowwp_process_password_form( $current_user );
   }
   

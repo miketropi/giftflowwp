@@ -125,6 +125,7 @@ class Donor_Contact_Meta extends Base_Meta_Box {
             );
             
             // Render the field
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo $field_instance->render();
         }
     }

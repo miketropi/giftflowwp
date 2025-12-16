@@ -589,14 +589,14 @@ class Stripe_Gateway extends Gateway_Base {
 
                 if ($response->isSuccessful()) {
                     $this->handle_successful_payment($response, $donation_id);
-                    wp_redirect(add_query_arg('payment_status', 'success', home_url()));
+                    wp_safe_redirect(esc_url(add_query_arg('payment_status', 'success', home_url())));
                 } else {
                     $this->handle_failed_payment($response, $donation_id);
-                    wp_redirect(add_query_arg('payment_status', 'failed', home_url()));
+                    wp_safe_redirect(esc_url(add_query_arg('payment_status', 'failed', home_url())));
                 }
             } catch (\Exception $e) {
                 $this->log_error('return_url_error', $e->getMessage(), $donation_id);
-                wp_redirect(add_query_arg('payment_status', 'error', home_url()));
+                wp_safe_redirect(esc_url(add_query_arg('payment_status', 'error', home_url())));
             }
             
             exit;

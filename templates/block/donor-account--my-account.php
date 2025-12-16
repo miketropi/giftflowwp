@@ -99,7 +99,7 @@ function giftflowwp_render_form_field( $field_config ) {
   ?>
   <div class="gfw-form-field<?php echo $field_full_width ? ' gfw-form-field--full' : ''; ?>">
     <label for="<?php echo esc_attr( $field_id ); ?>">
-      <?php echo esc_html( $field_label ); ?><?php echo $required_span; ?>
+      <?php echo esc_html( $field_label ); ?><?php echo wp_kses_post($required_span); ?>
     </label>
     
     <?php if ( $field_type === 'textarea' ): ?>
@@ -107,7 +107,7 @@ function giftflowwp_render_form_field( $field_config ) {
         id="<?php echo esc_attr( $field_id ); ?>" 
         name="<?php echo esc_attr( $field_name ); ?>" 
         rows="<?php echo esc_attr( $field_config['rows'] ?? 3 ); ?>"
-        <?php echo $readonly_attr . $required_attr . $attributes_string; ?>
+        <?php echo esc_attr($readonly_attr . $required_attr . $attributes_string); ?>
       ><?php echo esc_textarea( $field_value ); ?></textarea>
     <?php else: ?>
       <input 
@@ -115,7 +115,7 @@ function giftflowwp_render_form_field( $field_config ) {
         id="<?php echo esc_attr( $field_id ); ?>" 
         name="<?php echo esc_attr( $field_name ); ?>" 
         value="<?php echo esc_attr( $field_value ); ?>"
-        <?php echo $readonly_attr . $required_attr . $attributes_string; ?>
+        <?php echo esc_attr($readonly_attr . $required_attr . $attributes_string); ?>
       >
     <?php endif; ?>
   </div>
@@ -129,7 +129,7 @@ function giftflowwp_render_form_section( $title, $icon, $fields, $form_class = '
   ?>
   <div class="gfw-form-section">
     <h3 class="gfw-form-section-title">
-      <?php echo giftflowwp_svg_icon( $icon ); ?>
+      <?php echo wp_kses(giftflowwp_svg_icon( $icon ), giftflowwp_allowed_svg_tags()); ?>
       <?php echo esc_html( $title ); ?>
     </h3>
     
@@ -303,7 +303,7 @@ function giftflowwp_render_password_form() {
 
   <div class="gfw-form-section">
     <h3 class="gfw-form-section-title gfw-donor-account__title">
-      <?php echo giftflowwp_svg_icon( 'lock-closed' ); ?>
+      <?php echo wp_kses(giftflowwp_svg_icon( 'lock-closed' ), giftflowwp_allowed_svg_tags()); ?>
       <?php esc_html_e( 'Change Password', 'giftflowwp' ); ?>
     </h3>
 

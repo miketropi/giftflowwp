@@ -65,7 +65,7 @@ $payment_method_label = ucfirst(str_replace('_', ' ', $payment_method));
     <!-- Amount & Status -->
     <div class="gfw-donation-detail-amount-section">
       <div class="gfw-amount-display">
-        <span class="gfw-amount"><?php echo $amount; ?></span>
+        <span class="gfw-amount"><?php echo wp_kses_post($amount); ?></span>
         <span class="donation-status status-<?php echo esc_attr($status); ?>"><?php echo esc_html($status_label); ?></span>
       </div>
     </div>

@@ -11,71 +11,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-/**
- * Widget 1: Display overview statistics
- */
-function giftflowwp_display_overview_stats() {
-    $total_campaigns = giftflowwp_get_total_campaigns();
-    $total_donations = giftflowwp_get_total_donations_amount();
-    $total_donors = giftflowwp_get_total_donors();
-    $new_donors = giftflowwp_get_new_donors_count();
-    $top_donors = giftflowwp_get_top_donors();
-    
-    giftflowwp_load_template('admin/dashboard-overview-stats.php', array(
-        'total_campaigns' => $total_campaigns,
-        'total_donations' => $total_donations,
-        'total_donors' => $total_donors,
-        'new_donors' => $new_donors,
-        'top_donors' => $top_donors,
-    ));
-}
-
-/**
- * Widget 2: Display highlight campaigns
- */
-function giftflowwp_display_highlight_campaigns() {
-    $campaigns = giftflowwp_get_highlight_campaigns();
-    
-    giftflowwp_load_template('admin/dashboard-highlight-campaigns.php', array(
-        'campaigns' => $campaigns,
-    ));
-}
-
-/**
- * Widget 3: Display recent donations
- */
-function giftflowwp_display_recent_donations() {
-    $donations = giftflowwp_get_recent_donations();
-    
-    giftflowwp_load_template('admin/dashboard-recent-donations.php', array(
-        'donations' => $donations,
-    ));
-}
-
-/**
- * Widget 4: Display statistics charts
- */
-function giftflowwp_display_statistics_charts() {
-    $active_campaigns = giftflowwp_count_campaigns_by_status('active');
-    $closed_campaigns = giftflowwp_count_campaigns_by_status('closed');
-    $pending_campaigns = giftflowwp_count_campaigns_by_status('pending');
-    $completed_campaigns = giftflowwp_count_campaigns_by_status('completed');
-
-    giftflowwp_load_template('admin/dashboard-statistics-charts.php', array(
-        'active_campaigns' => $active_campaigns,
-        'closed_campaigns' => $closed_campaigns,
-        'pending_campaigns' => $pending_campaigns,
-        'completed_campaigns' => $completed_campaigns
-    ));
-}
-
-/**
- * Widget 6: Display quick actions
- */
-function giftflowwp_display_quick_actions() {
-    giftflowwp_load_template('admin/dashboard-quick-actions.php');
-}
-
 // Helper functions for data retrieval
 
 /**
@@ -117,16 +52,21 @@ function giftflowwp_count_campaigns_by_status($status = 'active') {
 function giftflowwp_get_total_donations_amount() {
     global $wpdb;
 
-    $sql = $wpdb->prepare("
-        SELECT SUM(CAST(pm.meta_value AS DECIMAL(10,2))) 
-        FROM {$wpdb->postmeta} pm
-        INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
-        WHERE pm.meta_key = %s
-        AND p.post_type = %s
-        AND p.post_status = %s
-    ", '_amount', 'donation', 'publish');
-
-    $total = $wpdb->get_var($sql);
+    $total = $wpdb->get_var(
+        $wpdb->prepare(
+            "
+            SELECT SUM(CAST(pm.meta_value AS DECIMAL(10,2)))
+            FROM {$wpdb->postmeta} pm
+            INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
+            WHERE pm.meta_key = %s
+            AND p.post_type = %s
+            AND p.post_status = %s
+            ",
+            '_amount',
+            'donation',
+            'publish'
+        )
+    );
 
     return $total ? $total : 0;
 }
@@ -356,21 +296,21 @@ function giftflowwp_get_donations_overview_stats_by_period( $period = '30d' ) {
         case '30d':
             $range_days = 30;
             for ( $i = $range_days - 1; $i >= 0; $i-- ) {
-                $dates[] = date( 'Y-m-d', strtotime( "-$i days", strtotime( $today ) ) );
+                $dates[] = gmdate( 'Y-m-d', strtotime( "-$i days", strtotime( $today ) ) );
             }
             break;
 
         case '6m':
             $range_months = 6;
             for ( $i = $range_months - 1; $i >= 0; $i-- ) {
-                $dates[] = date( 'Y-m', strtotime( "-$i months", strtotime( $today ) ) );
+                $dates[] = gmdate( 'Y-m', strtotime( "-$i months", strtotime( $today ) ) );
             }
             break;
 
         case '1y':
             $range_months = 12;
             for ( $i = $range_months - 1; $i >= 0; $i-- ) {
-                $dates[] = date( 'Y-m', strtotime( "-$i months", strtotime( $today ) ) );
+                $dates[] = gmdate( 'Y-m', strtotime( "-$i months", strtotime( $today ) ) );
             }
             break;
 
@@ -378,7 +318,7 @@ function giftflowwp_get_donations_overview_stats_by_period( $period = '30d' ) {
         default:
             $range_days = 7;
             for ( $i = $range_days - 1; $i >= 0; $i-- ) {
-                $dates[] = date( 'Y-m-d', strtotime( "-$i days", strtotime( $today ) ) );
+                $dates[] = gmdate( 'Y-m-d', strtotime( "-$i days", strtotime( $today ) ) );
             }
             break;
     }
@@ -399,7 +339,7 @@ function giftflowwp_get_donations_overview_stats_by_period( $period = '30d' ) {
     if ( strlen( $first_date ) === 7 ) {
         // Monthly grouping - use proper last day of month
         $start_date = $first_date . '-01 00:00:00';
-        $end_date = date( 'Y-m-t 23:59:59', strtotime( $last_date . '-01' ) );
+        $end_date = gmdate( 'Y-m-t 23:59:59', strtotime( $last_date . '-01' ) );
     } else {
         // Daily grouping
         $start_date = $first_date . ' 00:00:00';
@@ -430,8 +370,8 @@ function giftflowwp_get_donations_overview_stats_by_period( $period = '30d' ) {
     // Group donations and sum donation amounts
     foreach ( $donations as $donation ) {
         $group_key = ( in_array( $period, array( '6m', '1y' ), true ) )
-            ? date( 'Y-m', strtotime( $donation->post_date ) )
-            : date( 'Y-m-d', strtotime( $donation->post_date ) );
+            ? gmdate( 'Y-m', strtotime( $donation->post_date ) )
+            : gmdate( 'Y-m-d', strtotime( $donation->post_date ) );
 
         if ( ! isset( $results[ $group_key ] ) ) {
             continue;
@@ -447,7 +387,7 @@ function giftflowwp_get_donations_overview_stats_by_period( $period = '30d' ) {
         if ( strlen( $date ) === 7 ) {
             // Monthly grouping - use proper last day of month
             $start = $date . '-01 00:00:00';
-            $end   = date( 'Y-m-t 23:59:59', strtotime( $date . '-01' ) );
+            $end   = gmdate( 'Y-m-t 23:59:59', strtotime( $date . '-01' ) );
         } else {
             // Daily grouping
             $start = $date . ' 00:00:00';

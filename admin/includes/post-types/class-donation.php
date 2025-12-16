@@ -106,7 +106,7 @@ class Donation extends Base_Post_Type {
                 // $amount = get_post_meta( $post_id, '_amount', true );
                 // echo esc_html( $currency_symbol . number_format( floatval( $amount ), 2 ) );
                 $amount = get_post_meta( $post_id, '_amount', true );
-                echo giftflowwp_render_currency_formatted_amount($amount);
+                echo wp_kses_post(giftflowwp_render_currency_formatted_amount($amount));
                 break;
 
             case 'payment_method':
@@ -170,12 +170,12 @@ class Donation extends Base_Post_Type {
             $statuses = array( 'pending', 'completed', 'failed', 'refunded' );
             
             echo '<select name="donation_status">';
-            echo '<option value="">' . __( 'All Statuses', 'giftflowwp' ) . '</option>';
+            echo '<option value="">' . esc_html__( 'All Statuses', 'giftflowwp' ) . '</option>';
             
             foreach ( $statuses as $status ) {
                 $status_label = ucfirst( $status );
                 $selected_attr = selected( $selected, $status, false );
-                echo '<option value="' . esc_attr( $status ) . '" ' . $selected_attr . '>' . esc_html( $status_label ) . '</option>';
+                echo '<option value="' . esc_attr( $status ) . '" ' . esc_attr($selected_attr) . '>' . esc_html( $status_label ) . '</option>';
             }
             
             echo '</select>';
@@ -206,15 +206,15 @@ class Donation extends Base_Post_Type {
             " );
             
             echo '<select name="donation_donor">';
-            echo '<option value="">' . __( 'All Donors', 'giftflowwp' ) . '</option>';
+            echo '<option value="">' . esc_html__( 'All Donors', 'giftflowwp' ) . '</option>';
             
             foreach ( $donors as $donor ) {
                 $donor_name = trim( $donor->donor_name );
                 if ( empty( $donor_name ) ) {
-                    $donor_name = __( 'Donor ID: ', 'giftflowwp' ) . $donor->donor_id;
+                    $donor_name = esc_html__( 'Donor ID: ', 'giftflowwp' ) . $donor->donor_id;
                 }
                 $selected_attr = selected( $selected, $donor->donor_id, false );
-                echo '<option value="' . esc_attr( $donor->donor_id ) . '" ' . $selected_attr . '>' . esc_html( $donor_name ) . '</option>';
+                echo '<option value="' . esc_attr( $donor->donor_id ) . '" ' . esc_attr($selected_attr) . '>' . esc_html( $donor_name ) . '</option>';
             }
             
             echo '</select>';
@@ -244,12 +244,12 @@ class Donation extends Base_Post_Type {
             " );
             
             echo '<select name="donation_campaign">';
-            echo '<option value="">' . __( 'All Campaigns', 'giftflowwp' ) . '</option>';
+            echo '<option value="">' . esc_html__( 'All Campaigns', 'giftflowwp' ) . '</option>';
             
             foreach ( $campaigns as $campaign ) {
-                $campaign_title = !empty( $campaign->campaign_title ) ? $campaign->campaign_title : __( 'Campaign ID: ', 'giftflowwp' ) . $campaign->campaign_id;
+                $campaign_title = !empty( $campaign->campaign_title ) ? $campaign->campaign_title : esc_html__( 'Campaign ID: ', 'giftflowwp' ) . $campaign->campaign_id;
                 $selected_attr = selected( $selected, $campaign->campaign_id, false );
-                echo '<option value="' . esc_attr( $campaign->campaign_id ) . '" ' . $selected_attr . '>' . esc_html( $campaign_title ) . '</option>';
+                echo '<option value="' . esc_attr( $campaign->campaign_id ) . '" ' . esc_attr($selected_attr) . '>' . esc_html( $campaign_title ) . '</option>';
             }
             
             echo '</select>';

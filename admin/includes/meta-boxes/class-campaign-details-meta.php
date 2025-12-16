@@ -19,7 +19,7 @@ class Campaign_Details_Meta extends Base_Meta_Box {
      */
     public function __construct() {
         $this->id = 'campaign_details';
-        $this->title = __( 'Campaign Details', 'giftflowwp' );
+        $this->title = esc_html__( 'Campaign Details', 'giftflowwp' );
         $this->post_type = 'campaign';
         parent::__construct();
     }
@@ -41,72 +41,72 @@ class Campaign_Details_Meta extends Base_Meta_Box {
         return array(
             'regular' => array(
                 'goal_amount' => array(
-                    'label' => __( 'Goal Amount', 'giftflowwp' ),
+                    'label' => esc_html__( 'Goal Amount', 'giftflowwp' ),
                     'type'  => 'currency',
                     'step'  => '1',
                     'min'   => '0',
                     // 'currency_symbol' => '$',
                     // description
-                    'description' => __( 'Enter the goal amount for the campaign', 'giftflowwp' ),
+                    'description' => esc_html__( 'Enter the goal amount for the campaign', 'giftflowwp' ),
                 ),
                 'start_date' => array(
-                    'label' => __( 'Start Date', 'giftflowwp' ),
+                    'label' => esc_html__( 'Start Date', 'giftflowwp' ),
                     'type'  => 'datetime',
                     // 'date_format' => 'Y-m-d',
-                    'description' => __( 'Select the start date for the campaign 📅.', 'giftflowwp' ),
+                    'description' => esc_html__( 'Select the start date for the campaign 📅.', 'giftflowwp' ),
                 ),
                 'end_date' => array(
-                    'label' => __( 'End Date', 'giftflowwp' ),
+                    'label' => esc_html__( 'End Date', 'giftflowwp' ),
                     'type'  => 'datetime',
                     // 'date_format' => 'Y-m-d',
-                    'description' => __( 'Select the end date for the campaign 📅, If empty, the campaign will be active indefinitely ♾️', 'giftflowwp' ),
+                    'description' => esc_html__( 'Select the end date for the campaign 📅, If empty, the campaign will be active indefinitely ♾️', 'giftflowwp' ),
                 ),
                 'status' => array(
-                    'label'   => __( 'Status', 'giftflowwp' ),
+                    'label'   => esc_html__( 'Status', 'giftflowwp' ),
                     'type'    => 'select',
                     'options' => array(
-                        'active'   => __( 'Active', 'giftflowwp' ),
-                        'completed' => __( 'Completed', 'giftflowwp' ),
+                        'active'   => esc_html__( 'Active', 'giftflowwp' ),
+                        'completed' => esc_html__( 'Completed', 'giftflowwp' ),
                         // closed
-                        'closed' => __( 'Closed', 'giftflowwp' ),
+                        'closed' => esc_html__( 'Closed', 'giftflowwp' ),
                         // pending
-                        'pending' => __( 'Pending', 'giftflowwp' ), 
+                        'pending' => esc_html__( 'Pending', 'giftflowwp' ), 
                     ),
                     'description' => '
-                        <p>' . __( 'Select the status for the campaign donations:', 'giftflowwp' ) . '</p>
+                        <p>' . esc_html__( 'Select the status for the campaign donations:', 'giftflowwp' ) . '</p>
                         <ul>
-                            <li><strong>' . __( 'Active', 'giftflowwp' ) . '</strong> 🟢: ' . __( 'Campaign is open for donations', 'giftflowwp' ) . ' 💰</li>
-                            <li><strong>' . __( 'Completed', 'giftflowwp' ) . '</strong> 🏆: ' . __( 'Campaign is closed and all donations are collected  ✅, but donations are still allowed.', 'giftflowwp' ) . '</li>
-                            <li><strong>' . __( 'Closed', 'giftflowwp' ) . '</strong> 🔒: ' . __( 'Campaign is closed and no more donations are allowed', 'giftflowwp' ) . ' ⛔</li>
-                            <li><strong>' . __( 'Pending', 'giftflowwp' ) . '</strong> ⏳: ' . __( 'Campaign donations are pending and auto-activated when start date is reached', 'giftflowwp' ) . ' 📅</li>
+                            <li><strong>' . esc_html__( 'Active', 'giftflowwp' ) . '</strong> 🟢: ' . esc_html__( 'Campaign is open for donations', 'giftflowwp' ) . ' 💰</li>
+                            <li><strong>' . esc_html__( 'Completed', 'giftflowwp' ) . '</strong> 🏆: ' . esc_html__( 'Campaign is closed and all donations are collected  ✅, but donations are still allowed.', 'giftflowwp' ) . '</li>
+                            <li><strong>' . esc_html__( 'Closed', 'giftflowwp' ) . '</strong> 🔒: ' . esc_html__( 'Campaign is closed and no more donations are allowed', 'giftflowwp' ) . ' ⛔</li>
+                            <li><strong>' . esc_html__( 'Pending', 'giftflowwp' ) . '</strong> ⏳: ' . esc_html__( 'Campaign donations are pending and auto-activated when start date is reached', 'giftflowwp' ) . ' 📅</li>
                         </ul>',
                 ),
                 // on / off one-time donation
                 'one_time' => array(
-                    'label' => __( 'One-Time', 'giftflowwp' ),
+                    'label' => esc_html__( 'One-Time', 'giftflowwp' ),
                     'type'  => 'switch',
-                    'description' => __( 'Allow one-time donations', 'giftflowwp' ),
+                    'description' => esc_html__( 'Allow one-time donations', 'giftflowwp' ),
                     'default' => 1,
                 ),
                 // on / off recurring
                 'recurring' => array(
-                    'label' => __( 'Recurring', 'giftflowwp' ),
+                    'label' => esc_html__( 'Recurring', 'giftflowwp' ),
                     'type'  => 'switch',
-                    'description' => __( 'Allow recurring donations', 'giftflowwp' ),
+                    'description' => esc_html__( 'Allow recurring donations', 'giftflowwp' ),
                     'default' => 0,
                 ),
                 // select recurring interval
                 'recurring_interval' => array(
-                    'label' => __( 'Recurring Interval', 'giftflowwp' ),
+                    'label' => esc_html__( 'Recurring Interval', 'giftflowwp' ),
                     'type'  => 'select',
                     'options' => array(
-                        'daily' => __( 'Daily', 'giftflowwp' ),
-                        'weekly' => __( 'Weekly', 'giftflowwp' ),
-                        'monthly' => __( 'Monthly', 'giftflowwp' ),
-                        'quarterly' => __( 'Quarterly', 'giftflowwp' ),
-                        'yearly' => __( 'Yearly', 'giftflowwp' ),
+                        'daily' => esc_html__( 'Daily', 'giftflowwp' ),
+                        'weekly' => esc_html__( 'Weekly', 'giftflowwp' ),
+                        'monthly' => esc_html__( 'Monthly', 'giftflowwp' ),
+                        'quarterly' => esc_html__( 'Quarterly', 'giftflowwp' ),
+                        'yearly' => esc_html__( 'Yearly', 'giftflowwp' ),
                     ),
-                    'description' => __( 'Select the recurring interval for recurring donations', 'giftflowwp' ),
+                    'description' => esc_html__( 'Select the recurring interval for recurring donations', 'giftflowwp' ),
                     'default' => 'monthly',
                 )
 
@@ -114,19 +114,19 @@ class Campaign_Details_Meta extends Base_Meta_Box {
             'advanced' => array(
                 // repeater preset donation amounts ($10, $25, $50, $100, $250)
                 'preset_donation_amounts' => array(
-                    'label' => __( 'Preset Donation Amounts', 'giftflowwp' ),
+                    'label' => esc_html__( 'Preset Donation Amounts', 'giftflowwp' ),
                     'type'  => 'repeater',
                     'default' => $preset_donation_amounts,
-                    'description' => __( 'Enter the preset donation amounts for the campaign', 'giftflowwp' ),
+                    'description' => esc_html__( 'Enter the preset donation amounts for the campaign', 'giftflowwp' ),
                     'repeater_settings' => array(
                         'fields' => array(
                             'amount' => array(
-                                'label' => __( 'Amount', 'giftflowwp' ),
+                                'label' => esc_html__( 'Amount', 'giftflowwp' ),
                                 'type'  => 'currency',
                                 'step'  => '1',
                                 'min'   => '0',
                                 // 'value' => 10,
-                                'description' => __( 'Enter the amount for the donation', 'giftflowwp' ),
+                                'description' => esc_html__( 'Enter the amount for the donation', 'giftflowwp' ),
                                 // 'currency_symbol' => '$',
                             ),
                         ),
@@ -135,26 +135,26 @@ class Campaign_Details_Meta extends Base_Meta_Box {
 
                 // On / Off switch allow custom donation amounts
                 'allow_custom_donation_amounts' => array(
-                    'label' => __( 'Allow Custom Donation Amounts', 'giftflowwp' ),
+                    'label' => esc_html__( 'Allow Custom Donation Amounts', 'giftflowwp' ),
                     'type'  => 'switch',
                     'default' => 1,
-                    'description' => __( 'Allow users to enter their own donation amounts', 'giftflowwp' ),
+                    'description' => esc_html__( 'Allow users to enter their own donation amounts', 'giftflowwp' ),
                 ),
 
                 'location' => array(
-                    'label' => __( 'Location', 'giftflowwp' ),
+                    'label' => esc_html__( 'Location', 'giftflowwp' ),
                     'type'  => 'textfield',
                     'default' => 'United States',
-                    'description' => __( 'Enter the location for the campaign', 'giftflowwp' ),
+                    'description' => esc_html__( 'Enter the location for the campaign', 'giftflowwp' ),
                 ),
                 'gallery' => array(
-                    'label' => __( 'Gallery', 'giftflowwp' ),
+                    'label' => esc_html__( 'Gallery', 'giftflowwp' ),
                     'type'  => 'gallery',
-                    'description' => __( 'Upload images for the campaign', 'giftflowwp' ),
+                    'description' => esc_html__( 'Upload images for the campaign', 'giftflowwp' ),
                     'gallery_settings' => array(
                         'image_size' => 'thumbnail',
-                        'button_text' => __( 'Select Images', 'giftflowwp' ),
-                        'remove_text' => __( 'Remove All', 'giftflowwp' ),
+                        'button_text' => esc_html__( 'Select Images', 'giftflowwp' ),
+                        'remove_text' => esc_html__( 'Remove All', 'giftflowwp' ),
                     )
                 )
             )
@@ -201,6 +201,7 @@ class Campaign_Details_Meta extends Base_Meta_Box {
                         )
                     );
                     
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo $field->render();
                 }
                 ?>
@@ -232,6 +233,7 @@ class Campaign_Details_Meta extends Base_Meta_Box {
                         )
                     );
                     
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo $field->render();
                 }
                 ?>
@@ -286,6 +288,7 @@ class Campaign_Details_Meta extends Base_Meta_Box {
             });
         </script>
         <?php
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo ob_get_clean();
     }
 

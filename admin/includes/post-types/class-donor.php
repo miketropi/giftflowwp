@@ -171,12 +171,12 @@ class Donor extends Base_Post_Type {
             
             if ( !empty( $users ) ) {
                 echo '<select name="donor_user">';
-                echo '<option value="">' . __( 'All Users', 'giftflowwp' ) . '</option>';
+                echo '<option value="">' . esc_html__( 'All Users', 'giftflowwp' ) . '</option>';
                 
                 foreach ( $users as $user ) {
                     $user_label = $user->display_name . ' (' . $user->user_email . ')';
                     $selected_attr = selected( $selected, $user->ID, false );
-                    echo '<option value="' . esc_attr( $user->ID ) . '" ' . $selected_attr . '>' . esc_html( $user_label ) . '</option>';
+                    echo '<option value="' . esc_attr( $user->ID ) . '" ' . esc_attr($selected_attr) . '>' . esc_html( $user_label ) . '</option>';
                 }
                 
                 echo '</select>';
