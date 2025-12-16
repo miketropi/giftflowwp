@@ -2334,7 +2334,7 @@ var Welcome = function Welcome() {
           className: "giftflowwp-welcome__title-section",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h2", {
             className: "giftflowwp-welcome__title",
-            children: "GiftFlowWP Dashboard"
+            children: "GiftFlow Dashboard"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
             className: "giftflowwp-welcome__subtitle",
             children: "Your hub for managing fundraising campaigns and settings."

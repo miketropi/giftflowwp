@@ -63,8 +63,8 @@ function giftflowwp_donation_button_block_render($attributes, $content, $block) 
                 <?php echo esc_html($attributes['buttonText'] ?? 'Donate Now'); ?>
             </button>
             <p class="donation-button-error">
-                <?php echo giftflowwp_svg_icon('circle-alert'); ?>
-                <?php _e('No campaign found. Please select a campaign or ensure this is a campaign post.', 'giftflowwp'); ?>
+                <?php echo wp_kses($giftflowwp_svg_icon("circle-alert"), giftflowwp_allowed_svg_tags()); ?>
+                <?php esc_html_e('No campaign found. Please select a campaign or ensure this is a campaign post.', 'giftflowwp'); ?>
             </p>
         </div>
         <?php

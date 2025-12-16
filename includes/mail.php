@@ -154,6 +154,7 @@ function giftflowwp_send_mail_notification_donation_to_admin($donation_id, $paym
 
   return giftflowwp_send_mail_template(array(
     'to' => $admin_email,
+    /* translators: %s: Campaign name for the new donation notification email subject */
     'subject' => sprintf( esc_html__('New Donation — %s', 'giftflowwp'), $donation_data->campaign_name ),
     'header' => esc_html__('New donation received', 'giftflowwp'),
     'content' => $content
@@ -197,6 +198,7 @@ function giftflowwp_send_mail_thank_you_to_donor_payment_successful($donation_id
 
   return giftflowwp_send_mail_template(array(
     'to' => $donation_data->donor_email,
+    /* translators: %s: Campaign name for donor thank you email subject */
     'subject' => sprintf( esc_html__('Thank You for Your Donation — %s', 'giftflowwp'), $donation_data->campaign_name ),
     'header' => esc_html__('Thank You for Your Donation', 'giftflowwp'),
     'content' => $content

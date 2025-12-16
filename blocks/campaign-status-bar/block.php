@@ -39,7 +39,7 @@ function giftflowwp_campaign_status_bar_block_render($attributes, $content, $blo
       <div class="giftflowwp-campaign-status-bar">
         <div class="campaign-progress">
             <div class="progress-stats">
-                <?php echo __('Campaign not found or no data available', 'giftflowwp'); ?>
+                <?php echo esc_html__('Campaign not found or no data available', 'giftflowwp'); ?>
             </div>
             <div class="progress-bar" style="height: 0.5rem; background-color: #f1f5f9; overflow: hidden; width: 100%;">
                 <div class="progress" style="width: 0%; height: 100%; background: linear-gradient(90deg, #0ea5e9, #38bdf8);"></div>
@@ -50,7 +50,7 @@ function giftflowwp_campaign_status_bar_block_render($attributes, $content, $blo
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     </span>
                     <span class="__text">
-                        <?php _e('No donations yet', 'giftflowwp'); ?>
+                        <?php esc_html_e('No donations yet', 'giftflowwp'); ?>
                     </span>
                 </div>
                 <div class="progress-meta-item">
@@ -58,7 +58,7 @@ function giftflowwp_campaign_status_bar_block_render($attributes, $content, $blo
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock2-icon lucide-clock-2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 10"/></svg>
                     </span>
                     <span class="__text">
-                      <?php _e('Not available', 'giftflowwp'); ?>
+                      <?php esc_html_e('Not available', 'giftflowwp'); ?>
                     </span>
                 </div>
             </div>
@@ -104,7 +104,7 @@ function giftflowwp_campaign_status_bar_block_render($attributes, $content, $blo
                 <!-- template example: $100 raised from $1000 total -->
                 <?php 
                     /* translators: 1: is the raised amount, 2: is the goal amount */
-                    echo sprintf(__('%1$s raised from %2$s total', 'giftflowwp'), $raised_amount_formatted, $goal_amount_formatted); 
+                    echo wp_kses_post(sprintf(__('%1$s raised from %2$s total', 'giftflowwp'), $raised_amount_formatted, $goal_amount_formatted)); 
                 ?>
             </div>
             <div class="progress-bar" style="height: 0.5rem; background-color: #f1f5f9; overflow: hidden; width: 100%;">
@@ -118,9 +118,9 @@ function giftflowwp_campaign_status_bar_block_render($attributes, $content, $blo
                     <span class="__text">
                         <!-- if donation count is 0, show "No donations yet" else show donation count -->
                         <?php if ($donation_count === 0) : ?>
-                            <?php _e('No donations yet', 'giftflowwp'); ?>
+                            <?php esc_html_e('No donations yet', 'giftflowwp'); ?>
                         <?php else : ?>
-                            <?php echo $donation_count; ?> <?php echo _n('donation', 'donations', $donation_count, 'giftflowwp'); ?>
+                            <?php echo wp_kses_post($donation_count); ?> <?php echo wp_kses_post(_n('donation', 'donations', $donation_count, 'giftflowwp')); ?>
                         <?php endif; ?>
                     </span>
                 </div>
@@ -132,17 +132,17 @@ function giftflowwp_campaign_status_bar_block_render($attributes, $content, $blo
                     <span class="__text">
                       <!-- if days left is false, show "Not started", is true, show "Ended" else show days left -->
                       <?php if ($days_left === false) : ?>
-                        <?php _e('Not started', 'giftflowwp'); ?>
+                        <?php esc_html_e('Not started', 'giftflowwp'); ?>
                       <?php elseif ($days_left === true) : ?>
-                        <?php _e('Ended', 'giftflowwp'); ?>
+                        <?php esc_html_e('Ended', 'giftflowwp'); ?>
                       <?php elseif ($days_left === '') : ?>
                         
                         <?php 
                             // return message not limited time for campaign
-                            _e('Not limited time', 'giftflowwp'); 
+                            esc_html_e('Not limited time', 'giftflowwp'); 
                         ?>
                       <?php else : ?>
-                        <?php echo $days_left; ?> <?php echo _n('day left', 'days left', $days_left, 'giftflowwp'); ?>
+                        <?php echo wp_kses_post($days_left); ?> <?php echo wp_kses_post(_n('day left', 'days left', $days_left, 'giftflowwp')); ?>
                       <?php endif; ?>
                     </span>
                 </div>

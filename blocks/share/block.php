@@ -108,7 +108,7 @@ function giftflowwp_share_block_render($attributes, $content, $block) {
         <div class="giftflowwp-share__buttons">
             <?php if ($show_socials && !empty($social_platforms)): ?>
                 <?php foreach ($social_platforms as $platform): ?>
-                    <?php echo giftflowwp_render_social_share_button($platform, $share_url, $share_title, $share_description); ?>
+                    <?php echo wp_kses_post(giftflowwp_render_social_share_button($platform, $share_url, $share_title, $share_description)); ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
@@ -142,7 +142,7 @@ function giftflowwp_share_block_render($attributes, $content, $block) {
         <?php if ($show_copy_url): ?>
             <div class="giftflowwp-share__copy-feedback" style="display: none;">
                 <span class="giftflowwp-share__copy-message">
-                    <?php echo giftflowwp_svg_icon('checkmark-circle'); ?>
+                    <?php echo wp_kses(giftflowwp_svg_icon('checkmark-circle'), giftflowwp_allowed_svg_tags()); ?>
                     <?php esc_html_e('URL copied to clipboard!', 'giftflowwp'); ?>
                 </span>
             </div>
@@ -238,9 +238,6 @@ function giftflowwp_render_social_share_button($platform, $url, $title, $descrip
        ?>"
        target="_blank"
        rel="noopener noreferrer">
-        <!-- <span class="giftflowwp-share__icon">
-            <?php // echo giftflowwp_svg_icon($icon_name); ?>
-        </span> -->
         <span class="giftflowwp-share__text"><?php echo esc_html($platform_name); ?></span>
     </a>
     <?php

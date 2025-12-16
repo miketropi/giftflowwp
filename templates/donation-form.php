@@ -48,7 +48,10 @@ Donation form template 2 steps:
             <div class="donation-form__campaign-info">
                 <h4 class="donation-form__campaign-title"><?php _e('Donate to', 'giftflowwp'); ?>: <?php echo esc_html($campaign_title); ?></h4>
                 <div class="donation-form__campaign-progress">
-                    <?php echo sprintf(__('%s raised from %s goal', 'giftflowwp'), giftflowwp_render_currency_formatted_amount($raised_amount), giftflowwp_render_currency_formatted_amount($goal_amount)); ?>
+                    <?php 
+                    // Translators: %1$s is the amount raised, %2$s is the goal amount.
+                    echo sprintf(__('%1$s raised from %2$s goal', 'giftflowwp'), giftflowwp_render_currency_formatted_amount($raised_amount), giftflowwp_render_currency_formatted_amount($goal_amount)); 
+                    ?>
                 </div>
             </div>
         </div>

@@ -52,6 +52,108 @@ function giftflowwp_get_role_manager() {
   return \GiftFlowWp\Core\Role::get_instance();
 }
 
+function giftflowwp_allowed_svg_tags() {
+  return apply_filters('giftflowwp:allowed_svg_tags', [
+    // SVG allowed attributes for various types, attributes, DOM, elements
+    'svg' => [
+      'class' => true,
+      'viewbox' => true,
+      'aria-hidden' => true,
+      'role' => true,
+      'xmlns' => true,
+      'width' => true,
+      'height' => true,
+      'fill' => true,
+      'focusable' => true,
+      'style' => true,
+      'id' => true,
+      'stroke' => true,
+      'stroke-width' => true,
+      'stroke-linejoin' => true,
+      'stroke-linecap' => true,
+    ],
+    'path' => [
+      'd' => true,
+      'fill' => true,
+      'stroke' => true,
+      'stroke-width' => true,
+      'stroke-linecap' => true,
+      'stroke-linejoin' => true,
+      'class' => true,
+      'style' => true,
+      'id' => true,
+    ],
+    'g' => [
+      'class' => true,
+      'fill' => true,
+      'stroke' => true,
+      'stroke-width' => true,
+      'id' => true,
+      'style' => true,
+    ],
+    'circle' => [
+      'cx' => true,
+      'cy' => true,
+      'r' => true,
+      'fill' => true,
+      'stroke' => true,
+      'stroke-width' => true,
+      'class' => true,
+      'id' => true,
+      'style' => true,
+    ],
+    'rect' => [
+      'x' => true,
+      'y' => true,
+      'width' => true,
+      'height' => true,
+      'rx' => true,
+      'ry' => true,
+      'fill' => true,
+      'stroke' => true,
+      'stroke-width' => true,
+      'class' => true,
+      'id' => true,
+      'style' => true,
+    ],
+    'title' => [
+      // text content supported
+    ],
+    'polygon' => [
+      'points' => true,
+      'fill' => true,
+      'stroke' => true,
+      'stroke-width' => true,
+      'class' => true,
+      'id' => true,
+      'style' => true,
+    ],
+    'line' => [
+      'x1' => true,
+      'y1' => true,
+      'x2' => true,
+      'y2' => true,
+      'stroke' => true,
+      'stroke-width' => true,
+      'class' => true,
+      'id' => true,
+      'style' => true,
+    ],
+    'ellipse' => [
+      'cx' => true,
+      'cy' => true,
+      'rx' => true,
+      'ry' => true,
+      'fill' => true,
+      'stroke' => true,
+      'stroke-width' => true,
+      'class' => true,
+      'id' => true,
+      'style' => true,
+    ],
+  ]);
+}
+
 function giftflowwp_svg_icon($name) {
   $icons = require(__DIR__ . '/icons.php');
   return isset($icons[$name]) ? $icons[$name] : '';
@@ -607,6 +709,7 @@ function giftflowwp_auto_create_user_on_donation( $donation_id, $payment_result 
   // send mail to new user
   giftflowwp_send_mail_template(array(
     'to' => $donor_data->email,
+    /* translators: %s: Site name for new donor welcome email subject */
     'subject' => sprintf( esc_html__('Welcome to %s', 'giftflowwp'), get_bloginfo('name') ),
     'header' => esc_html__('🍀 Your donor account has been created.', 'giftflowwp'),
     'content' => $content,

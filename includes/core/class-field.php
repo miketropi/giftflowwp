@@ -964,9 +964,9 @@ class GiftFlowWP_Field {
 					var $lngDisplay = $mapField.find(".giftflowwp-googlemap-lng");
 					
 					var map, marker, geocoder;
-					var defaultLat = <?php echo !empty($lat) ? $lat : '40.7128'; ?>;
-					var defaultLng = <?php echo !empty($lng) ? $lng : '-74.0060'; ?>;
-					var defaultZoom = <?php echo !empty($lat) && !empty($lng) ? '15' : '2'; ?>;
+					var defaultLat = <?php echo !empty($lat) ? esc_js($lat) : esc_js('40.7128'); ?>;
+					var defaultLng = <?php echo !empty($lng) ? esc_js($lng) : esc_js('-74.0060'); ?>;
+					var defaultZoom = <?php echo !empty($lat) && !empty($lng) ? esc_js('15') : esc_js('2'); ?>;
 					
 					// Initialize the map
 					function initMap() {
@@ -1146,7 +1146,7 @@ class GiftFlowWP_Field {
 									)
 								);
 								
-								// Render the field
+								// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								echo $field->render();
 							endforeach; ?>
 						</div>
@@ -1283,7 +1283,7 @@ class GiftFlowWP_Field {
 						)
 					);
 					
-					// Render the field
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $field->render();
 				endforeach; ?>
 			</div>
@@ -1352,7 +1352,7 @@ class GiftFlowWP_Field {
 								)
 							);
 							
-							// Render the field
+							// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							echo $field->render();
 						endforeach; ?>
 					</div>

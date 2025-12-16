@@ -32,7 +32,7 @@ if ( file_exists( GIFTFLOWWP_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
     add_action( 'admin_notices', function() {
         ?>
         <div class="notice notice-error">
-            <p><?php _e( 'GiftFlowWp requires Composer dependencies to be installed. Please run "composer install" in the plugin directory.', 'giftflowwp' ); ?></p>
+            <p><?php esc_html_e( 'GiftFlowWp requires Composer dependencies to be installed. Please run "composer install" in the plugin directory.', 'giftflowwp' ); ?></p>
         </div>
         <?php
     } );
@@ -128,7 +128,7 @@ function giftflowwp_activate() {
     if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
         deactivate_plugins( plugin_basename( __FILE__ ) );
         wp_die(
-            __( 'GiftFlowWp requires PHP 7.4 or higher.', 'giftflowwp' ),
+            esc_html__( 'GiftFlowWp requires PHP 7.4 or higher.', 'giftflowwp' ),
             'Plugin Activation Error',
             [ 'back_link' => true ]
         );
@@ -138,7 +138,7 @@ function giftflowwp_activate() {
     if ( ! file_exists( GIFTFLOWWP_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
         deactivate_plugins( plugin_basename( __FILE__ ) );
         wp_die(
-            __( 'GiftFlowWp requires Composer dependencies to be installed. Please run "composer install" in the plugin directory.', 'giftflowwp' ),
+            esc_html__( 'GiftFlowWp requires Composer dependencies to be installed. Please run "composer install" in the plugin directory.', 'giftflowwp' ),
             'Plugin Activation Error',
             [ 'back_link' => true ]
         );

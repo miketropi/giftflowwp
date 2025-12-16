@@ -235,10 +235,8 @@ class Stripe_Gateway extends Gateway_Base {
                         'type' => 'switch',
                         'label' => __('Enable Webhook', 'giftflowwp'),
                         'value' => isset($payment_options['stripe']['stripe_webhook_enabled']) ? $payment_options['stripe']['stripe_webhook_enabled'] : false,
-                        'description' => sprintf(
-                            __('Enable webhooks for payment status updates. Webhook URL: %s', 'giftflowwp'),
-                            '<code>' . admin_url('admin-ajax.php?action=giftflowwp_stripe_webhook') . '</code><br>' .
-                            __('Recommended Stripe events to send: <strong>payment_intent.succeeded</strong>, <strong>payment_intent.payment_failed</strong>, <strong>charge.refunded</strong>.', 'giftflowwp')
+                        /* translators: This is the label for enabling the Stripe webhook option in the payment gateway settings */
+                        'description' => sprintf(__('Enable webhooks for payment status updates. Webhook URL: %s', 'giftflowwp'), '<code>' . admin_url('admin-ajax.php?action=giftflowwp_stripe_webhook') . '</code><br>' . __('Recommended Stripe events to send: <strong>payment_intent.succeeded</strong>, <strong>payment_intent.payment_failed</strong>, <strong>charge.refunded</strong>.', 'giftflowwp')
                         ),
                     ],
                 ]
@@ -259,7 +257,7 @@ class Stripe_Gateway extends Gateway_Base {
         <label class="donation-form__payment-method">
             <input type="radio" checked name="payment_method" value="<?php echo esc_attr($this->id); ?>" required>
             <span class="donation-form__payment-method-content">
-                <?php echo $this->icon; ?>
+                <?php echo wp_kses($this->icon, giftflowwp_allowed_svg_tags()); ?>
                 <span class="donation-form__payment-method-title"><?php echo esc_html($this->title); ?></span>
             </span>
         </label>
@@ -267,19 +265,19 @@ class Stripe_Gateway extends Gateway_Base {
             class="donation-form__payment-method-description donation-form__payment-method-description--stripe donation-form__fields" 
             >
             <div class="donation-form__payment-notification">
-                <?php echo $icons['checked']; ?>
-                <p><?php _e('We use Stripe to process payments. Your payment information is encrypted and never stored on our servers.', 'giftflowwp'); ?></p>
+                <?php echo wp_kses($icons['checked'], giftflowwp_allowed_svg_tags()); ?>
+                <p><?php esc_html_e('We use Stripe to process payments. Your payment information is encrypted and never stored on our servers.', 'giftflowwp'); ?></p>
             </div>
 
             <?php // name on card field ?>
             <div class="donation-form__field">
-                <label for="card_name" class="donation-form__field-label"><?php _e('Name on card', 'giftflowwp'); ?></label>
+                <label for="card_name" class="donation-form__field-label"><?php esc_html_e('Name on card', 'giftflowwp'); ?></label>
                 <input type="text" id="card_name" name="card_name" class="donation-form__field-input" required data-validate="required">
 
                 <div class="donation-form__field-error custom-error-message">
-                <?php echo $icons['error']; ?>
+                <?php echo wp_kses($icons['error'], giftflowwp_allowed_svg_tags()); ?>
                 <span class="custom-error-message-text">
-                    <?php _e('Name on card is required', 'giftflowwp'); ?>
+                    <?php esc_html_e('Name on card is required', 'giftflowwp'); ?>
                 </span>
                 </div>
             </div>
@@ -289,13 +287,13 @@ class Stripe_Gateway extends Gateway_Base {
                 class="donation-form__field" 
                 data-custom-validate="true" 
                 data-custom-validate-status="false" >
-                <label for="card_number" class="donation-form__field-label"><?php _e('Card number', 'giftflowwp'); ?></label>
+                <label for="card_number" class="donation-form__field-label"><?php esc_html_e('Card number', 'giftflowwp'); ?></label>
                 <div id="STRIPE-CARD-ELEMENT"></div> <?php // Render card via stripe.js ?>
 
                 <div class="donation-form__field-error custom-error-message">
-                <?php echo $icons['error']; ?>
+                <?php echo wp_kses($icons['error'], giftflowwp_allowed_svg_tags()); ?>
                 <span class="custom-error-message-text">
-                    <?php _e('Card information is incomplete', 'giftflowwp'); ?>
+                    <?php esc_html_e('Card information is incomplete', 'giftflowwp'); ?>
                 </span>
                 </div>
             </div>
@@ -370,11 +368,8 @@ class Stripe_Gateway extends Gateway_Base {
             'amount' => floatval($data['donation_amount']),
             'currency' => $this->get_currency(),
             'paymentMethod' => $data['stripe_payment_method_id'],
-            'description' => sprintf(
-                __('Donation from %s for campaign %s', 'giftflowwp'),
-                sanitize_text_field($data['donor_name']),
-                $data['campaign_id']
-            ),
+            /* translators: 1: donor name, 2: campaign id or name */
+            'description' => sprintf(__('Donation from %1$s for campaign %2$s', 'giftflowwp'), sanitize_text_field($data['donor_name']), $data['campaign_id']),
             'customer' => array(
                 'name' => sanitize_text_field($data['donor_name']),
                 'email' => sanitize_email($data['donor_email']),

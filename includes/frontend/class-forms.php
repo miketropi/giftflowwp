@@ -240,10 +240,8 @@ class Forms extends Base {
         // wp_send_json( $data );
 
         $donation_data = array(
-            'post_title' => sprintf(
-                __( 'Donation from %s', 'giftflowwp' ),
-                $data['donor_name']
-            ),
+            /* translators: %s: Donor name */
+            'post_title' => sprintf(__( 'Donation from %s', 'giftflowwp' ), $data['donor_name']),
             'post_type' => 'donation',
             'post_status' => 'publish',
         );

@@ -71,11 +71,8 @@ class Template {
         if (!file_exists($template_file)) {
             _doing_it_wrong(
                 __FUNCTION__,
-                sprintf(
-                    /* translators: %s: Template file name */
-                    __('Template file %s does not exist.', 'giftflowwp'),
-                    '<code>' . $template_file . '</code>'
-                ),
+                /* translators: %s: Template file name */
+                sprintf(esc_html__('Template file %s does not exist.', 'giftflowwp'), '<code>' . esc_html($template_file) . '</code>'),
                 '1.0.0'
             );
             return;

@@ -56,7 +56,12 @@ $pagination = $donations['pagination'] ?? 1;
 
         <?php if ($pagination > 1): ?>
             <div class="gfw-donation-pagination">
-                <span><?php printf( esc_html__( 'Page %1$d of %2$d', 'giftflowwp' ), $paged, $pagination ); ?></span>
+                <span>
+                    <?php 
+                    /* translators: 1: is paged, 2: total paged number */
+                    printf( esc_html__( 'Page %1$d of %2$d', 'giftflowwp' ), $paged, $pagination ); 
+                    ?>
+                </span>
                 <div class="gfw-pagination-buttons">
                   <?php if ($paged > 1): ?>
                     <button 

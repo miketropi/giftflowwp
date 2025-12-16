@@ -21,7 +21,7 @@ function giftflowwp_register_dashboard_page() {
     $icon_base64 = base64_encode(giftflowwp_svg_icon('plgicon'));
     add_menu_page(
         __('GiftFlow Dashboard', 'giftflowwp'),
-        __('Gift Flow', 'giftflowwp'),
+        __('GiftFlow', 'giftflowwp'),
         'manage_options',
         'giftflowwp-dashboard',
         'giftflowwp_dashboard_page',

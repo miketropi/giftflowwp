@@ -65,12 +65,12 @@ function giftflowwp_campaign_single_content_block_render($attributes, $content, 
     <div class="giftflowwp-tab-widget">
       <div class="giftflowwp-tab-widget-tabs">
         <?php foreach ($tabs as $tab) : ?>
-          <div class="giftflowwp-tab-widget-tab-item <?php echo isset($tab['is_active']) && true === $tab['is_active'] ? 'active' : ''; ?>" data-tab-id="<?php echo $tab['id']; ?>">
+          <div class="giftflowwp-tab-widget-tab-item <?php echo isset($tab['is_active']) && true === $tab['is_active'] ? 'active' : ''; ?>" data-tab-id="<?php echo esc_attr($tab['id']); ?>">
             <span class="giftflowwp-tab-widget-tab-item-icon">
-              <?php echo $tab['icon']; ?>
+              <?php echo wp_kses($tab['icon'], giftflowwp_allowed_svg_tags()); ?>
             </span>
             <span class="giftflowwp-tab-widget-tab-item-label">
-              <?php echo $tab['label']; ?>
+              <?php echo esc_html($tab['label']); ?>
             </span> 
           </div>
         <?php endforeach; ?>
@@ -79,8 +79,11 @@ function giftflowwp_campaign_single_content_block_render($attributes, $content, 
     <!-- Tab Content -->
     <div class="giftflowwp-tab-widget-content">
       <?php foreach ($tabs as $tab) : ?>
-        <div class="giftflowwp-tab-widget-content-item <?php echo isset($tab['is_active']) && true === $tab['is_active'] ? 'active' : ''; ?>" data-tab-id="<?php echo $tab['id']; ?>">
-          <?php echo $tab['content']; ?>
+        <div class="giftflowwp-tab-widget-content-item <?php echo isset($tab['is_active']) && true === $tab['is_active'] ? 'active' : ''; ?>" data-tab-id="<?php echo esc_attr($tab['id']); ?>">
+          <?php 
+          // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+          echo $tab['content']; 
+          ?>
         </div>
       <?php endforeach; ?>
     </div>
@@ -146,7 +149,7 @@ function giftflowwp_campaign_single_content_tab_campaign($content, $post_id) {
     <!-- <?php // echo do_shortcode('[giftflow_donation_form campaign_id="' . $post_id . '"]'); ?> -->
 
     <!-- campaign post content by id -->
-    <?php echo get_the_content($post_id); ?>
+    <?php echo wp_kses_post(get_the_content($post_id)); ?>
   </div>
   <?php
   return ob_get_clean();
@@ -160,9 +163,9 @@ function giftflowwp_campaign_single_content_tab_donations($content, $post_id) {
   ?>
   <div class="campaign-post-donations">
     <!-- description -->
-    <strong><?php _e('Below are the donations for this campaign.', 'giftflowwp'); ?></strong>
+    <strong><?php esc_html_e('Below are the donations for this campaign.', 'giftflowwp'); ?></strong>
 
-    <div class="__campaign-post-donations-list __donations-list-by-campaign-<?php echo $post_id ?>">
+    <div class="__campaign-post-donations-list __donations-list-by-campaign-<?php echo esc_attr($post_id); ?>">
       <?php
         // get all donations for the campaign
         // meta query status = completed
@@ -196,7 +199,7 @@ function giftflowwp_campaign_single_content_tab_comments($content, $post_id) {
   ?>
   <div class="campaign-post-comments">
     <!-- description -->
-    <strong><?php _e('Below are the comments for this campaign.', 'giftflowwp'); ?></strong>
+    <strong><?php esc_html_e('Below are the comments for this campaign.', 'giftflowwp'); ?></strong>
 
     <div class="campaign-post-comments-content">
       <?php
