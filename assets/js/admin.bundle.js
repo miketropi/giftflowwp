@@ -45,22 +45,22 @@ var CampaignTracking = function CampaignTracking() {
     isModalOpen = _useState2[0],
     setIsModalOpen = _useState2[1];
   if (loading) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-    className: "giftflowwp-overview__widget",
+    className: "giftflow-overview__widget",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h4", {
-      className: "giftflowwp-overview__widget-title",
+      className: "giftflow-overview__widget-title",
       children: "Campaigns Tracking"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-      className: "giftflowwp-campaigns-list__loading",
+      className: "giftflow-campaigns-list__loading",
       children: "Loading..."
     })]
   });
   if (error) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-    className: "giftflowwp-overview__widget",
+    className: "giftflow-overview__widget",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h4", {
-      className: "giftflowwp-overview__widget-title",
+      className: "giftflow-overview__widget-title",
       children: "Campaigns Tracking"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-      className: "giftflowwp-campaigns-list__error",
+      className: "giftflow-campaigns-list__error",
       children: ["Error: ", error]
     })]
   });
@@ -76,14 +76,14 @@ var CampaignTracking = function CampaignTracking() {
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-      className: "giftflowwp-overview__widget",
+      className: "giftflow-overview__widget",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-        className: "giftflowwp-overview__widget-header",
+        className: "giftflow-overview__widget-header",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h4", {
-          className: "giftflowwp-overview__widget-title",
+          className: "giftflow-overview__widget-title",
           children: "Campaigns Tracking"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
-          className: "giftflowwp-overview__widget-header-btn",
+          className: "giftflow-overview__widget-header-btn",
           onClick: function onClick() {
             return setIsModalOpen(true);
           },
@@ -92,29 +92,29 @@ var CampaignTracking = function CampaignTracking() {
           })
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        className: "giftflowwp-campaigns-list",
+        className: "giftflow-campaigns-list",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("ul", {
-          className: "giftflowwp-campaigns-list__ul",
+          className: "giftflow-campaigns-list__ul",
           children: campaigns.map(function (campaign) {
             return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("li", {
-              className: "giftflowwp-campaigns-list__item",
+              className: "giftflow-campaigns-list__item",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                className: "giftflowwp-campaigns-list__content",
+                className: "giftflow-campaigns-list__content",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("a", {
                   href: campaign.link,
                   target: "_blank",
                   rel: "noopener noreferrer",
-                  className: "giftflowwp-campaigns-list__title-link",
+                  className: "giftflow-campaigns-list__title-link",
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h5", {
-                    className: "giftflowwp-campaigns-list__title",
+                    className: "giftflow-campaigns-list__title",
                     dangerouslySetInnerHTML: {
                       __html: campaign.title
                     }
                   })
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                  className: "giftflowwp-campaigns-list__stats",
+                  className: "giftflow-campaigns-list__stats",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("span", {
-                    className: "giftflowwp-campaigns-list__stat",
+                    className: "giftflow-campaigns-list__stat",
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("strong", {
                       children: "Goal:"
                     }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
@@ -124,7 +124,7 @@ var CampaignTracking = function CampaignTracking() {
                       }
                     })]
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("span", {
-                    className: "giftflowwp-campaigns-list__stat",
+                    className: "giftflow-campaigns-list__stat",
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("strong", {
                       children: "Raised:"
                     }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
@@ -134,29 +134,29 @@ var CampaignTracking = function CampaignTracking() {
                       }
                     })]
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("span", {
-                    className: "giftflowwp-campaigns-list__stat",
+                    className: "giftflow-campaigns-list__stat",
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("strong", {
                       children: "Status:"
                     }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
-                      className: "giftflowwp-campaigns-list__status giftflowwp-campaigns-list__status--".concat(campaign.status),
+                      className: "giftflow-campaigns-list__status giftflow-campaigns-list__status--".concat(campaign.status),
                       children: campaign.status.charAt(0).toUpperCase() + campaign.status.slice(1)
                     })]
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-                  className: "giftflowwp-campaigns-list__progress-bar",
+                  className: "giftflow-campaigns-list__progress-bar",
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-                    className: "giftflowwp-campaigns-list__progress-fill",
+                    className: "giftflow-campaigns-list__progress-fill",
                     style: {
                       width: "".concat(campaign.percentage, "%")
                     }
                   })
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                  className: "giftflowwp-campaigns-list__meta",
+                  className: "giftflow-campaigns-list__meta",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("span", {
-                    className: "giftflowwp-campaigns-list__percentage",
+                    className: "giftflow-campaigns-list__percentage",
                     children: [campaign.percentage, "% funded"]
                   }), campaign.start_date && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("span", {
-                    className: "giftflowwp-campaigns-list__date",
+                    className: "giftflow-campaigns-list__date",
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("strong", {
                       children: "Start:"
                     }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
@@ -164,7 +164,7 @@ var CampaignTracking = function CampaignTracking() {
                       children: campaign.start_date.split("T")[0]
                     })]
                   }), campaign.end_date && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("span", {
-                    className: "giftflowwp-campaigns-list__date",
+                    className: "giftflow-campaigns-list__date",
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("strong", {
                       children: "End:"
                     }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
@@ -278,16 +278,16 @@ function CampaignTrackingModalSettings(_ref) {
       }), error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
         children: ["Error: ", error]
       }), loading === false && campaigns.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-        className: "giftflowwp-campaigns-list__settings-container",
+        className: "giftflow-campaigns-list__settings-container",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-          className: "giftflowwp-campaigns-list__auto-message",
+          className: "giftflow-campaigns-list__auto-message",
           children: "No campaigns selected. The system will automatically display the latest campaigns."
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-          className: "giftflowwp-campaigns-list__select-wrapper",
+          className: "giftflow-campaigns-list__select-wrapper",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("select", {
             id: "campaign-multiselect",
             multiple: true,
-            className: "giftflowwp-campaigns-list__multiselect",
+            className: "giftflow-campaigns-list__multiselect",
             onChange: function onChange(e) {
               setSelectedCampaigns(Array.from(e.target.selectedOptions).map(function (opt) {
                 return opt.value;
@@ -317,7 +317,7 @@ function CampaignTrackingModalSettings(_ref) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("option", {
                 value: campaign.id,
                 selected: selectedCampaigns.includes(campaign.id),
-                className: "giftflowwp-campaigns-list__option",
+                className: "giftflow-campaigns-list__option",
                 dangerouslySetInnerHTML: {
                   __html: "#ID ".concat(campaign.id, " \u2014 ").concat(campaign.title, " \u2014 ").concat(statusEmoji, " ").concat(statusLabel, " (").concat(campaign.percentage, "%)")
                 }
@@ -325,12 +325,12 @@ function CampaignTrackingModalSettings(_ref) {
             })
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-          className: "giftflowwp-campaigns-list__help-text __monospace",
+          className: "giftflow-campaigns-list__help-text __monospace",
           children: ["Hold ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-            className: "giftflowwp-campaigns-list__key",
+            className: "giftflow-campaigns-list__key",
             children: "Ctrl"
           }), " (or ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-            className: "giftflowwp-campaigns-list__key",
+            className: "giftflow-campaigns-list__key",
             children: "Cmd"
           }), " on Mac) and click to select multiple campaigns."]
         })]
@@ -361,33 +361,33 @@ function Card(_ref) {
     isLoading = _ref.isLoading;
   if (isLoading == true) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "giftflowwp-overview__stat-card giftflowwp-overview__stat-card--loading",
+      className: "giftflow-overview__stat-card giftflow-overview__stat-card--loading",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "giftflowwp-overview__stat-icon skeleton"
+        className: "giftflow-overview__stat-icon skeleton"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "giftflowwp-overview__stat-content",
+        className: "giftflow-overview__stat-content",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-          className: "giftflowwp-overview__stat-value skeleton"
+          className: "giftflow-overview__stat-value skeleton"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-          className: "giftflowwp-overview__stat-label skeleton"
+          className: "giftflow-overview__stat-label skeleton"
         })]
       })]
     });
   }
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "giftflowwp-overview__stat-card",
+    className: "giftflow-overview__stat-card",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "giftflowwp-overview__stat-icon",
+      className: "giftflow-overview__stat-icon",
       children: icon
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "giftflowwp-overview__stat-content",
+      className: "giftflow-overview__stat-content",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-        className: "giftflowwp-overview__stat-value __monospace",
+        className: "giftflow-overview__stat-value __monospace",
         dangerouslySetInnerHTML: {
           __html: value
         }
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-        className: "giftflowwp-overview__stat-label",
+        className: "giftflow-overview__stat-label",
         dangerouslySetInnerHTML: {
           __html: title
         }
@@ -417,7 +417,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var DashboardView = function DashboardView() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-    className: "giftflowwp-dashboard-view",
+    className: "giftflow-dashboard-view",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_Welcome__WEBPACK_IMPORTED_MODULE_0__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_OverView__WEBPACK_IMPORTED_MODULE_1__["default"], {})]
   });
 };
@@ -598,7 +598,7 @@ function DonationsChart() {
               setError(null);
 
               // Cache key based on period
-              cacheKey = "giftflowwp_chartdata_".concat(period);
+              cacheKey = "giftflow_chartdata_".concat(period);
               cacheRaw = localStorage.getItem(cacheKey);
               cache = null;
               if (cacheRaw) {
@@ -672,9 +672,9 @@ function DonationsChart() {
   // Show loading state
   if (loading) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-      className: "giftflowwp-chart-loading __monospace",
+      className: "giftflow-chart-loading __monospace",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
-        className: "giftflowwp-chart-loading__spinner"
+        className: "giftflow-chart-loading__spinner"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
         children: "Loading chart data..."
       })]
@@ -684,9 +684,9 @@ function DonationsChart() {
   // Show error state
   if (error) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-      className: "giftflowwp-chart-error __monospace",
+      className: "giftflow-chart-error __monospace",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
-        className: "giftflowwp-chart-error__icon",
+        className: "giftflow-chart-error__icon",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], {
           size: 24,
           color: "#dc2626"
@@ -699,7 +699,7 @@ function DonationsChart() {
         onClick: function onClick() {
           return window.location.reload();
         },
-        className: "giftflowwp-chart-error__retry",
+        className: "giftflow-chart-error__retry",
         children: "Retry"
       })]
     });
@@ -708,9 +708,9 @@ function DonationsChart() {
   // Show empty state if no data
   if (!dataChart.labels.length || (!dataChart.donationsData || Object.keys(dataChart.donationsData).length === 0) && (!dataChart.donorsData || Object.keys(dataChart.donorsData).length === 0)) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-      className: "giftflowwp-chart-empty __monospace",
+      className: "giftflow-chart-empty __monospace",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
-        className: "giftflowwp-chart-empty__icon",
+        className: "giftflow-chart-empty__icon",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], {
           size: 24,
           color: "#6b7280"
@@ -818,7 +818,7 @@ function DonationsChart() {
         position: "left",
         title: {
           display: true,
-          text: "Donation Amount (".concat(giftflowwp_admin.currency_symbol, ")"),
+          text: "Donation Amount (".concat(giftflow_admin.currency_symbol, ")"),
           color: '#6b7280',
           font: {
             size: 12,
@@ -832,7 +832,7 @@ function DonationsChart() {
         ticks: {
           color: '#6b7280',
           callback: function callback(value) {
-            return giftflowwp_admin.currency_symbol + value.toFixed(0);
+            return giftflow_admin.currency_symbol + value.toFixed(0);
           }
         }
       },
@@ -861,20 +861,20 @@ function DonationsChart() {
     }
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-    className: "giftflowwp-chart-container",
+    className: "giftflow-chart-container",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
-      className: "giftflowwp-chart-wrapper",
+      className: "giftflow-chart-wrapper",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_chartjs_2__WEBPACK_IMPORTED_MODULE_4__.Line, {
         data: data,
         options: options
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-      className: "giftflowwp-chart-description __monospace",
+      className: "giftflow-chart-description __monospace",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("p", {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("strong", {
           children: "Chart Description:"
         }), " This chart shows donation activity and donor registrations over the ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("select", {
-          className: "giftflowwp-chart-description__select",
+          className: "giftflow-chart-description__select",
           value: period,
           onChange: function onChange(e) {
             return setPeriod(e.target.value);
@@ -905,7 +905,7 @@ function DonationsChart() {
           children: "blue bars"
         }), " show the number of new donors registered each day."]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-        className: "giftflowwp-chart-cache-note",
+        className: "giftflow-chart-cache-note",
         style: {
           marginTop: '1rem',
           fontSize: '0.95em',
@@ -918,7 +918,7 @@ function DonationsChart() {
             children: "Note:"
           }), " Chart data is cached for 15 minutes to improve performance."]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
-          className: "giftflowwp-chart-clear-cache-btn",
+          className: "giftflow-chart-clear-cache-btn",
           style: {
             background: '#f1f5f9',
             border: '1px solid #2563eb',
@@ -932,7 +932,7 @@ function DonationsChart() {
           onClick: function onClick() {
             // Remove cache for all periods
             ['7d', '30d', '6m', '1y'].forEach(function (periodKey) {
-              localStorage.removeItem("giftflowwp_chartdata_".concat(periodKey));
+              localStorage.removeItem("giftflow_chartdata_".concat(periodKey));
             });
             // Reload to fetch fresh data
             window.location.reload();
@@ -1094,13 +1094,13 @@ var Modal = function Modal(_ref) {
   };
 
   // Build CSS classes
-  var modalClasses = ['giftflowwp-modal', isOpen ? 'giftflowwp-modal--open' : '', size !== 'medium' ? "giftflowwp-modal--".concat(size) : 'giftflowwp-modal--medium', variant !== 'default' ? "giftflowwp-modal--".concat(variant) : '', overlay !== 'default' ? "giftflowwp-modal-overlay--".concat(overlay) : '', position !== 'center' ? "giftflowwp-modal--".concat(position) : '', className].filter(Boolean).join(' ');
+  var modalClasses = ['giftflow-modal', isOpen ? 'giftflow-modal--open' : '', size !== 'medium' ? "giftflow-modal--".concat(size) : 'giftflow-modal--medium', variant !== 'default' ? "giftflow-modal--".concat(variant) : '', overlay !== 'default' ? "giftflow-modal-overlay--".concat(overlay) : '', position !== 'center' ? "giftflow-modal--".concat(position) : '', className].filter(Boolean).join(' ');
 
   // Render close button
   var renderCloseButton = function renderCloseButton() {
     if (!showCloseButton) return null;
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-      className: "giftflowwp-modal__close",
+      className: "giftflow-modal__close",
       onClick: handleClose,
       "aria-label": "Close modal",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
@@ -1129,13 +1129,13 @@ var Modal = function Modal(_ref) {
   var renderHeader = function renderHeader() {
     if (!title && !showCloseButton && variant !== 'with-image') return null;
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-      className: "giftflowwp-modal__header",
+      className: "giftflow-modal__header",
       children: [variant === 'with-image' && imageSrc && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
         src: imageSrc,
         alt: imageAlt,
-        className: "giftflowwp-modal__image"
+        className: "giftflow-modal__image"
       }), title && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
-        className: "giftflowwp-modal__title",
+        className: "giftflow-modal__title",
         children: title
       }), renderCloseButton()]
     });
@@ -1145,17 +1145,17 @@ var Modal = function Modal(_ref) {
   var renderFooter = function renderFooter() {
     if (!footer && actions.length === 0) return null;
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-      className: "giftflowwp-modal__footer",
+      className: "giftflow-modal__footer",
       children: footer || /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-        className: "giftflowwp-modal__actions",
+        className: "giftflow-modal__actions",
         children: actions.map(function (action, index) {
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
-            className: "giftflowwp-modal__button giftflowwp-modal__button--".concat(action.variant || 'secondary'),
+            className: "giftflow-modal__button giftflow-modal__button--".concat(action.variant || 'secondary'),
             onClick: action.onClick,
             disabled: action.disabled,
             type: action.type || 'button',
             children: [action.icon && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-              className: "giftflowwp-modal__button-icon",
+              className: "giftflow-modal__button-icon",
               children: action.icon
             }), action.text]
           }, index);
@@ -1172,14 +1172,14 @@ var Modal = function Modal(_ref) {
     ,
 
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-      className: "giftflowwp-modal__content",
+      className: "giftflow-modal__content",
       onClick: function onClick(e) {
         return e.stopPropagation();
       },
       children: [renderHeader(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "giftflowwp-modal__body",
+        className: "giftflow-modal__body",
         children: [variant === 'loading' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-          className: "giftflowwp-modal__spinner"
+          className: "giftflow-modal__spinner"
         }), children]
       }), renderFooter()]
     })
@@ -1246,17 +1246,17 @@ var OverView = function OverView() {
     title: 'Total Donors'
   }];
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
-    className: "giftflowwp-overview",
+    className: "giftflow-overview",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
-      className: "giftflowwp-overview__main",
+      className: "giftflow-overview__main",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("h3", {
-        className: "giftflowwp-overview__title",
+        className: "giftflow-overview__title",
         children: "Dashboard Overview"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
-        className: "giftflowwp-overview__chart",
+        className: "giftflow-overview__chart",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_DonationsOverviewChart__WEBPACK_IMPORTED_MODULE_6__["default"], {})
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
-        className: "giftflowwp-overview__stats",
+        className: "giftflow-overview__stats",
         children: cards.map(function (card, index) {
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_Card__WEBPACK_IMPORTED_MODULE_4__["default"], {
             icon: card.icon,
@@ -1266,13 +1266,13 @@ var OverView = function OverView() {
           }, index);
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
-        className: "giftflowwp-overview__recent-activity",
+        className: "giftflow-overview__recent-activity",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_RecentDonations__WEBPACK_IMPORTED_MODULE_5__["default"], {
           donations: basedata === null || basedata === void 0 ? void 0 : basedata.recent_donations
         })
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
-      className: "giftflowwp-overview__sidebar",
+      className: "giftflow-overview__sidebar",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_QuickActions__WEBPACK_IMPORTED_MODULE_1__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_CampaignTracking__WEBPACK_IMPORTED_MODULE_2__["default"], {})]
     })]
   });
@@ -1435,29 +1435,29 @@ function QuickActions() {
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-      className: "giftflowwp-overview__widget",
+      className: "giftflow-overview__widget",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h4", {
-        className: "giftflowwp-overview__widget-title",
+        className: "giftflow-overview__widget-title",
         children: "Actions"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-        className: "giftflowwp-overview__action-list",
+        className: "giftflow-overview__action-list",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("button", {
-          className: "giftflowwp-overview__action-btn",
+          className: "giftflow-overview__action-btn",
           type: "button",
           onClick: handleExportCampaign,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
-            className: "giftflowwp-overview__action-icon",
+            className: "giftflow-overview__action-icon",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"], {
               color: "#FFF",
               size: 20
             })
           }), "Export Campaign (.csv)"]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("button", {
-          className: "giftflowwp-overview__action-btn",
+          className: "giftflow-overview__action-btn",
           type: "button",
           onClick: handleExportDonor,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
-            className: "giftflowwp-overview__action-icon",
+            className: "giftflow-overview__action-icon",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"], {
               color: "#FFF",
               size: 20
@@ -1509,7 +1509,7 @@ var ExportCampaignModal = function ExportCampaignModal(_ref) {
               case 0:
                 _context.p = 0;
                 _context.n = 1;
-                return (0,_ulti_api__WEBPACK_IMPORTED_MODULE_7__.__request)("/wp-json/giftflowwp/v1/campaign/csv-export?campaign_id=".concat(selectedCampaign), {}, 'GET');
+                return (0,_ulti_api__WEBPACK_IMPORTED_MODULE_7__.__request)("/wp-json/giftflow/v1/campaign/csv-export?campaign_id=".concat(selectedCampaign), {}, 'GET');
               case 1:
                 response = _context.v;
                 blob = new Blob([response], {
@@ -1554,16 +1554,16 @@ var ExportCampaignModal = function ExportCampaignModal(_ref) {
       }
     }],
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-      className: "giftflowwp-export-campaign__select-container",
+      className: "giftflow-export-campaign__select-container",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("label", {
         htmlFor: "export-campaign-select",
-        className: "giftflowwp-export-campaign__label",
+        className: "giftflow-export-campaign__label",
         children: "Select Campaign to Export"
       }), loading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
-        className: "giftflowwp-export-campaign__loading",
+        className: "giftflow-export-campaign__loading",
         children: "Loading campaigns..."
       }), error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-        className: "giftflowwp-export-campaign__error",
+        className: "giftflow-export-campaign__error",
         children: ["Error: ", error.message || error.toString()]
       }), !loading && !error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.Fragment, {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_SelectSearch__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -1587,7 +1587,7 @@ var ExportCampaignModal = function ExportCampaignModal(_ref) {
           children: "Export Info:"
         }), " Exporting a campaign will download a CSV file with all details for the selected campaign, including donations, donor information, dates, and amounts."]
       }), errorMsg && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
-        className: "giftflowwp-export-campaign__error",
+        className: "giftflow-export-campaign__error",
         children: errorMsg
       })]
     })
@@ -1650,17 +1650,17 @@ function RecentDonations(_ref) {
     donations = _ref$donations === void 0 ? [] : _ref$donations;
   if (!donations || donations.length === 0) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "giftflowwp-recent-donations",
+      className: "giftflow-recent-donations",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "giftflowwp-recent-donations__header",
+        className: "giftflow-recent-donations__header",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-          className: "giftflowwp-recent-donations__title",
+          className: "giftflow-recent-donations__title",
           children: "Recent Donations"
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "giftflowwp-recent-donations__empty",
+        className: "giftflow-recent-donations__empty",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-          className: "giftflowwp-recent-donations__empty-icon",
+          className: "giftflow-recent-donations__empty-icon",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("svg", {
             width: "48",
             height: "48",
@@ -1673,100 +1673,100 @@ function RecentDonations(_ref) {
             })
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-          className: "giftflowwp-recent-donations__empty-text",
+          className: "giftflow-recent-donations__empty-text",
           children: "No recent donations"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-          className: "giftflowwp-recent-donations__empty-subtext",
+          className: "giftflow-recent-donations__empty-subtext",
           children: "Donations will appear here once they start coming in"
         })]
       })]
     });
   }
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "giftflowwp-recent-donations",
+    className: "giftflow-recent-donations",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: "giftflowwp-recent-donations__header",
+      className: "giftflow-recent-donations__header",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "giftflowwp-recent-donations__header-left",
+        className: "giftflow-recent-donations__header-left",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-          className: "giftflowwp-recent-donations__title",
+          className: "giftflow-recent-donations__title",
           children: "Recent Donations"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-          className: "giftflowwp-recent-donations__subtitle",
+          className: "giftflow-recent-donations__subtitle",
           children: "Latest contributions to your campaigns"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        className: "giftflowwp-recent-donations__header-right",
+        className: "giftflow-recent-donations__header-right",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-          className: "giftflowwp-recent-donations__count",
+          className: "giftflow-recent-donations__count",
           children: donations.length
         })
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "giftflowwp-recent-donations__grid",
+      className: "giftflow-recent-donations__grid",
       children: donations.map(function (donation) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-          className: "giftflowwp-recent-donations__card",
+          className: "giftflow-recent-donations__card",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "giftflowwp-recent-donations__card-header",
+            className: "giftflow-recent-donations__card-header",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "giftflowwp-recent-donations__donor-info",
+              className: "giftflow-recent-donations__donor-info",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-                className: "giftflowwp-recent-donations__donor-avatar",
+                className: "giftflow-recent-donations__donor-avatar",
                 children: donation.donor_name.charAt(0).toUpperCase()
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: "giftflowwp-recent-donations__donor-details",
+                className: "giftflow-recent-donations__donor-details",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", {
-                  className: "giftflowwp-recent-donations__donor-name",
+                  className: "giftflow-recent-donations__donor-name",
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("a", {
-                    href: giftflowwp_admin.admin_url + "post.php?post=".concat(donation.donor_id, "&action=edit"),
-                    className: "giftflowwp-recent-donations__donor-link",
+                    href: giftflow_admin.admin_url + "post.php?post=".concat(donation.donor_id, "&action=edit"),
+                    className: "giftflow-recent-donations__donor-link",
                     target: "_blank",
                     dangerouslySetInnerHTML: {
                       __html: donation.donor_name
                     }
                   })
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-                  className: "giftflowwp-recent-donations__donor-email",
+                  className: "giftflow-recent-donations__donor-email",
                   children: donation.donor_email
                 })]
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-              className: "giftflowwp-recent-donations__amount",
+              className: "giftflow-recent-donations__amount",
               dangerouslySetInnerHTML: {
                 __html: donation.__amount
               }
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            className: "giftflowwp-recent-donations__card-body",
+            className: "giftflow-recent-donations__card-body",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-              className: "giftflowwp-recent-donations__campaign-info",
+              className: "giftflow-recent-donations__campaign-info",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h5", {
-                className: "giftflowwp-recent-donations__campaign-title",
+                className: "giftflow-recent-donations__campaign-title",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("a", {
-                  href: giftflowwp_admin.admin_url + "post.php?post=".concat(donation.campaign_id, "&action=edit"),
+                  href: giftflow_admin.admin_url + "post.php?post=".concat(donation.campaign_id, "&action=edit"),
                   target: "_blank",
-                  className: "giftflowwp-recent-donations__campaign-link",
+                  className: "giftflow-recent-donations__campaign-link",
                   dangerouslySetInnerHTML: {
                     __html: donation.campaign_title
                   }
                 })
               })
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-              className: "giftflowwp-recent-donations__card-footer",
+              className: "giftflow-recent-donations__card-footer",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-                className: "giftflowwp-recent-donations__status-badge",
+                className: "giftflow-recent-donations__status-badge",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                  className: "giftflowwp-recent-donations__status giftflowwp-recent-donations__status--".concat(donation.status),
+                  className: "giftflow-recent-donations__status giftflow-recent-donations__status--".concat(donation.status),
                   children: donation.status
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: "giftflowwp-recent-donations__meta",
+                className: "giftflow-recent-donations__meta",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                  className: "giftflowwp-recent-donations__date",
+                  className: "giftflow-recent-donations__date",
                   children: donation.date
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", {
-                  className: "giftflowwp-recent-donations__payment-method",
+                  className: "giftflow-recent-donations__payment-method",
                   children: ["via ", donation.payment_method]
                 })]
               })]
@@ -1775,14 +1775,14 @@ function RecentDonations(_ref) {
         }, donation.id);
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "giftflowwp-recent-donations__footer",
+      className: "giftflow-recent-donations__footer",
       style: {
         marginTop: '1rem',
         textAlign: 'right'
       },
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("a", {
         href: "edit.php?post_type=donation",
-        className: "giftflowwp-btn giftflowwp-btn--secondary button button-small",
+        className: "giftflow-btn giftflow-btn--secondary button button-small",
         children: "View All Donations"
       })
     })]
@@ -1818,7 +1818,7 @@ __webpack_require__.r(__webpack_exports__);
  * A customizable, searchable select dropdown component with keyboard navigation,
  * loading states, error handling, and accessibility features.
  * 
- * @author GiftFlowWP
+ * @author GiftFlow
  * @version 1.0.0
  * 
  * @example
@@ -1922,10 +1922,10 @@ __webpack_require__.r(__webpack_exports__);
  * 
  * @styling
  * The component uses BEM methodology for CSS classes:
- * - .giftflowwp-select-search (main container)
- * - .giftflowwp-select-search__trigger (clickable area)
- * - .giftflowwp-select-search__dropdown (options container)
- * - .giftflowwp-select-search__option (individual option)
+ * - .giftflow-select-search (main container)
+ * - .giftflow-select-search__trigger (clickable area)
+ * - .giftflow-select-search__dropdown (options container)
+ * - .giftflow-select-search__option (individual option)
  * 
  * Customize styles by targeting these classes or using the className prop.
  */
@@ -2170,9 +2170,9 @@ function SelectSearch(_ref) {
   var selectedOption = getSelectedOption();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
     ref: containerRef,
-    className: "giftflowwp-select-search ".concat(className, " ").concat(disabled ? 'giftflowwp-select-search--disabled' : '', " ").concat(error ? 'giftflowwp-select-search--error' : ''),
+    className: "giftflow-select-search ".concat(className, " ").concat(disabled ? 'giftflow-select-search--disabled' : '', " ").concat(error ? 'giftflow-select-search--error' : ''),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-      className: "giftflowwp-select-search__trigger",
+      className: "giftflow-select-search__trigger",
       onClick: function onClick() {
         return !disabled && !loading && setIsOpen(!isOpen);
       },
@@ -2183,30 +2183,30 @@ function SelectSearch(_ref) {
       "aria-haspopup": "listbox",
       "aria-labelledby": id,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        className: "giftflowwp-select-search__value",
+        className: "giftflow-select-search__value",
         children: selectedOption ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
-          className: "giftflowwp-select-search__value-text",
+          className: "giftflow-select-search__value-text",
           dangerouslySetInnerHTML: {
             __html: selectedOption.label
           }
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
-          className: "giftflowwp-select-search__placeholder",
+          className: "giftflow-select-search__placeholder",
           dangerouslySetInnerHTML: {
             __html: placeholder
           }
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-        className: "giftflowwp-select-search__indicators",
+        className: "giftflow-select-search__indicators",
         children: [value && !disabled && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
           type: "button",
-          className: "giftflowwp-select-search__clear",
+          className: "giftflow-select-search__clear",
           onClick: handleClear,
           "aria-label": "Clear selection",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], {
             size: 16
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-          className: "giftflowwp-select-search__arrow",
+          className: "giftflow-select-search__arrow",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"], {
             size: 16
           })
@@ -2214,16 +2214,16 @@ function SelectSearch(_ref) {
       })]
     }), isOpen && /*#__PURE__*/(0,react_dom__WEBPACK_IMPORTED_MODULE_2__.createPortal)(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
       ref: dropdownRef,
-      className: "giftflowwp-select-search__dropdown",
+      className: "giftflow-select-search__dropdown",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-        className: "giftflowwp-select-search__search",
+        className: "giftflow-select-search__search",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], {
           size: 16,
-          className: "giftflowwp-select-search__search-icon"
+          className: "giftflow-select-search__search-icon"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
           ref: searchInputRef,
           type: "text",
-          className: "giftflowwp-select-search__search-input",
+          className: "giftflow-select-search__search-input",
           placeholder: searchPlaceholder,
           value: searchTerm,
           onChange: function onChange(e) {
@@ -2232,12 +2232,12 @@ function SelectSearch(_ref) {
           onKeyDown: handleKeyDown
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        className: "giftflowwp-select-search__options",
+        className: "giftflow-select-search__options",
         role: "listbox",
         children: loading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          className: "giftflowwp-select-search__loading",
+          className: "giftflow-select-search__loading",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-            className: "giftflowwp-select-search__spinner"
+            className: "giftflow-select-search__spinner"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
             children: "Loading options..."
           })]
@@ -2246,31 +2246,31 @@ function SelectSearch(_ref) {
             ref: function ref(el) {
               return optionRefs.current[index] = el;
             },
-            className: "giftflowwp-select-search__option ".concat(option.value === value ? 'giftflowwp-select-search__option--selected' : '', " ").concat(index === highlightedIndex ? 'giftflowwp-select-search__option--highlighted' : ''),
+            className: "giftflow-select-search__option ".concat(option.value === value ? 'giftflow-select-search__option--selected' : '', " ").concat(index === highlightedIndex ? 'giftflow-select-search__option--highlighted' : ''),
             onClick: function onClick() {
               return handleSelect(option);
             },
             role: "option",
             "aria-selected": option.value === value,
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
-              className: "giftflowwp-select-search__option-label",
+              className: "giftflow-select-search__option-label",
               dangerouslySetInnerHTML: {
                 __html: option.label
               }
             }), option.description && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
-              className: "giftflowwp-select-search__option-description",
+              className: "giftflow-select-search__option-description",
               dangerouslySetInnerHTML: {
                 __html: option.description
               }
             })]
           }, option.value);
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-          className: "giftflowwp-select-search__no-options",
+          className: "giftflow-select-search__no-options",
           children: "No options found"
         })
       })]
     }), document.body), error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-      className: "giftflowwp-select-search__error-message",
+      className: "giftflow-select-search__error-message",
       children: error
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
       type: "hidden",
@@ -2305,8 +2305,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Welcome = function Welcome() {
-  var create_campaign_url = giftflowwp_admin.admin_url + 'post-new.php?post_type=campaign';
-  var settings_url = giftflowwp_admin.admin_url + 'admin.php?page=giftflowwp-settings';
+  var create_campaign_url = giftflow_admin.admin_url + 'post-new.php?post_type=campaign';
+  var settings_url = giftflow_admin.admin_url + 'admin.php?page=giftflow-settings';
   var features = [{
     icon: lucide_react__WEBPACK_IMPORTED_MODULE_1__["default"],
     title: 'Create and launch new fundraising campaigns',
@@ -2321,39 +2321,39 @@ var Welcome = function Welcome() {
     description: 'and donor engagement from your dashboard.'
   }];
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-    className: "giftflowwp-welcome",
+    className: "giftflow-welcome",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-      className: "giftflowwp-welcome__header",
+      className: "giftflow-welcome__header",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-        className: "giftflowwp-welcome__logo-section",
+        className: "giftflow-welcome__logo-section",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], {
           width: 48,
           height: 48,
           color: "black"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-          className: "giftflowwp-welcome__title-section",
+          className: "giftflow-welcome__title-section",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h2", {
-            className: "giftflowwp-welcome__title",
+            className: "giftflow-welcome__title",
             children: "GiftFlow Dashboard"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
-            className: "giftflowwp-welcome__subtitle",
+            className: "giftflow-welcome__subtitle",
             children: "Your hub for managing fundraising campaigns and settings."
           })]
         })]
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-      className: "giftflowwp-welcome__content",
+      className: "giftflow-welcome__content",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-        className: "giftflowwp-welcome__left-column",
+        className: "giftflow-welcome__left-column",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-          className: "giftflowwp-welcome__features",
+          className: "giftflow-welcome__features",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
             children: "Key Features"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-            className: "giftflowwp-welcome__features-list ",
+            className: "giftflow-welcome__features-list ",
             children: features.map(function (feature, index) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                className: "giftflowwp-welcome__features-item",
+                className: "giftflow-welcome__features-item",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(feature.icon, {
                   width: 16,
                   height: 16,
@@ -2368,12 +2368,12 @@ var Welcome = function Welcome() {
           })]
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-        className: "giftflowwp-welcome__right-column",
+        className: "giftflow-welcome__right-column",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-          className: "giftflowwp-welcome__actions",
+          className: "giftflow-welcome__actions",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
             href: create_campaign_url,
-            className: "giftflowwp-welcome__action-btn",
+            className: "giftflow-welcome__action-btn",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
               role: "img",
               "aria-label": "Create",
@@ -2381,7 +2381,7 @@ var Welcome = function Welcome() {
             }), " Create Campaign"]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
             href: settings_url,
-            className: "giftflowwp-welcome__action-btn",
+            className: "giftflow-welcome__action-btn",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
               role: "img",
               "aria-label": "Settings",
@@ -2389,7 +2389,7 @@ var Welcome = function Welcome() {
             }), " Go to Settings"]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-          className: "giftflowwp-welcome__help",
+          className: "giftflow-welcome__help",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h4", {
             children: "Need Help?"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
@@ -2586,7 +2586,7 @@ function useCampaign() {
       }
       return "".concat(encodeURIComponent(key), "=").concat(encodeURIComponent(value));
     }).join('&');
-    // const urlWithParams = `/wp-json/giftflowwp/v1/campaigns${queryString ? `?${queryString}` : ''}`;
+    // const urlWithParams = `/wp-json/giftflow/v1/campaigns${queryString ? `?${queryString}` : ''}`;
 
     // Replace this URL with your actual API endpoint
     (0,_ulti_api__WEBPACK_IMPORTED_MODULE_3__.getCampaigns)(params).then(function (data) {
@@ -2638,7 +2638,7 @@ __webpack_require__.r(__webpack_exports__);
  * This hook provides a complete solution for managing modal state, including
  * keyboard navigation, body scroll prevention, and overlay interactions.
  * 
- * @author GiftFlowWP Team
+ * @author GiftFlow Team
  * @version 1.0.0
  * 
  * @example
@@ -2661,11 +2661,11 @@ __webpack_require__.r(__webpack_exports__);
  *     </button>
  * 
  *     {modal.isOpen && (
- *       <div className={`giftflowwp-modal ${modal.isOpen ? 'giftflowwp-modal--open' : ''} giftflowwp-modal--medium`}>
- *         <div className="giftflowwp-modal__content" onClick={modal.handleOverlayClick}>
- *           <div className="giftflowwp-modal__header">
- *             <h3 className="giftflowwp-modal__title">Modal Title</h3>
- *             <button className="giftflowwp-modal__close" onClick={modal.closeModal}>
+ *       <div className={`giftflow-modal ${modal.isOpen ? 'giftflow-modal--open' : ''} giftflow-modal--medium`}>
+ *         <div className="giftflow-modal__content" onClick={modal.handleOverlayClick}>
+ *           <div className="giftflow-modal__header">
+ *             <h3 className="giftflow-modal__title">Modal Title</h3>
+ *             <button className="giftflow-modal__close" onClick={modal.closeModal}>
  *               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
  *                 <line x1="18" y1="6" x2="6" y2="18"></line>
  *                 <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -2673,16 +2673,16 @@ __webpack_require__.r(__webpack_exports__);
  *             </button>
  *           </div>
  *           
- *           <div className="giftflowwp-modal__body">
+ *           <div className="giftflow-modal__body">
  *             Modal content here
  *           </div>
  *           
- *           <div className="giftflowwp-modal__footer">
- *             <div className="giftflowwp-modal__actions">
- *               <button className="giftflowwp-modal__button giftflowwp-modal__button--secondary" onClick={modal.closeModal}>
+ *           <div className="giftflow-modal__footer">
+ *             <div className="giftflow-modal__actions">
+ *               <button className="giftflow-modal__button giftflow-modal__button--secondary" onClick={modal.closeModal}>
  *                 Cancel
  *               </button>
- *               <button className="giftflowwp-modal__button giftflowwp-modal__button--primary">
+ *               <button className="giftflow-modal__button giftflow-modal__button--primary">
  *                 Confirm
  *               </button>
  *             </div>
@@ -2714,82 +2714,82 @@ __webpack_require__.r(__webpack_exports__);
  * @example
  * // Custom modal sizes
  * // Small modal (400px)
- * <div className="giftflowwp-modal giftflowwp-modal--small">
+ * <div className="giftflow-modal giftflow-modal--small">
  * 
  * // Medium modal (600px) - default
- * <div className="giftflowwp-modal giftflowwp-modal--medium">
+ * <div className="giftflow-modal giftflow-modal--medium">
  * 
  * // Large modal (800px)
- * <div className="giftflowwp-modal giftflowwp-modal--large">
+ * <div className="giftflow-modal giftflow-modal--large">
  * 
  * // Fullscreen modal
- * <div className="giftflowwp-modal giftflowwp-modal--fullscreen">
+ * <div className="giftflow-modal giftflow-modal--fullscreen">
  * 
  * @example
  * // Modal variants
  * // Modal with loading state
- * <div className="giftflowwp-modal giftflowwp-modal--loading">
- *   <div className="giftflowwp-modal__spinner"></div>
+ * <div className="giftflow-modal giftflow-modal--loading">
+ *   <div className="giftflow-modal__spinner"></div>
  * </div>
  * 
  * // Modal with image header
- * <div className="giftflowwp-modal giftflowwp-modal--with-image">
- *   <div className="giftflowwp-modal__header">
- *     <img src="image.jpg" alt="Header" className="giftflowwp-modal__image" />
- *     <h3 className="giftflowwp-modal__title">Title</h3>
+ * <div className="giftflow-modal giftflow-modal--with-image">
+ *   <div className="giftflow-modal__header">
+ *     <img src="image.jpg" alt="Header" className="giftflow-modal__image" />
+ *     <h3 className="giftflow-modal__title">Title</h3>
  *   </div>
  * </div>
  * 
  * // Modal with no padding
- * <div className="giftflowwp-modal giftflowwp-modal--no-padding">
+ * <div className="giftflow-modal giftflow-modal--no-padding">
  * 
  * @example
  * // Button variants in modal footer
- * <div className="giftflowwp-modal__actions">
- *   <button className="giftflowwp-modal__button giftflowwp-modal__button--primary">Primary</button>
- *   <button className="giftflowwp-modal__button giftflowwp-modal__button--secondary">Secondary</button>
- *   <button className="giftflowwp-modal__button giftflowwp-modal__button--danger">Danger</button>
- *   <button className="giftflowwp-modal__button giftflowwp-modal__button--ghost">Ghost</button>
+ * <div className="giftflow-modal__actions">
+ *   <button className="giftflow-modal__button giftflow-modal__button--primary">Primary</button>
+ *   <button className="giftflow-modal__button giftflow-modal__button--secondary">Secondary</button>
+ *   <button className="giftflow-modal__button giftflow-modal__button--danger">Danger</button>
+ *   <button className="giftflow-modal__button giftflow-modal__button--ghost">Ghost</button>
  * </div>
  * 
  * @example
  * // Footer alignment options
  * // Default (right aligned)
- * <div className="giftflowwp-modal__footer">
+ * <div className="giftflow-modal__footer">
  * 
  * // Center aligned
- * <div className="giftflowwp-modal__footer giftflowwp-modal__footer--center">
+ * <div className="giftflow-modal__footer giftflow-modal__footer--center">
  * 
  * // Space between
- * <div className="giftflowwp-modal__footer giftflowwp-modal__footer--space-between">
+ * <div className="giftflow-modal__footer giftflow-modal__footer--space-between">
  * 
  * @example
  * // Overlay variants
  * // Default overlay
- * <div className="giftflowwp-modal">
+ * <div className="giftflow-modal">
  * 
  * // Blur overlay
- * <div className="giftflowwp-modal giftflowwp-modal-overlay--blur">
+ * <div className="giftflow-modal giftflow-modal-overlay--blur">
  * 
  * // Dark overlay
- * <div className="giftflowwp-modal giftflowwp-modal-overlay--dark">
+ * <div className="giftflow-modal giftflow-modal-overlay--dark">
  * 
  * // Light overlay
- * <div className="giftflowwp-modal giftflowwp-modal-overlay--light">
+ * <div className="giftflow-modal giftflow-modal-overlay--light">
  * 
  * @example
  * // Modal positioning
  * // Top positioned
- * <div className="giftflowwp-modal giftflowwp-modal--top">
+ * <div className="giftflow-modal giftflow-modal--top">
  * 
  * // Bottom positioned
- * <div className="giftflowwp-modal giftflowwp-modal--bottom">
+ * <div className="giftflow-modal giftflow-modal--bottom">
  * 
  * // Left positioned
- * <div className="giftflowwp-modal giftflowwp-modal--left">
+ * <div className="giftflow-modal giftflow-modal--left">
  * 
  * // Right positioned
- * <div className="giftflowwp-modal giftflowwp-modal--right">
+ * <div className="giftflow-modal giftflow-modal--right">
  * 
  * @param {Object} options - Configuration options for the modal
  * @param {boolean} [options.initialOpen=false] - Initial open state
@@ -3051,8 +3051,8 @@ function _regeneratorDefine2(e, r, n, t) {
 (function (w, $) {
   'use strict';
 
-  w.giftflowwp = {};
-  w.giftflowwp.testSendMail_Handle = /*#__PURE__*/function () {
+  w.giftflow = {};
+  w.giftflow.testSendMail_Handle = /*#__PURE__*/function () {
     var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])(/*#__PURE__*/_regenerator().m(function _callee(name) {
       var r, res;
       return _regenerator().w(function (_context) {
@@ -3067,12 +3067,12 @@ function _regeneratorDefine2(e, r, n, t) {
           case 1:
             _context.n = 2;
             return $.ajax({
-              url: giftflowwp_admin.ajax_url,
+              url: giftflow_admin.ajax_url,
               type: 'POST',
               data: {
-                action: 'giftflowwp_test_send_mail',
+                action: 'giftflow_test_send_mail',
                 name: name,
-                nonce: giftflowwp_admin.nonce
+                nonce: giftflow_admin.nonce
               },
               error: function error(xhr, status, _error) {
                 console.error(status, _error);
@@ -3129,7 +3129,7 @@ var useDashboardStore = (0,zustand__WEBPACK_IMPORTED_MODULE_0__.create)((0,zusta
 }),
 // Add persist config to cache campaignsTracking in localStorage
 {
-  name: 'giftflowwp_dashboard_store',
+  name: 'giftflow_dashboard_store',
   partialize: function partialize(state) {
     return {
       campaignsTracking: state.campaignsTracking
@@ -3268,7 +3268,7 @@ function _regeneratorDefine2(e, r, n, t) {
 /**
  * API 
  * 
- * @package GiftFlowWp
+ * @package GiftFlow
  * @since v1.0.0
  */
 
@@ -3291,7 +3291,7 @@ var __request = /*#__PURE__*/function () {
           data = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
           method = _args.length > 2 && _args[2] !== undefined ? _args[2] : 'GET';
           // set nonce
-          data.nonce = data.nonce || giftflowwp_admin.nonce;
+          data.nonce = data.nonce || giftflow_admin.nonce;
           _context.n = 1;
           return jQuery.ajax({
             method: method,
@@ -3299,7 +3299,7 @@ var __request = /*#__PURE__*/function () {
             data: data,
             headers: {
               'Content-Type': 'application/json',
-              "X-WP-Nonce": giftflowwp_admin.rest_nonce
+              "X-WP-Nonce": giftflow_admin.rest_nonce
             },
             error: function error(_error) {
               console.error('Error:', _error);
@@ -3348,7 +3348,7 @@ var getCampaigns = /*#__PURE__*/function () {
             }
             return "".concat(encodeURIComponent(key), "=").concat(encodeURIComponent(value));
           }).join('&');
-          urlWithParams = "/wp-json/giftflowwp/v1/campaigns".concat(queryString ? "?".concat(queryString) : '');
+          urlWithParams = "/wp-json/giftflow/v1/campaigns".concat(queryString ? "?".concat(queryString) : '');
           return _context2.a(2, __request(urlWithParams, {}));
       }
     }, _callee2);
@@ -3363,7 +3363,7 @@ var getBasedata = /*#__PURE__*/function () {
     return _regenerator().w(function (_context3) {
       while (1) switch (_context3.n) {
         case 0:
-          urlWithParams = "/wp-json/giftflowwp/v1/dashboard/overview";
+          urlWithParams = "/wp-json/giftflow/v1/dashboard/overview";
           return _context3.a(2, __request(urlWithParams, {}));
       }
     }, _callee3);
@@ -3398,7 +3398,7 @@ var getDashboardStatisticsCharts = /*#__PURE__*/function () {
             }
             return "".concat(encodeURIComponent(key), "=").concat(encodeURIComponent(value));
           });
-          urlWithParams = "/wp-json/giftflowwp/v1/dashboard/statistics/charts".concat(queryString ? "?".concat(queryString) : '');
+          urlWithParams = "/wp-json/giftflow/v1/dashboard/statistics/charts".concat(queryString ? "?".concat(queryString) : '');
           return _context4.a(2, __request(urlWithParams, {}));
       }
     }, _callee4);

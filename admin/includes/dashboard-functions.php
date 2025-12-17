@@ -1,8 +1,8 @@
 <?php
 /**
- * Dashboard Widget Functions for GiftFlowWP
+ * Dashboard Widget Functions for GiftFlow
  *
- * @package GiftFlowWP
+ * @package GiftFlow
  * @subpackage Admin
  */
 
@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
 /**
  * Get total campaigns count
  */
-function giftflowwp_get_total_campaigns() {
+function giftflow_get_total_campaigns() {
     $campaigns = get_posts(array(
         'post_type' => 'campaign',
         'post_status' => 'publish',
@@ -29,7 +29,7 @@ function giftflowwp_get_total_campaigns() {
 /**
  * Get active campaigns count
  */
-function giftflowwp_count_campaigns_by_status($status = 'active') {
+function giftflow_count_campaigns_by_status($status = 'active') {
     $campaigns = get_posts(array(
         'post_type' => 'campaign',
         'post_status' => 'publish',
@@ -50,7 +50,7 @@ function giftflowwp_count_campaigns_by_status($status = 'active') {
 /**
  * Get total donations amount
  */
-function giftflowwp_get_total_donations_amount() {
+function giftflow_get_total_donations_amount() {
     global $wpdb;
 
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
@@ -76,7 +76,7 @@ function giftflowwp_get_total_donations_amount() {
 /**
  * Get total donors count
  */
-function giftflowwp_get_total_donors() {
+function giftflow_get_total_donors() {
     $donors = get_posts(array(
         'post_type' => 'donor',
         'post_status' => 'publish',
@@ -89,7 +89,7 @@ function giftflowwp_get_total_donors() {
 /**
  * Get highlight campaigns (top 3 by raised amount)
  */
-function giftflowwp_get_highlight_campaigns() {
+function giftflow_get_highlight_campaigns() {
     /**
      * Filter to allow modification of highlight campaigns query args.
      */
@@ -100,14 +100,14 @@ function giftflowwp_get_highlight_campaigns() {
         'orderby' => 'date',
         'order' => 'DESC'
     );
-    $args = apply_filters('giftflowwp_highlight_campaigns_query_args', $args);
+    $args = apply_filters('giftflow_highlight_campaigns_query_args', $args);
     $campaigns = get_posts($args);
     
     $highlight_campaigns = array();
     
     foreach ($campaigns as $campaign) {
         $goal = get_post_meta($campaign->ID, '_goal_amount', true);
-        $raised = giftflowwp_get_campaign_raised_amount($campaign->ID);
+        $raised = giftflow_get_campaign_raised_amount($campaign->ID);
         $percentage = $goal > 0 ? round(($raised / $goal) * 100, 1) : 0;
         
         $highlight_campaigns[] = array(
@@ -126,7 +126,7 @@ function giftflowwp_get_highlight_campaigns() {
 /**
  * Get recent donations (last 5)
  */
-function giftflowwp_get_recent_donations() {
+function giftflow_get_recent_donations() {
     /**
      * Filter to allow modification of recent donations query args.
      */
@@ -137,7 +137,7 @@ function giftflowwp_get_recent_donations() {
         'orderby' => 'date',
         'order' => 'DESC'
     );
-    $args = apply_filters('giftflowwp_recent_donations_query_args', $args);
+    $args = apply_filters('giftflow_recent_donations_query_args', $args);
     $donations = get_posts($args);
     
     $recent_donations = array();
@@ -147,7 +147,7 @@ function giftflowwp_get_recent_donations() {
         $donor_id = get_post_meta($donation->ID, '_donor_id', true);
         $campaign_id = get_post_meta($donation->ID, '_campaign_id', true);
         
-        $donor_name = esc_html__('??', 'giftflowwp');
+        $donor_name = esc_html__('??', 'giftflow');
         $donor_link = '#not-found';
         $donor_email = '#not-found';
         if ($donor_id) {
@@ -158,7 +158,7 @@ function giftflowwp_get_recent_donations() {
             $donor_email = get_post_meta($donor_id, '_email', true);
         }
         
-        $campaign_title = esc_html__('??', 'giftflowwp');
+        $campaign_title = esc_html__('??', 'giftflow');
         $campaign_link = '#not-found';
         $campaign_id = $campaign_id ?? '';
         if ($campaign_id) {
@@ -174,7 +174,7 @@ function giftflowwp_get_recent_donations() {
             'donor_name' => $donor_name,
             'donor_id' => $donor_id,
             'amount' => $amount,
-            '__amount' => giftflowwp_render_currency_formatted_amount($amount),
+            '__amount' => giftflow_render_currency_formatted_amount($amount),
             'payment_method' => get_post_meta($donation->ID, '_payment_method', true),
             'status' => get_post_meta($donation->ID, '_status', true),
             'campaign_id' => $campaign_id,
@@ -192,7 +192,7 @@ function giftflowwp_get_recent_donations() {
 /**
  * Get top donor this month
  */
-function giftflowwp_get_top_donors() {
+function giftflow_get_top_donors() {
     global $wpdb;
     
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
@@ -236,7 +236,7 @@ function giftflowwp_get_top_donors() {
 /**
  * Get new donors count (last 7 days)
  */
-function giftflowwp_get_new_donors_count() {
+function giftflow_get_new_donors_count() {
     $new_donors = get_posts(array(
         'post_type' => 'donor',
         'post_status' => 'publish',
@@ -252,7 +252,7 @@ function giftflowwp_get_new_donors_count() {
     return count($new_donors);
 }
 
-function giftflowwp_get_total_campaigns_by_status($status = 'active') {
+function giftflow_get_total_campaigns_by_status($status = 'active') {
     $campaigns = get_posts(array(
         'post_type' => 'campaign',
         'post_status' => 'publish',
@@ -270,7 +270,7 @@ function giftflowwp_get_total_campaigns_by_status($status = 'active') {
     return count($campaigns);
 }
 
-function giftflowwp_get_total_donors_count() {
+function giftflow_get_total_donors_count() {
     $donors = get_posts(array(
         'post_type' => 'donor',
         'post_status' => 'publish',
@@ -286,7 +286,7 @@ function giftflowwp_get_total_donors_count() {
  * @param string $period Allowed values: '7d', '30d', '6m', '1y'. Default: '7d'.
  * @return array
  */
-function giftflowwp_get_donations_overview_stats_by_period( $period = '30d' ) {
+function giftflow_get_donations_overview_stats_by_period( $period = '30d' ) {
     global $wpdb;
 
     $post_type  = 'donation';
@@ -422,7 +422,7 @@ function giftflowwp_get_donations_overview_stats_by_period( $period = '30d' ) {
 }
 
 // prepare data for export campaign donations csv
-function giftflowwp_prepare_data_for_export_campaign_donations_csv($campaign_id, $date_from = '', $date_to = '') {
+function giftflow_prepare_data_for_export_campaign_donations_csv($campaign_id, $date_from = '', $date_to = '') {
 
     $args = array(
         'post_type' => 'donation',
@@ -459,7 +459,7 @@ function giftflowwp_prepare_data_for_export_campaign_donations_csv($campaign_id,
         $results['date'] = get_the_date('', $donation_id);
         $results['amount'] = get_post_meta($donation_id, '_amount', true);
         $results['status'] = get_post_meta($donation_id, '_status', true);
-        $results['donor'] = giftflowwp_get_donor_data_by_id(get_post_meta($donation_id, '_donor_id', true));
+        $results['donor'] = giftflow_get_donor_data_by_id(get_post_meta($donation_id, '_donor_id', true));
         // Transaction ID
         $results['transaction_id'] = get_post_meta($donation_id, '_transaction_id', true);
         // Payment Method

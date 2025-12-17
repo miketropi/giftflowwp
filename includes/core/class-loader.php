@@ -1,12 +1,12 @@
 <?php
 /**
- * Loader class for GiftFlowWp
+ * Loader class for GiftFlow
  *
- * @package GiftFlowWp
+ * @package GiftFlow
  * @subpackage Core
  */
 
-namespace GiftFlowWp\Core;
+namespace GiftFlow\Core;
 
 /**
  * Loader class that handles file loading and initialization
@@ -24,57 +24,57 @@ class Loader extends Base {
      * Enqueue styles
      */
     public function admin_enqueue_scripts() {
-        wp_enqueue_script('giftflowwp-admin', $this->get_plugin_url() . 'assets/js/admin.bundle.js', array('jquery', 'wp-element', 'react-jsx-runtime'), $this->get_version(), true);
-        wp_enqueue_style('giftflowwp-admin', $this->get_plugin_url() . 'assets/css/admin.bundle.css', array(), $this->get_version());
+        wp_enqueue_script('giftflow-admin', $this->get_plugin_url() . 'assets/js/admin.bundle.js', array('jquery', 'wp-element', 'react-jsx-runtime'), $this->get_version(), true);
+        wp_enqueue_style('giftflow-admin', $this->get_plugin_url() . 'assets/css/admin.bundle.css', array(), $this->get_version());
     
-        wp_localize_script('giftflowwp-admin', 'giftflowwp_admin', array(
+        wp_localize_script('giftflow-admin', 'giftflow_admin', array(
             'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce'    => wp_create_nonce('giftflowwp_admin_nonce'),
+            'nonce'    => wp_create_nonce('giftflow_admin_nonce'),
             'rest_nonce' => wp_create_nonce( 'wp_rest' ),
             'admin_url' => admin_url(),
-            'currency_symbol' => giftflowwp_get_global_currency_symbol(),
+            'currency_symbol' => giftflow_get_global_currency_symbol(),
         ));
     }
 
     public function enqueue_scripts() {
         // block-campaign-status-bar.bundle.css
-        wp_enqueue_style('giftflowwp-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version());
+        wp_enqueue_style('giftflow-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version());
     
         // // donation-form.bundle.css
-        // wp_enqueue_style('giftflowwp-donation-form', $this->get_plugin_url() . 'assets/css/donation-form.bundle.css', array(), $this->get_version());
+        // wp_enqueue_style('giftflow-donation-form', $this->get_plugin_url() . 'assets/css/donation-form.bundle.css', array(), $this->get_version());
     
         // // forms.bundle.js
-        // wp_enqueue_script('giftflowwp-forms', $this->get_plugin_url() . 'assets/js/forms.bundle.js', array('jquery'), $this->get_version(), true);
+        // wp_enqueue_script('giftflow-forms', $this->get_plugin_url() . 'assets/js/forms.bundle.js', array('jquery'), $this->get_version(), true);
     
         // // stripe-donation.bundle.js
-        // wp_enqueue_script('giftflowwp-stripe-donation', $this->get_plugin_url() . 'assets/js/stripe-donation.bundle.js', array('jquery', 'giftflowwp-forms'), $this->get_version(), true);
+        // wp_enqueue_script('giftflow-stripe-donation', $this->get_plugin_url() . 'assets/js/stripe-donation.bundle.js', array('jquery', 'giftflow-forms'), $this->get_version(), true);
     }
 
     // enqueue blocks
     public function enqueue_blocks() {
-        wp_enqueue_style('giftflowwp-common', $this->get_plugin_url() . 'assets/css/common.bundle.css', array(), $this->get_version());
+        wp_enqueue_style('giftflow-common', $this->get_plugin_url() . 'assets/css/common.bundle.css', array(), $this->get_version());
 
         $args = require($this->get_plugin_dir() . '/blocks-build/index.asset.php');
-        wp_enqueue_script('giftflowwp-blocks', $this->get_plugin_url() . '/blocks-build/index.js', $args['dependencies'], $args['version'], true);
-        wp_enqueue_style('giftflowwp-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version());
-        wp_enqueue_style('giftflowwp-block-campaign-single-content', $this->get_plugin_url() . 'assets/css/block-campaign-single-content.bundle.css', array(), $this->get_version());
+        wp_enqueue_script('giftflow-blocks', $this->get_plugin_url() . '/blocks-build/index.js', $args['dependencies'], $args['version'], true);
+        wp_enqueue_style('giftflow-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version());
+        wp_enqueue_style('giftflow-block-campaign-single-content', $this->get_plugin_url() . 'assets/css/block-campaign-single-content.bundle.css', array(), $this->get_version());
         
         // load common js
         $args_common = require($this->get_plugin_dir() . '/assets/js/common.bundle.asset.php');
-        wp_enqueue_script('giftflowwp-common', $this->get_plugin_url() . 'assets/js/common.bundle.js', array('jquery'), $args_common['version'], true);
+        wp_enqueue_script('giftflow-common', $this->get_plugin_url() . 'assets/js/common.bundle.js', array('jquery'), $args_common['version'], true);
         
         // localize script
-        wp_localize_script('giftflowwp-common', 'giftflowwp_common', array(
+        wp_localize_script('giftflow-common', 'giftflow_common', array(
             'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce'    => wp_create_nonce('giftflowwp_common_nonce'),
+            'nonce'    => wp_create_nonce('giftflow_common_nonce'),
         ));
     }
 
     // Creating a new (custom) block category
     public function register_block_category( $categories ) {
         $categories[] = array(
-            'slug'  => 'giftflowwp',
-            'title' => 'GiftFlowWP',
+            'slug'  => 'giftflow',
+            'title' => 'GiftFlow',
             'icon'  => 'megaphone'
         );
     
@@ -98,9 +98,9 @@ class Loader extends Base {
      */ 
     public function load_textdomain() { 
         // load_plugin_textdomain(
-        //     'giftflowwp',
+        //     'giftflow',
         //     false,
-        //     dirname( plugin_basename( GIFTFLOWWP_PLUGIN_DIR ) ) . '/languages/'
+        //     dirname( plugin_basename( GIFTFLOW_PLUGIN_DIR ) ) . '/languages/'
         // );
     }
 
@@ -109,24 +109,24 @@ class Loader extends Base {
      */
     public function init() {
         // core
-        new \GiftFlowWp\Core\Block_Template();
-        \GiftFlowWp\Core\Role::get_instance();
+        new \GiftFlow\Core\Block_Template();
+        \GiftFlow\Core\Role::get_instance();
 
         // Initialize post types
-        new \GiftFlowWp\Admin\PostTypes\Donation();
-        new \GiftFlowWp\Admin\PostTypes\Donor();
-        new \GiftFlowWp\Admin\PostTypes\Campaign();
+        new \GiftFlow\Admin\PostTypes\Donation();
+        new \GiftFlow\Admin\PostTypes\Donor();
+        new \GiftFlow\Admin\PostTypes\Campaign();
 
         // Initialize meta boxes
-        new \GiftFlowWp\Admin\MetaBoxes\Donation_Transaction_Meta();
-        new \GiftFlowWp\Admin\MetaBoxes\Donor_Contact_Meta();
-        new \GiftFlowWp\Admin\MetaBoxes\Campaign_Details_Meta();
+        new \GiftFlow\Admin\MetaBoxes\Donation_Transaction_Meta();
+        new \GiftFlow\Admin\MetaBoxes\Donor_Contact_Meta();
+        new \GiftFlow\Admin\MetaBoxes\Campaign_Details_Meta();
 
         // Initialize frontend components
-        new \GiftFlowWp\Frontend\Shortcodes();
-        new \GiftFlowWp\Frontend\Forms(); 
+        new \GiftFlow\Frontend\Shortcodes();
+        new \GiftFlow\Frontend\Forms(); 
 
-        \GiftFlowWp\Gateways\Gateway_Base::init_gateways();
+        \GiftFlow\Gateways\Gateway_Base::init_gateways();
     }
 
     public function activate() {
@@ -144,7 +144,7 @@ class Loader extends Base {
         if (!$donor_account_page) {
 
             $donor_account_page = wp_insert_post(array(
-                'post_title' => esc_html__('Donor Account', 'giftflowwp'),
+                'post_title' => esc_html__('Donor Account', 'giftflow'),
                 'post_content' => '',
                 'post_status' => 'publish',
                 'post_type' => 'page',
@@ -161,7 +161,7 @@ class Loader extends Base {
         if (!$thank_donor_page) {
 
             $thank_donor_page = wp_insert_post(array(
-                'post_title' => esc_html__('Thank Donor', 'giftflowwp'),
+                'post_title' => esc_html__('Thank Donor', 'giftflow'),
                 'post_content' => '',
                 'post_status' => 'publish',
                 'post_type' => 'page',
@@ -177,7 +177,7 @@ class Loader extends Base {
 
     public function deactivate() {
         // Clean up roles and capabilities
-        $role_manager = \GiftFlowWp\Core\Role::get_instance();
+        $role_manager = \GiftFlow\Core\Role::get_instance();
         $role_manager->remove_roles();
         $role_manager->remove_capabilities();
     }

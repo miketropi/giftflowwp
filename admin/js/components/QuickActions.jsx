@@ -19,17 +19,17 @@ export default function QuickActions() {
 
   return (
     <>
-      <div className="giftflowwp-overview__widget">
-        <h4 className="giftflowwp-overview__widget-title">Actions</h4>
-        <div className="giftflowwp-overview__action-list">
-          <button className="giftflowwp-overview__action-btn" type="button" onClick={handleExportCampaign}>
-            <span className="giftflowwp-overview__action-icon">
+      <div className="giftflow-overview__widget">
+        <h4 className="giftflow-overview__widget-title">Actions</h4>
+        <div className="giftflow-overview__action-list">
+          <button className="giftflow-overview__action-btn" type="button" onClick={handleExportCampaign}>
+            <span className="giftflow-overview__action-icon">
               <FileDown color='#FFF' size={20} />
             </span>
             Export Campaign (.csv)
           </button>
-          <button className="giftflowwp-overview__action-btn" type="button" onClick={handleExportDonor}>
-            <span className="giftflowwp-overview__action-icon">
+          <button className="giftflow-overview__action-btn" type="button" onClick={handleExportDonor}>
+            <span className="giftflow-overview__action-icon">
               <FileDown color='#FFF' size={20} />
             </span>
             Export Donor (.csv)
@@ -64,7 +64,7 @@ const ExportCampaignModal = ({ isModalExportCampaignOpen, setIsModalExportCampai
 
           try {
             // open api to download csv 
-            const response = await __request(`/wp-json/giftflowwp/v1/campaign/csv-export?campaign_id=${selectedCampaign}`, {}, 'GET');
+            const response = await __request(`/wp-json/giftflow/v1/campaign/csv-export?campaign_id=${selectedCampaign}`, {}, 'GET');
 
             const blob = new Blob([response], {
               type: 'text/csv;charset=utf-8;'
@@ -96,12 +96,12 @@ const ExportCampaignModal = ({ isModalExportCampaignOpen, setIsModalExportCampai
         }
       }]}
     >
-    <div className="giftflowwp-export-campaign__select-container">
-      <label htmlFor="export-campaign-select" className="giftflowwp-export-campaign__label">
+    <div className="giftflow-export-campaign__select-container">
+      <label htmlFor="export-campaign-select" className="giftflow-export-campaign__label">
         Select Campaign to Export
       </label>
-      {loading && <div className="giftflowwp-export-campaign__loading">Loading campaigns...</div>}
-      {error && <div className="giftflowwp-export-campaign__error">Error: {error.message || error.toString()}</div>}
+      {loading && <div className="giftflow-export-campaign__loading">Loading campaigns...</div>}
+      {error && <div className="giftflow-export-campaign__error">Error: {error.message || error.toString()}</div>}
       {!loading && !error && (
         <>
           <SelectSearch
@@ -126,7 +126,7 @@ const ExportCampaignModal = ({ isModalExportCampaignOpen, setIsModalExportCampai
       <strong>Export Info:</strong> Exporting a campaign will download a CSV file with all details for the selected campaign, including donations, donor information, dates, and amounts.
     </div>
 
-    {errorMsg && <div className="giftflowwp-export-campaign__error">{errorMsg}</div>}
+    {errorMsg && <div className="giftflow-export-campaign__error">{errorMsg}</div>}
     </div>
   </Modal>
 }

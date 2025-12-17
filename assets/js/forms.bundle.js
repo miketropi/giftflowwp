@@ -514,10 +514,10 @@ function _regeneratorDefine2(e, r, n, t) {
                     while (1) switch (_context2.n) {
                       case 0:
                         // const res = await jQuery.ajax({
-                        // 	url: window.giftflowwpDonationForms.ajaxurl,
+                        // 	url: window.giftflowDonationForms.ajaxurl,
                         // 	type: 'POST',
                         // 	data: {
-                        // 		action: 'giftflowwp_donation_form',
+                        // 		action: 'giftflow_donation_form',
                         // 		wp_nonce: data.wp_nonce,
                         // 		data
                         // 	},
@@ -527,7 +527,7 @@ function _regeneratorDefine2(e, r, n, t) {
                         // })
                         // return res;
                         // return;
-                        ajaxurl = "".concat(window.giftflowwpDonationForms.ajaxurl, "?action=giftflowwp_donation_form&wp_nonce=").concat(data.wp_nonce);
+                        ajaxurl = "".concat(window.giftflowDonationForms.ajaxurl, "?action=giftflow_donation_form&wp_nonce=").concat(data.wp_nonce);
                         _context2.n = 1;
                         return fetch(ajaxurl, {
                           method: 'POST',

@@ -1,5 +1,5 @@
-// GiftFlowWP Select Search Component
-.giftflowwp-select-search {
+// GiftFlow Select Search Component
+.giftflow-select-search {
   position: relative;
   width: 100%;
   font-family: inherit;
@@ -103,7 +103,7 @@
     border-radius: 6px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    animation: giftflowwp-select-search-dropdown 0.2s ease-out;
+    animation: giftflow-select-search-dropdown 0.2s ease-out;
     max-height: 300px;
     min-width: 200px;
   }
@@ -192,7 +192,7 @@
       color: #1d4ed8;
       font-weight: 500;
 
-      .giftflowwp-select-search__option-label {
+      .giftflow-select-search__option-label {
         color: #1d4ed8;
       }
     }
@@ -228,7 +228,7 @@
     border: 2px solid #e5e7eb;
     border-top: 2px solid #3b82f6;
     border-radius: 50%;
-    animation: giftflowwp-select-search-spin 1s linear infinite;
+    animation: giftflow-select-search-spin 1s linear infinite;
   }
 
   &__no-options {
@@ -253,7 +253,7 @@
 
   // States
   &--disabled {
-    .giftflowwp-select-search__trigger {
+    .giftflow-select-search__trigger {
       background: #f9fafb;
       color: #9ca3af;
       cursor: not-allowed;
@@ -266,18 +266,18 @@
       }
     }
 
-    .giftflowwp-select-search__value-text,
-    .giftflowwp-select-search__placeholder {
+    .giftflow-select-search__value-text,
+    .giftflow-select-search__placeholder {
       color: #9ca3af;
     }
 
-    .giftflowwp-select-search__arrow {
+    .giftflow-select-search__arrow {
       color: #d1d5db;
     }
   }
 
   &--error {
-    .giftflowwp-select-search__trigger {
+    .giftflow-select-search__trigger {
       border-color: #dc2626;
 
       &:hover {
@@ -292,15 +292,15 @@
   }
 
   // When dropdown is open
-  &.giftflowwp-select-search--open {
-    .giftflowwp-select-search__arrow {
+  &.giftflow-select-search--open {
+    .giftflow-select-search__arrow {
       transform: rotate(180deg);
     }
   }
 }
 
 // Animations
-@keyframes giftflowwp-select-search-dropdown {
+@keyframes giftflow-select-search-dropdown {
   from {
     opacity: 0;
     transform: translateY(-8px);
@@ -311,14 +311,14 @@
   }
 }
 
-@keyframes giftflowwp-select-search-spin {
+@keyframes giftflow-select-search-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
 // Responsive design
 @media (max-width: 768px) {
-  .giftflowwp-select-search {
+  .giftflow-select-search {
     &__trigger {
       min-height: 40px;
       padding: 0.625rem 0.875rem;
@@ -363,7 +363,7 @@
 }
 
 @media (max-width: 480px) {
-  .giftflowwp-select-search {
+  .giftflow-select-search {
     &__trigger {
       min-height: 36px;
       padding: 0.5rem 0.75rem;

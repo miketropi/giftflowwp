@@ -1,4 +1,4 @@
-.giftflowwp-welcome {
+.giftflow-welcome {
   background: #fff;
   border: solid 1px #e0e0e0;
   border-radius: 8px;
@@ -60,7 +60,7 @@
 
   // Left column - Features
   &__left-column {
-    .giftflowwp-welcome__features {
+    .giftflow-welcome__features {
       h3 {
         margin: 0 0 16px 0;
         font-size: 20px;
@@ -68,7 +68,7 @@
       }
     }
 
-    .giftflowwp-welcome__features-item {
+    .giftflow-welcome__features-item {
       display: flex;
       align-items: center;
       gap: 6px;

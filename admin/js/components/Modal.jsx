@@ -119,12 +119,12 @@ const Modal = ({
 
   // Build CSS classes
   const modalClasses = [
-    'giftflowwp-modal',
-    isOpen ? 'giftflowwp-modal--open' : '',
-    size !== 'medium' ? `giftflowwp-modal--${size}` : 'giftflowwp-modal--medium',
-    variant !== 'default' ? `giftflowwp-modal--${variant}` : '',
-    overlay !== 'default' ? `giftflowwp-modal-overlay--${overlay}` : '',
-    position !== 'center' ? `giftflowwp-modal--${position}` : '',
+    'giftflow-modal',
+    isOpen ? 'giftflow-modal--open' : '',
+    size !== 'medium' ? `giftflow-modal--${size}` : 'giftflow-modal--medium',
+    variant !== 'default' ? `giftflow-modal--${variant}` : '',
+    overlay !== 'default' ? `giftflow-modal-overlay--${overlay}` : '',
+    position !== 'center' ? `giftflow-modal--${position}` : '',
     className
   ].filter(Boolean).join(' ');
 
@@ -134,7 +134,7 @@ const Modal = ({
 
     return (
       <button 
-        className="giftflowwp-modal__close" 
+        className="giftflow-modal__close" 
         onClick={handleClose}
         aria-label="Close modal"
       >
@@ -151,16 +151,16 @@ const Modal = ({
     if (!title && !showCloseButton && variant !== 'with-image') return null;
 
     return (
-      <div className="giftflowwp-modal__header">
+      <div className="giftflow-modal__header">
         {variant === 'with-image' && imageSrc && (
           <img 
             src={imageSrc} 
             alt={imageAlt} 
-            className="giftflowwp-modal__image"
+            className="giftflow-modal__image"
           />
         )}
         {title && (
-          <h3 className="giftflowwp-modal__title">
+          <h3 className="giftflow-modal__title">
             {title}
           </h3>
         )}
@@ -174,18 +174,18 @@ const Modal = ({
     if (!footer && actions.length === 0) return null;
 
     return (
-      <div className="giftflowwp-modal__footer">
+      <div className="giftflow-modal__footer">
         {footer || (
-          <div className="giftflowwp-modal__actions">
+          <div className="giftflow-modal__actions">
             {actions.map((action, index) => (
               <button
                 key={index}
-                className={`giftflowwp-modal__button giftflowwp-modal__button--${action.variant || 'secondary'}`}
+                className={`giftflow-modal__button giftflow-modal__button--${action.variant || 'secondary'}`}
                 onClick={action.onClick}
                 disabled={action.disabled}
                 type={action.type || 'button'}
               >
-                {action.icon && <span className="giftflowwp-modal__button-icon">{action.icon}</span>}
+                {action.icon && <span className="giftflow-modal__button-icon">{action.icon}</span>}
                 {action.text}
               </button>
             ))}
@@ -203,12 +203,12 @@ const Modal = ({
       className={modalClasses} 
       // onClick={handleOverlayClick} 
     >
-      <div className="giftflowwp-modal__content" onClick={(e) => e.stopPropagation()}>
+      <div className="giftflow-modal__content" onClick={(e) => e.stopPropagation()}>
         {renderHeader()}
         
-        <div className="giftflowwp-modal__body">
+        <div className="giftflow-modal__body">
           {variant === 'loading' && (
-            <div className="giftflowwp-modal__spinner"></div>
+            <div className="giftflow-modal__spinner"></div>
           )}
           {children}
         </div>

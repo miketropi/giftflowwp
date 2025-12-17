@@ -1,6 +1,6 @@
 <?php 
-use GiftFlowWP\Frontend\Template;
-use GiftFlowWp\Core\Role;
+use GiftFlow\Frontend\Template;
+use GiftFlow\Core\Role;
 
 if ( ! defined( 'ABSPATH' ) ) {
   exit; // Exit if accessed directly.
@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Common functions for the plugin
  * 
- * @package GiftFlowWP
+ * @package GiftFlow
  */
 
 // Global helper functions for easy access
@@ -19,8 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param int $user_id User ID
  * @return bool True if role was assigned, false otherwise
  */
-function giftflowwp_assign_donor_role($user_id) {
-  return \GiftFlowWp\Core\Role::get_instance()->assign_donor_role($user_id);
+function giftflow_assign_donor_role($user_id) {
+  return \GiftFlow\Core\Role::get_instance()->assign_donor_role($user_id);
 }
 
 /**
@@ -29,8 +29,8 @@ function giftflowwp_assign_donor_role($user_id) {
 * @param int $user_id User ID
 * @return bool True if role was removed, false otherwise
 */
-function giftflowwp_remove_donor_role($user_id) {
-  return \GiftFlowWp\Core\Role::get_instance()->remove_donor_role($user_id);
+function giftflow_remove_donor_role($user_id) {
+  return \GiftFlow\Core\Role::get_instance()->remove_donor_role($user_id);
 }
 
 /**
@@ -39,21 +39,21 @@ function giftflowwp_remove_donor_role($user_id) {
 * @param int $user_id User ID
 * @return bool True if user has donor role, false otherwise
 */
-function giftflowwp_user_has_donor_role($user_id) {
-  return \GiftFlowWp\Core\Role::get_instance()->user_has_donor_role($user_id);
+function giftflow_user_has_donor_role($user_id) {
+  return \GiftFlow\Core\Role::get_instance()->user_has_donor_role($user_id);
 }
 
 /**
 * Get the Role instance (for advanced usage)
 *
-* @return \GiftFlowWp\Core\Role
+* @return \GiftFlow\Core\Role
 */
-function giftflowwp_get_role_manager() {
-  return \GiftFlowWp\Core\Role::get_instance();
+function giftflow_get_role_manager() {
+  return \GiftFlow\Core\Role::get_instance();
 }
 
-function giftflowwp_allowed_svg_tags() {
-  return apply_filters('giftflowwp:allowed_svg_tags', [
+function giftflow_allowed_svg_tags() {
+  return apply_filters('giftflow:allowed_svg_tags', [
     // SVG allowed attributes for various types, attributes, DOM, elements
     'svg' => [
       'class' => true,
@@ -154,7 +154,7 @@ function giftflowwp_allowed_svg_tags() {
   ]);
 }
 
-function giftflowwp_svg_icon($name) {
+function giftflow_svg_icon($name) {
   $icons = require(__DIR__ . '/icons.php');
   return isset($icons[$name]) ? $icons[$name] : '';
 }
@@ -165,7 +165,7 @@ function giftflowwp_svg_icon($name) {
  * @param int $campaign_id The campaign ID
  * @return float The raised amount
  */
-function giftflowwp_get_campaign_raised_amount($campaign_id) {
+function giftflow_get_campaign_raised_amount($campaign_id) {
     // Get all donations for this campaign
     $donations = get_posts(array(
         'post_type' => 'donation',
@@ -200,12 +200,12 @@ function giftflowwp_get_campaign_raised_amount($campaign_id) {
 }
 
 /**
- * giftflowwp_get_campaign_goal_amount
+ * giftflow_get_campaign_goal_amount
  * 
  * @param int $campaign_id The campaign ID
  * @return float The goal amount
  */
-function giftflowwp_get_campaign_goal_amount($campaign_id) {
+function giftflow_get_campaign_goal_amount($campaign_id) {
     return get_post_meta($campaign_id, '_goal_amount', true);
 }
 
@@ -215,8 +215,8 @@ function giftflowwp_get_campaign_goal_amount($campaign_id) {
  * @param int $campaign_id The campaign ID
  * @return float The percentage (0-100)
  */
-function giftflowwp_get_campaign_progress_percentage($campaign_id) {
-    $raised_amount = giftflowwp_get_campaign_raised_amount($campaign_id);
+function giftflow_get_campaign_progress_percentage($campaign_id) {
+    $raised_amount = giftflow_get_campaign_raised_amount($campaign_id);
     $goal_amount = get_post_meta($campaign_id, '_goal_amount', true);
     
     if (!$goal_amount || floatval($goal_amount) <= 0) {
@@ -235,9 +235,9 @@ function giftflowwp_get_campaign_progress_percentage($campaign_id) {
  * @param int $campaign_id The campaign ID
  * @return string HTML formatted progress percentage
  */
-function giftflowwp_display_campaign_progress($campaign_id) {
-    $percentage = giftflowwp_get_campaign_progress_percentage($campaign_id);
-    $raised_amount = giftflowwp_get_campaign_raised_amount($campaign_id);
+function giftflow_display_campaign_progress($campaign_id) {
+    $percentage = giftflow_get_campaign_progress_percentage($campaign_id);
+    $raised_amount = giftflow_get_campaign_raised_amount($campaign_id);
     $goal_amount = get_post_meta($campaign_id, '_goal_amount', true);
     
     $html = sprintf(
@@ -258,25 +258,25 @@ function giftflowwp_display_campaign_progress($campaign_id) {
     return $html;
 }
 
-function giftflowwp_get_common_currency() {
+function giftflow_get_common_currency() {
   $currencies = require(__DIR__ . '/currency.php');
 
   // apply filter to the currencies
-  $currencies = apply_filters('giftflowwp_common_currencies', $currencies);
+  $currencies = apply_filters('giftflow_common_currencies', $currencies);
 
   return $currencies;
 }
 
 // get currency current 
-function giftflowwp_get_current_currency() {
-  $options = get_option('giftflowwp_general_options');
+function giftflow_get_current_currency() {
+  $options = get_option('giftflow_general_options');
   $currency = isset($options['currency']) ? $options['currency'] : 'USD';
   return $currency;
 }
 
 // get symbol of currency
-function giftflowwp_get_currency_symbol($currency) {
-  $currencies = giftflowwp_get_common_currency();
+function giftflow_get_currency_symbol($currency) {
+  $currencies = giftflow_get_common_currency();
   $_currency = array_filter($currencies, function($c) use ($currency) {
     return $c['code'] === $currency;
   });
@@ -285,8 +285,8 @@ function giftflowwp_get_currency_symbol($currency) {
 }
 
 // get name of currency
-function giftflowwp_get_currency_name($currency) {
-  $currencies = giftflowwp_get_common_currency();
+function giftflow_get_currency_name($currency) {
+  $currencies = giftflow_get_common_currency();
   $_currency = array_filter($currencies, function($c) use ($currency) {
     return $c['code'] === $currency;
   });
@@ -303,12 +303,12 @@ function giftflowwp_get_currency_name($currency) {
  * @param string $template // default: {{currency_symbol}} {{amount}}
  * @return string
  */
-function giftflowwp_render_currency_formatted_amount($amount, $decimals = 2, $currency = null, $template = '') {
+function giftflow_render_currency_formatted_amount($amount, $decimals = 2, $currency = null, $template = '') {
   
   if (!$currency) {
-    $currency = giftflowwp_get_current_currency();
+    $currency = giftflow_get_current_currency();
   }
-  $currency_symbol = giftflowwp_get_currency_symbol($currency);
+  $currency_symbol = giftflow_get_currency_symbol($currency);
   $amount = number_format($amount, $decimals);
   
   // replace array map 
@@ -318,19 +318,19 @@ function giftflowwp_render_currency_formatted_amount($amount, $decimals = 2, $cu
   );
 
   if (!$template) {
-    $template = giftflowwp_get_currency_template();
+    $template = giftflow_get_currency_template();
   }
 
-  $amount = '<span class="giftflowwp-currency-formatted-amount">' . str_replace(array_keys($replace), array_values($replace), $template) . '</span>';
+  $amount = '<span class="giftflow-currency-formatted-amount">' . str_replace(array_keys($replace), array_values($replace), $template) . '</span>';
 
-  $amount = apply_filters('giftflowwp_render_currency_formatted_amount', $amount, $currency, $decimals);
+  $amount = apply_filters('giftflow_render_currency_formatted_amount', $amount, $currency, $decimals);
   return $amount;
 }
 
 // get symbol
-function giftflowwp_get_global_currency_symbol() {
-  $currency = giftflowwp_get_current_currency();
-  $currencies = giftflowwp_get_common_currency();
+function giftflow_get_global_currency_symbol() {
+  $currency = giftflow_get_current_currency();
+  $currencies = giftflow_get_common_currency();
   $_currency = array_filter($currencies, function($c) use ($currency) {
     return $c['code'] === $currency;
   });
@@ -339,22 +339,22 @@ function giftflowwp_get_global_currency_symbol() {
 }
 
 // get currency template
-function giftflowwp_get_currency_template() {
-  $options = get_option('giftflowwp_general_options');
+function giftflow_get_currency_template() {
+  $options = get_option('giftflow_general_options');
   $currency_template = isset($options['currency_template']) ? $options['currency_template'] : '{{currency_symbol}}{{amount}}';
   return $currency_template;
 }
 
-function giftflowwp_get_currency_js_format_template() {
-  $temp = giftflowwp_get_currency_template();
-  $symbol = giftflowwp_get_global_currency_symbol();
+function giftflow_get_currency_js_format_template() {
+  $temp = giftflow_get_currency_template();
+  $symbol = giftflow_get_global_currency_symbol();
   $template = str_replace('{{currency_symbol}}', $symbol, $temp);
   $template = str_replace('{{amount}}', '{{value}}', $template);
   return $template;
 }
 
-function giftflowwp_get_preset_donation_amounts() {
-  $options = get_option('giftflowwp_general_options');
+function giftflow_get_preset_donation_amounts() {
+  $options = get_option('giftflow_general_options');
   $preset_donation_amounts = isset($options['preset_donation_amounts']) ? $options['preset_donation_amounts'] : '10, 25, 35';
   return $preset_donation_amounts;
 }
@@ -365,7 +365,7 @@ function giftflowwp_get_preset_donation_amounts() {
  * @param int $campaign_id
  * @return array
  */
-function giftflowwp_get_preset_donation_amounts_by_campaign($campaign_id) {
+function giftflow_get_preset_donation_amounts_by_campaign($campaign_id) {
   $preset_donation_amounts = get_post_meta($campaign_id, '_preset_donation_amounts', true);
 
   // unserialize if exists
@@ -381,7 +381,7 @@ function giftflowwp_get_preset_donation_amounts_by_campaign($campaign_id) {
   }, $preset_donation_amounts);
 }
 
-function giftflowwp_get_campaign_days_left($campaign_id) {
+function giftflow_get_campaign_days_left($campaign_id) {
   $start_date = get_post_meta($campaign_id, '_start_date', true);
   $end_date = get_post_meta($campaign_id, '_end_date', true);
   
@@ -415,16 +415,16 @@ function giftflowwp_get_campaign_days_left($campaign_id) {
   $days_left = ceil(($end_date - $current_date) / 86400);
 
   // apply filter
-  $days_left = apply_filters('giftflowwp_get_campaign_days_left', $days_left, $campaign_id);
+  $days_left = apply_filters('giftflow_get_campaign_days_left', $days_left, $campaign_id);
   
   return $days_left;
 }
 
 // get all donations for the campaign id  
-function giftflowwp_get_campaign_donations($campaign_id, $args = array(), $paged = 1) {
+function giftflow_get_campaign_donations($campaign_id, $args = array(), $paged = 1) {
 
   $args = wp_parse_args($args, array(
-    'posts_per_page' => apply_filters('giftflowwp_campaign_donations_per_page', 20),
+    'posts_per_page' => apply_filters('giftflow_campaign_donations_per_page', 20),
     'paged' => $paged,
     'orderby' => 'date',
     'order' => 'DESC',
@@ -456,7 +456,7 @@ function giftflowwp_get_campaign_donations($campaign_id, $args = array(), $paged
       $donor_meta['country'] = get_post_meta($donor_meta['id'], '_country', true);
 
       if ($is_anonymous == 'yes') {
-        $donor_meta['name'] = __('Anonymous 🍀', 'giftflowwp');
+        $donor_meta['name'] = __('Anonymous 🍀', 'giftflow');
         $donor_meta['email'] = '';
         $donor_meta['phone'] = '';
         $donor_meta['address'] = '';
@@ -469,7 +469,7 @@ function giftflowwp_get_campaign_donations($campaign_id, $args = array(), $paged
       return array(
         'id' => $post->ID,
         'amount' => get_post_meta($post->ID, '_amount', true),
-        'amount_formatted' => giftflowwp_render_currency_formatted_amount(get_post_meta($post->ID, '_amount', true)),
+        'amount_formatted' => giftflow_render_currency_formatted_amount(get_post_meta($post->ID, '_amount', true)),
         'payment_method' => get_post_meta($post->ID, '_payment_method', true),
         'status' => get_post_meta($post->ID, '_status', true),
         'transaction_id' => get_post_meta($post->ID, '_transaction_id', true),
@@ -491,26 +491,26 @@ function giftflowwp_get_campaign_donations($campaign_id, $args = array(), $paged
 /**
  * Donation form thank you template
  */
-function giftflowwp_donation_form_thank_you_section_html($args = array()) {
+function giftflow_donation_form_thank_you_section_html($args = array()) {
   // load template thank you
   $template = new Template();
   $template->load_template('donation-form-thank-you.php', $args);
 }
 
 // donation form error section
-function giftflowwp_donation_form_error_section_html() {
+function giftflow_donation_form_error_section_html() {
   // load template error
   $template = new Template();
   $template->load_template('donation-form-error.php');
 }
 
-function giftflowwp_load_template($template_name, $args = array()) {
+function giftflow_load_template($template_name, $args = array()) {
   $template = new Template();
   $template->load_template($template_name, $args);
 }
 
 // get donation data by donation id
-function giftflowwp_get_donation_data_by_id($donation_id) {
+function giftflow_get_donation_data_by_id($donation_id) {
   $donation_data = get_post($donation_id);
 
   if(!$donation_data) {
@@ -534,7 +534,7 @@ function giftflowwp_get_donation_data_by_id($donation_id) {
   $donation_data->anonymous = get_post_meta($donation_id, '_anonymous_donation', true);
 
   $donation_data->amount = get_post_meta($donation_id, '_amount', true);
-  $donation_data->__amount_formatted = giftflowwp_render_currency_formatted_amount($donation_data->amount);
+  $donation_data->__amount_formatted = giftflow_render_currency_formatted_amount($donation_data->amount);
 
   $donation_data->status = get_post_meta($donation_id, '_status', true);
   $donation_data->payment_method = get_post_meta($donation_id, '_payment_method', true);
@@ -545,8 +545,8 @@ function giftflowwp_get_donation_data_by_id($donation_id) {
 }
 
 // get donor account page
-function giftflowwp_get_donor_account_page() {
-  $options = get_option('giftflowwp_general_options');
+function giftflow_get_donor_account_page() {
+  $options = get_option('giftflow_general_options');
   $donor_account_page = isset($options['donor_account_page']) ? $options['donor_account_page'] : '';
 
   // if empty please search by path 'donor-account'
@@ -565,8 +565,8 @@ function giftflowwp_get_donor_account_page() {
 }
 
 // get thank donor page
-function giftflowwp_get_thank_donor_page() {
-  $options = get_option('giftflowwp_general_options');
+function giftflow_get_thank_donor_page() {
+  $options = get_option('giftflow_general_options');
   $thank_donor_page = isset($options['thank_donor_page']) ? $options['thank_donor_page'] : '';
 
   // if empty please search by path 'thank-donor'
@@ -591,13 +591,13 @@ function giftflowwp_get_thank_donor_page() {
  * @param mixed $payment_result
  * @return void
  */
-function giftflowwp_auto_create_user_on_donation( $donation_id, $payment_result ) {
+function giftflow_auto_create_user_on_donation( $donation_id, $payment_result ) {
 
   // get donor id 
   $donor_id = get_post_meta($donation_id, '_donor_id', true);
 
   // get donor data
-  $donor_data = giftflowwp_get_donor_data_by_id($donor_id);
+  $donor_data = giftflow_get_donor_data_by_id($donor_id);
 
   // check if user exists by email
   $user = get_user_by('email', $donor_data->email);
@@ -620,13 +620,13 @@ function giftflowwp_auto_create_user_on_donation( $donation_id, $payment_result 
   ));
 
   // assign donor role 
-  giftflowwp_assign_donor_role($user_id);
+  giftflow_assign_donor_role($user_id);
 
   // add hook after create new user
-  do_action('giftflowwp_new_user_on_first_time_donation', $user_id);
+  do_action('giftflow_new_user_on_first_time_donation', $user_id);
 
   // get donor account url 
-  $donor_account_url = get_permalink(giftflowwp_get_donor_account_page());
+  $donor_account_url = get_permalink(giftflow_get_donor_account_page());
 
   // load content mail template 
   ob_start();
@@ -646,22 +646,22 @@ function giftflowwp_auto_create_user_on_donation( $donation_id, $payment_result 
    * @param int $donor_id
    */
   $new_user_email_data = apply_filters(
-    'giftflowwp_new_user_email_data',
+    'giftflow_new_user_email_data',
     $new_user_email_data,
     $donor_data,
     $user_id,
     $donor_id
   );
 
-  giftflowwp_load_template('email/new-user.php', $new_user_email_data);
+  giftflow_load_template('email/new-user.php', $new_user_email_data);
   $content = ob_get_clean();
 
   // send mail to new user
-  giftflowwp_send_mail_template(array(
+  giftflow_send_mail_template(array(
     'to' => $donor_data->email,
     /* translators: %s: Site name for new donor welcome email subject */
-    'subject' => sprintf( esc_html__('Welcome to %s', 'giftflowwp'), get_bloginfo('name') ),
-    'header' => esc_html__('🍀 Your donor account has been created.', 'giftflowwp'),
+    'subject' => sprintf( esc_html__('Welcome to %s', 'giftflow'), get_bloginfo('name') ),
+    'header' => esc_html__('🍀 Your donor account has been created.', 'giftflow'),
     'content' => $content,
   ));
 }
@@ -672,7 +672,7 @@ function giftflowwp_auto_create_user_on_donation( $donation_id, $payment_result 
  * @param int $donor_id
  * @return object|null
  */
-function giftflowwp_get_donor_data_by_id($donor_id = 0) {
+function giftflow_get_donor_data_by_id($donor_id = 0) {
   $donor_data = get_post($donor_id);
 
   if ( ! $donor_data || is_wp_error( $donor_data ) ) {
@@ -701,7 +701,7 @@ function giftflowwp_get_donor_data_by_id($donor_id = 0) {
  * @param int $per_page
  * @return array
  */
-function giftflowwp_query_donation_by_donor_id($donor_id, $page = 1, $per_page = 20) {
+function giftflow_query_donation_by_donor_id($donor_id, $page = 1, $per_page = 20) {
   $donations = new WP_Query(array(
     'post_type' => 'donation',
     // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
@@ -719,7 +719,7 @@ function giftflowwp_query_donation_by_donor_id($donor_id, $page = 1, $per_page =
 }
 
 // get donor id by email
-function giftflowwp_get_donor_id_by_email($email) {
+function giftflow_get_donor_id_by_email($email) {
   $donor = get_posts(array(
     'post_type' => 'donor',
     // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
@@ -744,18 +744,18 @@ function giftflowwp_get_donor_id_by_email($email) {
  * @param int $per_page
  * @return wp_query
  */
-function giftflowwp_get_donations_by_user($user_id, $page = 1, $per_page = 20) {
+function giftflow_get_donations_by_user($user_id, $page = 1, $per_page = 20) {
   $user_email = get_user_by('id', $user_id)->user_email;
-  $donor_id = giftflowwp_get_donor_id_by_email($user_email);
-  $donations = giftflowwp_query_donation_by_donor_id($donor_id, $page, $per_page);
+  $donor_id = giftflow_get_donor_id_by_email($user_email);
+  $donations = giftflow_query_donation_by_donor_id($donor_id, $page, $per_page);
   return $donations;
 }
 
-function giftflowwp_process_bar_of_campaign_donations($campaign_id) {
-  $progress_percentage = giftflowwp_get_campaign_progress_percentage($campaign_id);
+function giftflow_process_bar_of_campaign_donations($campaign_id) {
+  $progress_percentage = giftflow_get_campaign_progress_percentage($campaign_id);
 
   ?>
-  <div class="giftflowwp-campaign-progress-bar" title="<?php echo esc_attr($progress_percentage); ?>%" style="max-wdith: 100%; margin: 0 0 .5em;"> 
+  <div class="giftflow-campaign-progress-bar" title="<?php echo esc_attr($progress_percentage); ?>%" style="max-wdith: 100%; margin: 0 0 .5em;"> 
     <div class="progress-bar" style="height: 3px; background-color: #f1f5f9; overflow: hidden; width: 100%; border-radius: 1px;">
       <div class="progress" style="width: <?php echo esc_attr($progress_percentage); ?>%; height: 100%; background: linear-gradient(90deg, #22c55e, #4ade80);"></div>
     </div>
@@ -769,15 +769,15 @@ function giftflowwp_process_bar_of_campaign_donations($campaign_id) {
  * @param int $user_id
  * @return array
  */
-function giftflowwp_get_donor_user_information($user_id) {
+function giftflow_get_donor_user_information($user_id) {
   // get user data 
   $user_data = get_user_by('id', $user_id);
   
-  // giftflowwp_get_donor_id_by_email
-  $donor_id = giftflowwp_get_donor_id_by_email($user_data->user_email);
+  // giftflow_get_donor_id_by_email
+  $donor_id = giftflow_get_donor_id_by_email($user_data->user_email);
 
   // get donor data
-  $donor_data = giftflowwp_get_donor_data_by_id($donor_id);
+  $donor_data = giftflow_get_donor_data_by_id($donor_id);
 
   $donor_information = array(
     // wp user

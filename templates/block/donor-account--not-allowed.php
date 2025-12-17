@@ -1,7 +1,7 @@
 <?php 
 /**
  * Template for not allowed to view this donation
- * @package GiftflowWP
+ * @package GiftFlow
  * @since 1.0.0
  */
 
@@ -11,6 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <div class="gfw-not-allowed">
-  <?php esc_html_e('You are not allowed to view this donation.', 'giftflowwp'); ?>
+  <?php esc_html_e('You are not allowed to view this donation.', 'giftflow'); ?>
 </div>
 <?php

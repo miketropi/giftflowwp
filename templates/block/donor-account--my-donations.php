@@ -1,7 +1,7 @@
 <?php 
 /**
  * Template for my donations
- * @package GiftflowWP
+ * @package GiftFlow
  * @since 1.0.0
  */
 
@@ -20,9 +20,9 @@ $page = $page ?? 1;
 $cache_process_bar = [];
 ?>
 <div class="gfw-my-donations-header">
-  <h2 class="gfw-donor-account__title"><?php esc_html_e('My Donations', 'giftflowwp'); ?></h2>
+  <h2 class="gfw-donor-account__title"><?php esc_html_e('My Donations', 'giftflow'); ?></h2>
   <p class="gfw-my-donations-desc">
-    <?php esc_html_e('Here you can view a detailed record of your recent donations. Each contribution helps us create lasting impact and drive positive change in our community.', 'giftflowwp'); ?>
+    <?php esc_html_e('Here you can view a detailed record of your recent donations. Each contribution helps us create lasting impact and drive positive change in our community.', 'giftflow'); ?>
   </p>
 </div>
 
@@ -34,10 +34,10 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) : ?>
     <thead>
       <tr>
         <th></th>
-        <th width="40%"><?php esc_html_e('Campaign', 'giftflowwp'); ?></th>
-        <th><?php esc_html_e('Amount', 'giftflowwp'); ?></th>
-        <th><?php esc_html_e('Date', 'giftflowwp'); ?></th>
-        <th><?php esc_html_e('Status', 'giftflowwp'); ?></th>
+        <th width="40%"><?php esc_html_e('Campaign', 'giftflow'); ?></th>
+        <th><?php esc_html_e('Amount', 'giftflow'); ?></th>
+        <th><?php esc_html_e('Date', 'giftflow'); ?></th>
+        <th><?php esc_html_e('Status', 'giftflow'); ?></th>
         <th></th>
       </tr>
     </thead>
@@ -54,9 +54,9 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) : ?>
         // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
         $campaign_id = get_post_meta( $donation_id, '_campaign_id', true );
         // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-        $campaign_title = $campaign_id ? get_the_title( $campaign_id ) : esc_html__('N/A', 'giftflowwp');
+        $campaign_title = $campaign_id ? get_the_title( $campaign_id ) : esc_html__('N/A', 'giftflow');
         // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-        $amount_formatted = giftflowwp_render_currency_formatted_amount( $amount );
+        $amount_formatted = giftflow_render_currency_formatted_amount( $amount );
         // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
         $payment_status = get_post_meta( $donation_id, '_status', true );
       ?>
@@ -69,7 +69,7 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) : ?>
               <?php
                 if (!isset($cache_process_bar[$campaign_id])) {
                   ob_start();
-                  giftflowwp_process_bar_of_campaign_donations($campaign_id);
+                  giftflow_process_bar_of_campaign_donations($campaign_id);
                   // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
                   $process_bar_html = ob_get_clean();
                   // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
@@ -98,9 +98,9 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) : ?>
             </span>
           </td>
           <td>
-            <a class="gfw-view-detail-link" href="<?php echo esc_url(giftflowwp_donor_account_page_url('donations?_id=' . $donation_id)); ?>" style="white-space: nowrap;">
-              <?php echo wp_kses(giftflowwp_svg_icon('eye'), giftflowwp_allowed_svg_tags()); ?>
-              <?php esc_html_e('View Detail', 'giftflowwp'); ?>
+            <a class="gfw-view-detail-link" href="<?php echo esc_url(giftflow_donor_account_page_url('donations?_id=' . $donation_id)); ?>" style="white-space: nowrap;">
+              <?php echo wp_kses(giftflow_svg_icon('eye'), giftflow_allowed_svg_tags()); ?>
+              <?php esc_html_e('View Detail', 'giftflow'); ?>
             </a>
           </td>
         </tr>
@@ -120,12 +120,12 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) : ?>
     <div class="gfw-pagination">
       <?php
       echo wp_kses_post(paginate_links( array(
-        'base'      => str_replace( $big, '%#%', esc_url( giftflowwp_donor_account_page_url('donations?_page=' . $big ) ) ),
+        'base'      => str_replace( $big, '%#%', esc_url( giftflow_donor_account_page_url('donations?_page=' . $big ) ) ),
         'format'    => '?_page=%#%',
         'current'   => $current_page,
         'total'     => $donations->max_num_pages,
-        'prev_text' => esc_html__('Previous', 'giftflowwp'),
-        'next_text' => esc_html__('Next', 'giftflowwp'),
+        'prev_text' => esc_html__('Previous', 'giftflow'),
+        'next_text' => esc_html__('Next', 'giftflow'),
       ) ));
       ?>
     </div>
@@ -133,6 +133,6 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) : ?>
   <?php wp_reset_postdata(); ?>
 <?php else : ?>
   <div class="gfw-no-donations">
-    <?php esc_html_e('You have not made any donations yet.', 'giftflowwp'); ?>
+    <?php esc_html_e('You have not made any donations yet.', 'giftflow'); ?>
   </div>
 <?php endif; ?>

@@ -1,18 +1,18 @@
 /**
- * GiftFlowWP Modal Library
+ * GiftFlow Modal Library
  * A clean, simple, and easy-to-use modal system with AJAX support
  * 
  * QUICK START EXAMPLES:
  * 
  * Basic Modal:
- * const modal = new GiftFlowWPModal({
+ * const modal = new GiftFlowModal({
  *     content: '<h2>Hello World!</h2><p>This is a simple modal.</p>',
  *     closeButton: true
  * });
  * modal.open();
  * 
  * AJAX Modal:
- * const ajaxModal = new GiftFlowWPModal({
+ * const ajaxModal = new GiftFlowModal({
  *     ajax: true,
  *     ajaxUrl: '/api/get-content',
  *     onLoad: (content, modal) => console.log('Content loaded:', content)
@@ -20,12 +20,12 @@
  * ajaxModal.open();
  * 
  * Quick Dialogs:
- * GiftFlowWPModal.alert('Operation completed!', 'Success');
- * const confirmed = await GiftFlowWPModal.confirm('Are you sure?');
- * const value = await GiftFlowWPModal.prompt('Enter your name:', 'John Doe');
+ * GiftFlowModal.alert('Operation completed!', 'Success');
+ * const confirmed = await GiftFlowModal.confirm('Are you sure?');
+ * const value = await GiftFlowModal.prompt('Enter your name:', 'John Doe');
  * 
  * Custom Modal:
- * const customModal = new GiftFlowWPModal({
+ * const customModal = new GiftFlowModal({
  *     content: '<p>Custom sized modal</p>',
  *     width: '800px',
  *     animation: 'zoom',
@@ -34,19 +34,19 @@
  * customModal.open();
  * 
  * For complete documentation and examples, see:
- * wp-content/plugins/giftflowwp/assets/js/util/README.md
+ * wp-content/plugins/giftflow/assets/js/util/README.md
  */
 
 /**
- * GiftFlowWP Modal Library
+ * GiftFlow Modal Library
  * A clean, simple, and easy-to-use modal system with AJAX support
  */
-class GiftFlowWPModal {
+class GiftFlowModal {
     constructor(options = {}) {
         this.options = {
             // Modal options
-            id: options.id || 'giftflowwp-modal',
-            className: options.className || 'giftflowwp-modal',
+            id: options.id || 'giftflow-modal',
+            className: options.className || 'giftflow-modal',
             overlay: options.overlay !== false,
             closeOnOverlay: options.closeOnOverlay !== false,
             closeOnEscape: options.closeOnEscape !== false,
@@ -121,14 +121,14 @@ class GiftFlowWPModal {
         // Create overlay
         if (this.options.overlay) {
             this.overlayElement = document.createElement('div');
-            this.overlayElement.className = 'giftflowwp-modal__overlay';
+            this.overlayElement.className = 'giftflow-modal__overlay';
             this.overlayElement.setAttribute('aria-hidden', 'true');
         }
         
         // Create modal container
         this.modalElement = document.createElement('div');
         this.modalElement.id = this.options.id;
-        this.modalElement.className = `giftflowwp-modal ${this.options.className}`;
+        this.modalElement.className = `giftflow-modal ${this.options.className}`;
         this.modalElement.setAttribute('role', 'dialog');
         this.modalElement.setAttribute('aria-modal', 'true');
         this.modalElement.setAttribute('aria-label', this.options.ariaLabel);
@@ -150,12 +150,12 @@ class GiftFlowWPModal {
         
         // Create modal content
         this.contentElement = document.createElement('div');
-        this.contentElement.className = 'giftflowwp-modal__content';
+        this.contentElement.className = 'giftflow-modal__content';
         
         // Add close button if enabled
         if (this.options.closeButton) {
             this.closeButtonElement = document.createElement('button');
-            this.closeButtonElement.className = 'giftflowwp-modal__close';
+            this.closeButtonElement.className = 'giftflow-modal__close';
             this.closeButtonElement.setAttribute('type', 'button');
             this.closeButtonElement.setAttribute('aria-label', 'Close modal');
             this.closeButtonElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
@@ -178,7 +178,7 @@ class GiftFlowWPModal {
         }
         
         // Add animation classes
-        this.modalElement.classList.add(`giftflowwp-modal--${this.options.animation}`);
+        this.modalElement.classList.add(`giftflow-modal--${this.options.animation}`);
     }
     
     /**
@@ -270,7 +270,7 @@ class GiftFlowWPModal {
             
         } catch (error) {
             console.error('Modal AJAX error:', error);
-            this.contentElement.innerHTML = '<div class="giftflowwp-modal__error">Failed to load content</div>';
+            this.contentElement.innerHTML = '<div class="giftflow-modal__error">Failed to load content</div>';
             
             if (this.options.onError) {
                 this.options.onError(error, this);
@@ -282,7 +282,7 @@ class GiftFlowWPModal {
      * Show loading state
      */
     showLoading() {
-        this.contentElement.innerHTML = '<div class="giftflowwp-modal__loading">Loading...</div>';
+        this.contentElement.innerHTML = '<div class="giftflow-modal__loading">Loading...</div>';
     }
     
     /**
@@ -304,9 +304,9 @@ class GiftFlowWPModal {
         
         // Trigger animation
         requestAnimationFrame(() => {
-            this.modalElement.classList.add('giftflowwp-modal--open');
+            this.modalElement.classList.add('giftflow-modal--open');
             if (this.options.overlay) {
-                this.overlayElement.classList.add('giftflowwp-modal__overlay--open');
+                this.overlayElement.classList.add('giftflow-modal__overlay--open');
             }
         });
         
@@ -344,9 +344,9 @@ class GiftFlowWPModal {
         }
         
         // Trigger close animation
-        this.modalElement.classList.remove('giftflowwp-modal--open');
+        this.modalElement.classList.remove('giftflow-modal--open');
         if (this.options.overlay) {
-            this.overlayElement.classList.remove('giftflowwp-modal__overlay--open');
+            this.overlayElement.classList.remove('giftflow-modal__overlay--open');
         }
         
         // Wait for animation to complete
@@ -428,21 +428,21 @@ class GiftFlowWPModal {
 /**
  * Static methods for easy modal creation
  */
-GiftFlowWPModal.create = function(options) {
-    return new GiftFlowWPModal(options);
+GiftFlowModal.create = function(options) {
+    return new GiftFlowModal(options);
 };
 
-GiftFlowWPModal.alert = function(message, title = 'Alert', options = {}) {
-    const modal = new GiftFlowWPModal({
+GiftFlowModal.alert = function(message, title = 'Alert', options = {}) {
+    const modal = new GiftFlowModal({
         content: `
-            <div class="giftflowwp-modal__header">
+            <div class="giftflow-modal__header">
                 <h3>${title}</h3>
             </div>
-            <div class="giftflowwp-modal__body">
+            <div class="giftflow-modal__body">
                 <p>${message}</p>
             </div>
-            <div class="giftflowwp-modal__footer">
-                <button class="giftflowwp-modal__btn giftflowwp-modal__btn--primary" onclick="this.closest('.giftflowwp-modal').giftflowwpModal.close()">
+            <div class="giftflow-modal__footer">
+                <button class="giftflow-modal__btn giftflow-modal__btn--primary" onclick="this.closest('.giftflow-modal').giftflowModal.close()">
                     OK
                 </button>
             </div>
@@ -454,27 +454,27 @@ GiftFlowWPModal.alert = function(message, title = 'Alert', options = {}) {
     });
     
     // Store modal reference for the close button
-    modal.modalElement.giftflowwpModal = modal;
+    modal.modalElement.giftflowModal = modal;
     
     modal.open();
     return modal;
 };
 
-GiftFlowWPModal.confirm = function(message, title = 'Confirm', options = {}) {
+GiftFlowModal.confirm = function(message, title = 'Confirm', options = {}) {
     return new Promise((resolve) => {
-        const modal = new GiftFlowWPModal({
+        const modal = new GiftFlowModal({
             content: `
-                <div class="giftflowwp-modal__header">
+                <div class="giftflow-modal__header">
                     <h3>${title}</h3>
                 </div>
-                <div class="giftflowwp-modal__body">
+                <div class="giftflow-modal__body">
                     <p>${message}</p>
                 </div>
-                <div class="giftflowwp-modal__footer">
-                    <button class="giftflowwp-modal__btn giftflowwp-modal__btn--secondary" onclick="this.closest('.giftflowwp-modal').giftflowwpModal.confirmResult(false)">
+                <div class="giftflow-modal__footer">
+                    <button class="giftflow-modal__btn giftflow-modal__btn--secondary" onclick="this.closest('.giftflow-modal').giftflowModal.confirmResult(false)">
                         Cancel
                     </button>
-                    <button class="giftflowwp-modal__btn giftflowwp-modal__btn--primary" onclick="this.closest('.giftflowwp-modal').giftflowwpModal.confirmResult(true)">
+                    <button class="giftflow-modal__btn giftflow-modal__btn--primary" onclick="this.closest('.giftflow-modal').giftflowModal.confirmResult(true)">
                         OK
                     </button>
                 </div>
@@ -487,7 +487,7 @@ GiftFlowWPModal.confirm = function(message, title = 'Confirm', options = {}) {
         });
         
         // Store modal reference and confirm method
-        modal.modalElement.giftflowwpModal = modal;
+        modal.modalElement.giftflowModal = modal;
         modal.confirmResult = (result) => {
             modal.close();
             resolve(result);
@@ -497,22 +497,22 @@ GiftFlowWPModal.confirm = function(message, title = 'Confirm', options = {}) {
     });
 };
 
-GiftFlowWPModal.prompt = function(message, defaultValue = '', title = 'Input', options = {}) {
+GiftFlowModal.prompt = function(message, defaultValue = '', title = 'Input', options = {}) {
     return new Promise((resolve) => {
-        const modal = new GiftFlowWPModal({
+        const modal = new GiftFlowModal({
             content: `
-                <div class="giftflowwp-modal__header">
+                <div class="giftflow-modal__header">
                     <h3>${title}</h3>
                 </div>
-                <div class="giftflowwp-modal__body">
+                <div class="giftflow-modal__body">
                     <p>${message}</p>
-                    <input type="text" class="giftflowwp-modal__input" value="${defaultValue}" placeholder="Enter value...">
+                    <input type="text" class="giftflow-modal__input" value="${defaultValue}" placeholder="Enter value...">
                 </div>
-                <div class="giftflowwp-modal__footer">
-                    <button class="giftflowwp-modal__btn giftflowwp-modal__btn--secondary" onclick="this.closest('.giftflowwp-modal').giftflowwpModal.promptResult(null)">
+                <div class="giftflow-modal__footer">
+                    <button class="giftflow-modal__btn giftflow-modal__btn--secondary" onclick="this.closest('.giftflow-modal').giftflowModal.promptResult(null)">
                         Cancel
                     </button>
-                    <button class="giftflowwp-modal__btn giftflowwp-modal__btn--primary" onclick="this.closest('.giftflowwp-modal').giftflowwpModal.promptResult(this.closest('.giftflowwp-modal').querySelector('.giftflowwp-modal__input').value)">
+                    <button class="giftflow-modal__btn giftflow-modal__btn--primary" onclick="this.closest('.giftflow-modal').giftflowModal.promptResult(this.closest('.giftflow-modal').querySelector('.giftflow-modal__input').value)">
                         OK
                     </button>
                 </div>
@@ -525,7 +525,7 @@ GiftFlowWPModal.prompt = function(message, defaultValue = '', title = 'Input', o
         });
         
         // Store modal reference and prompt method
-        modal.modalElement.giftflowwpModal = modal;
+        modal.modalElement.giftflowModal = modal;
         modal.promptResult = (result) => {
             modal.close();
             resolve(result);
@@ -535,7 +535,7 @@ GiftFlowWPModal.prompt = function(message, defaultValue = '', title = 'Input', o
         
         // Focus input
         setTimeout(() => {
-            const input = modal.modalElement.querySelector('.giftflowwp-modal__input');
+            const input = modal.modalElement.querySelector('.giftflow-modal__input');
             if (input) {
                 input.focus();
                 input.select();
@@ -546,9 +546,9 @@ GiftFlowWPModal.prompt = function(message, defaultValue = '', title = 'Input', o
 
 // Export for different module systems
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = GiftFlowWPModal;
+    module.exports = GiftFlowModal;
 } else if (typeof define === 'function' && define.amd) {
-    define(() => GiftFlowWPModal);
+    define(() => GiftFlowModal);
 } else {
-    window.GiftFlowWPModal = GiftFlowWPModal;
+    window.GiftFlowModal = GiftFlowModal;
 }

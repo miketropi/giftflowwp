@@ -2,11 +2,11 @@
 /**
  * Donation Post Type Class
  *
- * @package GiftFlowWp
+ * @package GiftFlow
  * @subpackage Admin
  */
 
-namespace GiftFlowWp\Admin\PostTypes;
+namespace GiftFlow\Admin\PostTypes;
 
 /**
  * Donation Post Type Class
@@ -23,19 +23,19 @@ class Donation extends Base_Post_Type {
     protected function init_post_type() {
         $this->post_type = 'donation';
         $this->labels = array(
-            'name'                  => _x( 'Donations', 'Post type general name', 'giftflowwp' ),
-            'singular_name'         => _x( 'Donation', 'Post type singular name', 'giftflowwp' ),
-            'menu_name'            => _x( 'Donations', 'Admin Menu text', 'giftflowwp' ),
-            'name_admin_bar'       => _x( 'Donation', 'Add New on Toolbar', 'giftflowwp' ),
-            'add_new'              => __( 'Add New', 'giftflowwp' ),
-            'add_new_item'         => __( 'Add New Donation', 'giftflowwp' ),
-            'new_item'             => __( 'New Donation', 'giftflowwp' ),
-            'edit_item'            => __( 'Edit Donation', 'giftflowwp' ),
-            'view_item'            => __( 'View Donation', 'giftflowwp' ),
-            'all_items'            => __( 'All Donations', 'giftflowwp' ),
-            'search_items'         => __( 'Search Donations', 'giftflowwp' ),
-            'not_found'            => __( 'No donations found.', 'giftflowwp' ),
-            'not_found_in_trash'   => __( 'No donations found in Trash.', 'giftflowwp' ),
+            'name'                  => _x( 'Donations', 'Post type general name', 'giftflow' ),
+            'singular_name'         => _x( 'Donation', 'Post type singular name', 'giftflow' ),
+            'menu_name'            => _x( 'Donations', 'Admin Menu text', 'giftflow' ),
+            'name_admin_bar'       => _x( 'Donation', 'Add New on Toolbar', 'giftflow' ),
+            'add_new'              => __( 'Add New', 'giftflow' ),
+            'add_new_item'         => __( 'Add New Donation', 'giftflow' ),
+            'new_item'             => __( 'New Donation', 'giftflow' ),
+            'edit_item'            => __( 'Edit Donation', 'giftflow' ),
+            'view_item'            => __( 'View Donation', 'giftflow' ),
+            'all_items'            => __( 'All Donations', 'giftflow' ),
+            'search_items'         => __( 'Search Donations', 'giftflow' ),
+            'not_found'            => __( 'No donations found.', 'giftflow' ),
+            'not_found_in_trash'   => __( 'No donations found in Trash.', 'giftflow' ),
         );
 
         $this->args = array(
@@ -43,7 +43,7 @@ class Donation extends Base_Post_Type {
             'public'             => false,
             'publicly_queryable' => false,
             'show_ui'            => true,
-            'show_in_menu'       => 'giftflowwp-dashboard',
+            'show_in_menu'       => 'giftflow-dashboard',
             'query_var'          => true,
             'rewrite'            => array( 'slug' => 'donation' ),
             'capability_type'    => 'post',
@@ -78,12 +78,12 @@ class Donation extends Base_Post_Type {
         
         foreach ( $columns as $key => $value ) {
             if ( $key === 'title' ) {
-                $new_columns['title'] = __( 'Donation ID', 'giftflowwp' );
-                $new_columns['amount'] = __( 'Amount', 'giftflowwp' );
-                $new_columns['payment_method'] = __( 'Payment Method', 'giftflowwp' );
-                $new_columns['status'] = __( 'Status', 'giftflowwp' );
-                $new_columns['donor'] = __( 'Donor', 'giftflowwp' );
-                $new_columns['campaign'] = __( 'Campaign', 'giftflowwp' );
+                $new_columns['title'] = __( 'Donation ID', 'giftflow' );
+                $new_columns['amount'] = __( 'Amount', 'giftflow' );
+                $new_columns['payment_method'] = __( 'Payment Method', 'giftflow' );
+                $new_columns['status'] = __( 'Status', 'giftflow' );
+                $new_columns['donor'] = __( 'Donor', 'giftflow' );
+                $new_columns['campaign'] = __( 'Campaign', 'giftflow' );
             } else {
                 $new_columns[$key] = $value;
             }
@@ -102,11 +102,11 @@ class Donation extends Base_Post_Type {
         switch ( $column ) {
             case 'amount':
                 // get currency symbol
-                // $currency_symbol = giftflowwp_get_currency_symbol(giftflowwp_get_current_currency());
+                // $currency_symbol = giftflow_get_currency_symbol(giftflow_get_current_currency());
                 // $amount = get_post_meta( $post_id, '_amount', true );
                 // echo esc_html( $currency_symbol . number_format( floatval( $amount ), 2 ) );
                 $amount = get_post_meta( $post_id, '_amount', true );
-                echo wp_kses_post(giftflowwp_render_currency_formatted_amount($amount));
+                echo wp_kses_post(giftflow_render_currency_formatted_amount($amount));
                 break;
 
             case 'payment_method':
@@ -171,7 +171,7 @@ class Donation extends Base_Post_Type {
             $statuses = array( 'pending', 'completed', 'failed', 'refunded' );
             
             echo '<select name="donation_status">';
-            echo '<option value="">' . esc_html__( 'All Statuses', 'giftflowwp' ) . '</option>';
+            echo '<option value="">' . esc_html__( 'All Statuses', 'giftflow' ) . '</option>';
             
             foreach ( $statuses as $status ) {
                 $status_label = ucfirst( $status );
@@ -210,12 +210,12 @@ class Donation extends Base_Post_Type {
             " );
             
             echo '<select name="donation_donor">';
-            echo '<option value="">' . esc_html__( 'All Donors', 'giftflowwp' ) . '</option>';
+            echo '<option value="">' . esc_html__( 'All Donors', 'giftflow' ) . '</option>';
             
             foreach ( $donors as $donor ) {
                 $donor_name = trim( $donor->donor_name );
                 if ( empty( $donor_name ) ) {
-                    $donor_name = esc_html__( 'Donor ID: ', 'giftflowwp' ) . $donor->donor_id;
+                    $donor_name = esc_html__( 'Donor ID: ', 'giftflow' ) . $donor->donor_id;
                 }
                 $selected_attr = selected( $selected, $donor->donor_id, false );
                 echo '<option value="' . esc_attr( $donor->donor_id ) . '" ' . esc_attr($selected_attr) . '>' . esc_html( $donor_name ) . '</option>';
@@ -251,10 +251,10 @@ class Donation extends Base_Post_Type {
             " );
             
             echo '<select name="donation_campaign">';
-            echo '<option value="">' . esc_html__( 'All Campaigns', 'giftflowwp' ) . '</option>';
+            echo '<option value="">' . esc_html__( 'All Campaigns', 'giftflow' ) . '</option>';
             
             foreach ( $campaigns as $campaign ) {
-                $campaign_title = !empty( $campaign->campaign_title ) ? $campaign->campaign_title : esc_html__( 'Campaign ID: ', 'giftflowwp' ) . $campaign->campaign_id;
+                $campaign_title = !empty( $campaign->campaign_title ) ? $campaign->campaign_title : esc_html__( 'Campaign ID: ', 'giftflow' ) . $campaign->campaign_id;
                 $selected_attr = selected( $selected, $campaign->campaign_id, false );
                 echo '<option value="' . esc_attr( $campaign->campaign_id ) . '" ' . esc_attr($selected_attr) . '>' . esc_html( $campaign_title ) . '</option>';
             }

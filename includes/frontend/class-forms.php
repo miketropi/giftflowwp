@@ -1,14 +1,14 @@
 <?php
 /**
- * Forms class for GiftFlowWp
+ * Forms class for GiftFlow
  *
- * @package GiftFlowWp
+ * @package GiftFlow
  * @subpackage Frontend
  */
 
-namespace GiftFlowWp\Frontend;
+namespace GiftFlow\Frontend;
 
-use GiftFlowWp\Core\Base;
+use GiftFlow\Core\Base;
 
 /**
  * Handles donation form functionality
@@ -27,8 +27,8 @@ class Forms extends Base {
      */
     private function init_hooks() {
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-        add_action( 'wp_ajax_giftflowwp_donation_form', array( $this, 'process_donation' ) );
-        add_action( 'wp_ajax_nopriv_giftflowwp_donation_form', array( $this, 'process_donation' ) );
+        add_action( 'wp_ajax_giftflow_donation_form', array( $this, 'process_donation' ) );
+        add_action( 'wp_ajax_nopriv_giftflow_donation_form', array( $this, 'process_donation' ) );
     }
 
     /**
@@ -36,14 +36,14 @@ class Forms extends Base {
      */
     public function enqueue_scripts() {
         // donation-form.bundle.css
-        wp_enqueue_style('giftflowwp-donation-form', $this->get_plugin_url() . 'assets/css/donation-form.bundle.css', array(), $this->get_version());
+        wp_enqueue_style('giftflow-donation-form', $this->get_plugin_url() . 'assets/css/donation-form.bundle.css', array(), $this->get_version());
     
         // forms.bundle.js
-        wp_enqueue_script('giftflowwp-donation-forms', $this->get_plugin_url() . 'assets/js/forms.bundle.js', array('jquery'), $this->get_version(), true);
+        wp_enqueue_script('giftflow-donation-forms', $this->get_plugin_url() . 'assets/js/forms.bundle.js', array('jquery'), $this->get_version(), true);
     
-        wp_localize_script( 'giftflowwp-donation-forms', 'giftflowwpDonationForms', array(
+        wp_localize_script( 'giftflow-donation-forms', 'giftflowDonationForms', array(
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
-            'nonce'    => wp_create_nonce( 'giftflowwp_donation_form' ),
+            'nonce'    => wp_create_nonce( 'giftflow_donation_form' ),
         ) );
     }
 
@@ -74,18 +74,18 @@ class Forms extends Base {
         $fields['donation_amount'] = floatval( $fields['donation_amount'] );
 
         // add filter to fields
-        $fields = apply_filters( 'giftflowwp_donation_form_fields', $fields );
+        $fields = apply_filters( 'giftflow_donation_form_fields', $fields );
 
         // wp_send_json_success( $fields );
 
-        // giftflowwp_donation_form
-        check_ajax_referer( 'giftflowwp_donation_form', 'wp_nonce' );
+        // giftflow_donation_form
+        check_ajax_referer( 'giftflow_donation_form', 'wp_nonce' );
 
 
         // Validate data
         if ( ! $this->validate_donation_data( $fields ) ) {
             wp_send_json_error( array(
-                'message' => __( 'Invalid donation data', 'giftflowwp' ),
+                'message' => __( 'Invalid donation data', 'giftflow' ),
             ) );
         }
 
@@ -111,13 +111,13 @@ class Forms extends Base {
 
         // add hook after payment processed
         /**
-         * @see giftflowwp_send_mail_notification_donation_to_admin - 10
-         * @see giftflowwp_auto_create_user_on_donation - 10
+         * @see giftflow_send_mail_notification_donation_to_admin - 10
+         * @see giftflow_auto_create_user_on_donation - 10
          */
-        do_action( 'giftflowwp_donation_after_payment_processed', $donation_id, $payment_result );
+        do_action( 'giftflow_donation_after_payment_processed', $donation_id, $payment_result );
 
         wp_send_json_success( array(
-            'message' => __( 'Donation processed successfully', 'giftflowwp' ),
+            'message' => __( 'Donation processed successfully', 'giftflow' ),
             'donation_id' => $donation_id,
             'payment_result' => $payment_result,
         ) );
@@ -160,9 +160,9 @@ class Forms extends Base {
         // call function based on payment method, allow 3rd party to process payment
         // check if function exists
         $payment_method = $data['payment_method'];
-        $pm_obj =  \GiftFlowWp\Gateways\Gateway_Base::get_gateway( $payment_method );  
+        $pm_obj =  \GiftFlow\Gateways\Gateway_Base::get_gateway( $payment_method );  
         if ( ! $pm_obj ) {
-            return new \WP_Error( 'invalid_payment_method', __( 'Invalid payment method', 'giftflowwp' ) );
+            return new \WP_Error( 'invalid_payment_method', __( 'Invalid payment method', 'giftflow' ) );
         }
 
         // Process payment using the gateway class
@@ -203,7 +203,7 @@ class Forms extends Base {
 
             // if ( ! $user ) {
             //     // run hook if donor exists but user not exists
-            //     do_action( 'giftflowwp_add_user_on_donation', $donor[0]->ID );
+            //     do_action( 'giftflow_add_user_on_donation', $donor[0]->ID );
             // }
             
             // return donor id
@@ -223,7 +223,7 @@ class Forms extends Base {
             update_post_meta( $donor_id, '_first_name', $data['donor_name'] );
 
             // hook after create donor record
-            do_action( 'giftflowwp_donor_added', $donor_id );
+            do_action( 'giftflow_donor_added', $donor_id );
 
             return $donor_id;
         }   
@@ -243,7 +243,7 @@ class Forms extends Base {
 
         $donation_data = array(
             /* translators: %s: Donor name */
-            'post_title' => sprintf(__( 'Donation from %s', 'giftflowwp' ), $data['donor_name']),
+            'post_title' => sprintf(__( 'Donation from %s', 'giftflow' ), $data['donor_name']),
             'post_type' => 'donation',
             'post_status' => 'publish',
         );
@@ -306,7 +306,7 @@ class Forms extends Base {
         // custom field status
         update_post_meta( $donation_id, '_status', 'pending' ); 
 
-        do_action( 'giftflowwp_donation_created', $donation_id );
+        do_action( 'giftflow_donation_created', $donation_id );
 
         return $donation_id;
     }

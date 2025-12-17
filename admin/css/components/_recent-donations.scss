@@ -1,5 +1,5 @@
-// GiftFlowWP Recent Donations Component - Compact Clean Layout
-.giftflowwp-recent-donations {
+// GiftFlow Recent Donations Component - Compact Clean Layout
+.giftflow-recent-donations {
 
   &__header {
     display: flex;
@@ -182,7 +182,7 @@
     white-space: nowrap;
     font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
 
-    :global(.giftflowwp-currency-formatted-amount) {
+    :global(.giftflow-currency-formatted-amount) {
       color: #059669;
     }
   }

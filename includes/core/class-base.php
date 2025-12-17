@@ -1,12 +1,12 @@
 <?php
 /**
- * Base class for GiftFlowWp
+ * Base class for GiftFlow
  *
- * @package GiftFlowWp
+ * @package GiftFlow
  * @subpackage Core
  */
 
-namespace GiftFlowWp\Core;
+namespace GiftFlow\Core;
 
 /**
  * Base class that other classes can extend
@@ -37,9 +37,9 @@ class Base {
      * Constructor
      */
     public function __construct() {
-        $this->version = GIFTFLOWWP_VERSION;
-        $this->plugin_dir = GIFTFLOWWP_PLUGIN_DIR;
-        $this->plugin_url = GIFTFLOWWP_PLUGIN_URL;
+        $this->version = GIFTFLOW_VERSION;
+        $this->plugin_dir = GIFTFLOW_PLUGIN_DIR;
+        $this->plugin_url = GIFTFLOW_PLUGIN_URL;
     }
 
     /**

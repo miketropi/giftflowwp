@@ -1,6 +1,6 @@
 # Email Template System Documentation
 
-The GiftFlowWP plugin includes a comprehensive email template system that allows developers to send beautifully formatted emails using predefined templates. This document explains how to use the email system effectively.
+The GiftFlow plugin includes a comprehensive email template system that allows developers to send beautifully formatted emails using predefined templates. This document explains how to use the email system effectively.
 
 ## Overview
 
@@ -12,7 +12,7 @@ The email system consists of:
 
 ## Core Functions
 
-### `giftflowwp_send_mail_template($args)`
+### `giftflow_send_mail_template($args)`
 
 The main function for sending emails using the default template system.
 
@@ -32,14 +32,14 @@ $args = array(
 
 ```php
 // Basic email
-giftflowwp_send_mail_template(array(
+giftflow_send_mail_template(array(
     'to' => 'user@example.com',
     'subject' => 'Welcome to Our Platform',
     'content' => '<h2>Welcome!</h2><p>Thank you for joining us.</p>'
 ));
 
 // Email with custom header and footer
-giftflowwp_send_mail_template(array(
+giftflow_send_mail_template(array(
     'to' => 'user@example.com',
     'subject' => 'Donation Confirmation',
     'header' => 'Thank you for your donation',
@@ -48,7 +48,7 @@ giftflowwp_send_mail_template(array(
 ));
 ```
 
-### `giftflowwp_load_template($template_name, $args)`
+### `giftflow_load_template($template_name, $args)`
 
 Loads a specific email template with variables.
 
@@ -66,7 +66,7 @@ $args = array(
 ```php
 // Load admin notification template
 ob_start();
-giftflowwp_load_template('email/new-donation-admin.php', array(
+giftflow_load_template('email/new-donation-admin.php', array(
     'campaign_name' => 'Emergency Relief Fund',
     'campaign_url' => 'https://example.com/campaign/123',
     'donor_name' => 'John Doe',
@@ -79,7 +79,7 @@ giftflowwp_load_template('email/new-donation-admin.php', array(
 $content = ob_get_clean();
 
 // Send the email
-giftflowwp_send_mail_template(array(
+giftflow_send_mail_template(array(
     'to' => 'admin@example.com',
     'subject' => 'New Donation Received',
     'content' => $content
@@ -111,7 +111,7 @@ array(
 
 ```php
 ob_start();
-giftflowwp_load_template('email/new-donation-admin.php', array(
+giftflow_load_template('email/new-donation-admin.php', array(
     'campaign_name' => 'School Supplies Drive',
     'campaign_url' => home_url('/campaign/school-supplies'),
     'donor_name' => 'Jane Smith',
@@ -123,7 +123,7 @@ giftflowwp_load_template('email/new-donation-admin.php', array(
 ));
 $content = ob_get_clean();
 
-giftflowwp_send_mail_template(array(
+giftflow_send_mail_template(array(
     'to' => get_option('admin_email'),
     'subject' => 'New Donation: School Supplies Drive',
     'content' => $content
@@ -152,7 +152,7 @@ array(
 
 ```php
 ob_start();
-giftflowwp_load_template('email/thanks-donor.php', array(
+giftflow_load_template('email/thanks-donor.php', array(
     'campaign_name' => 'Emergency Relief Fund',
     'campaign_url' => home_url('/campaign/emergency-relief'),
     'donor_name' => 'John Doe',
@@ -163,7 +163,7 @@ giftflowwp_load_template('email/thanks-donor.php', array(
 ));
 $content = ob_get_clean();
 
-giftflowwp_send_mail_template(array(
+giftflow_send_mail_template(array(
     'to' => 'john@example.com',
     'subject' => 'Thank You for Your Donation',
     'header' => 'Thank You for Your Generous Donation',
@@ -190,7 +190,7 @@ array(
 
 ```php
 ob_start();
-giftflowwp_load_template('email/new-user.php', array(
+giftflow_load_template('email/new-user.php', array(
     'name' => 'Jane Smith',
     'username' => 'jane_smith',
     'password' => 'temp_password_123',
@@ -198,7 +198,7 @@ giftflowwp_load_template('email/new-user.php', array(
 ));
 $content = ob_get_clean();
 
-giftflowwp_send_mail_template(array(
+giftflow_send_mail_template(array(
     'to' => 'jane@example.com',
     'subject' => 'Welcome to Our Platform',
     'header' => 'Welcome to Our Community',
@@ -213,7 +213,7 @@ giftflowwp_send_mail_template(array(
 The system uses WordPress options for email configuration:
 
 ```php
-$email_opts = get_option('giftflowwp_email_options');
+$email_opts = get_option('giftflow_email_options');
 $email_from_name = $email_opts['email_from_name'] ?? get_bloginfo('name');
 $email_admin_address = $email_opts['email_admin_address'] ?? get_bloginfo('admin_email');
 ```
@@ -237,7 +237,7 @@ Use the built-in test system to preview email templates:
 
 ```php
 // Trigger test email
-do_action('giftflowwp_test_send_mail', 'template_name');
+do_action('giftflow_test_send_mail', 'template_name');
 ```
 
 ### Available Test Templates
@@ -250,13 +250,13 @@ do_action('giftflowwp_test_send_mail', 'template_name');
 
 ```php
 // Test admin notification
-do_action('giftflowwp_test_send_mail', 'admin_new_donation');
+do_action('giftflow_test_send_mail', 'admin_new_donation');
 
 // Test donor thank you
-do_action('giftflowwp_test_send_mail', 'donor_thanks');
+do_action('giftflow_test_send_mail', 'donor_thanks');
 
 // Test new user welcome
-do_action('giftflowwp_test_send_mail', 'new_user_first_time_donation');
+do_action('giftflow_test_send_mail', 'new_user_first_time_donation');
 ```
 
 ## Best Practices
@@ -267,7 +267,7 @@ When loading templates, always use output buffering to capture the content:
 
 ```php
 ob_start();
-giftflowwp_load_template('email/template-name.php', $args);
+giftflow_load_template('email/template-name.php', $args);
 $content = ob_get_clean();
 ```
 
@@ -285,8 +285,8 @@ $amount = sanitize_text_field($_POST['amount']);
 All text in templates should use WordPress translation functions:
 
 ```php
-esc_html_e('Thank you for your donation', 'giftflowwp');
-printf(esc_html__('Hello %s', 'giftflowwp'), esc_html($name));
+esc_html_e('Thank you for your donation', 'giftflow');
+printf(esc_html__('Hello %s', 'giftflow'), esc_html($name));
 ```
 
 ### 4. Handle Missing Variables
@@ -304,7 +304,7 @@ Always test email templates before deploying to production:
 
 ```php
 // Test with sample data
-do_action('giftflowwp_test_send_mail', 'template_name');
+do_action('giftflow_test_send_mail', 'template_name');
 ```
 
 ## Custom Template Development
@@ -345,12 +345,12 @@ To add test support for your custom template:
 // In mail.php, add to the test function
 case 'your_template_name':
     ob_start();
-    giftflowwp_load_template('email/your-template.php', array(
+    giftflow_load_template('email/your-template.php', array(
         'variable1' => '<Sample Value 1>',
         'variable2' => '<Sample Value 2>',
     ));
     $content = ob_get_clean();
-    return giftflowwp_send_mail_template(array(
+    return giftflow_send_mail_template(array(
         'to' => $admin_email,
         'subject' => 'Test: Your Template',
         'content' => $content

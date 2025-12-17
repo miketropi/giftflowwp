@@ -1,7 +1,7 @@
 <?php 
 /**
  * Template for my donations detail
- * @package GiftflowWP
+ * @package GiftFlow
  * @since 1.0.0
  */
 
@@ -52,10 +52,10 @@ $payment_method_label = ucfirst(str_replace('_', ' ', $payment_method));
 
 <div class="gfw-donation-detail-actions">
   <a 
-    href="<?php echo esc_url(giftflowwp_donor_account_page_url('donations')); ?>" 
+    href="<?php echo esc_url(giftflow_donor_account_page_url('donations')); ?>" 
     class="gfw-view-detail-link"
   >
-    &larr; <?php esc_html_e('Back to Donations', 'giftflowwp'); ?>
+    &larr; <?php esc_html_e('Back to Donations', 'giftflow'); ?>
   </a>
 </div>
 

@@ -2,11 +2,11 @@
 /**
  * Donation Transaction Meta Box Class
  *
- * @package GiftFlowWp
+ * @package GiftFlow
  * @subpackage Admin
  */
 
-namespace GiftFlowWp\Admin\MetaBoxes;
+namespace GiftFlow\Admin\MetaBoxes;
 
 /**
  * Donation Transaction Meta Box Class
@@ -17,7 +17,7 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
      */
     public function __construct() {
         $this->id = 'donation_transaction_details';
-        $this->title = __( 'Transaction Details', 'giftflowwp' );
+        $this->title = __( 'Transaction Details', 'giftflow' );
         $this->post_type = 'donation';
         parent::__construct();
     }
@@ -30,90 +30,90 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
     protected function get_fields() {
         return array(
             'amount' => array(
-                'label' => __( 'Amount', 'giftflowwp' ),
+                'label' => __( 'Amount', 'giftflow' ),
                 'type'  => 'currency',
                 // 'step'  => '0.01',
                 // 'currency_symbol' => '$',
-                'description' => __( 'Enter the amount of the donation', 'giftflowwp' ),
+                'description' => __( 'Enter the amount of the donation', 'giftflow' ),
             ),
             'payment_method' => array(
-                'label'   => __( 'Payment Method', 'giftflowwp' ),
+                'label'   => __( 'Payment Method', 'giftflow' ),
                 'type'    => 'select',
                 'options' => array(
-                    'stripe' => __( 'Stripe', 'giftflowwp' ),
-                    'paypal' => __( 'PayPal', 'giftflowwp' ),
-                    'bank'   => __( 'Bank Transfer', 'giftflowwp' ),
+                    'stripe' => __( 'Stripe', 'giftflow' ),
+                    'paypal' => __( 'PayPal', 'giftflow' ),
+                    'bank'   => __( 'Bank Transfer', 'giftflow' ),
                 ),
-                'description' => __( 'Select the payment method used for the donation', 'giftflowwp' ),
+                'description' => __( 'Select the payment method used for the donation', 'giftflow' ),
             ),
             'status' => array(
-                'label'   => __( 'Status', 'giftflowwp' ),
+                'label'   => __( 'Status', 'giftflow' ),
                 'type'    => 'select',
                 'options' => array(
-                    'pending'   => __( 'Pending', 'giftflowwp' ),
-                    'completed' => __( 'Completed', 'giftflowwp' ),
-                    'failed'    => __( 'Failed', 'giftflowwp' ),
-                    'refunded'  => __( 'Refunded', 'giftflowwp' ),
+                    'pending'   => __( 'Pending', 'giftflow' ),
+                    'completed' => __( 'Completed', 'giftflow' ),
+                    'failed'    => __( 'Failed', 'giftflow' ),
+                    'refunded'  => __( 'Refunded', 'giftflow' ),
                 ),
-                'description' => __( 'Select the status of the donation', 'giftflowwp' ),
+                'description' => __( 'Select the status of the donation', 'giftflow' ),
             ),
             
             'donor_id' => array(
-                'label' => __( 'Donor', 'giftflowwp' ),
+                'label' => __( 'Donor', 'giftflow' ),
                 'type'  => 'select',
                 'options' => $this->get_donors(),
-                'description' => __( 'Select the donor of the donation', 'giftflowwp' ),
+                'description' => __( 'Select the donor of the donation', 'giftflow' ),
             ),
             'donor_message' => array(
-                'label' => __( 'Donor Message', 'giftflowwp' ),
+                'label' => __( 'Donor Message', 'giftflow' ),
                 'type'  => 'textarea',
-                'description' => __( 'Enter a message from the donor', 'giftflowwp' ),
+                'description' => __( 'Enter a message from the donor', 'giftflow' ),
             ),
             'anonymous_donation' => array(
-                'label' => __( 'Anonymous', 'giftflowwp' ),
+                'label' => __( 'Anonymous', 'giftflow' ),
                 'type'  => 'select',
                 'options' => array(
-                    'no'  => __( 'No', 'giftflowwp' ),
-                    'yes' => __( 'Yes', 'giftflowwp' ),
+                    'no'  => __( 'No', 'giftflow' ),
+                    'yes' => __( 'Yes', 'giftflow' ),
                 ),
-                'description' => __( 'Check if the donor wants to remain anonymous', 'giftflowwp' ),
+                'description' => __( 'Check if the donor wants to remain anonymous', 'giftflow' ),
             ),
             'campaign_id' => array(
-                'label' => __( 'Campaign', 'giftflowwp' ),
+                'label' => __( 'Campaign', 'giftflow' ),
                 'type'  => 'select',
                 'options' => $this->get_campaigns(),
-                'description' => __( 'Select the campaign of the donation', 'giftflowwp' ),
+                'description' => __( 'Select the campaign of the donation', 'giftflow' ),
             ),
             'donation_type' => array(
-                'label' => __( 'Donation Type', 'giftflowwp' ),
+                'label' => __( 'Donation Type', 'giftflow' ),
                 'type'  => 'select',
                 'options' => array(
-                    'one-time' => __( 'One-Time', 'giftflowwp' ),
-                    'recurring'  => __( 'Recurring', 'giftflowwp' ),
+                    'one-time' => __( 'One-Time', 'giftflow' ),
+                    'recurring'  => __( 'Recurring', 'giftflow' ),
                 ),
-                'description' => __( 'Select the type of donation', 'giftflowwp' ),
+                'description' => __( 'Select the type of donation', 'giftflow' ),
             ),
             'recurring_interval' => array(
-                'label' => __( 'Recurring Interval', 'giftflowwp' ),
+                'label' => __( 'Recurring Interval', 'giftflow' ),
                 'type'  => 'select',
                 'options' => array(
-                    'daily'   => __( 'Daily', 'giftflowwp' ),
-                    'weekly'  => __( 'Weekly', 'giftflowwp' ),
-                    'monthly' => __( 'Monthly', 'giftflowwp' ),
-                    'quarterly' => __( 'Quarterly', 'giftflowwp' ),
-                    'yearly'  => __( 'Yearly', 'giftflowwp' ),
+                    'daily'   => __( 'Daily', 'giftflow' ),
+                    'weekly'  => __( 'Weekly', 'giftflow' ),
+                    'monthly' => __( 'Monthly', 'giftflow' ),
+                    'quarterly' => __( 'Quarterly', 'giftflow' ),
+                    'yearly'  => __( 'Yearly', 'giftflow' ),
                 ),
-                'description' => __( 'Select the recurring interval of the donation', 'giftflowwp' ),
+                'description' => __( 'Select the recurring interval of the donation', 'giftflow' ),
             ),
             'transaction_id' => array(
-                'label' => __( 'Transaction ID', 'giftflowwp' ),
+                'label' => __( 'Transaction ID', 'giftflow' ),
                 'type'  => 'textfield',
-                'description' => __( 'Enter the transaction ID of the donation', 'giftflowwp' ),
+                'description' => __( 'Enter the transaction ID of the donation', 'giftflow' ),
             ),
             'transaction_raw_data' => array(
-                'label' => __( 'Transaction Raw Data', 'giftflowwp' ),
+                'label' => __( 'Transaction Raw Data', 'giftflow' ),
                 'type'  => 'textarea',
-                'description' => __( 'Raw data of the transaction, useful for debugging', 'giftflowwp' ),
+                'description' => __( 'Raw data of the transaction, useful for debugging', 'giftflow' ),
             ),
         );
     }
@@ -146,7 +146,7 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
             // }
             
             // Create and render the field
-            $field_instance = new \GiftFlowWP_Field( 
+            $field_instance = new \GiftFlow_Field( 
                 $field_id, 
                 $field_id, 
                 $field_args['type'], 

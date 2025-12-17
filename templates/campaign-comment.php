@@ -38,8 +38,8 @@ $comments = get_comments($args);
           'format'    => '',
           'current'   => $paged,
           'total'     => $total_pages,
-          'prev_text' => __('Previous', 'giftflowwp'),
-          'next_text' => __('Next', 'giftflowwp'),
+          'prev_text' => __('Previous', 'giftflow'),
+          'next_text' => __('Next', 'giftflow'),
       ]));
       echo '</nav> <!-- .gfw-campaign-comments-pagination -->';
     }
@@ -57,8 +57,8 @@ $comments = get_comments($args);
           'format'    => '',
           'current'   => $paged,
           'total'     => $total_pages,
-          'prev_text' => __('Previous', 'giftflowwp'),
-          'next_text' => __('Next', 'giftflowwp'),
+          'prev_text' => __('Previous', 'giftflow'),
+          'next_text' => __('Next', 'giftflow'),
       ]));
       echo '</nav> <!-- .gfw-campaign-comments-pagination -->';
     }
@@ -72,7 +72,7 @@ $comments = get_comments($args);
       ?>
       <div class="gfw-no-comments">
         <p>
-          <?php esc_html_e('Comments are closed for this campaign.', 'giftflowwp'); ?>
+          <?php esc_html_e('Comments are closed for this campaign.', 'giftflow'); ?>
         </p>
       </div>
       <?php
@@ -80,7 +80,7 @@ $comments = get_comments($args);
     ?>
     <div class="gfw-no-comments">
       <p>
-        <?php esc_html_e('No comments yet. Be the first to share your thoughts!, Your feedback and support mean a lot to this campaign.', 'giftflowwp'); ?>
+        <?php esc_html_e('No comments yet. Be the first to share your thoughts!, Your feedback and support mean a lot to this campaign.', 'giftflow'); ?>
       </p>
     </div>
     <?php

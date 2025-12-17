@@ -75,19 +75,19 @@ The block supports the following social media platforms:
 The block generates the following CSS classes for styling:
 
 ```css
-.giftflowwp-share                           /* Main container */
-.giftflowwp-share__title                    /* Title heading */
-.giftflowwp-share__buttons                  /* Button container */
-.giftflowwp-share__button                   /* Base button styles */
-.giftflowwp-share__button--facebook         /* Facebook button */
-.giftflowwp-share__button--twitter          /* X/Twitter button */
-.giftflowwp-share__button--linkedin         /* LinkedIn button */
-.giftflowwp-share__button--email            /* Email button */
-.giftflowwp-share__button--copy-url         /* Copy URL button */
-.giftflowwp-share__icon                     /* Button icon */
-.giftflowwp-share__text                     /* Button text */
-.giftflowwp-share__copy-feedback            /* Copy feedback message */
-.giftflowwp-share__copy-message             /* Copy success text */
+.giftflow-share                           /* Main container */
+.giftflow-share__title                    /* Title heading */
+.giftflow-share__buttons                  /* Button container */
+.giftflow-share__button                   /* Base button styles */
+.giftflow-share__button--facebook         /* Facebook button */
+.giftflow-share__button--twitter          /* X/Twitter button */
+.giftflow-share__button--linkedin         /* LinkedIn button */
+.giftflow-share__button--email            /* Email button */
+.giftflow-share__button--copy-url         /* Copy URL button */
+.giftflow-share__icon                     /* Button icon */
+.giftflow-share__text                     /* Button text */
+.giftflow-share__copy-feedback            /* Copy feedback message */
+.giftflow-share__copy-message             /* Copy success text */
 ```
 
 ## Responsive Design
@@ -174,38 +174,38 @@ When `customUrl` is empty, the block automatically detects the current page cont
 ### Basic Usage
 ```php
 <!-- In PHP template -->
-<?php echo do_blocks('<!-- wp:giftflowwp/share /-->'); ?>
+<?php echo do_blocks('<!-- wp:giftflow/share /-->'); ?>
 ```
 
 ### With Custom Title
 ```php
 <!-- In PHP template -->
-<?php echo do_blocks('<!-- wp:giftflowwp/share {"title":"Share this campaign"} /-->'); ?>
+<?php echo do_blocks('<!-- wp:giftflow/share {"title":"Share this campaign"} /-->'); ?>
 ```
 
 ### With Custom URL
 ```php
 <!-- In PHP template -->
-<?php echo do_blocks('<!-- wp:giftflowwp/share {"customUrl":"https://example.com/custom-page"} /-->'); ?>
+<?php echo do_blocks('<!-- wp:giftflow/share {"customUrl":"https://example.com/custom-page"} /-->'); ?>
 ```
 
 ### Social Media Only
 ```php
 <!-- In PHP template -->
-<?php echo do_blocks('<!-- wp:giftflowwp/share {"showEmail":false,"showCopyUrl":false} /-->'); ?>
+<?php echo do_blocks('<!-- wp:giftflow/share {"showEmail":false,"showCopyUrl":false} /-->'); ?>
 ```
 
 ### Email and Copy URL Only
 ```php
 <!-- In PHP template -->
-<?php echo do_blocks('<!-- wp:giftflowwp/share {"showSocials":false} /-->'); ?>
+<?php echo do_blocks('<!-- wp:giftflow/share {"showSocials":false} /-->'); ?>
 ```
 
 ### In Block Template
 ```html
-<!-- wp:giftflowwp/share -->
-<!-- wp:giftflowwp/share {"title":"Share this campaign","customUrl":"https://example.com/campaign"} /-->
-<!-- /wp:giftflowwp/share -->
+<!-- wp:giftflow/share -->
+<!-- wp:giftflow/share {"title":"Share this campaign","customUrl":"https://example.com/campaign"} /-->
+<!-- /wp:giftflow/share -->
 ```
 
 ### Common Use Cases

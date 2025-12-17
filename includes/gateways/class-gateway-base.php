@@ -1,11 +1,11 @@
 <?php
 /**
- * Base Gateway class for GiftFlowWp
+ * Base Gateway class for GiftFlow
  *
  * This class provides a comprehensive foundation for creating payment gateways
  * with automatic registration, settings management, and asset enqueuing.
  *
- * @package GiftFlowWp
+ * @package GiftFlow
  * @subpackage Gateways
  * @since 1.0.0
  * @version 1.0.0
@@ -16,21 +16,21 @@
  * 1. CREATING A NEW GATEWAY:
  * --------------------------
  * ```php
- * namespace GiftFlowWp\Gateways;
+ * namespace GiftFlow\Gateways;
  * 
  * class My_Gateway extends Gateway_Base {
  *     
  *     protected function init_gateway() {
  *         $this->id = 'my_gateway';
- *         $this->title = __('My Gateway', 'giftflowwp');
- *         $this->description = __('Accept payments via My Gateway', 'giftflowwp');
+ *         $this->title = __('My Gateway', 'giftflow');
+ *         $this->description = __('Accept payments via My Gateway', 'giftflow');
  *         $this->icon = 'path/to/icon.png';
  *         $this->order = 20;
  *         $this->supports = array('refunds', 'subscriptions');
  *         
  *         // Add scripts and styles
  *         $this->add_script('my-gateway-js', array(
- *             'src' => GIFTFLOWWP_PLUGIN_URL . 'assets/js/my-gateway.js',
+ *             'src' => GIFTFLOW_PLUGIN_URL . 'assets/js/my-gateway.js',
  *             'deps' => array('jquery'),
  *             'frontend' => true,
  *             'localize' => array(
@@ -43,11 +43,11 @@
  *     protected function register_settings_fields() {
  *         return array(
  *             'enabled' => array(
- *                 'title' => __('Enable', 'giftflowwp'),
+ *                 'title' => __('Enable', 'giftflow'),
  *                 'type' => 'checkbox',
  *             ),
  *             'api_key' => array(
- *                 'title' => __('API Key', 'giftflowwp'),
+ *                 'title' => __('API Key', 'giftflow'),
  *                 'type' => 'password',
  *             ),
  *         );
@@ -69,10 +69,10 @@
  * });
  * 
  * // Register gateways
- * add_action('giftflowwp_register_gateways', function() {
- *     new \GiftFlowWp\Gateways\Stripe_Gateway();
- *     new \GiftFlowWp\Gateways\PayPal_Gateway();
- *     new \GiftFlowWp\Gateways\My_Gateway();
+ * add_action('giftflow_register_gateways', function() {
+ *     new \GiftFlow\Gateways\Stripe_Gateway();
+ *     new \GiftFlow\Gateways\PayPal_Gateway();
+ *     new \GiftFlow\Gateways\My_Gateway();
  * });
  * ```
  * 
@@ -92,16 +92,16 @@
  * 4. AVAILABLE HOOKS & FILTERS:
  * -----------------------------
  * Actions:
- * - giftflowwp_register_gateways - Register custom gateways
- * - giftflowwp_gateway_init_hooks - After gateway hooks initialization
- * - giftflowwp_gateway_registered - After gateway registration
- * - giftflowwp_gateway_settings_saved - After settings saved
- * - giftflowwp_gateways_initialized - After all gateways initialized
- * - giftflowwp_gateway_enqueue_frontend_assets - Additional frontend assets
- * - giftflowwp_gateway_enqueue_admin_assets - Additional admin assets
+ * - giftflow_register_gateways - Register custom gateways
+ * - giftflow_gateway_init_hooks - After gateway hooks initialization
+ * - giftflow_gateway_registered - After gateway registration
+ * - giftflow_gateway_settings_saved - After settings saved
+ * - giftflow_gateways_initialized - After all gateways initialized
+ * - giftflow_gateway_enqueue_frontend_assets - Additional frontend assets
+ * - giftflow_gateway_enqueue_admin_assets - Additional admin assets
  * 
  * Filters:
- * - giftflowwp_payment_gateways - Modify gateways list
+ * - giftflow_payment_gateways - Modify gateways list
  * 
  * 5. ASSET MANAGEMENT:
  * --------------------
@@ -141,9 +141,9 @@
  * 
  */
 
-namespace GiftFlowWp\Gateways;
+namespace GiftFlow\Gateways;
 
-use GiftFlowWp\Core\Base;
+use GiftFlow\Core\Base;
 
 /**
  * Base class for payment gateways
@@ -256,8 +256,8 @@ abstract class Gateway_Base extends Base {
      * Initialize gateway settings
      */
     protected function init_settings() {
-        $opts = get_option('giftflowwp_payment_options', []); // all options of payment gateways
-        $this->settings = $opts[$this->id]; // get_option('giftflowwp_gateway_' . $this->id, array());
+        $opts = get_option('giftflow_payment_options', []); // all options of payment gateways
+        $this->settings = isset($opts[$this->id]) ? $opts[$this->id] : array(); // get_option('giftflow_gateway_' . $this->id, array());
         
         $enabledFieldName = $this->id . '_enabled';
         $enabled = isset($this->settings[$enabledFieldName]) ? $this->settings[$enabledFieldName] == '1' : false;
@@ -270,8 +270,8 @@ abstract class Gateway_Base extends Base {
      */
     protected function init_hooks() {
         // Core gateway hooks
-        add_filter('giftflowwp_payment_gateways', array($this, 'add_gateway_to_list'));
-        add_action('giftflowwp_payment_methods_settings', array($this, 'register_settings_fields'));
+        add_filter('giftflow_payment_gateways', array($this, 'add_gateway_to_list'));
+        add_action('giftflow_payment_methods_settings', array($this, 'register_settings_fields'));
 
         // Asset hooks
         add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_assets'));
@@ -281,7 +281,7 @@ abstract class Gateway_Base extends Base {
         $this->init_additional_hooks();
         
         // Allow third parties to add hooks
-        do_action('giftflowwp_gateway_init_hooks', $this);
+        do_action('giftflow_gateway_init_hooks', $this);
     }
 
     /**
@@ -299,7 +299,7 @@ abstract class Gateway_Base extends Base {
             self::$gateway_registry[$this->id] = $this;
             
             // Fire action after gateway registration
-            do_action('giftflowwp_gateway_registered', $this->id, $this);
+            do_action('giftflow_gateway_registered', $this->id, $this);
         }
     }
 
@@ -365,7 +365,7 @@ abstract class Gateway_Base extends Base {
         }
         
         // Allow additional frontend assets
-        do_action('giftflowwp_gateway_enqueue_frontend_assets', $this->id);
+        do_action('giftflow_gateway_enqueue_frontend_assets', $this->id);
     }
 
     /**
@@ -408,7 +408,7 @@ abstract class Gateway_Base extends Base {
         }
         
         // Allow additional admin assets
-        do_action('giftflowwp_gateway_enqueue_admin_assets', $this->id);
+        do_action('giftflow_gateway_enqueue_admin_assets', $this->id);
     }
 
     /**
@@ -455,7 +455,7 @@ abstract class Gateway_Base extends Base {
      */
     public static function init_gateways() {
         // Allow plugins to register gateways
-        do_action('giftflowwp_register_gateways');
+        do_action('giftflow_register_gateways');
         
         // Sort gateways by order
         uasort(self::$gateway_registry, function($a, $b) {
@@ -463,7 +463,7 @@ abstract class Gateway_Base extends Base {
         });
         
         // Fire action after all gateways initialized
-        do_action('giftflowwp_gateways_initialized', self::$gateway_registry);
+        do_action('giftflow_gateways_initialized', self::$gateway_registry);
     }
 
     /**

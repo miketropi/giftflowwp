@@ -1,26 +1,26 @@
-.giftflowwp-campaign-status-bar {
+.giftflow-campaign-status-bar {
   padding-top: 1.5em;
   padding-bottom: 0.5em;
   border-top: 1px solid #e2e8f0;
 }
-.giftflowwp-campaign-status-bar .campaign-progress .progress-stats {
+.giftflow-campaign-status-bar .campaign-progress .progress-stats {
   font-size: 1rem;
   margin-bottom: 0.75rem;
 }
 @media (max-width: 768px) {
-  .giftflowwp-campaign-status-bar .campaign-progress .progress-stats {
+  .giftflow-campaign-status-bar .campaign-progress .progress-stats {
     font-size: 0.9rem;
   }
 }
 @media (max-width: 480px) {
-  .giftflowwp-campaign-status-bar .campaign-progress .progress-stats {
+  .giftflow-campaign-status-bar .campaign-progress .progress-stats {
     font-size: 0.85rem;
   }
 }
-.giftflowwp-campaign-status-bar .campaign-progress .progress-stats .giftflowwp-currency-formatted-amount {
+.giftflow-campaign-status-bar .campaign-progress .progress-stats .giftflow-currency-formatted-amount {
   font-weight: 600;
 }
-.giftflowwp-campaign-status-bar .campaign-progress .progress-bar {
+.giftflow-campaign-status-bar .campaign-progress .progress-bar {
   height: 0.5rem;
   background-color: #f1f5f9;
   border-radius: 9999px;
@@ -29,47 +29,47 @@
   margin-bottom: 1rem;
 }
 @media (max-width: 480px) {
-  .giftflowwp-campaign-status-bar .campaign-progress .progress-bar {
+  .giftflow-campaign-status-bar .campaign-progress .progress-bar {
     height: 0.6rem;
   }
 }
-.giftflowwp-campaign-status-bar .campaign-progress .progress-bar .progress {
+.giftflow-campaign-status-bar .campaign-progress .progress-bar .progress {
   height: 100%;
   background: linear-gradient(90deg, #0ea5e9, #38bdf8);
   border-radius: 9999px;
   transition: width 0.5s ease;
 }
-.giftflowwp-campaign-status-bar .campaign-progress .progress-meta {
+.giftflow-campaign-status-bar .campaign-progress .progress-meta {
   display: flex;
   justify-content: space-between;
   margin-top: 0.5rem;
   font-size: 0.875rem;
 }
 @media (max-width: 768px) {
-  .giftflowwp-campaign-status-bar .campaign-progress .progress-meta {
+  .giftflow-campaign-status-bar .campaign-progress .progress-meta {
     font-size: 0.8rem;
   }
 }
 @media (max-width: 480px) {
-  .giftflowwp-campaign-status-bar .campaign-progress .progress-meta {
+  .giftflow-campaign-status-bar .campaign-progress .progress-meta {
     flex-direction: column;
     gap: 0.5rem;
   }
 }
-.giftflowwp-campaign-status-bar .campaign-progress .progress-meta .progress-meta-item {
+.giftflow-campaign-status-bar .campaign-progress .progress-meta .progress-meta-item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 @media (max-width: 480px) {
-  .giftflowwp-campaign-status-bar .campaign-progress .progress-meta .progress-meta-item {
+  .giftflow-campaign-status-bar .campaign-progress .progress-meta .progress-meta-item {
     justify-content: flex-start;
   }
 }
-.giftflowwp-campaign-status-bar .campaign-progress .progress-meta .progress-meta-item .__icon {
+.giftflow-campaign-status-bar .campaign-progress .progress-meta .progress-meta-item .__icon {
   display: flex;
   align-items: center;
 }
-.giftflowwp-campaign-status-bar .campaign-progress .progress-meta .progress-meta-item .__text {
+.giftflow-campaign-status-bar .campaign-progress .progress-meta .progress-meta-item .__text {
   font-weight: 500;
 }

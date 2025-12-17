@@ -1,8 +1,8 @@
-.giftflowwp-share {
+.giftflow-share {
 
   &__title {
     font-weight: 600;
-    color: var(--giftflowwp-text-color, #1f2937);
+    color: var(--giftflow-text-color, #1f2937);
     margin: 0 0 .5rem 0;
     display: inline-block;
     line-height: normal;
@@ -44,7 +44,7 @@
     background: none;
     border: none;
     border-radius: 0;
-    color: var(--giftflowwp-success-dark, #065f46);
+    color: var(--giftflow-success-dark, #065f46);
     font-weight: bold;
     animation: none;
     font-size: 11px;

@@ -1,12 +1,12 @@
 <?php 
 
-function giftflowwp_donation_button_block() {
+function giftflow_donation_button_block() {
 
     register_block_type(
-        'giftflowwp/donation-button',
+        'giftflow/donation-button',
         array(
             'api_version' => 3,
-            'render_callback' => 'giftflowwp_donation_button_block_render',
+            'render_callback' => 'giftflow_donation_button_block_render',
             'attributes' => array(
                 'campaignId' => array(
                     'type' => 'number',
@@ -37,9 +37,9 @@ function giftflowwp_donation_button_block() {
     );
 }
 
-add_action('init', 'giftflowwp_donation_button_block');
+add_action('init', 'giftflow_donation_button_block');
 
-function giftflowwp_donation_button_block_render($attributes, $content, $block) {
+function giftflow_donation_button_block_render($attributes, $content, $block) {
     $campaign_id = $attributes['campaignId'] ?? 0;
     
     // If no specific campaign is selected, use the current post ID
@@ -51,7 +51,7 @@ function giftflowwp_donation_button_block_render($attributes, $content, $block) 
     if (empty($campaign_id)) {
         ob_start();
         ?>
-        <div class="giftflowwp-donation-button">
+        <div class="giftflow-donation-button">
             <button class="donation-btn donation-btn--disabled--" disabled-- style="
                 background-color: <?php echo esc_attr($attributes['backgroundColor'] ?? '#000000'); ?>;
                 color: <?php echo esc_attr($attributes['textColor'] ?? '#ffffff'); ?>;
@@ -63,8 +63,8 @@ function giftflowwp_donation_button_block_render($attributes, $content, $block) 
                 <?php echo esc_html($attributes['buttonText'] ?? 'Donate Now'); ?>
             </button>
             <p class="donation-button-error">
-                <?php echo wp_kses($giftflowwp_svg_icon("circle-alert"), giftflowwp_allowed_svg_tags()); ?>
-                <?php esc_html_e('No campaign found. Please select a campaign or ensure this is a campaign post.', 'giftflowwp'); ?>
+                <?php echo wp_kses(giftflow_svg_icon("circle-alert"), giftflow_allowed_svg_tags()); ?>
+                <?php esc_html_e('No campaign found. Please select a campaign or ensure this is a campaign post.', 'giftflow'); ?>
             </p>
         </div>
         <?php
@@ -73,7 +73,7 @@ function giftflowwp_donation_button_block_render($attributes, $content, $block) 
 
     // Get campaign data
     $goal_amount = get_post_meta($campaign_id, '_goal_amount', true);
-    $raised_amount = giftflowwp_get_campaign_raised_amount($campaign_id);
+    $raised_amount = giftflow_get_campaign_raised_amount($campaign_id);
     $campaign_title = get_the_title($campaign_id);
     
     // Check if campaign exists and is active
@@ -81,7 +81,7 @@ function giftflowwp_donation_button_block_render($attributes, $content, $block) 
     $is_active = $campaign_status === 'publish';
     
     // Get button attributes
-    $button_text = $attributes['buttonText'] ?? esc_html__('Donate Now', 'giftflowwp');
+    $button_text = $attributes['buttonText'] ?? esc_html__('Donate Now', 'giftflow');
     $background_color = $attributes['backgroundColor'] ?? '#000000';
     $text_color = $attributes['textColor'] ?? '#ffffff';
     $border_radius = $attributes['borderRadius'] ?? 0;
@@ -125,14 +125,14 @@ function giftflowwp_donation_button_block_render($attributes, $content, $block) 
 
     ob_start();
     ?>
-    <div class="giftflowwp-donation-button" data-campaign-id="<?php echo esc_attr($campaign_id); ?>">
+    <div class="giftflow-donation-button" data-campaign-id="<?php echo esc_attr($campaign_id); ?>">
         <button 
             class="<?php echo esc_attr($button_class_string); ?>"
             style="<?php echo esc_attr($button_style_string); ?>"
             <?php echo $is_active ? '' : 'disabled'; ?>
             data-campaign-id="<?php echo esc_attr($campaign_id); ?>"
             data-campaign-title="<?php echo esc_attr($campaign_title); ?>"
-            onclick="giftflowwp.donationButton_Handle(this)"
+            onclick="giftflow.donationButton_Handle(this)"
         >
             <?php echo esc_html($button_text); ?>
         </button>

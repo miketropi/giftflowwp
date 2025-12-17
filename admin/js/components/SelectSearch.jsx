@@ -4,7 +4,7 @@
  * A customizable, searchable select dropdown component with keyboard navigation,
  * loading states, error handling, and accessibility features.
  * 
- * @author GiftFlowWP
+ * @author GiftFlow
  * @version 1.0.0
  * 
  * @example
@@ -108,10 +108,10 @@
  * 
  * @styling
  * The component uses BEM methodology for CSS classes:
- * - .giftflowwp-select-search (main container)
- * - .giftflowwp-select-search__trigger (clickable area)
- * - .giftflowwp-select-search__dropdown (options container)
- * - .giftflowwp-select-search__option (individual option)
+ * - .giftflow-select-search (main container)
+ * - .giftflow-select-search__trigger (clickable area)
+ * - .giftflow-select-search__dropdown (options container)
+ * - .giftflow-select-search__option (individual option)
  * 
  * Customize styles by targeting these classes or using the className prop.
  */
@@ -345,10 +345,10 @@ export default function SelectSearch({
   return (
     <div 
       ref={containerRef}
-      className={`giftflowwp-select-search ${className} ${disabled ? 'giftflowwp-select-search--disabled' : ''} ${error ? 'giftflowwp-select-search--error' : ''}`}
+      className={`giftflow-select-search ${className} ${disabled ? 'giftflow-select-search--disabled' : ''} ${error ? 'giftflow-select-search--error' : ''}`}
     >
       <div
-        className="giftflowwp-select-search__trigger"
+        className="giftflow-select-search__trigger"
         onClick={() => !disabled && !loading && setIsOpen(!isOpen)}
         onKeyDown={handleKeyDown}
         tabIndex={disabled ? -1 : 0}
@@ -357,28 +357,28 @@ export default function SelectSearch({
         aria-haspopup="listbox"
         aria-labelledby={id}
       >
-        <div className="giftflowwp-select-search__value">
+        <div className="giftflow-select-search__value">
           {selectedOption ? (
-            <span className="giftflowwp-select-search__value-text" dangerouslySetInnerHTML={{ __html: selectedOption.label }}>
+            <span className="giftflow-select-search__value-text" dangerouslySetInnerHTML={{ __html: selectedOption.label }}>
             </span>
           ) : (
-            <span className="giftflowwp-select-search__placeholder" dangerouslySetInnerHTML={{ __html: placeholder }}>
+            <span className="giftflow-select-search__placeholder" dangerouslySetInnerHTML={{ __html: placeholder }}>
             </span>
           )}
         </div>
         
-        <div className="giftflowwp-select-search__indicators">
+        <div className="giftflow-select-search__indicators">
           {value && !disabled && (
             <button
               type="button"
-              className="giftflowwp-select-search__clear"
+              className="giftflow-select-search__clear"
               onClick={handleClear}
               aria-label="Clear selection"
             >
               <X size={16} />
             </button>
           )}
-          <div className="giftflowwp-select-search__arrow">
+          <div className="giftflow-select-search__arrow">
             <ChevronDown size={16} />
           </div>
         </div>
@@ -387,14 +387,14 @@ export default function SelectSearch({
       {isOpen && createPortal(
         <div 
           ref={dropdownRef}
-          className="giftflowwp-select-search__dropdown"
+          className="giftflow-select-search__dropdown"
         >
-          <div className="giftflowwp-select-search__search">
-            <Search size={16} className="giftflowwp-select-search__search-icon" />
+          <div className="giftflow-select-search__search">
+            <Search size={16} className="giftflow-select-search__search-icon" />
             <input
               ref={searchInputRef}
               type="text"
-              className="giftflowwp-select-search__search-input"
+              className="giftflow-select-search__search-input"
               placeholder={searchPlaceholder}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -402,10 +402,10 @@ export default function SelectSearch({
             />
           </div>
           
-          <div className="giftflowwp-select-search__options" role="listbox">
+          <div className="giftflow-select-search__options" role="listbox">
             {loading ? (
-              <div className="giftflowwp-select-search__loading">
-                <div className="giftflowwp-select-search__spinner"></div>
+              <div className="giftflow-select-search__loading">
+                <div className="giftflow-select-search__spinner"></div>
                 <span>Loading options...</span>
               </div>
             ) : filteredOptions.length > 0 ? (
@@ -413,25 +413,25 @@ export default function SelectSearch({
                 <div
                   key={option.value}
                   ref={el => optionRefs.current[index] = el}
-                  className={`giftflowwp-select-search__option ${
-                    option.value === value ? 'giftflowwp-select-search__option--selected' : ''
+                  className={`giftflow-select-search__option ${
+                    option.value === value ? 'giftflow-select-search__option--selected' : ''
                   } ${
-                    index === highlightedIndex ? 'giftflowwp-select-search__option--highlighted' : ''
+                    index === highlightedIndex ? 'giftflow-select-search__option--highlighted' : ''
                   }`}
                   onClick={() => handleSelect(option)}
                   role="option"
                   aria-selected={option.value === value}
                 >
-                  <span className="giftflowwp-select-search__option-label" dangerouslySetInnerHTML={{ __html: option.label }}>
+                  <span className="giftflow-select-search__option-label" dangerouslySetInnerHTML={{ __html: option.label }}>
                   </span>
                   {option.description && (
-                    <span className="giftflowwp-select-search__option-description" dangerouslySetInnerHTML={{ __html: option.description }}>
+                    <span className="giftflow-select-search__option-description" dangerouslySetInnerHTML={{ __html: option.description }}>
                     </span>
                   )}
                 </div>
               ))
             ) : (
-              <div className="giftflowwp-select-search__no-options">
+              <div className="giftflow-select-search__no-options">
                 No options found
               </div>
             )}
@@ -441,7 +441,7 @@ export default function SelectSearch({
       )}
 
       {error && (
-        <div className="giftflowwp-select-search__error-message">
+        <div className="giftflow-select-search__error-message">
           {error}
         </div>
       )}

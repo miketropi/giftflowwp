@@ -1,5 +1,5 @@
-// GiftFlowWP Modal Component Styles
-.giftflowwp-modal {
+// GiftFlow Modal Component Styles
+.giftflow-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -35,7 +35,7 @@
     display: flex;
     flex-direction: column;
 
-    .giftflowwp-modal--open & {
+    .giftflow-modal--open & {
       transform: scale(1) translateY(0);
     }
   }
@@ -251,7 +251,7 @@
 
   // Modal loading state
   &--loading {
-    .giftflowwp-modal__body {
+    .giftflow-modal__body {
       position: relative;
       min-height: 200px;
       display: flex;
@@ -271,7 +271,7 @@
       }
     }
 
-    .giftflowwp-modal__spinner {
+    .giftflow-modal__spinner {
       position: relative;
       z-index: 2;
       width: 40px;
@@ -285,30 +285,30 @@
 
   // Modal with no padding
   &--no-padding {
-    .giftflowwp-modal__body {
+    .giftflow-modal__body {
       padding: 0;
     }
 
-    .giftflowwp-modal__header {
+    .giftflow-modal__header {
       padding: 1.5rem;
       margin-bottom: 0;
     }
 
-    .giftflowwp-modal__footer {
+    .giftflow-modal__footer {
       padding: 1.5rem;
     }
   }
 
   // Modal with image
   &--with-image {
-    .giftflowwp-modal__header {
+    .giftflow-modal__header {
       background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
       border-bottom: none;
       padding: 2rem 1.5rem;
       text-align: center;
     }
 
-    .giftflowwp-modal__image {
+    .giftflow-modal__image {
       width: 80px;
       height: 80px;
       margin: 0 auto 1rem auto;
@@ -350,12 +350,12 @@
       flex-direction: column-reverse;
       gap: 0.5rem;
 
-      .giftflowwp-modal__actions {
+      .giftflow-modal__actions {
         width: 100%;
         flex-direction: column;
       }
 
-      .giftflowwp-modal__button {
+      .giftflow-modal__button {
         width: 100%;
         justify-content: center;
       }
@@ -395,7 +395,7 @@
 }
 
 // Modal overlay variants
-.giftflowwp-modal-overlay {
+.giftflow-modal-overlay {
   &--blur {
     backdrop-filter: blur(8px);
   }
@@ -410,7 +410,7 @@
 }
 
 // Utility classes for modal positioning
-.giftflowwp-modal {
+.giftflow-modal {
   &--top {
     align-items: flex-start;
     padding-top: 2rem;

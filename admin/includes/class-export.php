@@ -1,8 +1,8 @@
 <?php
 /**
- * Export functionality for GiftFlowWP
+ * Export functionality for GiftFlow
  *
- * @package GiftFlowWP
+ * @package GiftFlow
  * @subpackage Admin
  */
 
@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class GiftFlowWP_Export {
+class GiftFlow_Export {
     public $format;
     public $campaign_id;
     public $period;
@@ -77,7 +77,7 @@ class GiftFlowWP_Export {
         
         if (empty($donations)) {
             /* translators: %s: Campaign name */
-            wp_die(sprintf(esc_html__('No donations found for the selected campaign: %s', 'giftflowwp'), esc_html(get_the_title($this->campaign_id))));
+            wp_die(sprintf(esc_html__('No donations found for the selected campaign: %s', 'giftflow'), esc_html(get_the_title($this->campaign_id))));
         }
         
         // Generate export based on format

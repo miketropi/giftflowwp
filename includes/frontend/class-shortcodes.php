@@ -1,14 +1,14 @@
 <?php
 /**
- * Shortcodes class for GiftFlowWp
+ * Shortcodes class for GiftFlow
  *
- * @package GiftFlowWp
+ * @package GiftFlow
  * @subpackage Frontend
  */
 
-namespace GiftFlowWp\Frontend;
+namespace GiftFlow\Frontend;
 
-use GiftFlowWp\Core\Base;
+use GiftFlow\Core\Base;
 
 /**
  * Handles all shortcode functionality
@@ -43,20 +43,20 @@ class Shortcodes extends Base {
         $campaign_id = intval($atts['campaign_id']);
         if (!$campaign_id) {
             return;
-            // return '<div class="giftflowwp-error">' . __('Invalid campaign ID', 'giftflowwp') . '</div>';
+            // return '<div class="giftflow-error">' . __('Invalid campaign ID', 'giftflow') . '</div>';
         }
 
         // gateways
-        $gateways = \GiftFlowWp\Gateways\Gateway_Base::get_registered_gateways();
+        $gateways = \GiftFlow\Gateways\Gateway_Base::get_registered_gateways();
 
         // preset donation amounts
-        $preset_donation_amounts = giftflowwp_get_preset_donation_amounts_by_campaign($campaign_id);
+        $preset_donation_amounts = giftflow_get_preset_donation_amounts_by_campaign($campaign_id);
 
         // raised amount
-        $raised_amount = giftflowwp_get_campaign_raised_amount($campaign_id);
+        $raised_amount = giftflow_get_campaign_raised_amount($campaign_id);
 
         // goal amount
-        $goal_amount = giftflowwp_get_campaign_goal_amount($campaign_id);
+        $goal_amount = giftflow_get_campaign_goal_amount($campaign_id);
 
 
         // Get default donation amount (first preset amount or 10)
@@ -66,10 +66,10 @@ class Shortcodes extends Base {
         $campaign_title = get_the_title($campaign_id);
 
         // Get currency symbol
-        $currency_symbol = giftflowwp_get_global_currency_symbol();
+        $currency_symbol = giftflow_get_global_currency_symbol();
 
         // Get currency format template
-        $currency_format_template = giftflowwp_get_currency_js_format_template();
+        $currency_format_template = giftflow_get_currency_js_format_template();
 
         // array of donation types
         $donation_types = array();
@@ -82,8 +82,8 @@ class Shortcodes extends Base {
             $donation_types[] = [
                 'name' => 'one-time',
                 'icon' => '',
-                'label' => __('One-time Donation', 'giftflowwp'),
-                'description' => __('Make a single donation', 'giftflowwp'),
+                'label' => __('One-time Donation', 'giftflow'),
+                'description' => __('Make a single donation', 'giftflow'),
             ];
         }
 
@@ -96,19 +96,19 @@ class Shortcodes extends Base {
         if ($recurring_donation) {
 
             $recurring_label_array = [
-                'daily' => __('Daily Donation', 'giftflowwp'),
-                'weekly' => __('Weekly Donation', 'giftflowwp'),
-                'monthly' => __('Monthly Donation', 'giftflowwp'),
-                'yearly' => __('Yearly Donation', 'giftflowwp'),
+                'daily' => __('Daily Donation', 'giftflow'),
+                'weekly' => __('Weekly Donation', 'giftflow'),
+                'monthly' => __('Monthly Donation', 'giftflow'),
+                'yearly' => __('Yearly Donation', 'giftflow'),
             ];
 
             $recurring_label = $recurring_label_array[$recurring_interval];
 
             $donation_types[] = [
                 'name' => 'recurring',
-                'icon' => giftflowwp_svg_icon('loop'),
+                'icon' => giftflow_svg_icon('loop'),
                 'label' => $recurring_label,
-                'description' => __('Make a recurring donation', 'giftflowwp'),
+                'description' => __('Make a recurring donation', 'giftflow'),
             ];
         }
 

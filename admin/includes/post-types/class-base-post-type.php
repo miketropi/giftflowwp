@@ -2,11 +2,11 @@
 /**
  * Base Post Type Class
  *
- * @package GiftFlowWp
+ * @package GiftFlow
  * @subpackage Admin
  */
 
-namespace GiftFlowWp\Admin\PostTypes;
+namespace GiftFlow\Admin\PostTypes;
 
 /**
  * Base Post Type Class

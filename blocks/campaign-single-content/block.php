@@ -1,19 +1,19 @@
 <?php 
 
-function giftflowwp_campaign_single_content_block() {
+function giftflow_campaign_single_content_block() {
 
   register_block_type(
-      'giftflowwp/campaign-single-content',
+      'giftflow/campaign-single-content',
       array(
           'api_version' => 3,
-          'render_callback' => 'giftflowwp_campaign_single_content_block_render',
+          'render_callback' => 'giftflow_campaign_single_content_block_render',
       )
   );
 }
 
-add_action('init', 'giftflowwp_campaign_single_content_block');
+add_action('init', 'giftflow_campaign_single_content_block');
 
-function giftflowwp_campaign_single_content_block_render($attributes, $content, $block) {
+function giftflow_campaign_single_content_block_render($attributes, $content, $block) {
   $post_id = get_the_ID();
 
   // Check if it is a WP json api request:
@@ -36,40 +36,40 @@ function giftflowwp_campaign_single_content_block_render($attributes, $content, 
   $tabs = array(
     'campaign' => array(
       'id' => 'campaign',
-      'label' => apply_filters('giftflowwp:campaign_single_content_tab_campaign_label', __('Campaign', 'giftflowwp')),
-      'content' => apply_filters('giftflowwp:campaign_single_content_tab_campaign', '', $post_id),
-      'icon' => apply_filters('giftflowwp:campaign_single_content_tab_campaign_icon', $icons[0]),
+      'label' => apply_filters('giftflow:campaign_single_content_tab_campaign_label', __('Campaign', 'giftflow')),
+      'content' => apply_filters('giftflow:campaign_single_content_tab_campaign', '', $post_id),
+      'icon' => apply_filters('giftflow:campaign_single_content_tab_campaign_icon', $icons[0]),
       'is_active' => true,
     ),
     'donations' => array(
       'id' => 'donations',
-      'label' => apply_filters('giftflowwp:campaign_single_content_tab_donations_label', __('Donations', 'giftflowwp')),
-      'content' => apply_filters('giftflowwp:campaign_single_content_tab_donations', '', $post_id),
-      'icon' => apply_filters('giftflowwp:campaign_single_content_tab_donations_icon', $icons[1]),
+      'label' => apply_filters('giftflow:campaign_single_content_tab_donations_label', __('Donations', 'giftflow')),
+      'content' => apply_filters('giftflow:campaign_single_content_tab_donations', '', $post_id),
+      'icon' => apply_filters('giftflow:campaign_single_content_tab_donations_icon', $icons[1]),
     ),
     'comments' => array(
       'id' => 'comments',
-      'label' => apply_filters('giftflowwp:campaign_single_content_tab_comments_label', __('Comments', 'giftflowwp')),
-      'content' => apply_filters('giftflowwp:campaign_single_content_tab_comments', '', $post_id),
-      'icon' => apply_filters('giftflowwp:campaign_single_content_tab_comments_icon', $icons[2]),
+      'label' => apply_filters('giftflow:campaign_single_content_tab_comments_label', __('Comments', 'giftflow')),
+      'content' => apply_filters('giftflow:campaign_single_content_tab_comments', '', $post_id),
+      'icon' => apply_filters('giftflow:campaign_single_content_tab_comments_icon', $icons[2]),
     ),
   );
   
   // Allow filtering of tabs
-  $tabs = apply_filters('giftflowwp:campaign_single_content_tabs', $tabs, $post_id);
+  $tabs = apply_filters('giftflow:campaign_single_content_tabs', $tabs, $post_id);
 
   ob_start();
   ?>
-  <div class="giftflowwp-campaign-single-content">
+  <div class="giftflow-campaign-single-content">
     <!-- Tab Widget -->
-    <div class="giftflowwp-tab-widget">
-      <div class="giftflowwp-tab-widget-tabs">
+    <div class="giftflow-tab-widget">
+      <div class="giftflow-tab-widget-tabs">
         <?php foreach ($tabs as $tab) : ?>
-          <div class="giftflowwp-tab-widget-tab-item <?php echo isset($tab['is_active']) && true === $tab['is_active'] ? 'active' : ''; ?>" data-tab-id="<?php echo esc_attr($tab['id']); ?>">
-            <span class="giftflowwp-tab-widget-tab-item-icon">
-              <?php echo wp_kses($tab['icon'], giftflowwp_allowed_svg_tags()); ?>
+          <div class="giftflow-tab-widget-tab-item <?php echo isset($tab['is_active']) && true === $tab['is_active'] ? 'active' : ''; ?>" data-tab-id="<?php echo esc_attr($tab['id']); ?>">
+            <span class="giftflow-tab-widget-tab-item-icon">
+              <?php echo wp_kses($tab['icon'], giftflow_allowed_svg_tags()); ?>
             </span>
-            <span class="giftflowwp-tab-widget-tab-item-label">
+            <span class="giftflow-tab-widget-tab-item-label">
               <?php echo esc_html($tab['label']); ?>
             </span> 
           </div>
@@ -77,9 +77,9 @@ function giftflowwp_campaign_single_content_block_render($attributes, $content, 
       </div>
     </div>
     <!-- Tab Content -->
-    <div class="giftflowwp-tab-widget-content">
+    <div class="giftflow-tab-widget-content">
       <?php foreach ($tabs as $tab) : ?>
-        <div class="giftflowwp-tab-widget-content-item <?php echo isset($tab['is_active']) && true === $tab['is_active'] ? 'active' : ''; ?>" data-tab-id="<?php echo esc_attr($tab['id']); ?>">
+        <div class="giftflow-tab-widget-content-item <?php echo isset($tab['is_active']) && true === $tab['is_active'] ? 'active' : ''; ?>" data-tab-id="<?php echo esc_attr($tab['id']); ?>">
           <?php 
           // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
           echo $tab['content']; 
@@ -91,27 +91,27 @@ function giftflowwp_campaign_single_content_block_render($attributes, $content, 
   <script>
     // make vanila script controller show / hide tab content, call in dom inited
     document.addEventListener('DOMContentLoaded', function() {
-      const tabWidget = document.querySelector('.giftflowwp-tab-widget');
-      const tabWidgetContent = document.querySelector('.giftflowwp-tab-widget-content');
+      const tabWidget = document.querySelector('.giftflow-tab-widget');
+      const tabWidgetContent = document.querySelector('.giftflow-tab-widget-content');
 
-      tabWidget.querySelectorAll('.giftflowwp-tab-widget-tab-item').forEach(tabItem => {
+      tabWidget.querySelectorAll('.giftflow-tab-widget-tab-item').forEach(tabItem => {
         tabItem.addEventListener('click', function(e) {
           const target = this;
           const tabId = target.dataset.tabId;
-          const tabContent = tabWidgetContent.querySelector(`.giftflowwp-tab-widget-content-item[data-tab-id="${tabId}"]`);
+          const tabContent = tabWidgetContent.querySelector(`.giftflow-tab-widget-content-item[data-tab-id="${tabId}"]`);
           
           target.classList.add('active');
           tabContent.classList.add('active');
 
           // remove active class from all other tab contents
-          tabWidgetContent.querySelectorAll('.giftflowwp-tab-widget-content-item').forEach(tabContent => {
+          tabWidgetContent.querySelectorAll('.giftflow-tab-widget-content-item').forEach(tabContent => {
             if (tabContent.dataset.tabId !== tabId) {
               tabContent.classList.remove('active');
             }
           });
 
           // remove active class from all other tab items
-          tabWidget.querySelectorAll('.giftflowwp-tab-widget-tab-item').forEach(tabItem => {
+          tabWidget.querySelectorAll('.giftflow-tab-widget-tab-item').forEach(tabItem => {
             if (tabItem.dataset.tabId !== tabId) {
               tabItem.classList.remove('active');
             }
@@ -126,7 +126,7 @@ function giftflowwp_campaign_single_content_block_render($attributes, $content, 
         console.log('hash', hash);
         // if hash include comment then active comments tab
         if (hash.includes('comment')) {
-          const commentsTab = tabWidget.querySelector('.giftflowwp-tab-widget-tab-item[data-tab-id="comments"]');
+          const commentsTab = tabWidget.querySelector('.giftflow-tab-widget-tab-item[data-tab-id="comments"]');
           if (commentsTab) {
             commentsTab.click();
           }
@@ -139,9 +139,9 @@ function giftflowwp_campaign_single_content_block_render($attributes, $content, 
 }
 
 // add filter campaign_single_content_tab_campaign
-add_filter('giftflowwp:campaign_single_content_tab_campaign', 'giftflowwp_campaign_single_content_tab_campaign', 10, 2);
+add_filter('giftflow:campaign_single_content_tab_campaign', 'giftflow_campaign_single_content_tab_campaign', 10, 2);
 
-function giftflowwp_campaign_single_content_tab_campaign($content, $post_id) {
+function giftflow_campaign_single_content_tab_campaign($content, $post_id) {
   ob_start();
   ?>
   <div class="campaign-post-content">
@@ -156,14 +156,14 @@ function giftflowwp_campaign_single_content_tab_campaign($content, $post_id) {
 }
 
 // add filter campaign_single_content_tab_donations
-add_filter('giftflowwp:campaign_single_content_tab_donations', 'giftflowwp_campaign_single_content_tab_donations', 10, 2);
+add_filter('giftflow:campaign_single_content_tab_donations', 'giftflow_campaign_single_content_tab_donations', 10, 2);
 
-function giftflowwp_campaign_single_content_tab_donations($content, $post_id) {
+function giftflow_campaign_single_content_tab_donations($content, $post_id) {
   ob_start();
   ?>
   <div class="campaign-post-donations">
     <!-- description -->
-    <strong><?php esc_html_e('Below are the donations for this campaign.', 'giftflowwp'); ?></strong>
+    <strong><?php esc_html_e('Below are the donations for this campaign.', 'giftflow'); ?></strong>
 
     <div class="__campaign-post-donations-list __donations-list-by-campaign-<?php echo esc_attr($post_id); ?>">
       <?php
@@ -180,8 +180,8 @@ function giftflowwp_campaign_single_content_tab_donations($content, $post_id) {
           )
         );
         $_paged = 1;
-        $results = giftflowwp_get_campaign_donations($post_id, $args, $_paged);
-        giftflowwp_load_template('donation-list-of-campaign.php', array(
+        $results = giftflow_get_campaign_donations($post_id, $args, $_paged);
+        giftflow_load_template('donation-list-of-campaign.php', array(
           'donations' => $results,
           'paged' => $_paged,
           'campaign_id' => $post_id,
@@ -193,19 +193,19 @@ function giftflowwp_campaign_single_content_tab_donations($content, $post_id) {
   return ob_get_clean();
 }
 
-add_filter('giftflowwp:campaign_single_content_tab_comments', 'giftflowwp_campaign_single_content_tab_comments', 10, 2);
+add_filter('giftflow:campaign_single_content_tab_comments', 'giftflow_campaign_single_content_tab_comments', 10, 2);
 
-function giftflowwp_campaign_single_content_tab_comments($content, $post_id) {
+function giftflow_campaign_single_content_tab_comments($content, $post_id) {
   ob_start();
   ?>
   <div class="campaign-post-comments">
     <!-- description -->
-    <strong><?php esc_html_e('Below are the comments for this campaign.', 'giftflowwp'); ?></strong>
+    <strong><?php esc_html_e('Below are the comments for this campaign.', 'giftflow'); ?></strong>
 
     <div class="campaign-post-comments-content">
       <?php
         // load comments template
-        giftflowwp_load_template('campaign-comment.php', array(
+        giftflow_load_template('campaign-comment.php', array(
           'post_id' => $post_id,
         ));
       ?>

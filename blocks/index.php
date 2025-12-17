@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 
-class GiftFlowWp_Block_Loader {
+class GiftFlow_Block_Loader {
     /**
      * Load all block files from subdirectories
      */
@@ -21,6 +21,6 @@ class GiftFlowWp_Block_Loader {
 }
 
 // Initialize the block loader
-GiftFlowWp_Block_Loader::load_blocks();
+GiftFlow_Block_Loader::load_blocks();
 
 

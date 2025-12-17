@@ -1,10 +1,10 @@
 /**
- * GiftFlowWP Modal Styles
+ * GiftFlow Modal Styles
  * Clean, simple, and smooth modal styling
  */
 
 // Modal overlay
-.giftflowwp-modal__overlay {
+.giftflow-modal__overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -26,10 +26,10 @@
 }
 
 // Main modal container
-.giftflowwp-modal {
+.giftflow-modal {
   position: relative;
   background: #ffffff;
-  border-radius: var(--giftflowwp-border-radius);
+  border-radius: var(--giftflow-border-radius);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   max-width: 90vw;
   max-height: 90vh;
@@ -48,7 +48,7 @@
 
     overflow: visible;
 
-    .giftflowwp-modal__content {
+    .giftflow-modal__content {
       max-height: none;
     }
   }
@@ -58,7 +58,7 @@
     transform: scale(1);
     opacity: 0;
     
-    &.giftflowwp-modal--open {
+    &.giftflow-modal--open {
       opacity: 1;
     }
   }
@@ -67,7 +67,7 @@
     transform: translateY(50px);
     opacity: 0;
     
-    &.giftflowwp-modal--open {
+    &.giftflow-modal--open {
       transform: translateY(0);
       opacity: 1;
     }
@@ -77,7 +77,7 @@
     transform: scale(0.9);
     opacity: 0;
     
-    &.giftflowwp-modal--open {
+    &.giftflow-modal--open {
       transform: scale(1);
       opacity: 1;
     }
@@ -118,7 +118,7 @@
 }
 
 // Modal content
-.giftflowwp-modal__content {
+.giftflow-modal__content {
   padding: 1.5rem;
   overflow-y: auto;
   max-height: calc(90vh - 3rem);
@@ -149,7 +149,7 @@
 }
 
 // Close button
-.giftflowwp-modal__close {
+.giftflow-modal__close {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -186,7 +186,7 @@
 }
 
 // Modal header
-.giftflowwp-modal__header {
+.giftflow-modal__header {
   margin: -1.5rem -1.5rem 1rem -1.5rem;
   padding: 1.5rem 1.5rem 0 1.5rem;
   
@@ -200,7 +200,7 @@
 }
 
 // Modal body
-.giftflowwp-modal__body {
+.giftflow-modal__body {
   margin-bottom: 1rem;
   
   p {
@@ -215,7 +215,7 @@
 }
 
 // Modal footer
-.giftflowwp-modal__footer {
+.giftflow-modal__footer {
   margin: 1rem -1.5rem -1.5rem -1.5rem;
   padding: 1rem 1.5rem 1.5rem 1.5rem;
   border-top: 1px solid #e2e8f0;
@@ -229,17 +229,17 @@
     flex-direction: column-reverse;
     align-items: stretch;
     
-    .giftflowwp-modal__btn {
+    .giftflow-modal__btn {
       width: 100%;
     }
   }
 }
 
 // Modal buttons
-.giftflowwp-modal__btn {
+.giftflow-modal__btn {
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: var(--giftflowwp-border-radius);
+  border-radius: var(--giftflow-border-radius);
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
@@ -329,11 +329,11 @@
 }
 
 // Modal input
-.giftflowwp-modal__input {
+.giftflow-modal__input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid var(--giftflowwp-border-color);
-  border-radius: var(--giftflowwp-border-radius);
+  border: 1px solid var(--giftflow-border-color);
+  border-radius: var(--giftflow-border-radius);
   // font-size: 0.875rem;
   // transition: all 0.2s ease-in-out;
   box-sizing: border-box;
@@ -350,7 +350,7 @@
 }
 
 // Loading state
-.giftflowwp-modal__loading {
+.giftflow-modal__loading {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -365,13 +365,13 @@
     border: 2px solid #e2e8f0;
     border-top-color: #3b82f6;
     border-radius: 50%;
-    animation: giftflowwpModalSpin 1s linear infinite;
+    animation: giftflowModalSpin 1s linear infinite;
     margin-right: 0.75rem;
   }
 }
 
 // Error state
-.giftflowwp-modal__error {
+.giftflow-modal__error {
   padding: 1rem;
   background: #fef2f2;
   border: 1px solid #fecaca;
@@ -382,7 +382,7 @@
 }
 
 // Success message
-.giftflowwp-modal__success {
+.giftflow-modal__success {
   padding: 1rem;
   background: #f0fdf4;
   border: 1px solid #bbf7d0;
@@ -393,7 +393,7 @@
 }
 
 // Info message
-.giftflowwp-modal__info {
+.giftflow-modal__info {
   padding: 1rem;
   background: #eff6ff;
   border: 1px solid #bfdbfe;
@@ -404,7 +404,7 @@
 }
 
 // Warning message
-.giftflowwp-modal__warning {
+.giftflow-modal__warning {
   padding: 1rem;
   background: #fffbeb;
   border: 1px solid #fed7aa;
@@ -415,7 +415,7 @@
 }
 
 // Animations
-@keyframes giftflowwpModalSpin {
+@keyframes giftflowModalSpin {
   to {
     transform: rotate(360deg);
   }
@@ -423,7 +423,7 @@
 
 // Responsive design
 @media (max-width: 768px) {
-  .giftflowwp-modal {
+  .giftflow-modal {
     margin: 1rem;
     max-width: calc(100vw - 2rem);
     max-height: calc(100vh - 2rem);
@@ -458,7 +458,7 @@
 }
 
 @media (max-width: 480px) {
-  .giftflowwp-modal {
+  .giftflow-modal {
     margin: 0.5rem;
     max-width: calc(100vw - 1rem);
     max-height: calc(100vh - 1rem);
@@ -501,7 +501,7 @@
 
 // Touch device optimizations
 @media (hover: none) and (pointer: coarse) {
-  .giftflowwp-modal {
+  .giftflow-modal {
     &__btn {
       min-height: 44px; // iOS recommended minimum touch target
       
@@ -533,7 +533,7 @@
 
 // High contrast mode support
 @media (prefers-contrast: high) {
-  .giftflowwp-modal {
+  .giftflow-modal {
     border: 2px solid #000000;
     
     &__close {
@@ -548,7 +548,7 @@
 
 // Reduced motion support
 @media (prefers-reduced-motion: reduce) {
-  .giftflowwp-modal {
+  .giftflow-modal {
     transition: none;
     
     &__overlay {
@@ -560,7 +560,7 @@
     &--zoom {
       transition: none;
       
-      &.giftflowwp-modal--open {
+      &.giftflow-modal--open {
         transform: none;
         opacity: 1;
       }
@@ -593,7 +593,7 @@
     }
   }
   
-  @keyframes giftflowwpModalSpin {
+  @keyframes giftflowModalSpin {
     to {
       transform: none;
     }
@@ -602,7 +602,7 @@
 
 // Dark mode support (if CSS custom properties are available)
 @media (prefers-color-scheme: dark) {
-  .giftflowwp-modal {
+  .giftflow-modal {
     background: #1f2937;
     color: #f9fafb;
     

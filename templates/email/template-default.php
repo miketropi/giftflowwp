@@ -175,7 +175,7 @@ $accent_color = '#0b57d0';
             font-size: .8rem;
         }
 
-        #giftflowwp-email-table p {
+        #giftflow-email-table p {
           margin-bottom: 0;
         }
         
@@ -200,7 +200,7 @@ $accent_color = '#0b57d0';
                               <?php if (!empty($header)): ?>
                                 <?php echo wp_kses_post($header); ?>
                               <?php else: ?>
-                                <?php esc_html_e( 'Thank you for your support', 'giftflowwp' ); ?>
+                                <?php esc_html_e( 'Thank you for your support', 'giftflow' ); ?>
                               <?php endif; ?>
                             </p>
                         </td>
@@ -224,10 +224,10 @@ $accent_color = '#0b57d0';
                         /* translators: 1: Site name, 2: Unsubscribe link */
                         esc_html__(
                             'This email was sent from %1$s. This is an automated notification. Please do not reply to this email. If you have any questions, please contact us at %2$s or email %3$s.',
-                            'giftflowwp'
+                            'giftflow'
                         ),
                         '<a href="' . esc_url($site_url) . '" style="color: ' . esc_attr($accent_color) . ';">' . esc_html($site_name) . '</a>',
-                        '<a href="' . esc_url($site_url) . '" style="color: ' . esc_attr($accent_color) . ';">' . esc_html__('Our website', 'giftflowwp') . '</a>',
+                        '<a href="' . esc_url($site_url) . '" style="color: ' . esc_attr($accent_color) . ';">' . esc_html__('Our website', 'giftflow') . '</a>',
                         '<a href="mailto:' . esc_attr($admin_email) . '" style="color: ' . esc_attr($accent_color) . ';">' . esc_html($admin_email) . '</a>'
                     );
                     ?>

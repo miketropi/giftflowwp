@@ -3,7 +3,7 @@
  * Sendmail 
  */
 
-function giftflowwp_send_mail_template($args = array()) {
+function giftflow_send_mail_template($args = array()) {
   $args = wp_parse_args($args, array(
     'to' => '',
     'subject' => '',
@@ -12,7 +12,7 @@ function giftflowwp_send_mail_template($args = array()) {
     'footer' => '',
   ));
 
-  $email_opts = get_option('giftflowwp_email_options');
+  $email_opts = get_option('giftflow_email_options');
   $email_from_name = $email_opts['email_from_name'] ?? get_bloginfo('name');
   $email_admin_address = $email_opts['email_admin_address'] ?? get_bloginfo('admin_email');
 
@@ -23,7 +23,7 @@ function giftflowwp_send_mail_template($args = array()) {
 
   // get html
   ob_start();
-  giftflowwp_load_template('email/template-default.php', array(
+  giftflow_load_template('email/template-default.php', array(
     'header' => $args['header'],
     'content' => $args['content'],
     'footer' => $args['footer']
@@ -35,11 +35,11 @@ function giftflowwp_send_mail_template($args = array()) {
 }
 
 // test mail ajax
-add_action('wp_ajax_giftflowwp_test_send_mail', 'giftflowwp_test_send_mail_ajax');
-function giftflowwp_test_send_mail_ajax() {
+add_action('wp_ajax_giftflow_test_send_mail', 'giftflow_test_send_mail_ajax');
+function giftflow_test_send_mail_ajax() {
 
   // check nonce
-  if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'giftflowwp_admin_nonce')) {
+  if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'giftflow_admin_nonce')) {
     wp_send_json_error('Invalid nonce');
   }
 
@@ -47,21 +47,21 @@ function giftflowwp_test_send_mail_ajax() {
   $name = isset($_POST['name']) ? sanitize_text_field(wp_unslash($_POST['name'])) : '';
   
   // do action test mail
-  do_action('giftflowwp_test_send_mail', $name);
+  do_action('giftflow_test_send_mail', $name);
   die();
 }
 
-add_action('giftflowwp_test_send_mail', 'giftflowwp_test_send_mail_action');
-function giftflowwp_test_send_mail_action($name) {
+add_action('giftflow_test_send_mail', 'giftflow_test_send_mail_action');
+function giftflow_test_send_mail_action($name) {
 
-  $email_opts = get_option('giftflowwp_email_options');
+  $email_opts = get_option('giftflow_email_options');
   $admin_email = $email_opts['email_admin_address'];
 
   switch ($name) {
 
     case 'admin_new_donation':
       ob_start();
-      giftflowwp_load_template('email/new-donation-admin.php', array(
+      giftflow_load_template('email/new-donation-admin.php', array(
         'campaign_name' => '<Campaign Name>',
         'campaign_url' => '#',
         'donor_name' => '<Donor Name>',
@@ -72,7 +72,7 @@ function giftflowwp_test_send_mail_action($name) {
         'payment_method' => '<Payment Method>'
       ));
       $content = ob_get_clean();
-      return giftflowwp_send_mail_template(array(
+      return giftflow_send_mail_template(array(
         'to' => $admin_email,
         'subject' => 'New Donation: <Campaign Name>',
         'header' => 'New donation received',
@@ -82,7 +82,7 @@ function giftflowwp_test_send_mail_action($name) {
 
     case 'donor_thanks':
       ob_start();
-      giftflowwp_load_template('email/thanks-donor.php', array(
+      giftflow_load_template('email/thanks-donor.php', array(
         'campaign_name' => '<Campaign Name>',
         'campaign_url' => '#',
         'donor_name' => '<Donor Name>',
@@ -93,7 +93,7 @@ function giftflowwp_test_send_mail_action($name) {
       ));
       $content = ob_get_clean();
 
-      return giftflowwp_send_mail_template(array(
+      return giftflow_send_mail_template(array(
         'to' => $admin_email,
         'subject' => 'Hi <Donor Name>, Thanks for Your Donation',
         'header' => 'Thanks for Your Donation',
@@ -103,14 +103,14 @@ function giftflowwp_test_send_mail_action($name) {
     
     case 'new_user_first_time_donation':
       ob_start();
-      giftflowwp_load_template('email/new-user.php', array(
+      giftflow_load_template('email/new-user.php', array(
         'name' => '<Name>',
         'username' => '<Username>',
         'password' => '<Password>',
         'login_url' => '<Login URL>',
       ));
       $content = ob_get_clean();
-      return giftflowwp_send_mail_template(array(
+      return giftflow_send_mail_template(array(
         'to' => $admin_email,
         'subject' => 'New User Registered',
         'header' => 'New User Registered',
@@ -120,13 +120,13 @@ function giftflowwp_test_send_mail_action($name) {
   }
 }
 
-add_action('giftflowwp_donation_after_payment_processed', 'giftflowwp_send_mail_notification_donation_to_admin', 10, 2);
-function giftflowwp_send_mail_notification_donation_to_admin($donation_id, $payment_result) {
-  $email_opts = get_option('giftflowwp_email_options');
+add_action('giftflow_donation_after_payment_processed', 'giftflow_send_mail_notification_donation_to_admin', 10, 2);
+function giftflow_send_mail_notification_donation_to_admin($donation_id, $payment_result) {
+  $email_opts = get_option('giftflow_email_options');
   $admin_email = $email_opts['email_admin_address'];
 
   // get donation data
-  $donation_data = giftflowwp_get_donation_data_by_id($donation_id);
+  $donation_data = giftflow_get_donation_data_by_id($donation_id);
 
   ob_start();
   /**
@@ -136,7 +136,7 @@ function giftflowwp_send_mail_notification_donation_to_admin($donation_id, $paym
    * @param int $donation_id The donation ID.
    * @param object $donation_data The donation data object.
    */
-  $admin_email_args = apply_filters('giftflowwp_new_donation_admin_email_args', array(
+  $admin_email_args = apply_filters('giftflow_new_donation_admin_email_args', array(
     'donation_id' => $donation_id,
     'donation_edit_url' => $donation_data->donation_edit_url,
     'campaign_name' => $donation_data->campaign_name,
@@ -149,29 +149,29 @@ function giftflowwp_send_mail_notification_donation_to_admin($donation_id, $paym
     'payment_method' => $donation_data->payment_method
   ), $donation_id, $donation_data);
 
-  giftflowwp_load_template('email/new-donation-admin.php', $admin_email_args);
+  giftflow_load_template('email/new-donation-admin.php', $admin_email_args);
   $content = ob_get_clean();
 
-  return giftflowwp_send_mail_template(array(
+  return giftflow_send_mail_template(array(
     'to' => $admin_email,
     /* translators: %s: Campaign name for the new donation notification email subject */
-    'subject' => sprintf( esc_html__('New Donation — %s', 'giftflowwp'), $donation_data->campaign_name ),
-    'header' => esc_html__('New donation received', 'giftflowwp'),
+    'subject' => sprintf( esc_html__('New Donation — %s', 'giftflow'), $donation_data->campaign_name ),
+    'header' => esc_html__('New donation received', 'giftflow'),
     'content' => $content
   ));
 }
 
-add_action('giftflowwp_donation_after_payment_processed', 'giftflowwp_send_mail_thank_you_to_donor_payment_successful', 12, 2);
-function giftflowwp_send_mail_thank_you_to_donor_payment_successful($donation_id, $payment_result) {
+add_action('giftflow_donation_after_payment_processed', 'giftflow_send_mail_thank_you_to_donor_payment_successful', 12, 2);
+function giftflow_send_mail_thank_you_to_donor_payment_successful($donation_id, $payment_result) {
   if($payment_result != true) {
     return;
   }
 
-  // get giftflowwp_get_donor_account_page() url
-  $donor_account_url = get_permalink(giftflowwp_get_donor_account_page());
+  // get giftflow_get_donor_account_page() url
+  $donor_account_url = get_permalink(giftflow_get_donor_account_page());
 
   // get donation data
-  $donation_data = giftflowwp_get_donation_data_by_id($donation_id);
+  $donation_data = giftflow_get_donation_data_by_id($donation_id);
 
   // send thanks email 
   ob_start();
@@ -182,7 +182,7 @@ function giftflowwp_send_mail_thank_you_to_donor_payment_successful($donation_id
    * @param int $donation_id The donation ID.
    * @param object $donation_data The donation data object.
    */
-  $thanks_donor_args = apply_filters('giftflowwp_thanks_donor_email_args', array(
+  $thanks_donor_args = apply_filters('giftflow_thanks_donor_email_args', array(
     'donation_id' => $donation_id,
     'campaign_name' => $donation_data->campaign_name,
     'campaign_url' => $donation_data->campaign_url,
@@ -193,14 +193,14 @@ function giftflowwp_send_mail_thank_you_to_donor_payment_successful($donation_id
     'donor_dashboard_url' => $donor_account_url,
   ), $donation_id, $donation_data);
 
-  giftflowwp_load_template('email/thanks-donor.php', $thanks_donor_args);
+  giftflow_load_template('email/thanks-donor.php', $thanks_donor_args);
   $content = ob_get_clean();
 
-  return giftflowwp_send_mail_template(array(
+  return giftflow_send_mail_template(array(
     'to' => $donation_data->donor_email,
     /* translators: %s: Campaign name for donor thank you email subject */
-    'subject' => sprintf( esc_html__('Thank You for Your Donation — %s', 'giftflowwp'), $donation_data->campaign_name ),
-    'header' => esc_html__('Thank You for Your Donation', 'giftflowwp'),
+    'subject' => sprintf( esc_html__('Thank You for Your Donation — %s', 'giftflow'), $donation_data->campaign_name ),
+    'header' => esc_html__('Thank You for Your Donation', 'giftflow'),
     'content' => $content
   ));
 }

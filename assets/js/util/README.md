@@ -1,4 +1,4 @@
-# GiftFlowWP Modal Library
+# GiftFlow Modal Library
 
 A clean, simple, and easy-to-use modal system with AJAX support, smooth animations, and accessibility features.
 
@@ -19,7 +19,7 @@ A clean, simple, and easy-to-use modal system with AJAX support, smooth animatio
 
 ```javascript
 // Create a simple modal
-const modal = new GiftFlowWPModal({
+const modal = new GiftFlowModal({
     content: '<h2>Hello World!</h2><p>This is a simple modal.</p>',
     closeButton: true
 });
@@ -31,16 +31,16 @@ modal.open();
 
 ```javascript
 // Alert dialog
-GiftFlowWPModal.alert('Operation completed successfully!', 'Success');
+GiftFlowModal.alert('Operation completed successfully!', 'Success');
 
 // Confirm dialog
-const confirmed = await GiftFlowWPModal.confirm('Are you sure?', 'Confirm Action');
+const confirmed = await GiftFlowModal.confirm('Are you sure?', 'Confirm Action');
 if (confirmed) {
     // User clicked OK
 }
 
 // Prompt dialog
-const value = await GiftFlowWPModal.prompt('Enter your name:', 'John Doe', 'User Input');
+const value = await GiftFlowModal.prompt('Enter your name:', 'John Doe', 'User Input');
 if (value) {
     console.log('User entered:', value);
 }
@@ -52,8 +52,8 @@ if (value) {
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `id` | string | 'giftflowwp-modal' | Modal ID attribute |
-| `className` | string | 'giftflowwp-modal' | Additional CSS classes |
+| `id` | string | 'giftflow-modal' | Modal ID attribute |
+| `className` | string | 'giftflow-modal' | Additional CSS classes |
 | `overlay` | boolean | true | Show overlay background |
 | `closeOnOverlay` | boolean | true | Close when clicking overlay |
 | `closeOnEscape` | boolean | true | Close when pressing Escape |
@@ -130,16 +130,16 @@ modal.destroy();
 ### Basic Modal
 
 ```javascript
-const modal = new GiftFlowWPModal({
+const modal = new GiftFlowModal({
     content: `
-        <div class="giftflowwp-modal__header">
+        <div class="giftflow-modal__header">
             <h3>Welcome</h3>
         </div>
-        <div class="giftflowwp-modal__body">
+        <div class="giftflow-modal__body">
             <p>This is a basic modal with custom content.</p>
         </div>
-        <div class="giftflowwp-modal__footer">
-            <button class="giftflowwp-modal__btn giftflowwp-modal__btn--primary" onclick="this.closest('.giftflowwp-modal').giftflowwpModal.close()">
+        <div class="giftflow-modal__footer">
+            <button class="giftflow-modal__btn giftflow-modal__btn--primary" onclick="this.closest('.giftflow-modal').giftflowModal.close()">
                 Close
             </button>
         </div>
@@ -154,7 +154,7 @@ modal.open();
 ### AJAX Modal
 
 ```javascript
-const ajaxModal = new GiftFlowWPModal({
+const ajaxModal = new GiftFlowModal({
     ajax: true,
     ajaxUrl: '/api/get-content',
     ajaxMethod: 'POST',
@@ -173,7 +173,7 @@ ajaxModal.open();
 ### Custom Size and Position
 
 ```javascript
-const customModal = new GiftFlowWPModal({
+const customModal = new GiftFlowModal({
     content: '<p>Custom sized modal</p>',
     width: '800px',
     maxWidth: '1000px',
@@ -189,7 +189,7 @@ customModal.open();
 ### Modal with Callbacks
 
 ```javascript
-const callbackModal = new GiftFlowWPModal({
+const callbackModal = new GiftFlowModal({
     content: '<p>Modal with callbacks</p>',
     onOpen: (modal) => {
         console.log('Modal opened');
@@ -207,7 +207,7 @@ callbackModal.open();
 ### Auto-close Modal
 
 ```javascript
-const autoCloseModal = new GiftFlowWPModal({
+const autoCloseModal = new GiftFlowModal({
     content: '<p>This modal will close automatically in 3 seconds</p>',
     autoClose: true,
     autoCloseDelay: 3000,
@@ -222,28 +222,28 @@ autoCloseModal.open();
 ### Form Modal
 
 ```javascript
-const formModal = new GiftFlowWPModal({
+const formModal = new GiftFlowModal({
     content: `
-        <div class="giftflowwp-modal__header">
+        <div class="giftflow-modal__header">
             <h3>Contact Form</h3>
         </div>
-        <div class="giftflowwp-modal__body">
+        <div class="giftflow-modal__body">
             <form>
                 <div style="margin-bottom: 1rem;">
                     <label for="name">Name:</label>
-                    <input type="text" id="name" class="giftflowwp-modal__input" required>
+                    <input type="text" id="name" class="giftflow-modal__input" required>
                 </div>
                 <div style="margin-bottom: 1rem;">
                     <label for="email">Email:</label>
-                    <input type="email" id="email" class="giftflowwp-modal__input" required>
+                    <input type="email" id="email" class="giftflow-modal__input" required>
                 </div>
             </form>
         </div>
-        <div class="giftflowwp-modal__footer">
-            <button class="giftflowwp-modal__btn giftflowwp-modal__btn--secondary" onclick="this.closest('.giftflowwp-modal').giftflowwpModal.close()">
+        <div class="giftflow-modal__footer">
+            <button class="giftflow-modal__btn giftflow-modal__btn--secondary" onclick="this.closest('.giftflow-modal').giftflowModal.close()">
                 Cancel
             </button>
-            <button class="giftflowwp-modal__btn giftflowwp-modal__btn--primary" onclick="submitForm()">
+            <button class="giftflow-modal__btn giftflow-modal__btn--primary" onclick="submitForm()">
                 Submit
             </button>
         </div>
@@ -269,7 +269,7 @@ function submitForm() {
 ### Loading State
 
 ```javascript
-const loadingModal = new GiftFlowWPModal({
+const loadingModal = new GiftFlowModal({
     ajax: true,
     ajaxUrl: '/api/slow-endpoint',
     onLoad: (content, modal) => {
@@ -278,7 +278,7 @@ const loadingModal = new GiftFlowWPModal({
     },
     onError: (error, modal) => {
         // Handle error
-        modal.setContent('<div class="giftflowwp-modal__error">Failed to load content</div>');
+        modal.setContent('<div class="giftflow-modal__error">Failed to load content</div>');
     }
 });
 
@@ -290,24 +290,24 @@ loadingModal.open();
 The modal generates the following CSS classes for styling:
 
 ```css
-.giftflowwp-modal__overlay              /* Modal overlay */
-.giftflowwp-modal                       /* Main modal container */
-.giftflowwp-modal__content              /* Modal content area */
-.giftflowwp-modal__close                /* Close button */
-.giftflowwp-modal__header               /* Modal header */
-.giftflowwp-modal__body                 /* Modal body */
-.giftflowwp-modal__footer               /* Modal footer */
-.giftflowwp-modal__btn                  /* Button base styles */
-.giftflowwp-modal__btn--primary         /* Primary button */
-.giftflowwp-modal__btn--secondary       /* Secondary button */
-.giftflowwp-modal__btn--danger          /* Danger button */
-.giftflowwp-modal__btn--success         /* Success button */
-.giftflowwp-modal__input                /* Input field */
-.giftflowwp-modal__loading              /* Loading state */
-.giftflowwp-modal__error                /* Error message */
-.giftflowwp-modal__success              /* Success message */
-.giftflowwp-modal__info                 /* Info message */
-.giftflowwp-modal__warning              /* Warning message */
+.giftflow-modal__overlay              /* Modal overlay */
+.giftflow-modal                       /* Main modal container */
+.giftflow-modal__content              /* Modal content area */
+.giftflow-modal__close                /* Close button */
+.giftflow-modal__header               /* Modal header */
+.giftflow-modal__body                 /* Modal body */
+.giftflow-modal__footer               /* Modal footer */
+.giftflow-modal__btn                  /* Button base styles */
+.giftflow-modal__btn--primary         /* Primary button */
+.giftflow-modal__btn--secondary       /* Secondary button */
+.giftflow-modal__btn--danger          /* Danger button */
+.giftflow-modal__btn--success         /* Success button */
+.giftflow-modal__input                /* Input field */
+.giftflow-modal__loading              /* Loading state */
+.giftflow-modal__error                /* Error message */
+.giftflow-modal__success              /* Success message */
+.giftflow-modal__info                 /* Info message */
+.giftflow-modal__warning              /* Warning message */
 ```
 
 ## Animation Variants
@@ -341,28 +341,28 @@ The modal generates the following CSS classes for styling:
 ### Small Modal
 ```javascript
 {
-    className: 'giftflowwp-modal--small'
+    className: 'giftflow-modal--small'
 }
 ```
 
 ### Medium Modal
 ```javascript
 {
-    className: 'giftflowwp-modal--medium'
+    className: 'giftflow-modal--medium'
 }
 ```
 
 ### Large Modal
 ```javascript
 {
-    className: 'giftflowwp-modal--large'
+    className: 'giftflow-modal--large'
 }
 ```
 
 ### Full Screen Modal
 ```javascript
 {
-    className: 'giftflowwp-modal--full'
+    className: 'giftflow-modal--full'
 }
 ```
 
@@ -431,4 +431,4 @@ The modal generates the following CSS classes for styling:
 
 ## License
 
-This modal library is part of the GiftFlowWP plugin and follows the same license terms.
+This modal library is part of the GiftFlow plugin and follows the same license terms.

@@ -2,11 +2,11 @@
 /**
  * Template loader class
  *
- * @package GiftFlowWP
+ * @package GiftFlow
  * @since 1.0.0
  */
 
-namespace GiftFlowWP\Frontend;
+namespace GiftFlow\Frontend;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
@@ -27,7 +27,7 @@ class Template {
      * Constructor
      */
     public function __construct() {
-        $this->plugin_template_dir = GIFTFLOWWP_PLUGIN_DIR . 'templates/';
+        $this->plugin_template_dir = GIFTFLOW_PLUGIN_DIR . 'templates/';
     }
 
     /**
@@ -39,12 +39,12 @@ class Template {
      */
     public function get_template_path($template_name, $template_path = '') {
         // Allow theme developers to filter the template path
-        $template_path = apply_filters('giftflowwp_template_path', $template_path, $template_name);
+        $template_path = apply_filters('giftflow_template_path', $template_path, $template_name);
 
         // Check theme directory first
         $theme_template = locate_template([
             $template_path . $template_name,
-            'giftflowwp/' . $template_name,
+            'giftflow/' . $template_name,
         ]);
 
         if ($theme_template) {
@@ -66,13 +66,13 @@ class Template {
         $template_file = $this->get_template_path($template_name, $template_path);
 
         // Allow theme developers to filter the template file
-        $template_file = apply_filters('giftflowwp_template_file', $template_file, $template_name, $args);
+        $template_file = apply_filters('giftflow_template_file', $template_file, $template_name, $args);
 
         if (!file_exists($template_file)) {
             _doing_it_wrong(
                 __FUNCTION__,
                 /* translators: %s: Template file name */
-                sprintf(esc_html__('Template file %s does not exist.', 'giftflowwp'), '<code>' . esc_html($template_file) . '</code>'),
+                sprintf(esc_html__('Template file %s does not exist.', 'giftflow'), '<code>' . esc_html($template_file) . '</code>'),
                 '1.0.0'
             );
             return;
@@ -84,12 +84,12 @@ class Template {
         }
 
         // Allow theme developers to do something before template is loaded
-        do_action('giftflowwp_before_template_load', $template_name, $template_file, $args);
+        do_action('giftflow_before_template_load', $template_name, $template_file, $args);
 
         include $template_file;
 
         // Allow theme developers to do something after template is loaded
-        do_action('giftflowwp_after_template_load', $template_name, $template_file, $args);
+        do_action('giftflow_after_template_load', $template_name, $template_file, $args);
     }
 
     /**
@@ -102,11 +102,11 @@ class Template {
     public function get_template_part($slug, $name = '', $args = []) {
         $template = '';
 
-        // Look in yourtheme/slug-name.php and yourtheme/giftflowwp/slug-name.php
+        // Look in yourtheme/slug-name.php and yourtheme/giftflow/slug-name.php
         if ($name) {
             $template = locate_template([
                 "{$slug}-{$name}.php",
-                "giftflowwp/{$slug}-{$name}.php",
+                "giftflow/{$slug}-{$name}.php",
             ]);
         }
 
@@ -115,16 +115,16 @@ class Template {
             $template = $this->plugin_template_dir . "{$slug}-{$name}.php";
         }
 
-        // If template file doesn't exist, look in yourtheme/slug.php and yourtheme/giftflowwp/slug.php
+        // If template file doesn't exist, look in yourtheme/slug.php and yourtheme/giftflow/slug.php
         if (!$template) {
             $template = locate_template([
                 "{$slug}.php",
-                "giftflowwp/{$slug}.php",
+                "giftflow/{$slug}.php",
             ]);
         }
 
         // Allow 3rd party plugins to filter template file from their plugin
-        $template = apply_filters('giftflowwp_get_template_part', $template, $slug, $name);
+        $template = apply_filters('giftflow_get_template_part', $template, $slug, $name);
 
         if ($template) {
             $this->load_template($template, $args);

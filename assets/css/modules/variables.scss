@@ -1,26 +1,26 @@
 :root {
-  --giftflowwp-primary-color: #000000;
-  --giftflowwp-secondary-color: #10B981;
-  --giftflowwp-text-color: black;
-  --giftflowwp-text-light: #6B7280;
-  --giftflowwp-border-color: #E5E7EB;
-  --giftflowwp-background-color: #F9FAFB;
-  --giftflowwp-error-color: #EF4444;
-  --giftflowwp-success-color: #10B981;
-  --giftflowwp-border-radius: 6px;
-  --giftflowwp-transition: all 0.3s ease;
-  --giftflowwp-disabled: #fafafa;
-  --giftflowwp-disabled-text: #999;
+  --giftflow-primary-color: #000000;
+  --giftflow-secondary-color: #10B981;
+  --giftflow-text-color: black;
+  --giftflow-text-light: #6B7280;
+  --giftflow-border-color: #E5E7EB;
+  --giftflow-background-color: #F9FAFB;
+  --giftflow-error-color: #EF4444;
+  --giftflow-success-color: #10B981;
+  --giftflow-border-radius: 6px;
+  --giftflow-transition: all 0.3s ease;
+  --giftflow-disabled: #fafafa;
+  --giftflow-disabled-text: #999;
 }
 
 // SCSS Variables (referencing CSS Custom Properties)
-$primary-color: var(--giftflowwp-primary-color);
-$secondary-color: var(--giftflowwp-secondary-color);
-$text-color: var(--giftflowwp-text-color);
-$text-light: var(--giftflowwp-text-light);
-$border-color: var(--giftflowwp-border-color);
-$background-color: var(--giftflowwp-background-color);
-$error-color: var(--giftflowwp-error-color);
-$success-color: var(--giftflowwp-success-color);
-$border-radius: var(--giftflowwp-border-radius);
-$transition: var(--giftflowwp-transition);
+$primary-color: var(--giftflow-primary-color);
+$secondary-color: var(--giftflow-secondary-color);
+$text-color: var(--giftflow-text-color);
+$text-light: var(--giftflow-text-light);
+$border-color: var(--giftflow-border-color);
+$background-color: var(--giftflow-background-color);
+$error-color: var(--giftflow-error-color);
+$success-color: var(--giftflow-success-color);
+$border-radius: var(--giftflow-border-radius);
+$transition: var(--giftflow-transition);

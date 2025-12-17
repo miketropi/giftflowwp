@@ -52,16 +52,16 @@ export default function CampaignTrackingModalSettings({ isOpen, onClose, onSave 
       }
       {
         loading === false && campaigns.length > 0 && 
-        <div className="giftflowwp-campaigns-list__settings-container">
-          <div className="giftflowwp-campaigns-list__auto-message">
+        <div className="giftflow-campaigns-list__settings-container">
+          <div className="giftflow-campaigns-list__auto-message">
             No campaigns selected. The system will automatically display the latest campaigns.
           </div>
           <br />
-          <div className="giftflowwp-campaigns-list__select-wrapper">
+          <div className="giftflow-campaigns-list__select-wrapper">
             <select
               id="campaign-multiselect"
               multiple
-              className="giftflowwp-campaigns-list__multiselect"
+              className="giftflow-campaigns-list__multiselect"
               onChange={e => {
                 setSelectedCampaigns(Array.from(e.target.selectedOptions).map(opt => opt.value));
               }}
@@ -91,15 +91,15 @@ export default function CampaignTrackingModalSettings({ isOpen, onClose, onSave 
                   key={campaign.id}
                   value={campaign.id}
                   selected={selectedCampaigns.includes(campaign.id)}
-                  className="giftflowwp-campaigns-list__option"
+                  className="giftflow-campaigns-list__option"
                   dangerouslySetInnerHTML={{ __html: `#ID ${ campaign.id } — ${ campaign.title } — ${ statusEmoji } ${ statusLabel } (${ campaign.percentage }%)` }}
                 >
                 </option>
               })}
             </select>
           </div>
-          <div className="giftflowwp-campaigns-list__help-text __monospace">
-            Hold <span className="giftflowwp-campaigns-list__key">Ctrl</span> (or <span className="giftflowwp-campaigns-list__key">Cmd</span> on Mac) and click to select multiple campaigns.
+          <div className="giftflow-campaigns-list__help-text __monospace">
+            Hold <span className="giftflow-campaigns-list__key">Ctrl</span> (or <span className="giftflow-campaigns-list__key">Cmd</span> on Mac) and click to select multiple campaigns.
           </div>
           
         </div>
