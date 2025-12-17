@@ -209,21 +209,33 @@ function giftflowwp_donor_account_my_account_callback() {
   
   $account_result = null;
   $password_result = null;
-  
+
+
   // Process account form
-  if ( 
-      isset( $_POST['giftflowwp_update_account'] ) && 
-      isset( $_POST['giftflowwp_account_nonce'] ) &&
-      wp_verify_nonce( $_POST['giftflowwp_account_nonce'], 'giftflowwp_update_account' ) ) {
-    $account_result = giftflowwp_process_account_form( $current_user->ID );
+  if (
+    isset( $_POST['giftflowwp_update_account'], $_POST['giftflowwp_account_nonce'] ) &&
+    wp_verify_nonce(
+      sanitize_text_field(
+        wp_unslash( $_POST['giftflowwp_account_nonce'] )
+      ),
+      'giftflowwp_update_account'
+    )
+  ) {
+    $account_result = giftflowwp_process_account_form( $current_user->ID, $_POST );
   }
+
   
   // Process password form
   if ( 
-    isset( $_POST['giftflowwp_update_password'] ) && 
-    isset( $_POST['giftflowwp_password_nonce'] ) &&
-    wp_verify_nonce( $_POST['giftflowwp_password_nonce'], 'giftflowwp_update_password' ) ) {
-    $password_result = giftflowwp_process_password_form( $current_user );
+    isset( $_POST['giftflowwp_update_password'], $_POST['giftflowwp_password_nonce'] ) && 
+    wp_verify_nonce(
+      sanitize_text_field(
+        wp_unslash( $_POST['giftflowwp_password_nonce'] )
+      ),
+      'giftflowwp_update_password'
+    )
+  ) {
+    $password_result = giftflowwp_process_password_form( $current_user, $_POST );
   }
   
   // =============================================================================
@@ -263,12 +275,12 @@ function giftflowwp_donor_account_my_account_callback() {
 /**
  * Process account information form submission
  */
-function giftflowwp_process_account_form( $user_id ) {
+function giftflowwp_process_account_form( $user_id, $post_data ) {
   // get donor id $donor_id = giftflowwp_get_donor_id_by_email($user_data->user_email);
   $user_email = get_user_by('id', $user_id)->user_email;
   $donor_id = giftflowwp_get_donor_id_by_email($user_email);
   
-  $form_data = giftflowwp_sanitize_account_form_data();
+  $form_data = giftflowwp_sanitize_account_form_data($post_data);
   $errors = giftflowwp_validate_account_form_data( $form_data );
   
   if ( empty( $errors ) ) {
@@ -286,8 +298,8 @@ function giftflowwp_process_account_form( $user_id ) {
 /**
  * Process password change form submission
  */
-function giftflowwp_process_password_form( $current_user ) {
-  $form_data = giftflowwp_sanitize_password_form_data();
+function giftflowwp_process_password_form( $current_user, $post_data = array() ) {
+  $form_data = giftflowwp_sanitize_password_form_data($post_data);
   $errors = giftflowwp_validate_password_form_data( $form_data, $current_user );
   
   if ( empty( $errors ) ) {
@@ -309,17 +321,18 @@ function giftflowwp_process_password_form( $current_user ) {
 /**
  * Sanitize account form data
  */
-function giftflowwp_sanitize_account_form_data() {
+function giftflowwp_sanitize_account_form_data($post_data = array()) {
+  
   $form_data = array(
-    'first_name' => sanitize_text_field( $_POST['first_name'] ?? '' ),
-    'last_name' => sanitize_text_field( $_POST['last_name'] ?? '' ),
-    'email' => sanitize_email( $_POST['email'] ?? '' ),
-    'phone' => sanitize_text_field( $_POST['phone'] ?? '' ),
-    'address' => sanitize_textarea_field( $_POST['address'] ?? '' ),
-    'city' => sanitize_text_field( $_POST['city'] ?? '' ),
-    'state' => sanitize_text_field( $_POST['state'] ?? '' ),
-    'postal_code' => sanitize_text_field( $_POST['postal_code'] ?? '' ),
-    'country' => sanitize_text_field( $_POST['country'] ?? '' ),
+    'first_name' => sanitize_text_field( wp_unslash( $post_data['first_name'] ?? '' ) ),
+    'last_name' => sanitize_text_field( wp_unslash( $post_data['last_name'] ?? '' ) ),
+    'email' => sanitize_email( wp_unslash( $post_data['email'] ?? '' ) ),
+    'phone' => sanitize_text_field( wp_unslash( $post_data['phone'] ?? '' ) ),
+    'address' => sanitize_textarea_field( wp_unslash( $post_data['address'] ?? '' ) ),
+    'city' => sanitize_text_field( wp_unslash( $post_data['city'] ?? '' ) ),
+    'state' => sanitize_text_field( wp_unslash( $post_data['state'] ?? '' ) ),
+    'postal_code' => sanitize_text_field( wp_unslash( $post_data['postal_code'] ?? '' ) ),
+    'country' => sanitize_text_field( wp_unslash( $post_data['country'] ?? '' ) ),
   );
 
   /**
@@ -335,11 +348,11 @@ function giftflowwp_sanitize_account_form_data() {
 /**
  * Sanitize password form data
  */
-function giftflowwp_sanitize_password_form_data() {
+function giftflowwp_sanitize_password_form_data($post_data = array()) {
   return array(
-    'current_password' => $_POST['giftflowwp_current_password'] ?? '',
-    'new_password' => $_POST['giftflowwp_new_password'] ?? '',
-    'confirm_password' => $_POST['giftflowwp_confirm_password'] ?? '',
+    'current_password' => sanitize_text_field( wp_unslash( $post_data['giftflowwp_current_password'] ?? '' ) ),
+    'new_password' => sanitize_text_field( wp_unslash( $post_data['giftflowwp_new_password'] ?? '' ) ),
+    'confirm_password' => sanitize_text_field( wp_unslash( $post_data['giftflowwp_confirm_password'] ?? '' ) ),
   );
 }
 

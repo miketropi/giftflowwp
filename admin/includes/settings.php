@@ -41,7 +41,8 @@ function giftflowwp_settings_page() {
     }
 
     // Get active tab
-    $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'general';
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    $active_tab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : 'general';
 
     // build array of tabs 
     $tabs = apply_filters('giftflowwp_settings_tabs', [

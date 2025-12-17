@@ -170,6 +170,8 @@ function giftflowwp_get_campaign_raised_amount($campaign_id) {
     $donations = get_posts(array(
         'post_type' => 'donation',
         'posts_per_page' => -1,
+        'fields' => 'ids',
+        // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
         'meta_query' => array(
             array(
                 'key' => '_campaign_id',
@@ -187,8 +189,8 @@ function giftflowwp_get_campaign_raised_amount($campaign_id) {
     $total_amount = 0;
 
     // Sum up all completed donations
-    foreach ($donations as $donation) {
-        $amount = get_post_meta($donation->ID, '_amount', true);
+    foreach ($donations as $id) {
+        $amount = get_post_meta($id, '_amount', true);
         if ($amount) {
             $total_amount += floatval($amount);
         }
@@ -430,7 +432,9 @@ function giftflowwp_get_campaign_donations($campaign_id, $args = array(), $paged
     'post_type' => 'donation',
   ));
 
+  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
   $args['meta_key'] = '_campaign_id';
+  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
   $args['meta_value'] = $campaign_id;
 
   $donations = new WP_Query($args);
@@ -700,7 +704,9 @@ function giftflowwp_get_donor_data_by_id($donor_id = 0) {
 function giftflowwp_query_donation_by_donor_id($donor_id, $page = 1, $per_page = 20) {
   $donations = new WP_Query(array(
     'post_type' => 'donation',
+    // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
     'meta_key' => '_donor_id',
+    // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
     'meta_value' => $donor_id,
     'posts_per_page' => $per_page,
     'paged' => $page,
@@ -716,7 +722,9 @@ function giftflowwp_query_donation_by_donor_id($donor_id, $page = 1, $per_page =
 function giftflowwp_get_donor_id_by_email($email) {
   $donor = get_posts(array(
     'post_type' => 'donor',
+    // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
     'meta_key' => '_email',
+    // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
     'meta_value' => $email,
     'posts_per_page' => 1,
   ));

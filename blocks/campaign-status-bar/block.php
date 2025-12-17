@@ -80,6 +80,8 @@ function giftflowwp_campaign_status_bar_block_render($attributes, $content, $blo
     $donations = get_posts(array(
         'post_type' => 'donation',
         'posts_per_page' => -1,
+        'fields' => 'ids',
+        // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
         'meta_query' => array(
             array(
                 'key' => '_campaign_id',

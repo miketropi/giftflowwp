@@ -166,7 +166,8 @@ class Donation extends Base_Post_Type {
         global $typenow;
         
         if ( $typenow === 'donation' ) {
-            $selected = isset( $_GET['donation_status'] ) ? $_GET['donation_status'] : '';
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $selected = isset( $_GET['donation_status'] ) ? sanitize_text_field(wp_unslash($_GET['donation_status'])) : '';
             $statuses = array( 'pending', 'completed', 'failed', 'refunded' );
             
             echo '<select name="donation_status">';
@@ -189,10 +190,13 @@ class Donation extends Base_Post_Type {
         global $typenow;
         
         if ( $typenow === 'donation' ) {
-            $selected = isset( $_GET['donation_donor'] ) ? $_GET['donation_donor'] : '';
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $selected = isset( $_GET['donation_donor'] ) ? sanitize_text_field(wp_unslash($_GET['donation_donor'])) : '';
             
             // Get all unique donors from donations
             global $wpdb;
+
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
             $donors = $wpdb->get_results( "
                 SELECT DISTINCT pm.meta_value as donor_id, 
                        CONCAT(pm2.meta_value, ' ', pm3.meta_value) as donor_name
@@ -228,10 +232,13 @@ class Donation extends Base_Post_Type {
         global $typenow;
         
         if ( $typenow === 'donation' ) {
-            $selected = isset( $_GET['donation_campaign'] ) ? $_GET['donation_campaign'] : '';
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $selected = isset( $_GET['donation_campaign'] ) ? sanitize_text_field(wp_unslash($_GET['donation_campaign'])) : '';
             
             // Get all unique campaigns from donations
             global $wpdb;
+            
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
             $campaigns = $wpdb->get_results( "
                 SELECT DISTINCT pm.meta_value as campaign_id, p.post_title as campaign_title
                 FROM {$wpdb->postmeta} pm
@@ -268,8 +275,10 @@ class Donation extends Base_Post_Type {
             $meta_query = array();
             
             // Filter by status
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             if ( isset( $_GET['donation_status'] ) && $_GET['donation_status'] !== '' ) {
-                $status = sanitize_text_field( $_GET['donation_status'] );
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                $status = sanitize_text_field( wp_unslash($_GET['donation_status']) );
                 $meta_query[] = array(
                     'key'     => '_status',
                     'value'   => $status,
@@ -278,7 +287,9 @@ class Donation extends Base_Post_Type {
             }
             
             // Filter by donor
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             if ( isset( $_GET['donation_donor'] ) && $_GET['donation_donor'] !== '' ) {
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 $donor_id = intval( $_GET['donation_donor'] );
                 $meta_query[] = array(
                     'key'     => '_donor_id',
@@ -288,7 +299,9 @@ class Donation extends Base_Post_Type {
             }
             
             // Filter by campaign
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended    
             if ( isset( $_GET['donation_campaign'] ) && $_GET['donation_campaign'] !== '' ) {
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 $campaign_id = intval( $_GET['donation_campaign'] );
                 $meta_query[] = array(
                     'key'     => '_campaign_id',

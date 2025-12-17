@@ -53,6 +53,7 @@ class GiftFlowWP_Export {
             'post_type' => 'donation',
             'post_status' => 'publish',
             'numberposts' => -1,
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
             'meta_query' => array()
         );
         

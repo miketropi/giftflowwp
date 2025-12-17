@@ -53,7 +53,8 @@ function giftflowwp_dashboard_page() {
     }
     
     // Get the current tab
-    $current_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'overview';
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    $current_tab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : 'overview';
     
     // Include the header
     ?>

@@ -1,4 +1,4 @@
-# GiftFlowWp - WordPress Donation Plugin
+# GiftFlow
 
 A comprehensive WordPress plugin for managing donations, donors, and campaigns with modern features and extensible architecture.
 
@@ -213,8 +213,8 @@ For support, please visit our [support forum](https://giftflowwp.com/support) or
 
 ## License
 
-This plugin is licensed under the GPL v2 or later.
+GPL v2 or later. See [LICENSE](https://www.gnu.org/licenses/gpl-2.0.html) for details.
 
-## Credits
+---
 
-Developed by the GiftFlowWp Team. 
+**Developed by @GiftflowTeam**

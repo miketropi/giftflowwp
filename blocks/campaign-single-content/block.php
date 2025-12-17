@@ -170,6 +170,7 @@ function giftflowwp_campaign_single_content_tab_donations($content, $post_id) {
         // get all donations for the campaign
         // meta query status = completed
         $args = array(
+          // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
           'meta_query' => array(
             array(
               'key' => '_status',

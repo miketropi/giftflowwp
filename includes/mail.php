@@ -39,12 +39,12 @@ add_action('wp_ajax_giftflowwp_test_send_mail', 'giftflowwp_test_send_mail_ajax'
 function giftflowwp_test_send_mail_ajax() {
 
   // check nonce
-  if (!wp_verify_nonce($_POST['nonce'], 'giftflowwp_admin_nonce')) {
+  if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'giftflowwp_admin_nonce')) {
     wp_send_json_error('Invalid nonce');
   }
 
   // name 
-  $name = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
+  $name = isset($_POST['name']) ? sanitize_text_field(wp_unslash($_POST['name'])) : '';
   
   // do action test mail
   do_action('giftflowwp_test_send_mail', $name);

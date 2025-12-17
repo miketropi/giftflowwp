@@ -182,12 +182,10 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
 
         $fields = $this->get_fields();
         foreach ( $fields as $field_id => $field ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
             if ( isset( $_POST[ $field_id ] ) ) {
-                update_post_meta(
-                    $post_id,
-                    '_' . $field_id,
-                    sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) )
-                );
+                // phpcs:ignore WordPress.Security.NonceVerification.Missing
+                update_post_meta($post_id,  '_' . $field_id, sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) ) );
             }
         }
     }

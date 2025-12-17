@@ -188,7 +188,9 @@ class Forms extends Base {
         // get donor record by email
         $donor = get_posts( array(
             'post_type' => 'donor',
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
             'meta_key' => '_email',
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
             'meta_value' => $data['donor_email'],
             // get only one record
             'posts_per_page' => 1,

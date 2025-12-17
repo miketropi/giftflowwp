@@ -41,6 +41,7 @@ add_action('rest_api_init', function () {
                 'default' => [],
             ),
             // exclude
+            // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
             'exclude' => array(
                 'type' => 'array',
                 'default' => [],
@@ -112,6 +113,7 @@ function giftflowwp_get_campaigns($request) {
         'order' => $request->get_param('order'),
         'orderby' => $request->get_param('orderby'),
         'post__in' => $request->get_param('include'),
+        // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in
         'post__not_in' => $request->get_param('exclude'),
     );
     $query = new WP_Query($args);

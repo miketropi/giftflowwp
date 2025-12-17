@@ -315,8 +315,10 @@ class Campaign_Details_Meta extends Base_Meta_Box {
 
         // Save regular fields
         foreach ( $fields['regular'] as $field_id => $field ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
             if ( isset( $_POST[ $field_id ] ) ) {
-                $value = $_POST[ $field_id ];
+                // phpcs:ignore WordPress.Security.NonceVerification.Missing
+                $value = sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) );
                 $value = sanitize_text_field( wp_unslash( $value ) );
 
                 update_post_meta(
@@ -335,14 +337,16 @@ class Campaign_Details_Meta extends Base_Meta_Box {
         
         // Save advanced fields
         foreach ( $fields['advanced'] as $field_id => $field ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
             if ( isset( $_POST[ $field_id ] ) ) {
-
-                $value = $_POST[ $field_id ];
+                // phpcs:ignore WordPress.Security.NonceVerification.Missing
+                $value = sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) );
 
                 // if value is an array, then we need to save each value as a separate post meta
                 if ( is_array( $value ) ) {
                     $value = serialize( $value );
                 } else {
+                    // phpcs:ignore WordPress.Security.NonceVerification.Missing
                     $value = sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) );
                 }
 

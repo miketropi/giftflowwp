@@ -564,16 +564,20 @@ class Stripe_Gateway extends Gateway_Base {
      * Handle return URL from 3D Secure
      */
     public function handle_return_url() {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         if (!isset($_GET['giftflow_stripe_return']) || !isset($_GET['payment_intent'])) {
             return;
         }
 
-        $payment_intent_id = sanitize_text_field($_GET['payment_intent']);
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $payment_intent_id = sanitize_text_field(wp_unslash($_GET['payment_intent']));
         
         // Find donation by payment intent ID
         $donations = get_posts(array(
             'post_type' => 'donation',
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
             'meta_key' => '_transaction_id',
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
             'meta_value' => $payment_intent_id,
             'posts_per_page' => 1
         ));
@@ -705,6 +709,7 @@ class Stripe_Gateway extends Gateway_Base {
             'timestamp' => current_time('mysql')
         );
 
+        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
         error_log('[GiftFlow Stripe Success] ' . wp_json_encode($log_data));
     }
 
@@ -726,6 +731,7 @@ class Stripe_Gateway extends Gateway_Base {
             'timestamp' => current_time('mysql')
         );
 
+        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
         error_log('[GiftFlow Stripe Error] ' . wp_json_encode($log_data));
     }
 }

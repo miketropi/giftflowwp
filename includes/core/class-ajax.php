@@ -86,6 +86,7 @@ class GiftFlowWP_Ajax {
 		}
 
 		$args = array(
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query' => array(
 				array(
 					'key' => '_status',
@@ -117,7 +118,13 @@ class GiftFlowWP_Ajax {
 			wp_send_json_error( __( 'Security check failed', 'giftflowwp' ) );
 		}
 		
-		echo do_shortcode('[giftflow_donation_form campaign_id="' . $_GET['campaign_id'] . '"]');
+		$campaign_id = isset($_GET['campaign_id']) ? intval(wp_unslash($_GET['campaign_id'])) : 0;
+
+		if ($campaign_id <= 0) {
+			wp_send_json_error( __( 'Invalid campaign ID', 'giftflowwp' ) );
+		}
+
+		echo do_shortcode('[giftflow_donation_form campaign_id="' . $campaign_id . '"]');
 		die();
 	}
 }

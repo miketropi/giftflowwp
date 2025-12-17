@@ -152,10 +152,13 @@ class Donor extends Base_Post_Type {
         global $typenow;
         
         if ( $typenow === 'donor' ) {
-            $selected = isset( $_GET['donor_user'] ) ? $_GET['donor_user'] : '';
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $selected = isset( $_GET['donor_user'] ) ? sanitize_text_field(wp_unslash($_GET['donor_user'])) : '';
             
             // Get all users who have associated donor records
             global $wpdb;
+
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
             $users = $wpdb->get_results( "
                 SELECT DISTINCT u.ID, u.display_name, u.user_email
                 FROM {$wpdb->users} u
@@ -191,9 +194,10 @@ class Donor extends Base_Post_Type {
      */
     public function filter_donors( $query ) {
         global $pagenow, $typenow;
-        
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         if ( $pagenow === 'edit.php' && $typenow === 'donor' && isset( $_GET['donor_user'] ) && $_GET['donor_user'] !== '' ) {
-            $user_id = intval( $_GET['donor_user'] );
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $user_id = intval( wp_unslash($_GET['donor_user']) );
             
             // Get the user's email
             $user = get_user_by( 'ID', $user_id );

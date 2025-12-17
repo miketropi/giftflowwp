@@ -34,6 +34,7 @@ function giftflowwp_count_campaigns_by_status($status = 'active') {
         'post_type' => 'campaign',
         'post_status' => 'publish',
         'numberposts' => -1,
+        // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
         'meta_query' => array(
             array(
                 'key' => '_status',
@@ -52,6 +53,7 @@ function giftflowwp_count_campaigns_by_status($status = 'active') {
 function giftflowwp_get_total_donations_amount() {
     global $wpdb;
 
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
     $total = $wpdb->get_var(
         $wpdb->prepare(
             "
@@ -193,6 +195,7 @@ function giftflowwp_get_recent_donations() {
 function giftflowwp_get_top_donors() {
     global $wpdb;
     
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
     $results = $wpdb->get_results("
         SELECT 
             pm1.meta_value as donor_id,
@@ -254,6 +257,7 @@ function giftflowwp_get_total_campaigns_by_status($status = 'active') {
         'post_type' => 'campaign',
         'post_status' => 'publish',
         'numberposts' => -1,
+        // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
         'meta_query' => array(
             array(
                 'key' => '_status',
@@ -347,18 +351,11 @@ function giftflowwp_get_donations_overview_stats_by_period( $period = '30d' ) {
     }
 
     // Query all donations in the range
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
     $donations = $wpdb->get_results(
         $wpdb->prepare(
-            "
-            SELECT p.ID, p.{$date_field}
-            FROM {$wpdb->posts} p
-            INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
-            WHERE p.post_type = %s
-              AND p.post_status = 'publish'
-              AND pm.meta_key = %s
-              AND pm.meta_value = %s
-              AND p.{$date_field} BETWEEN %s AND %s
-            ",
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            "SELECT p.ID, p.{$date_field} FROM {$wpdb->posts} p INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id WHERE p.post_type = %s AND p.post_status = 'publish' AND pm.meta_key = %s AND pm.meta_value = %s AND p.{$date_field} BETWEEN %s AND %s",
             $post_type,
             '_status',
             'completed',
@@ -394,6 +391,7 @@ function giftflowwp_get_donations_overview_stats_by_period( $period = '30d' ) {
             $end   = $date . ' 23:59:59';
         }
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $donor_count = $wpdb->get_var(
             $wpdb->prepare(
                 "
