@@ -5,11 +5,11 @@ import { Disabled } from '@wordpress/components';
 const { useSelect } = wp.data;
 
 
-registerBlockType('giftflowwp/campaign-single-content', {
+registerBlockType('giftflow/campaign-single-content', {
     apiVersion: 3,
     title: 'Campaign Single Content',
     icon: 'block-default',
-    category: 'giftflowwp',
+    category: 'giftflow',
     usesContext: ['postId'],
     edit: (props) => {
         const { attributes, ...rest } = props;
@@ -22,7 +22,7 @@ registerBlockType('giftflowwp/campaign-single-content', {
             <div {...blockProps}>
                 <Disabled>
                     <ServerSideRender 
-                        block="giftflowwp/campaign-single-content" 
+                        block="giftflow/campaign-single-content" 
                         attributes={ attributes } />
                 </Disabled>
             </div>

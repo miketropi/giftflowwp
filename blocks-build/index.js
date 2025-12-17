@@ -87,11 +87,11 @@ function _objectSpread(e) {
 
 
 var useSelect = wp.data.useSelect;
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__.registerBlockType)('giftflowwp/campaign-single-content', {
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__.registerBlockType)('giftflow/campaign-single-content', {
   apiVersion: 3,
   title: 'Campaign Single Content',
   icon: 'block-default',
-  category: 'giftflowwp',
+  category: 'giftflow',
   usesContext: ['postId'],
   edit: function edit(props) {
     var _rest$context$postId, _rest$context;
@@ -104,7 +104,7 @@ var useSelect = wp.data.useSelect;
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", _objectSpread(_objectSpread({}, blockProps), {}, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Disabled, {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default()), {
-          block: "giftflowwp/campaign-single-content",
+          block: "giftflow/campaign-single-content",
           attributes: attributes
         })
       })
@@ -164,11 +164,11 @@ function _objectSpread(e) {
 
 
 var useSelect = wp.data.useSelect;
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__.registerBlockType)('giftflowwp/campaign-status-bar', {
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__.registerBlockType)('giftflow/campaign-status-bar', {
   apiVersion: 3,
   title: 'Campaign Status Bar',
   icon: 'block-default',
-  category: 'giftflowwp',
+  category: 'giftflow',
   attributes: {
     __editorPostId: {
       type: 'number',
@@ -187,7 +187,7 @@ var useSelect = wp.data.useSelect;
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", _objectSpread(_objectSpread({}, blockProps), {}, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Disabled, {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default()), {
-          block: "giftflowwp/campaign-status-bar",
+          block: "giftflow/campaign-status-bar",
           attributes: attributes
         })
       })
@@ -252,11 +252,11 @@ function _objectSpread(e) {
 
 
 var useSelect = wp.data.useSelect;
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__.registerBlockType)('giftflowwp/donation-button', {
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__.registerBlockType)('giftflow/donation-button', {
   apiVersion: 3,
   title: 'Donation Button',
   icon: 'heart',
-  category: 'giftflowwp',
+  category: 'giftflow',
   attributes: {
     campaignId: {
       type: 'number',
@@ -301,7 +301,7 @@ var useSelect = wp.data.useSelect;
 
     // Prepare campaign options for the dropdown
     var campaignOptions = campaigns ? [{
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Use Current Post (Auto-detect)', 'giftflowwp'),
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Use Current Post (Auto-detect)', 'giftflow'),
       value: 0
     }].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(campaigns.map(function (campaign) {
       return {
@@ -309,7 +309,7 @@ var useSelect = wp.data.useSelect;
         value: campaign.id
       };
     }))) : [{
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Loading campaigns...', 'giftflowwp'),
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Loading campaigns...', 'giftflow'),
       value: 0
     }];
 
@@ -364,55 +364,55 @@ var useSelect = wp.data.useSelect;
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.Fragment, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.InspectorControls, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
-          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Campaign Settings', 'giftflowwp'),
+          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Campaign Settings', 'giftflow'),
           initialOpen: true,
           style: panelStyles,
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
             style: controlStyles,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.SelectControl, {
-              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Select Campaign', 'giftflowwp'),
+              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Select Campaign', 'giftflow'),
               value: attributes.campaignId,
               options: campaignOptions,
               onChange: function onChange(value) {
                 return updateAttribute('campaignId', parseInt(value));
               },
-              help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Choose a specific campaign or leave as "Auto-detect" to use the current post.', 'giftflowwp')
+              help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Choose a specific campaign or leave as "Auto-detect" to use the current post.', 'giftflow')
             })
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
-          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Button Settings', 'giftflowwp'),
+          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Button Settings', 'giftflow'),
           initialOpen: true,
           style: panelStyles,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
             style: controlStyles,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.TextControl, {
-              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Button Text', 'giftflowwp'),
+              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Button Text', 'giftflow'),
               value: attributes.buttonText,
               onChange: function onChange(value) {
                 return updateAttribute('buttonText', value);
               },
-              help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Customize the text displayed on the donation button.', 'giftflowwp')
+              help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Customize the text displayed on the donation button.', 'giftflow')
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
             style: controlStyles,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
-              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Full Width Button', 'giftflowwp'),
+              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Full Width Button', 'giftflow'),
               checked: attributes.fullWidth,
               onChange: function onChange(value) {
                 return updateAttribute('fullWidth', value);
               },
-              help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Make the button span the full width of its container.', 'giftflowwp')
+              help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Make the button span the full width of its container.', 'giftflow')
             })
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
-          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Button Styling', 'giftflowwp'),
+          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Button Styling', 'giftflow'),
           initialOpen: false,
           style: panelStyles,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
             style: controlStyles,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.BaseControl, {
-              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Background Color', 'giftflowwp'),
-              help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Choose the background color for your button.', 'giftflowwp'),
+              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Background Color', 'giftflow'),
+              help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Choose the background color for your button.', 'giftflow'),
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                 style: colorPickerContainerStyles,
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ColorPicker, {
@@ -432,8 +432,8 @@ var useSelect = wp.data.useSelect;
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
             style: controlStyles,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.BaseControl, {
-              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Text Color', 'giftflowwp'),
-              help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Choose the text color for your button.', 'giftflowwp'),
+              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Text Color', 'giftflow'),
+              help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Choose the text color for your button.', 'giftflow'),
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                 style: colorPickerContainerStyles,
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ColorPicker, {
@@ -453,8 +453,8 @@ var useSelect = wp.data.useSelect;
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
             style: controlStyles,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.BaseControl, {
-              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Border Radius', 'giftflowwp'),
-              help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Adjust the corner roundness of your button.', 'giftflowwp'),
+              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Border Radius', 'giftflow'),
+              help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Adjust the corner roundness of your button.', 'giftflow'),
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                 style: rangeContainerStyles,
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("input", {
@@ -484,7 +484,7 @@ var useSelect = wp.data.useSelect;
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", _objectSpread(_objectSpread({}, blockProps), {}, {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Disabled, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default()), {
-            block: "giftflowwp/donation-button",
+            block: "giftflow/donation-button",
             attributes: attributes
           })
         })
@@ -544,11 +544,11 @@ function _objectSpread(e) {
 
 
 
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)('giftflowwp/donor-account', {
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)('giftflow/donor-account', {
   apiVersion: 3,
   title: 'Donor Account',
   icon: 'admin-users',
-  category: 'giftflowwp',
+  category: 'giftflow',
   attributes: {},
   edit: function edit(props) {
     var attributes = props.attributes,
@@ -558,7 +558,7 @@ function _objectSpread(e) {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", _objectSpread(_objectSpread({}, blockProps), {}, {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Disabled, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_2___default()), {
-            block: "giftflowwp/donor-account",
+            block: "giftflow/donor-account",
             attributes: attributes
           })
         })
@@ -618,11 +618,11 @@ function _objectSpread(e) {
 
 
 
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)('giftflowwp/share', {
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)('giftflow/share', {
   apiVersion: 3,
   title: 'Share',
   icon: 'share',
-  category: 'giftflowwp',
+  category: 'giftflow',
   attributes: {
     title: {
       type: 'string',
@@ -655,53 +655,53 @@ function _objectSpread(e) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
-          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Share Settings', 'giftflowwp'),
+          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Share Settings', 'giftflow'),
           initialOpen: true,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
-            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Title', 'giftflowwp'),
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Title', 'giftflow'),
             value: attributes.title,
             onChange: function onChange(value) {
               return updateAttribute('title', value);
             },
-            help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Heading text above the share buttons.', 'giftflowwp')
+            help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Heading text above the share buttons.', 'giftflow')
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
-            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Custom URL', 'giftflowwp'),
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Custom URL', 'giftflow'),
             value: attributes.customUrl,
             onChange: function onChange(value) {
               return updateAttribute('customUrl', value);
             },
-            help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Leave empty to use current page URL, or enter a custom URL to share.', 'giftflowwp')
+            help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Leave empty to use current page URL, or enter a custom URL to share.', 'giftflow')
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
-          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Sharing Options', 'giftflowwp'),
+          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Sharing Options', 'giftflow'),
           initialOpen: true,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ToggleControl, {
-            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Social Media (Facebook, X, LinkedIn)', 'giftflowwp'),
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Social Media (Facebook, X, LinkedIn)', 'giftflow'),
             checked: attributes.showSocials,
             onChange: function onChange(value) {
               return updateAttribute('showSocials', value);
             },
-            help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Display social media sharing buttons.', 'giftflowwp')
+            help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Display social media sharing buttons.', 'giftflow')
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ToggleControl, {
-            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Email', 'giftflowwp'),
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Email', 'giftflow'),
             checked: attributes.showEmail,
             onChange: function onChange(value) {
               return updateAttribute('showEmail', value);
             },
-            help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Display email sharing option.', 'giftflowwp')
+            help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Display email sharing option.', 'giftflow')
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ToggleControl, {
-            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Copy URL', 'giftflowwp'),
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Copy URL', 'giftflow'),
             checked: attributes.showCopyUrl,
             onChange: function onChange(value) {
               return updateAttribute('showCopyUrl', value);
             },
-            help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Display copy URL to clipboard button.', 'giftflowwp')
+            help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Display copy URL to clipboard button.', 'giftflow')
           })]
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", _objectSpread(_objectSpread({}, blockProps), {}, {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Disabled, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_2___default()), {
-            block: "giftflowwp/share",
+            block: "giftflow/share",
             attributes: attributes
           })
         })

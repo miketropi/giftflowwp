@@ -2,10 +2,10 @@
 /**
  * Block Template Handler
  *
- * @package GiftflowWP
+ * @package GiftFlow
  */
 
-namespace GiftflowWP\Core;
+namespace GiftFlow\Core;
 
 /**
  * Class Block_Template
@@ -31,31 +31,31 @@ class Block_Template {
         // Register templates for pages
         $templates = array(
             'archive-campaign' => array(
-                'title' => esc_html__('Campaign Archive', 'giftflowwp'),
-                'description' => esc_html__('A template for the campaign archive page.', 'giftflowwp'),
+                'title' => esc_html__('Campaign Archive', 'giftflow'),
+                'description' => esc_html__('A template for the campaign archive page.', 'giftflow'),
                 // 'post_types' => array( 'page' ),
                 'template' => 'archive-campaign'
             ),
             'taxonomy-campaign-tax' => array(
-                'title' => esc_html__('Category Campaign Archive', 'giftflowwp'),
-                'description' => esc_html__('A template for the category campaign archive page.', 'giftflowwp'),
+                'title' => esc_html__('Category Campaign Archive', 'giftflow'),
+                'description' => esc_html__('A template for the category campaign archive page.', 'giftflow'),
                 'template' => 'category-campaign-archive'
             ),
             'single-campaign' => array(
-                'title' => esc_html__('Single Campaign', 'giftflowwp'),
-                'description' => esc_html__('A template for the single campaign page.', 'giftflowwp'),
+                'title' => esc_html__('Single Campaign', 'giftflow'),
+                'description' => esc_html__('A template for the single campaign page.', 'giftflow'),
                 'post_types' => array( 'campaign' ),
                 'template' => 'single-campaign'
             ),
             'donor-account' => array(
-                'title' => esc_html__('Donor Account', 'giftflowwp'),
-                'description' => esc_html__('A template for the donor account page.', 'giftflowwp'),
+                'title' => esc_html__('Donor Account', 'giftflow'),
+                'description' => esc_html__('A template for the donor account page.', 'giftflow'),
                 'post_types' => array( 'page' ),
                 'template' => 'donor-account'
             ),
             'thank-donor' => array(
-                'title' => esc_html__('Thank Donor', 'giftflowwp'),
-                'description' => esc_html__('A template for the thank donor page.', 'giftflowwp'),
+                'title' => esc_html__('Thank Donor', 'giftflow'),
+                'description' => esc_html__('A template for the thank donor page.', 'giftflow'),
                 'post_types' => array( 'page' ),
                 'template' => 'thank-donor'
             )
@@ -63,11 +63,11 @@ class Block_Template {
 
         foreach ( $templates as $slug => $template ) {
 
-            $content = file_get_contents(GIFTFLOWWP_PLUGIN_DIR . 'block-templates/' . $template['template'] . '.html');
-            $template['content'] = apply_filters('giftflowwp_block_template_content', $content, $template);
+            $content = file_get_contents(GIFTFLOW_PLUGIN_DIR . 'block-templates/' . $template['template'] . '.html');
+            $template['content'] = apply_filters('giftflow_block_template_content', $content, $template);
 
             register_block_template(
-                'giftflowwp//' . $slug,
+                'giftflow//' . $slug,
                 $template
             );
         }

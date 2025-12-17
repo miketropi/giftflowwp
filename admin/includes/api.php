@@ -2,14 +2,14 @@
 /**
  * API 
  * 
- * @package GiftFlowWp
+ * @package GiftFlow
  * @since v1.0.0
  */
 
 add_action('rest_api_init', function () {
-    register_rest_route('giftflowwp/v1', '/campaigns', array(
+    register_rest_route('giftflow/v1', '/campaigns', array(
         'methods' => 'GET',
-        'callback' => 'giftflowwp_get_campaigns',
+        'callback' => 'giftflow_get_campaigns',
         'permission_callback' => function () {
             return current_user_can('edit_posts'); // Editor, Author, Admin
         }, 
@@ -41,6 +41,7 @@ add_action('rest_api_init', function () {
                 'default' => [],
             ),
             // exclude
+            // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
             'exclude' => array(
                 'type' => 'array',
                 'default' => [],
@@ -48,17 +49,17 @@ add_action('rest_api_init', function () {
         ),
     ));
 
-    register_rest_route('giftflowwp/v1', '/dashboard/overview', array(
+    register_rest_route('giftflow/v1', '/dashboard/overview', array(
         'methods' => 'GET',
-        'callback' => 'giftflowwp_get_dashboard_overview',
+        'callback' => 'giftflow_get_dashboard_overview',
         'permission_callback' => function () {
             return current_user_can('edit_posts'); // Editor, Author, Admin
         },
     ));
 
-    register_rest_route('giftflowwp/v1', '/dashboard/statistics/charts', array(
+    register_rest_route('giftflow/v1', '/dashboard/statistics/charts', array(
         'methods' => 'GET',
-        'callback' => 'giftflowwp_get_dashboard_statistics_charts',
+        'callback' => 'giftflow_get_dashboard_statistics_charts',
         'permission_callback' => function () {
             return current_user_can('edit_posts'); // Editor, Author, Admin
         },
@@ -71,9 +72,9 @@ add_action('rest_api_init', function () {
     ));
 
     // register route create campaign csv
-    register_rest_route('giftflowwp/v1', '/campaign/csv-export', array(
+    register_rest_route('giftflow/v1', '/campaign/csv-export', array(
         'methods' => 'GET',
-        'callback' => 'giftflowwp_export_campaign_csv',
+        'callback' => 'giftflow_export_campaign_csv',
         'permission_callback' => function () {
             // allow anyone create for test 
             // return true;
@@ -98,10 +99,10 @@ add_action('rest_api_init', function () {
 });
 
 /**
- * Handle GET /wp-json/giftflowwp/v1/campaigns
+ * Handle GET /wp-json/giftflow/v1/campaigns
  * Returns a list of campaigns.
  */
-function giftflowwp_get_campaigns($request) {
+function giftflow_get_campaigns($request) {
     // Example: Fetch campaigns from a custom post type 'campaign'
     $args = array(
         'post_type'      => 'campaign',
@@ -112,6 +113,7 @@ function giftflowwp_get_campaigns($request) {
         'order' => $request->get_param('order'),
         'orderby' => $request->get_param('orderby'),
         'post__in' => $request->get_param('include'),
+        // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in
         'post__not_in' => $request->get_param('exclude'),
     );
     $query = new WP_Query($args);
@@ -123,12 +125,12 @@ function giftflowwp_get_campaigns($request) {
             $query->the_post();
 
             $goal_amount = (float) get_post_meta(get_the_ID(), '_goal_amount', true);
-            $raised_amount = (float) giftflowwp_get_campaign_raised_amount(get_the_ID());
-            $percentage = giftflowwp_get_campaign_progress_percentage(get_the_ID());
+            $raised_amount = (float) giftflow_get_campaign_raised_amount(get_the_ID());
+            $percentage = giftflow_get_campaign_progress_percentage(get_the_ID());
 
             // convert to currency
-            $__goal_amount = giftflowwp_render_currency_formatted_amount($goal_amount);
-            $__raised_amount = giftflowwp_render_currency_formatted_amount($raised_amount);
+            $__goal_amount = giftflow_render_currency_formatted_amount($goal_amount);
+            $__raised_amount = giftflow_render_currency_formatted_amount($raised_amount);
 
             $campaigns[] = array(
                 'id'      => strval(get_the_ID()),
@@ -153,38 +155,38 @@ function giftflowwp_get_campaigns($request) {
     return rest_ensure_response($campaigns);
 }
 
-function giftflowwp_get_dashboard_overview($request) {
+function giftflow_get_dashboard_overview($request) {
 
-    $total_raised = giftflowwp_get_total_donations_amount();
+    $total_raised = giftflow_get_total_donations_amount();
     $data = array(
         'total_raised' => $total_raised,
-        '__total_raised' => giftflowwp_render_currency_formatted_amount($total_raised),
-        'total_active_campaigns' => giftflowwp_get_total_campaigns_by_status('active'),
-        'total_donors' => giftflowwp_get_total_donors_count(),
-        'recent_donations' => giftflowwp_get_recent_donations(),
-        // 'recent_donors' => giftflowwp_get_recent_donors(),
-        // 'top_comments' => giftflowwp_get_top_comments_of_campaigns(),
+        '__total_raised' => giftflow_render_currency_formatted_amount($total_raised),
+        'total_active_campaigns' => giftflow_get_total_campaigns_by_status('active'),
+        'total_donors' => giftflow_get_total_donors_count(),
+        'recent_donations' => giftflow_get_recent_donations(),
+        // 'recent_donors' => giftflow_get_recent_donors(),
+        // 'top_comments' => giftflow_get_top_comments_of_campaigns(),
     );
     return rest_ensure_response($data);
 }
 
 /**
- * Handle GET /wp-json/giftflowwp/v1/dashboard/statistics/charts
+ * Handle GET /wp-json/giftflow/v1/dashboard/statistics/charts
  * Returns the statistics charts data.
  */
-function giftflowwp_get_dashboard_statistics_charts($request) {
+function giftflow_get_dashboard_statistics_charts($request) {
     $period = $request->get_param('period');
     $data = array(
-        'donations_overview_chart_by_period' => giftflowwp_get_donations_overview_stats_by_period($period),
+        'donations_overview_chart_by_period' => giftflow_get_donations_overview_stats_by_period($period),
     );
     return rest_ensure_response($data);
 }
 
 /**
- * Handle POST /wp-json/giftflowwp/v1/campaign/csv-export
+ * Handle POST /wp-json/giftflow/v1/campaign/csv-export
  * Exports the campaign CSV.
  */
-function giftflowwp_export_campaign_csv($request) {
+function giftflow_export_campaign_csv($request) {
     // ⚠️ Disable cache & buffer
     if (ob_get_length()) {
         ob_end_clean();
@@ -193,5 +195,5 @@ function giftflowwp_export_campaign_csv($request) {
     $campaign_id = $request->get_param('campaign_id');
     $date_from = $request->get_param('date_from');
     $date_to = $request->get_param('date_to');
-    $export = new GiftFlowWP_Export($campaign_id, 'all', $date_from, $date_to, true, true, 'csv');
+    $export = new GiftFlow_Export($campaign_id, 'all', $date_from, $date_to, true, true, 'csv');
 }

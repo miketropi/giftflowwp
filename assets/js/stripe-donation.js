@@ -3,7 +3,7 @@
  * 
  */
 import {loadStripe} from '@stripe/stripe-js';
-const STRIPE_PUBLIC_KEY = giftflowwpStripeDonation.stripe_publishable_key;
+const STRIPE_PUBLIC_KEY = giftflowStripeDonation.stripe_publishable_key;
 
 ((w) => {
   'use strict';

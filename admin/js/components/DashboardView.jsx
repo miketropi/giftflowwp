@@ -3,7 +3,7 @@ import OverView from './OverView';
 
 const DashboardView = () => {
   return (
-    <div className="giftflowwp-dashboard-view">
+    <div className="giftflow-dashboard-view">
       <Welcome />
       <OverView />
     </div>

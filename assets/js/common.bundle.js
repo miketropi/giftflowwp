@@ -198,11 +198,11 @@ function _regeneratorDefine2(e, r, n, t) {
 (function (w, $) {
   "use strict";
 
-  var _giftflowwp_common = giftflowwp_common,
-    ajax_url = _giftflowwp_common.ajax_url,
-    nonce = _giftflowwp_common.nonce;
-  w.giftflowwp = w.giftflowwp || {};
-  var gfw = w.giftflowwp;
+  var _giftflow_common = giftflow_common,
+    ajax_url = _giftflow_common.ajax_url,
+    nonce = _giftflow_common.nonce;
+  w.giftflow = w.giftflow || {};
+  var gfw = w.giftflow;
 
   // load donation list
   gfw.loadDonationListPaginationTemplate_Handle = /*#__PURE__*/function () {
@@ -233,7 +233,7 @@ function _regeneratorDefine2(e, r, n, t) {
               url: ajax_url,
               type: 'POST',
               data: {
-                action: 'giftflowwp_get_pagination_donation_list_html',
+                action: 'giftflow_get_pagination_donation_list_html',
                 campaign: campaign,
                 page: page,
                 nonce: nonce
@@ -463,9 +463,9 @@ function _regeneratorDefine2(e, r, n, t) {
     }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2));
   }, _regeneratorDefine2(e, r, n, t);
 }
-var _giftflowwp_common = giftflowwp_common,
-  ajax_url = _giftflowwp_common.ajax_url,
-  nonce = _giftflowwp_common.nonce;
+var _giftflow_common = giftflow_common,
+  ajax_url = _giftflow_common.ajax_url,
+  nonce = _giftflow_common.nonce;
 function donationButton_Handle(_x) {
   return _donationButton_Handle.apply(this, arguments);
 }
@@ -476,9 +476,9 @@ function _donationButton_Handle() {
       while (1) switch (_context.n) {
         case 0:
           _el$dataset = el.dataset, campaignId = _el$dataset.campaignId, campaignTitle = _el$dataset.campaignTitle;
-          ajaxModal = new GiftFlowWPModal({
+          ajaxModal = new GiftFlowModal({
             ajax: true,
-            ajaxUrl: "".concat(ajax_url, "?action=giftflowwp_get_campaign_donation_form&campaign_id=").concat(campaignId, "&nonce=").concat(nonce),
+            ajaxUrl: "".concat(ajax_url, "?action=giftflow_get_campaign_donation_form&campaign_id=").concat(campaignId, "&nonce=").concat(nonce),
             onLoad: function onLoad(content, modal) {
               // console.log('Content loaded:', modal);
 
@@ -671,20 +671,20 @@ function _objectSpread(e) {
   return e;
 }
 /**
- * GiftFlowWP Modal Library
+ * GiftFlow Modal Library
  * A clean, simple, and easy-to-use modal system with AJAX support
  * 
  * QUICK START EXAMPLES:
  * 
  * Basic Modal:
- * const modal = new GiftFlowWPModal({
+ * const modal = new GiftFlowModal({
  *     content: '<h2>Hello World!</h2><p>This is a simple modal.</p>',
  *     closeButton: true
  * });
  * modal.open();
  * 
  * AJAX Modal:
- * const ajaxModal = new GiftFlowWPModal({
+ * const ajaxModal = new GiftFlowModal({
  *     ajax: true,
  *     ajaxUrl: '/api/get-content',
  *     onLoad: (content, modal) => console.log('Content loaded:', content)
@@ -692,12 +692,12 @@ function _objectSpread(e) {
  * ajaxModal.open();
  * 
  * Quick Dialogs:
- * GiftFlowWPModal.alert('Operation completed!', 'Success');
- * const confirmed = await GiftFlowWPModal.confirm('Are you sure?');
- * const value = await GiftFlowWPModal.prompt('Enter your name:', 'John Doe');
+ * GiftFlowModal.alert('Operation completed!', 'Success');
+ * const confirmed = await GiftFlowModal.confirm('Are you sure?');
+ * const value = await GiftFlowModal.prompt('Enter your name:', 'John Doe');
  * 
  * Custom Modal:
- * const customModal = new GiftFlowWPModal({
+ * const customModal = new GiftFlowModal({
  *     content: '<p>Custom sized modal</p>',
  *     width: '800px',
  *     animation: 'zoom',
@@ -706,20 +706,20 @@ function _objectSpread(e) {
  * customModal.open();
  * 
  * For complete documentation and examples, see:
- * wp-content/plugins/giftflowwp/assets/js/util/README.md
+ * wp-content/plugins/giftflow/assets/js/util/README.md
  */
 /**
- * GiftFlowWP Modal Library
+ * GiftFlow Modal Library
  * A clean, simple, and easy-to-use modal system with AJAX support
  */
-var GiftFlowWPModal = /*#__PURE__*/function () {
-  function GiftFlowWPModal() {
+var GiftFlowModal = /*#__PURE__*/function () {
+  function GiftFlowModal() {
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__["default"])(this, GiftFlowWPModal);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__["default"])(this, GiftFlowModal);
     this.options = _objectSpread({
       // Modal options
-      id: options.id || 'giftflowwp-modal',
-      className: options.className || 'giftflowwp-modal',
+      id: options.id || 'giftflow-modal',
+      className: options.className || 'giftflow-modal',
       overlay: options.overlay !== false,
       closeOnOverlay: options.closeOnOverlay !== false,
       closeOnEscape: options.closeOnEscape !== false,
@@ -770,7 +770,7 @@ var GiftFlowWPModal = /*#__PURE__*/function () {
   /**
    * Initialize the modal
    */
-  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__["default"])(GiftFlowWPModal, [{
+  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__["default"])(GiftFlowModal, [{
     key: "init",
     value: function init() {
       this.createModal();
@@ -789,14 +789,14 @@ var GiftFlowWPModal = /*#__PURE__*/function () {
       // Create overlay
       if (this.options.overlay) {
         this.overlayElement = document.createElement('div');
-        this.overlayElement.className = 'giftflowwp-modal__overlay';
+        this.overlayElement.className = 'giftflow-modal__overlay';
         this.overlayElement.setAttribute('aria-hidden', 'true');
       }
 
       // Create modal container
       this.modalElement = document.createElement('div');
       this.modalElement.id = this.options.id;
-      this.modalElement.className = "giftflowwp-modal ".concat(this.options.className);
+      this.modalElement.className = "giftflow-modal ".concat(this.options.className);
       this.modalElement.setAttribute('role', 'dialog');
       this.modalElement.setAttribute('aria-modal', 'true');
       this.modalElement.setAttribute('aria-label', this.options.ariaLabel);
@@ -818,12 +818,12 @@ var GiftFlowWPModal = /*#__PURE__*/function () {
 
       // Create modal content
       this.contentElement = document.createElement('div');
-      this.contentElement.className = 'giftflowwp-modal__content';
+      this.contentElement.className = 'giftflow-modal__content';
 
       // Add close button if enabled
       if (this.options.closeButton) {
         this.closeButtonElement = document.createElement('button');
-        this.closeButtonElement.className = 'giftflowwp-modal__close';
+        this.closeButtonElement.className = 'giftflow-modal__close';
         this.closeButtonElement.setAttribute('type', 'button');
         this.closeButtonElement.setAttribute('aria-label', 'Close modal');
         this.closeButtonElement.innerHTML = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-x-icon lucide-x\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg>";
@@ -845,7 +845,7 @@ var GiftFlowWPModal = /*#__PURE__*/function () {
       }
 
       // Add animation classes
-      this.modalElement.classList.add("giftflowwp-modal--".concat(this.options.animation));
+      this.modalElement.classList.add("giftflow-modal--".concat(this.options.animation));
     }
 
     /**
@@ -955,7 +955,7 @@ var GiftFlowWPModal = /*#__PURE__*/function () {
               _context.p = 4;
               _t = _context.v;
               console.error('Modal AJAX error:', _t);
-              this.contentElement.innerHTML = '<div class="giftflowwp-modal__error">Failed to load content</div>';
+              this.contentElement.innerHTML = '<div class="giftflow-modal__error">Failed to load content</div>';
               if (this.options.onError) {
                 this.options.onError(_t, this);
               }
@@ -975,7 +975,7 @@ var GiftFlowWPModal = /*#__PURE__*/function () {
   }, {
     key: "showLoading",
     value: function showLoading() {
-      this.contentElement.innerHTML = '<div class="giftflowwp-modal__loading">Loading...</div>';
+      this.contentElement.innerHTML = '<div class="giftflow-modal__loading">Loading...</div>';
     }
 
     /**
@@ -998,9 +998,9 @@ var GiftFlowWPModal = /*#__PURE__*/function () {
 
       // Trigger animation
       requestAnimationFrame(function () {
-        _this2.modalElement.classList.add('giftflowwp-modal--open');
+        _this2.modalElement.classList.add('giftflow-modal--open');
         if (_this2.options.overlay) {
-          _this2.overlayElement.classList.add('giftflowwp-modal__overlay--open');
+          _this2.overlayElement.classList.add('giftflow-modal__overlay--open');
         }
       });
 
@@ -1040,9 +1040,9 @@ var GiftFlowWPModal = /*#__PURE__*/function () {
       }
 
       // Trigger close animation
-      this.modalElement.classList.remove('giftflowwp-modal--open');
+      this.modalElement.classList.remove('giftflow-modal--open');
       if (this.options.overlay) {
-        this.overlayElement.classList.remove('giftflowwp-modal__overlay--open');
+        this.overlayElement.classList.remove('giftflow-modal__overlay--open');
       }
 
       // Wait for animation to complete
@@ -1126,30 +1126,30 @@ var GiftFlowWPModal = /*#__PURE__*/function () {
 /**
  * Static methods for easy modal creation
  */
-GiftFlowWPModal.create = function (options) {
-  return new GiftFlowWPModal(options);
+GiftFlowModal.create = function (options) {
+  return new GiftFlowModal(options);
 };
-GiftFlowWPModal.alert = function (message) {
+GiftFlowModal.alert = function (message) {
   var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'Alert';
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var modal = new GiftFlowWPModal(_objectSpread({
-    content: "\n            <div class=\"giftflowwp-modal__header\">\n                <h3>".concat(title, "</h3>\n            </div>\n            <div class=\"giftflowwp-modal__body\">\n                <p>").concat(message, "</p>\n            </div>\n            <div class=\"giftflowwp-modal__footer\">\n                <button class=\"giftflowwp-modal__btn giftflowwp-modal__btn--primary\" onclick=\"this.closest('.giftflowwp-modal').giftflowwpModal.close()\">\n                    OK\n                </button>\n            </div>\n        "),
+  var modal = new GiftFlowModal(_objectSpread({
+    content: "\n            <div class=\"giftflow-modal__header\">\n                <h3>".concat(title, "</h3>\n            </div>\n            <div class=\"giftflow-modal__body\">\n                <p>").concat(message, "</p>\n            </div>\n            <div class=\"giftflow-modal__footer\">\n                <button class=\"giftflow-modal__btn giftflow-modal__btn--primary\" onclick=\"this.closest('.giftflow-modal').giftflowModal.close()\">\n                    OK\n                </button>\n            </div>\n        "),
     closeButton: true,
     closeOnOverlay: false,
     closeOnEscape: true
   }, options));
 
   // Store modal reference for the close button
-  modal.modalElement.giftflowwpModal = modal;
+  modal.modalElement.giftflowModal = modal;
   modal.open();
   return modal;
 };
-GiftFlowWPModal.confirm = function (message) {
+GiftFlowModal.confirm = function (message) {
   var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'Confirm';
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   return new Promise(function (resolve) {
-    var modal = new GiftFlowWPModal(_objectSpread({
-      content: "\n                <div class=\"giftflowwp-modal__header\">\n                    <h3>".concat(title, "</h3>\n                </div>\n                <div class=\"giftflowwp-modal__body\">\n                    <p>").concat(message, "</p>\n                </div>\n                <div class=\"giftflowwp-modal__footer\">\n                    <button class=\"giftflowwp-modal__btn giftflowwp-modal__btn--secondary\" onclick=\"this.closest('.giftflowwp-modal').giftflowwpModal.confirmResult(false)\">\n                        Cancel\n                    </button>\n                    <button class=\"giftflowwp-modal__btn giftflowwp-modal__btn--primary\" onclick=\"this.closest('.giftflowwp-modal').giftflowwpModal.confirmResult(true)\">\n                        OK\n                    </button>\n                </div>\n            "),
+    var modal = new GiftFlowModal(_objectSpread({
+      content: "\n                <div class=\"giftflow-modal__header\">\n                    <h3>".concat(title, "</h3>\n                </div>\n                <div class=\"giftflow-modal__body\">\n                    <p>").concat(message, "</p>\n                </div>\n                <div class=\"giftflow-modal__footer\">\n                    <button class=\"giftflow-modal__btn giftflow-modal__btn--secondary\" onclick=\"this.closest('.giftflow-modal').giftflowModal.confirmResult(false)\">\n                        Cancel\n                    </button>\n                    <button class=\"giftflow-modal__btn giftflow-modal__btn--primary\" onclick=\"this.closest('.giftflow-modal').giftflowModal.confirmResult(true)\">\n                        OK\n                    </button>\n                </div>\n            "),
       closeButton: true,
       closeOnOverlay: false,
       closeOnEscape: true,
@@ -1159,7 +1159,7 @@ GiftFlowWPModal.confirm = function (message) {
     }, options));
 
     // Store modal reference and confirm method
-    modal.modalElement.giftflowwpModal = modal;
+    modal.modalElement.giftflowModal = modal;
     modal.confirmResult = function (result) {
       modal.close();
       resolve(result);
@@ -1167,13 +1167,13 @@ GiftFlowWPModal.confirm = function (message) {
     modal.open();
   });
 };
-GiftFlowWPModal.prompt = function (message) {
+GiftFlowModal.prompt = function (message) {
   var defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
   var title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'Input';
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   return new Promise(function (resolve) {
-    var modal = new GiftFlowWPModal(_objectSpread({
-      content: "\n                <div class=\"giftflowwp-modal__header\">\n                    <h3>".concat(title, "</h3>\n                </div>\n                <div class=\"giftflowwp-modal__body\">\n                    <p>").concat(message, "</p>\n                    <input type=\"text\" class=\"giftflowwp-modal__input\" value=\"").concat(defaultValue, "\" placeholder=\"Enter value...\">\n                </div>\n                <div class=\"giftflowwp-modal__footer\">\n                    <button class=\"giftflowwp-modal__btn giftflowwp-modal__btn--secondary\" onclick=\"this.closest('.giftflowwp-modal').giftflowwpModal.promptResult(null)\">\n                        Cancel\n                    </button>\n                    <button class=\"giftflowwp-modal__btn giftflowwp-modal__btn--primary\" onclick=\"this.closest('.giftflowwp-modal').giftflowwpModal.promptResult(this.closest('.giftflowwp-modal').querySelector('.giftflowwp-modal__input').value)\">\n                        OK\n                    </button>\n                </div>\n            "),
+    var modal = new GiftFlowModal(_objectSpread({
+      content: "\n                <div class=\"giftflow-modal__header\">\n                    <h3>".concat(title, "</h3>\n                </div>\n                <div class=\"giftflow-modal__body\">\n                    <p>").concat(message, "</p>\n                    <input type=\"text\" class=\"giftflow-modal__input\" value=\"").concat(defaultValue, "\" placeholder=\"Enter value...\">\n                </div>\n                <div class=\"giftflow-modal__footer\">\n                    <button class=\"giftflow-modal__btn giftflow-modal__btn--secondary\" onclick=\"this.closest('.giftflow-modal').giftflowModal.promptResult(null)\">\n                        Cancel\n                    </button>\n                    <button class=\"giftflow-modal__btn giftflow-modal__btn--primary\" onclick=\"this.closest('.giftflow-modal').giftflowModal.promptResult(this.closest('.giftflow-modal').querySelector('.giftflow-modal__input').value)\">\n                        OK\n                    </button>\n                </div>\n            "),
       closeButton: true,
       closeOnOverlay: false,
       closeOnEscape: true,
@@ -1183,7 +1183,7 @@ GiftFlowWPModal.prompt = function (message) {
     }, options));
 
     // Store modal reference and prompt method
-    modal.modalElement.giftflowwpModal = modal;
+    modal.modalElement.giftflowModal = modal;
     modal.promptResult = function (result) {
       modal.close();
       resolve(result);
@@ -1192,7 +1192,7 @@ GiftFlowWPModal.prompt = function (message) {
 
     // Focus input
     setTimeout(function () {
-      var input = modal.modalElement.querySelector('.giftflowwp-modal__input');
+      var input = modal.modalElement.querySelector('.giftflow-modal__input');
       if (input) {
         input.focus();
         input.select();
@@ -1203,13 +1203,13 @@ GiftFlowWPModal.prompt = function (message) {
 
 // Export for different module systems
 if ( true && module.exports) {
-  module.exports = GiftFlowWPModal;
+  module.exports = GiftFlowModal;
 } else if (typeof define === 'function' && __webpack_require__.amdO) {
   define(function () {
-    return GiftFlowWPModal;
+    return GiftFlowModal;
   });
 } else {
-  window.GiftFlowWPModal = GiftFlowWPModal;
+  window.GiftFlowModal = GiftFlowModal;
 }
 
 /***/ }),
@@ -1577,7 +1577,7 @@ function _typeof(o) {
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
 /******/ 		
-/******/ 		var chunkLoadingGlobal = self["webpackChunkgiftflowwp"] = self["webpackChunkgiftflowwp"] || [];
+/******/ 		var chunkLoadingGlobal = self["webpackChunkgiftflow"] = self["webpackChunkgiftflow"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();

@@ -1,8 +1,8 @@
 <?php
 /**
- * GiftFlowWP Dashboard
+ * GiftFlow Dashboard
  *
- * @package GiftFlowWP
+ * @package GiftFlow
  * @subpackage Admin
  */
 
@@ -12,48 +12,49 @@ if (!defined('ABSPATH')) {
 }
 
 // Include dashboard functions
-require_once GIFTFLOWWP_PLUGIN_DIR . 'admin/includes/dashboard-functions.php';
+require_once GIFTFLOW_PLUGIN_DIR . 'admin/includes/dashboard-functions.php';
 
 /**
- * Register the GiftFlowWP dashboard page
+ * Register the GiftFlow dashboard page
  */
-function giftflowwp_register_dashboard_page() {
-    $icon_base64 = base64_encode(giftflowwp_svg_icon('plgicon'));
+function giftflow_register_dashboard_page() {
+    $icon_base64 = base64_encode(giftflow_svg_icon('plgicon'));
     add_menu_page(
-        __('GiftFlow Dashboard', 'giftflowwp'),
-        __('Gift Flow', 'giftflowwp'),
+        __('GiftFlow Dashboard', 'giftflow'),
+        __('GiftFlow', 'giftflow'),
         'manage_options',
-        'giftflowwp-dashboard',
-        'giftflowwp_dashboard_page',
+        'giftflow-dashboard',
+        'giftflow_dashboard_page',
         'data:image/svg+xml;base64,' . $icon_base64,
         // 'dashicons-heart',
         30
     );
 
     add_submenu_page(
-        'giftflowwp-dashboard',
-        __('Dashboard', 'giftflowwp'),
-        __('Dashboard', 'giftflowwp'),
+        'giftflow-dashboard',
+        __('Dashboard', 'giftflow'),
+        __('Dashboard', 'giftflow'),
         'manage_options',
-        'giftflowwp-dashboard',
-        'giftflowwp_dashboard_page',
+        'giftflow-dashboard',
+        'giftflow_dashboard_page',
         0
     );
     
 }
-add_action('admin_menu', 'giftflowwp_register_dashboard_page');
+add_action('admin_menu', 'giftflow_register_dashboard_page');
 
 /**
- * Display the GiftFlowWP dashboard page content
+ * Display the GiftFlow dashboard page content
  */
-function giftflowwp_dashboard_page() {
+function giftflow_dashboard_page() {
     // Check user capabilities
     if (!current_user_can('manage_options')) {
         return;
     }
     
     // Get the current tab
-    $current_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'overview';
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    $current_tab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : 'overview';
     
     // Include the header
     ?>
@@ -61,13 +62,13 @@ function giftflowwp_dashboard_page() {
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
         
         <nav class="nav-tab-wrapper">
-            <a href="<?php echo esc_url(admin_url('admin.php?page=giftflowwp-dashboard&tab=overview')); ?>" 
+            <a href="<?php echo esc_url(admin_url('admin.php?page=giftflow-dashboard&tab=overview')); ?>" 
                class="nav-tab <?php echo $current_tab === 'overview' ? 'nav-tab-active' : ''; ?>">
-                <?php _e('Overview', 'giftflowwp'); ?>
+                <?php esc_html_e('Overview', 'giftflow'); ?>
             </a>
-            <!-- <a href="<?php echo esc_url(admin_url('admin.php?page=giftflowwp-dashboard&tab=help')); ?>" 
+            <!-- <a href="<?php echo esc_url(admin_url('admin.php?page=giftflow-dashboard&tab=help')); ?>" 
                class="nav-tab <?php echo $current_tab === 'help' ? 'nav-tab-active' : ''; ?>">
-                <?php _e('Help', 'giftflowwp'); ?>
+                <?php esc_html_e('Help', 'giftflow'); ?>
             </a> -->
         </nav>
         
@@ -76,11 +77,11 @@ function giftflowwp_dashboard_page() {
             // Include the appropriate tab content
             switch ($current_tab) {
                 case 'help':
-                    giftflowwp_dashboard_help_tab();
+                    giftflow_dashboard_help_tab();
                     break;
                 case 'overview':
                 default:
-                    giftflowwp_dashboard_overview_tab();
+                    giftflow_dashboard_overview_tab();
                     break;
             }
             ?>
@@ -92,15 +93,15 @@ function giftflowwp_dashboard_page() {
 /**
  * Display the overview tab content
  */
-function giftflowwp_dashboard_overview_tab() {
-    giftflowwp_load_template('admin/dashboard-view.php');
+function giftflow_dashboard_overview_tab() {
+    giftflow_load_template('admin/dashboard-view.php');
 }
 
 /**
  * Display the help tab content
  */
-function giftflowwp_dashboard_help_tab() {
-    giftflowwp_load_template('admin/dashboard-helps.php');
+function giftflow_dashboard_help_tab() {
+    giftflow_load_template('admin/dashboard-helps.php');
 }
 
 

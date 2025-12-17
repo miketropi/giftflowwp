@@ -3,8 +3,11 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $posts = $donations['posts'] ?? [];
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $total = $donations['total'] ?? 0;
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $pagination = $donations['pagination'] ?? 1;
 ?>
 
@@ -14,17 +17,19 @@ $pagination = $donations['pagination'] ?? 1;
             <?php if ( $total > 0 ) : ?>
                 <?php
                 /* translators: %s: number of donations */
-                printf( esc_html__( '%s donations', 'giftflowwp' ), esc_html( $total ) );
+                printf( esc_html__( '%s donations', 'giftflow' ), esc_html( $total ) );
                 ?>
             <?php else : ?>
-                <?php esc_html_e( 'Be the first to donate', 'giftflowwp' ); ?>
+                <?php esc_html_e( 'Be the first to donate', 'giftflow' ); ?>
             <?php endif; ?>
         </span>
     </div>
 
     <?php if (!empty($posts)): ?>
         <div class="gfw-donation-list">
-            <?php foreach ($posts as $donation): ?>
+            <?php 
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+            foreach ($posts as $donation): ?>
                 <div class="gfw-donation-item">
                     <div class="gfw-donation-row">
                         <div class="gfw-donation-left">
@@ -42,12 +47,12 @@ $pagination = $donations['pagination'] ?? 1;
                             <?php endif; ?>
                             
                             <div class="gfw-donation-time">
-                                <?php echo esc_html(date('F j, Y – H:i:s', strtotime($donation['date_gmt']))); ?>
+                                <?php echo esc_html(gmdate('F j, Y – H:i:s', strtotime($donation['date_gmt']))); ?>
                             </div>
                         </div>
                         
                         <div class="gfw-donation-right">
-                            <div class="gfw-donation-amount"><?php echo $donation['amount_formatted']; ?></div>
+                            <div class="gfw-donation-amount"><?php echo wp_kses_post($donation['amount_formatted']); ?></div>
                         </div>
                     </div>
                 </div>
@@ -56,16 +61,21 @@ $pagination = $donations['pagination'] ?? 1;
 
         <?php if ($pagination > 1): ?>
             <div class="gfw-donation-pagination">
-                <span><?php printf( esc_html__( 'Page %1$d of %2$d', 'giftflowwp' ), $paged, $pagination ); ?></span>
+                <span>
+                    <?php 
+                    /* translators: 1: is paged, 2: total paged number */
+                    printf( esc_html__( 'Page %1$d of %2$d', 'giftflow' ), esc_html($paged), esc_html($pagination) ); 
+                    ?>
+                </span>
                 <div class="gfw-pagination-buttons">
                   <?php if ($paged > 1): ?>
                     <button 
                       class="gfw-prev-btn" 
                       data-page="<?php echo esc_attr($paged - 1); ?>"
                       data-campaign="<?php echo esc_attr($campaign_id); ?>"
-                      onClick="window.giftflowwp.loadDonationListPaginationTemplate_Handle(this)" 
+                      onClick="window.giftflow.loadDonationListPaginationTemplate_Handle(this)" 
                     >
-                      <?php esc_html_e('Previous', 'giftflowwp'); ?>
+                      <?php esc_html_e('Previous', 'giftflow'); ?>
                     </button>
                   <?php endif; ?>
                   
@@ -74,8 +84,8 @@ $pagination = $donations['pagination'] ?? 1;
                       class="gfw-next-btn" 
                       data-page="<?php echo esc_attr($paged + 1); ?>"
                       data-campaign="<?php echo esc_attr($campaign_id); ?>" 
-                      onClick="window.giftflowwp.loadDonationListPaginationTemplate_Handle(this)">
-                      <?php esc_html_e('Next', 'giftflowwp'); ?>
+                      onClick="window.giftflow.loadDonationListPaginationTemplate_Handle(this)">
+                      <?php esc_html_e('Next', 'giftflow'); ?>
                     </button>
                   <?php endif; ?>
                 </div>
@@ -84,7 +94,7 @@ $pagination = $donations['pagination'] ?? 1;
 
     <?php else: ?>
         <div class="gfw-donation-empty">
-            <p><?php esc_html_e('No donations yet', 'giftflowwp'); ?></p>
+            <p><?php esc_html_e('No donations yet', 'giftflow'); ?></p>
         </div>
     <?php endif; ?>
 </div>

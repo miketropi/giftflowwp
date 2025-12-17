@@ -29,26 +29,26 @@ const OverView = () => {
   ];
 
   return (
-    <div className="giftflowwp-overview">
-      <div className="giftflowwp-overview__main">
-        <h3 className="giftflowwp-overview__title">Dashboard Overview</h3>
+    <div className="giftflow-overview">
+      <div className="giftflow-overview__main">
+        <h3 className="giftflow-overview__title">Dashboard Overview</h3>
 
-        <div className="giftflowwp-overview__chart">
+        <div className="giftflow-overview__chart">
           <DonationsOverviewChart />
         </div>
         
-        <div className="giftflowwp-overview__stats">
+        <div className="giftflow-overview__stats">
           { cards.map((card, index) => (
             <Card key={index} icon={card.icon} value={card.value} title={card.title} isLoading={loading} />
           )) }
         </div>
 
-        <div className="giftflowwp-overview__recent-activity">
+        <div className="giftflow-overview__recent-activity">
           <RecentDonations donations={basedata?.recent_donations} />
         </div>
       </div>
 
-      <div className="giftflowwp-overview__sidebar">
+      <div className="giftflow-overview__sidebar">
         <QuickActions />
         <CampaignTracking />
       </div>

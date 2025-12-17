@@ -1,6 +1,6 @@
-# GiftFlowWP Field Builder
+# GiftFlow Field Builder
 
-The GiftFlowWP Field Builder provides a flexible and easy-to-use way to create and render WordPress custom meta fields. This documentation will guide you through using the `GiftFlowWP_Field` class to create various types of fields for your WordPress site.
+The GiftFlow Field Builder provides a flexible and easy-to-use way to create and render WordPress custom meta fields. This documentation will guide you through using the `GiftFlow_Field` class to create various types of fields for your WordPress site.
 
 ## Table of Contents
 
@@ -15,14 +15,14 @@ The GiftFlowWP Field Builder provides a flexible and easy-to-use way to create a
 
 ## Installation
 
-The Field Builder is included in the GiftFlowWP plugin. No additional installation is required.
+The Field Builder is included in the GiftFlow plugin. No additional installation is required.
 
 ## Basic Usage
 
-To create a field, instantiate the `GiftFlowWP_Field` class with the required parameters:
+To create a field, instantiate the `GiftFlow_Field` class with the required parameters:
 
 ```php
-$field = new GiftFlowWP_Field(
+$field = new GiftFlow_Field(
     'field_id',      // Unique ID for the field
     'field_name',    // Name attribute for the field
     'field_type',    // Type of field (see Field Types below)
@@ -110,7 +110,7 @@ The `googlemap_settings` property is an array with the following options:
 ### Text Field
 
 ```php
-$text_field = new GiftFlowWP_Field(
+$text_field = new GiftFlow_Field(
     'my_text_field',
     'my_text_field',
     'textfield',
@@ -127,7 +127,7 @@ echo $text_field->render();
 ### Select Field
 
 ```php
-$select_field = new GiftFlowWP_Field(
+$select_field = new GiftFlow_Field(
     'my_select_field',
     'my_select_field',
     'select',
@@ -147,7 +147,7 @@ echo $select_field->render();
 ### Currency Field
 
 ```php
-$currency_field = new GiftFlowWP_Field(
+$currency_field = new GiftFlow_Field(
     'my_currency_field',
     'my_currency_field',
     'currency',
@@ -166,7 +166,7 @@ echo $currency_field->render();
 ### Multiple Select Field
 
 ```php
-$multiple_select_field = new GiftFlowWP_Field(
+$multiple_select_field = new GiftFlow_Field(
     'my_multiple_select_field',
     'my_multiple_select_field[]', // Note the [] for multiple values
     'multiple_select',
@@ -186,7 +186,7 @@ echo $multiple_select_field->render();
 ### Textarea Field
 
 ```php
-$textarea_field = new GiftFlowWP_Field(
+$textarea_field = new GiftFlow_Field(
     'my_textarea_field',
     'my_textarea_field',
     'textarea',
@@ -203,7 +203,7 @@ echo $textarea_field->render();
 ### Checkbox Field
 
 ```php
-$checkbox_field = new GiftFlowWP_Field(
+$checkbox_field = new GiftFlow_Field(
     'my_checkbox_field',
     'my_checkbox_field',
     'checkbox',
@@ -219,7 +219,7 @@ echo $checkbox_field->render();
 ### Switch Field
 
 ```php
-$switch_field = new GiftFlowWP_Field(
+$switch_field = new GiftFlow_Field(
     'my_switch_field',
     'my_switch_field',
     'switch',
@@ -235,7 +235,7 @@ echo $switch_field->render();
 ### Datetime Field
 
 ```php
-$datetime_field = new GiftFlowWP_Field(
+$datetime_field = new GiftFlow_Field(
     'my_datetime_field',
     'my_datetime_field',
     'datetime',
@@ -252,7 +252,7 @@ echo $datetime_field->render();
 ### Color Field
 
 ```php
-$color_field = new GiftFlowWP_Field(
+$color_field = new GiftFlow_Field(
     'my_color_field',
     'my_color_field',
     'color',
@@ -268,7 +268,7 @@ echo $color_field->render();
 ### Gallery Field
 
 ```php
-$gallery_field = new GiftFlowWP_Field(
+$gallery_field = new GiftFlow_Field(
     'my_gallery_field',
     'my_gallery_field',
     'gallery',
@@ -289,7 +289,7 @@ echo $gallery_field->render();
 ### Google Maps Field
 
 ```php
-$googlemap_field = new GiftFlowWP_Field(
+$googlemap_field = new GiftFlow_Field(
     'my_googlemap_field',
     'my_googlemap_field',
     'googlemap',
@@ -336,7 +336,7 @@ function render_custom_meta_box($post) {
     $select_value = get_post_meta($post->ID, 'my_select_field', true);
     
     // Create fields
-    $text_field = new GiftFlowWP_Field(
+    $text_field = new GiftFlow_Field(
         'my_text_field',
         'my_text_field',
         'textfield',
@@ -346,7 +346,7 @@ function render_custom_meta_box($post) {
         )
     );
     
-    $select_field = new GiftFlowWP_Field(
+    $select_field = new GiftFlow_Field(
         'my_select_field',
         'my_select_field',
         'select',
@@ -405,8 +405,8 @@ add_action('save_post', 'save_custom_meta_box');
 
 The Field Builder adds CSS classes to help with styling:
 
-- Each field is wrapped in a div with classes `giftflowwp-field` and `giftflowwp-field-{type}`
-- The input element has the class `giftflowwp-field-input`
+- Each field is wrapped in a div with classes `giftflow-field` and `giftflow-field-{type}`
+- The input element has the class `giftflow-field-input`
 - Currency fields have additional classes for the currency symbol
 - Switch fields have additional classes for the switch slider
 
@@ -442,7 +442,7 @@ $type = $field->get_type();
 You can add custom HTML attributes to fields:
 
 ```php
-$field = new GiftFlowWP_Field(
+$field = new GiftFlow_Field(
     'my_field',
     'my_field',
     'textfield',
@@ -460,7 +460,7 @@ $field = new GiftFlowWP_Field(
 You can add custom CSS classes to fields:
 
 ```php
-$field = new GiftFlowWP_Field(
+$field = new GiftFlow_Field(
     'my_field',
     'my_field',
     'textfield',

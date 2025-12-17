@@ -3,42 +3,46 @@
 if ( ! defined( 'ABSPATH' ) ) {
   exit; // Exit if accessed directly.
 }
-
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $donation_id = $donation_id ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $donation_edit_url = $donation_edit_url ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $campaign_name = $campaign_name ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $campaign_url = $campaign_url ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $donor_name = $donor_name ?? '';
-$donor_email = $donor_email ?? '';
-$amount = $amount ?? '';
-$date = $date ?? '';
-$status = $status ?? '';
-$payment_method = $payment_method ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 // Get site information
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $site_name = get_bloginfo('name');
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $site_url = home_url();
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $admin_email = get_option('admin_email');
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $accent_color = '#0b57d0';
 ?>
 
 <h2 style="font-size: 1rem;     font-weight: 600;     margin: 0 0 .3rem 0; color: black;">
-    <?php esc_html_e('New Donation Received', 'giftflowwp'); ?>
+    <?php esc_html_e('New Donation Received', 'giftflow'); ?>
 </h2>
 
 <p style="margin: 0 0 1.8rem 0; line-height: 1.6; opacity: .8; font-size: .9rem;">
-    <?php esc_html_e('A new donation has been received on your website! Below are the details of the donation. Please review and take any necessary action.', 'giftflowwp'); ?>
+    <?php esc_html_e('A new donation has been received on your website! Below are the details of the donation. Please review and take any necessary action.', 'giftflow'); ?>
     <br><br>
-    <?php esc_html_e('This notification helps you stay up to date with the latest support from your community. Keeping track of donations ensures transparency and allows you to thank your donors promptly.', 'giftflowwp'); ?>
+    <?php esc_html_e('This notification helps you stay up to date with the latest support from your community. Keeping track of donations ensures transparency and allows you to thank your donors promptly.', 'giftflow'); ?>
 </p>
 
-<table id="giftflowwp-email-table" width="100%" cellpadding="0" cellspacing="0" role="presentation" style="width: 100%; border-collapse: collapse; margin: 1.8rem 0 0; background: #ffffff; border: 1px solid #e9ecef; border-radius: 0.3rem; overflow: hidden;">
+<table id="giftflow-email-table" width="100%" cellpadding="0" cellspacing="0" role="presentation" style="width: 100%; border-collapse: collapse; margin: 1.8rem 0 0; background: #ffffff; border: 1px solid #e9ecef; border-radius: 0.3rem; overflow: hidden;">
     
     <!-- Donation Details Header -->
     <tr>
         <td style="padding: .8rem 0; border-bottom: 1px solid #e9ecef;">
             <h3 style="margin: 0; font-size: 1rem; font-weight: 600; color: black;">
-                <?php esc_html_e('Donation Details', 'giftflowwp'); ?>
+                <?php esc_html_e('Donation Details', 'giftflow'); ?>
             </h3>
         </td>
     </tr>
@@ -50,12 +54,12 @@ $accent_color = '#0b57d0';
                 <tr>
                     <td style="width: 30%; padding: 0; vertical-align: top;">
                         <p style="font-size: 0.9rem;">
-                            <?php esc_html_e('Amount:', 'giftflowwp'); ?>
+                            <?php esc_html_e('Amount:', 'giftflow'); ?>
                         </p>
                     </td>
                     <td style="width: 70%; padding: 0; vertical-align: top;">
                         <span style="color: <?php echo esc_attr($accent_color); ?>; font-weight: 600;">
-                            <?php echo $amount; ?>
+                            <?php echo wp_kses_post($amount); ?>
                         </span>
                     </td>
                 </tr>
@@ -70,7 +74,7 @@ $accent_color = '#0b57d0';
                 <tr>
                     <td style="width: 30%; padding: 0; vertical-align: top;">
                         <p style="font-size: 0.9rem;">
-                            <?php esc_html_e('Donor:', 'giftflowwp'); ?>
+                            <?php esc_html_e('Donor:', 'giftflow'); ?>
                         </p>
                     </td>
                     <td style="width: 70%; padding: 0; vertical-align: top;">
@@ -90,7 +94,7 @@ $accent_color = '#0b57d0';
                 <tr>
                     <td style="width: 30%; padding: 0; vertical-align: top;">
                         <p style="font-size: 0.9rem;">
-                            <?php esc_html_e('Email:', 'giftflowwp'); ?>
+                            <?php esc_html_e('Email:', 'giftflow'); ?>
                         </p>
                     </td>
                     <td style="width: 70%; padding: 0; vertical-align: top;">
@@ -111,7 +115,7 @@ $accent_color = '#0b57d0';
                 <tr>
                     <td style="width: 30%; padding: 0; vertical-align: top;">
                         <p style="font-size: 0.9rem;">
-                            <?php esc_html_e('Campaign:', 'giftflowwp'); ?>
+                            <?php esc_html_e('Campaign:', 'giftflow'); ?>
                         </p>
                     </td>
                     <td style="width: 70%; padding: 0; vertical-align: top;">
@@ -138,7 +142,7 @@ $accent_color = '#0b57d0';
                 <tr>
                     <td style="width: 30%; padding: 0; vertical-align: top;">
                         <p style="font-size: 0.9rem;">
-                            <?php esc_html_e('Date:', 'giftflowwp'); ?>
+                            <?php esc_html_e('Date:', 'giftflow'); ?>
                         </p>
                     </td>
                     <td style="width: 70%; padding: 0; vertical-align: top;">
@@ -159,7 +163,7 @@ $accent_color = '#0b57d0';
                 <tr>
                     <td style="width: 30%; padding: 0; vertical-align: top;">
                         <p style="font-size: 0.9rem;">
-                            <?php esc_html_e('Payment Method:', 'giftflowwp'); ?>
+                            <?php esc_html_e('Payment Method:', 'giftflow'); ?>
                         </p>
                     </td>
                     <td style="width: 70%; padding: 0; vertical-align: top;">
@@ -180,7 +184,7 @@ $accent_color = '#0b57d0';
                 <tr>
                     <td style="width: 30%; padding: 0; vertical-align: top;">
                         <p style="font-size: 0.9rem;">
-                            <?php esc_html_e('Status:', 'giftflowwp'); ?>
+                            <?php esc_html_e('Status:', 'giftflow'); ?>
                         </p>
                     </td>
                     <td style="width: 70%; padding: 0; vertical-align: top;">
@@ -198,7 +202,7 @@ $accent_color = '#0b57d0';
 <?php if (!empty($donation_edit_url)): ?>
     <p style="margin: 2rem 0 0 0; font-size: 0.95rem; text-align: center;">
         <a href="<?php echo esc_url($donation_edit_url); ?>" style="color: <?php echo esc_attr($accent_color); ?>; text-decoration: underline; font-weight: 500;" target="_blank" rel="noopener">
-            👉 <?php esc_html_e('View this Donation in Admin', 'giftflowwp'); ?>
+            👉 <?php esc_html_e('View this Donation in Admin', 'giftflow'); ?>
         </a>
     </p>
 <?php endif; ?>

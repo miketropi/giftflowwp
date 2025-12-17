@@ -154,10 +154,10 @@
 		async onSendData(data) {
 
 			// const res = await jQuery.ajax({
-			// 	url: window.giftflowwpDonationForms.ajaxurl,
+			// 	url: window.giftflowDonationForms.ajaxurl,
 			// 	type: 'POST',
 			// 	data: {
-			// 		action: 'giftflowwp_donation_form',
+			// 		action: 'giftflow_donation_form',
 			// 		wp_nonce: data.wp_nonce,
 			// 		data
 			// 	},
@@ -169,7 +169,7 @@
 			// return res;
 
 			// return;
-			let ajaxurl = `${window.giftflowwpDonationForms.ajaxurl}?action=giftflowwp_donation_form&wp_nonce=${data.wp_nonce}`;
+			let ajaxurl = `${window.giftflowDonationForms.ajaxurl}?action=giftflow_donation_form&wp_nonce=${data.wp_nonce}`;
 
 			const response = await fetch(ajaxurl, {
 				method: 'POST',

@@ -2,17 +2,17 @@
 /**
  * User Role Management Class
  *
- * @package GiftFlowWP
+ * @package GiftFlow
  * @subpackage Core
  * @since 1.0.0
  */
 
-namespace GiftFlowWp\Core;
+namespace GiftFlow\Core;
 
 /**
  * Class Role
  * 
- * Handles user role registration and management for the GiftFlowWP plugin
+ * Handles user role registration and management for the GiftFlow plugin
  */
 class Role extends Base {
     
@@ -59,8 +59,8 @@ class Role extends Base {
     public function register_roles() {
         // Donor role like subscriber role
         add_role(
-            'giftflowwp_donor',
-            __('Donor', 'giftflowwp'),
+            'giftflow_donor',
+            __('Donor', 'giftflow'),
             array(
                 'read' => true,
             )
@@ -82,10 +82,10 @@ class Role extends Base {
      */
     public function assign_donor_role($user_id) {
         $user = get_user_by('id', $user_id);
-        if ($user && !in_array('giftflowwp_donor', $user->roles)) {
-            // $user->add_role('giftflowwp_donor');
+        if ($user && !in_array('giftflow_donor', $user->roles)) {
+            // $user->add_role('giftflow_donor');
             // set role
-            $user->set_role('giftflowwp_donor');
+            $user->set_role('giftflow_donor');
 
             // add more role subscriber
             $user->add_role('subscriber');
@@ -103,8 +103,8 @@ class Role extends Base {
      */
     public function remove_donor_role($user_id) {
         $user = get_user_by('id', $user_id);
-        if ($user && in_array('giftflowwp_donor', $user->roles)) {
-            $user->remove_role('giftflowwp_donor');
+        if ($user && in_array('giftflow_donor', $user->roles)) {
+            $user->remove_role('giftflow_donor');
             return true;
         }
         return false;
@@ -118,14 +118,14 @@ class Role extends Base {
      */
     public function user_has_donor_role($user_id) {
         $user = get_user_by('id', $user_id);
-        return $user && in_array('giftflowwp_donor', $user->roles);
+        return $user && in_array('giftflow_donor', $user->roles);
     }
     
     /**
      * Remove all custom roles on plugin deactivation
      */
     public function remove_roles() {
-        remove_role('giftflowwp_donor');
+        remove_role('giftflow_donor');
     }
     
     /**

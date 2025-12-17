@@ -1,11 +1,11 @@
-.giftflowwp-repeater-field {
+.giftflow-repeater-field {
     margin-bottom: $spacing-lg;
 
-    .giftflowwp-repeater-rows {
+    .giftflow-repeater-rows {
         margin-bottom: $spacing-md;
     }
 
-    .giftflowwp-repeater-row {
+    .giftflow-repeater-row {
         background: #fff;
         border: 1px solid $border-color;
         border-radius: $border-radius;
@@ -16,7 +16,7 @@
             margin-bottom: 0;
         }
 
-        .giftflowwp-repeater-row-header {
+        .giftflow-repeater-row-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -25,13 +25,13 @@
             border-bottom: 1px solid $border-color;
             border-radius: $border-radius $border-radius 0 0;
 
-            .giftflowwp-repeater-row-title {
+            .giftflow-repeater-row-title {
                 font-weight: 600;
                 color: $text-color;
                 font-size: $font-size-md;
             }
 
-            .giftflowwp-repeater-remove-row {
+            .giftflow-repeater-remove-row {
                 color: $error-color;
                 background: transparent;
                 border: 1px solid $error-color;
@@ -47,10 +47,10 @@
             }
         }
 
-        .giftflowwp-repeater-row-content {
+        .giftflow-repeater-row-content {
             padding: $spacing-md;
 
-            .giftflowwp-repeater-field {
+            .giftflow-repeater-field {
                 margin-bottom: $spacing-md;
 
                 &:last-child {
@@ -58,7 +58,7 @@
                 }
 
                 // Style for nested fields
-                .giftflowwp-field {
+                .giftflow-field {
                     margin-bottom: 0;
                 }
 
@@ -90,19 +90,19 @@
                 // }
 
                 // Currency field specific styles
-                .giftflowwp-currency-field {
+                .giftflow-currency-field {
                     display: flex;
                     align-items: center;
                     gap: $spacing-xs;
 
-                    .giftflowwp-currency-symbol {
+                    .giftflow-currency-symbol {
                         font-weight: 600;
                         color: $text-color;
                     }
                 }
 
                 // Switch field specific styles
-                .giftflowwp-switch {
+                .giftflow-switch {
                     position: relative;
                     display: inline-block;
                     width: 50px;
@@ -113,7 +113,7 @@
                         width: 0;
                         height: 0;
 
-                        &:checked + .giftflowwp-switch-slider {
+                        &:checked + .giftflow-switch-slider {
                             background-color: $primary-color;
 
                             &:before {
@@ -122,7 +122,7 @@
                         }
                     }
 
-                    .giftflowwp-switch-slider {
+                    .giftflow-switch-slider {
                         position: absolute;
                         cursor: pointer;
                         top: 0;
@@ -150,7 +150,7 @@
         }
     }
 
-    .giftflowwp-repeater-add-row {
+    .giftflow-repeater-add-row {
         // background: $primary-color;
         // color: #fff;
         // border: none;
@@ -172,14 +172,14 @@
 
     // Responsive styles
     @media screen and (max-width: 782px) {
-        .giftflowwp-repeater-row {
-            .giftflowwp-repeater-row-header {
+        .giftflow-repeater-row {
+            .giftflow-repeater-row-header {
                 flex-direction: column;
                 gap: $spacing-sm;
                 align-items: flex-start;
             }
 
-            .giftflowwp-repeater-row-content {
+            .giftflow-repeater-row-content {
                 padding: $spacing-sm;
             }
         }

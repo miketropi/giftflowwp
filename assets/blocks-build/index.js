@@ -79,11 +79,11 @@ function _objectSpread(e) {
 
 
 
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)('giftflowwp/campaign-status-bar', {
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)('giftflow/campaign-status-bar', {
   apiVersion: 3,
   title: 'Campaign Status Bar',
   icon: 'block-default',
-  category: 'giftflowwp',
+  category: 'giftflow',
   attributes: {
     __editorPostId: {
       type: 'number',
@@ -99,7 +99,7 @@ function _objectSpread(e) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", _objectSpread(_objectSpread({}, blockProps), {}, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Disabled, {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_2___default()), {
-          block: "giftflowwp/campaign-status-bar",
+          block: "giftflow/campaign-status-bar",
           attributes: attributes
         })
       })

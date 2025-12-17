@@ -1,11 +1,11 @@
 <?php
 
-function giftflowwp_share_block() {
+function giftflow_share_block() {
     register_block_type(
-        'giftflowwp/share',
+        'giftflow/share',
         array(
             'api_version' => 3,
-            'render_callback' => 'giftflowwp_share_block_render',
+            'render_callback' => 'giftflow_share_block_render',
             'attributes' => array(
                 'title' => array(
                     'type' => 'string',
@@ -32,10 +32,10 @@ function giftflowwp_share_block() {
     );
 }
 
-add_action('init', 'giftflowwp_share_block');
+add_action('init', 'giftflow_share_block');
 
-function giftflowwp_share_block_render($attributes, $content, $block) {
-    $title = $attributes['title'] ?? esc_html__('Share this', 'giftflowwp');
+function giftflow_share_block_render($attributes, $content, $block) {
+    $title = $attributes['title'] ?? esc_html__('Share this', 'giftflow');
     $show_socials = $attributes['showSocials'] ?? true;
     $show_email = $attributes['showEmail'] ?? true;
     $show_copy_url = $attributes['showCopyUrl'] ?? true;
@@ -87,7 +87,8 @@ function giftflowwp_share_block_render($attributes, $content, $block) {
         $share_title = get_the_date();
         $share_description = get_bloginfo('description');
     } elseif (is_search()) {
-        $share_title = sprintf(__('Search results for: %s', 'giftflowwp'), get_search_query());
+        /* translators: %s is the search query */
+        $share_title = sprintf(esc_html__('Search results for: %s', 'giftflow'), get_search_query());
         $share_description = get_bloginfo('description');
     } else {
         $share_title = get_bloginfo('name');
@@ -99,72 +100,72 @@ function giftflowwp_share_block_render($attributes, $content, $block) {
 
     ob_start();
     ?>
-    <div class="giftflowwp-share">
+    <div class="giftflow-share">
         <?php if (!empty($title)): ?>
-            <strong class="giftflowwp-share__title"><?php echo esc_html($title); ?></strong>
+            <strong class="giftflow-share__title"><?php echo esc_html($title); ?></strong>
         <?php endif; ?>
 
-        <div class="giftflowwp-share__buttons">
+        <div class="giftflow-share__buttons">
             <?php if ($show_socials && !empty($social_platforms)): ?>
                 <?php foreach ($social_platforms as $platform): ?>
-                    <?php echo giftflowwp_render_social_share_button($platform, $share_url, $share_title, $share_description); ?>
+                    <?php echo wp_kses_post(giftflow_render_social_share_button($platform, $share_url, $share_title, $share_description)); ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
             <?php if ($show_email): ?>
-                <a href="<?php echo esc_url(giftflowwp_get_email_share_url($share_url, $share_title, $share_description)); ?>" 
-                   class="giftflowwp-share__button giftflowwp-share__button--email"
-                   title="<?php esc_attr_e('Share via Email', 'giftflowwp'); ?>"
+                <a href="<?php echo esc_url(giftflow_get_email_share_url($share_url, $share_title, $share_description)); ?>" 
+                   class="giftflow-share__button giftflow-share__button--email"
+                   title="<?php esc_attr_e('Share via Email', 'giftflow'); ?>"
                    target="_blank"
                    rel="noopener noreferrer">
-                    <!-- <span class="giftflowwp-share__icon">
-                        <?php // echo giftflowwp_svg_icon('mail'); ?>
+                    <!-- <span class="giftflow-share__icon">
+                        <?php // echo giftflow_svg_icon('mail'); ?>
                     </span> -->
-                    <span class="giftflowwp-share__text"><?php esc_html_e('Email', 'giftflowwp'); ?></span>
+                    <span class="giftflow-share__text"><?php esc_html_e('Email', 'giftflow'); ?></span>
                 </a>
             <?php endif; ?>
 
             <?php if ($show_copy_url): ?>
                 <a href="#"
-                    class="giftflowwp-share__button giftflowwp-share__button--copy-url"
+                    class="giftflow-share__button giftflow-share__button--copy-url"
                     data-url="<?php echo esc_attr($share_url); ?>"
-                    title="<?php esc_attr_e('Copy URL to clipboard', 'giftflowwp'); ?>"
-                    onclick="giftflowwpCopyUrlToClipboard('<?php echo esc_js($share_url); ?>', this)">
-                    <!-- <span class="giftflowwp-share__icon">
-                        <?php // echo giftflowwp_svg_icon('link'); ?>
+                    title="<?php esc_attr_e('Copy URL to clipboard', 'giftflow'); ?>"
+                    onclick="giftflowCopyUrlToClipboard('<?php echo esc_js($share_url); ?>', this)">
+                    <!-- <span class="giftflow-share__icon">
+                        <?php // echo giftflow_svg_icon('link'); ?>
                     </span> -->
-                    <span class="giftflowwp-share__text"><?php esc_html_e('Copy Link', 'giftflowwp'); ?></span>
+                    <span class="giftflow-share__text"><?php esc_html_e('Copy Link', 'giftflow'); ?></span>
                 </a>
             <?php endif; ?>
         </div>
 
         <?php if ($show_copy_url): ?>
-            <div class="giftflowwp-share__copy-feedback" style="display: none;">
-                <span class="giftflowwp-share__copy-message">
-                    <?php echo giftflowwp_svg_icon('checkmark-circle'); ?>
-                    <?php esc_html_e('URL copied to clipboard!', 'giftflowwp'); ?>
+            <div class="giftflow-share__copy-feedback" style="display: none;">
+                <span class="giftflow-share__copy-message">
+                    <?php echo wp_kses(giftflow_svg_icon('checkmark-circle'), giftflow_allowed_svg_tags()); ?>
+                    <?php esc_html_e('URL copied to clipboard!', 'giftflow'); ?>
                 </span>
             </div>
         <?php endif; ?>
     </div>
 
     <script>
-    function giftflowwpCopyUrlToClipboard(url, button) {
+    function giftflowCopyUrlToClipboard(url, button) {
         if (navigator.clipboard && window.isSecureContext) {
             // Use modern clipboard API
             navigator.clipboard.writeText(url).then(function() {
-                giftflowwpShowCopyFeedback(button);
+                giftflowShowCopyFeedback(button);
             }).catch(function(err) {
                 console.error('Failed to copy: ', err);
-                giftflowwpFallbackCopy(url, button);
+                giftflowFallbackCopy(url, button);
             });
         } else {
             // Fallback for older browsers
-            giftflowwpFallbackCopy(url, button);
+            giftflowFallbackCopy(url, button);
         }
     }
 
-    function giftflowwpFallbackCopy(url, button) {
+    function giftflowFallbackCopy(url, button) {
         const textArea = document.createElement('textarea');
         textArea.value = url;
         textArea.style.position = 'fixed';
@@ -176,7 +177,7 @@ function giftflowwp_share_block_render($attributes, $content, $block) {
         
         try {
             document.execCommand('copy');
-            giftflowwpShowCopyFeedback(button);
+            giftflowShowCopyFeedback(button);
         } catch (err) {
             console.error('Fallback copy failed: ', err);
         }
@@ -184,9 +185,9 @@ function giftflowwp_share_block_render($attributes, $content, $block) {
         document.body.removeChild(textArea);
     }
 
-    function giftflowwpShowCopyFeedback(button) {
-        const container = button.closest('.giftflowwp-share');
-        const feedback = container.querySelector('.giftflowwp-share__copy-feedback');
+    function giftflowShowCopyFeedback(button) {
+        const container = button.closest('.giftflow-share');
+        const feedback = container.querySelector('.giftflow-share__copy-feedback');
         
         if (feedback) {
             feedback.style.display = 'block';
@@ -200,7 +201,7 @@ function giftflowwp_share_block_render($attributes, $content, $block) {
     return ob_get_clean();
 }
 
-function giftflowwp_render_social_share_button($platform, $url, $title, $description) {
+function giftflow_render_social_share_button($platform, $url, $title, $description) {
     $share_urls = array(
         'facebook' => 'https://www.facebook.com/sharer/sharer.php?u=' . urlencode($url),
         'twitter' => 'https://twitter.com/intent/tweet?url=' . urlencode($url) . '&text=' . urlencode($title),
@@ -208,9 +209,9 @@ function giftflowwp_render_social_share_button($platform, $url, $title, $descrip
     );
 
     $platform_names = array(
-        'facebook' => __('Facebook', 'giftflowwp'),
-        'twitter' => __('X', 'giftflowwp'),
-        'linkedin' => __('LinkedIn', 'giftflowwp'),
+        'facebook' => __('Facebook', 'giftflow'),
+        'twitter' => __('X', 'giftflow'),
+        'linkedin' => __('LinkedIn', 'giftflow'),
     );
 
     $platform_icons = array(
@@ -230,22 +231,24 @@ function giftflowwp_render_social_share_button($platform, $url, $title, $descrip
     ob_start();
     ?>
     <a href="<?php echo esc_url($share_url); ?>" 
-       class="giftflowwp-share__button giftflowwp-share__button--<?php echo esc_attr($platform); ?>"
-       title="<?php printf(esc_attr__('Share on %s', 'giftflowwp'), esc_attr($platform_name)); ?>"
+       class="giftflow-share__button giftflow-share__button--<?php echo esc_attr($platform); ?>"
+       title="<?php 
+       /* translators: %s is the platform name */
+       echo esc_attr( sprintf( esc_html__('Share on %s', 'giftflow'), esc_html($platform_name) ) ); 
+       ?>"
        target="_blank"
        rel="noopener noreferrer">
-        <!-- <span class="giftflowwp-share__icon">
-            <?php // echo giftflowwp_svg_icon($icon_name); ?>
-        </span> -->
-        <span class="giftflowwp-share__text"><?php echo esc_html($platform_name); ?></span>
+        <span class="giftflow-share__text"><?php echo esc_html($platform_name); ?></span>
     </a>
     <?php
     return ob_get_clean();
 }
 
-function giftflowwp_get_email_share_url($url, $title, $description) {
-    $subject = sprintf(__('Check out: %s', 'giftflowwp'), $title);
-    $body = sprintf(__("I thought you might be interested in this:\n\n%s\n\n%s\n\n%s", 'giftflowwp'), $title, $description, $url);
+function giftflow_get_email_share_url($url, $title, $description) {
+    /* translators: %s is the title */
+    $subject = sprintf(__('Check out: %s', 'giftflow'), $title);
+    /* translators: 1: is the title, 2: is the description, 3: is the URL */
+    $body = sprintf(__('I thought you might be interested in this:\n\n%1$s\n\n%2$s\n\n%3$s', 'giftflow'), $title, $description, $url);
     
     return 'mailto:?subject=' . urlencode($subject) . '&body=' . urlencode($body);
 }

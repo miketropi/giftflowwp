@@ -2,11 +2,11 @@
 /**
  * Donor Post Type Class
  *
- * @package GiftFlowWp
+ * @package GiftFlow
  * @subpackage Admin
  */
 
-namespace GiftFlowWp\Admin\PostTypes;
+namespace GiftFlow\Admin\PostTypes;
 
 /**
  * Donor Post Type Class
@@ -24,19 +24,19 @@ class Donor extends Base_Post_Type {
     protected function init_post_type() {
         $this->post_type = 'donor';
         $this->labels = array(
-            'name'                  => _x( 'Donors', 'Post type general name', 'giftflowwp' ),
-            'singular_name'         => _x( 'Donor', 'Post type singular name', 'giftflowwp' ),
-            'menu_name'            => _x( 'Donors', 'Admin Menu text', 'giftflowwp' ),
-            'name_admin_bar'       => _x( 'Donor', 'Add New on Toolbar', 'giftflowwp' ),
-            'add_new'              => __( 'Add New', 'giftflowwp' ),
-            'add_new_item'         => __( 'Add New Donor', 'giftflowwp' ),
-            'new_item'             => __( 'New Donor', 'giftflowwp' ),
-            'edit_item'            => __( 'Edit Donor', 'giftflowwp' ),
-            'view_item'            => __( 'View Donor', 'giftflowwp' ),
-            'all_items'            => __( 'All Donors', 'giftflowwp' ),
-            'search_items'         => __( 'Search Donors', 'giftflowwp' ),
-            'not_found'            => __( 'No donors found.', 'giftflowwp' ),
-            'not_found_in_trash'   => __( 'No donors found in Trash.', 'giftflowwp' ),
+            'name'                  => _x( 'Donors', 'Post type general name', 'giftflow' ),
+            'singular_name'         => _x( 'Donor', 'Post type singular name', 'giftflow' ),
+            'menu_name'            => _x( 'Donors', 'Admin Menu text', 'giftflow' ),
+            'name_admin_bar'       => _x( 'Donor', 'Add New on Toolbar', 'giftflow' ),
+            'add_new'              => __( 'Add New', 'giftflow' ),
+            'add_new_item'         => __( 'Add New Donor', 'giftflow' ),
+            'new_item'             => __( 'New Donor', 'giftflow' ),
+            'edit_item'            => __( 'Edit Donor', 'giftflow' ),
+            'view_item'            => __( 'View Donor', 'giftflow' ),
+            'all_items'            => __( 'All Donors', 'giftflow' ),
+            'search_items'         => __( 'Search Donors', 'giftflow' ),
+            'not_found'            => __( 'No donors found.', 'giftflow' ),
+            'not_found_in_trash'   => __( 'No donors found in Trash.', 'giftflow' ),
         );
 
         $this->args = array(
@@ -44,7 +44,7 @@ class Donor extends Base_Post_Type {
             'public'             => false,
             'publicly_queryable' => false,
             'show_ui'            => true,
-            'show_in_menu'       => 'giftflowwp-dashboard',
+            'show_in_menu'       => 'giftflow-dashboard',
             'query_var'          => true,
             'rewrite'            => array( 'slug' => 'donor' ),
             'capability_type'    => 'post',
@@ -77,11 +77,11 @@ class Donor extends Base_Post_Type {
         
         foreach ( $columns as $key => $value ) {
             if ( $key === 'title' ) {
-                $new_columns['title'] = __( 'Donor ID', 'giftflowwp' );
-                $new_columns['full_name'] = __( 'Full Name', 'giftflowwp' );
-                $new_columns['email'] = __( 'Email', 'giftflowwp' );
-                $new_columns['phone'] = __( 'Phone', 'giftflowwp' );
-                $new_columns['address'] = __( 'Address', 'giftflowwp' );
+                $new_columns['title'] = __( 'Donor ID', 'giftflow' );
+                $new_columns['full_name'] = __( 'Full Name', 'giftflow' );
+                $new_columns['email'] = __( 'Email', 'giftflow' );
+                $new_columns['phone'] = __( 'Phone', 'giftflow' );
+                $new_columns['address'] = __( 'Address', 'giftflow' );
             } else {
                 $new_columns[$key] = $value;
             }
@@ -152,10 +152,13 @@ class Donor extends Base_Post_Type {
         global $typenow;
         
         if ( $typenow === 'donor' ) {
-            $selected = isset( $_GET['donor_user'] ) ? $_GET['donor_user'] : '';
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $selected = isset( $_GET['donor_user'] ) ? sanitize_text_field(wp_unslash($_GET['donor_user'])) : '';
             
             // Get all users who have associated donor records
             global $wpdb;
+
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
             $users = $wpdb->get_results( "
                 SELECT DISTINCT u.ID, u.display_name, u.user_email
                 FROM {$wpdb->users} u
@@ -171,12 +174,12 @@ class Donor extends Base_Post_Type {
             
             if ( !empty( $users ) ) {
                 echo '<select name="donor_user">';
-                echo '<option value="">' . __( 'All Users', 'giftflowwp' ) . '</option>';
+                echo '<option value="">' . esc_html__( 'All Users', 'giftflow' ) . '</option>';
                 
                 foreach ( $users as $user ) {
                     $user_label = $user->display_name . ' (' . $user->user_email . ')';
                     $selected_attr = selected( $selected, $user->ID, false );
-                    echo '<option value="' . esc_attr( $user->ID ) . '" ' . $selected_attr . '>' . esc_html( $user_label ) . '</option>';
+                    echo '<option value="' . esc_attr( $user->ID ) . '" ' . esc_attr($selected_attr) . '>' . esc_html( $user_label ) . '</option>';
                 }
                 
                 echo '</select>';
@@ -191,9 +194,10 @@ class Donor extends Base_Post_Type {
      */
     public function filter_donors( $query ) {
         global $pagenow, $typenow;
-        
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         if ( $pagenow === 'edit.php' && $typenow === 'donor' && isset( $_GET['donor_user'] ) && $_GET['donor_user'] !== '' ) {
-            $user_id = intval( $_GET['donor_user'] );
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $user_id = intval( wp_unslash($_GET['donor_user']) );
             
             // Get the user's email
             $user = get_user_by( 'ID', $user_id );

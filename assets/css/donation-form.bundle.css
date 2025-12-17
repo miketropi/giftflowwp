@@ -1,26 +1,26 @@
 @charset "UTF-8";
 :root {
-  --giftflowwp-primary-color: #000000;
-  --giftflowwp-secondary-color: #10B981;
-  --giftflowwp-text-color: black;
-  --giftflowwp-text-light: #6B7280;
-  --giftflowwp-border-color: #E5E7EB;
-  --giftflowwp-background-color: #F9FAFB;
-  --giftflowwp-error-color: #EF4444;
-  --giftflowwp-success-color: #10B981;
-  --giftflowwp-border-radius: 6px;
-  --giftflowwp-transition: all 0.3s ease;
-  --giftflowwp-disabled: #fafafa;
-  --giftflowwp-disabled-text: #999;
+  --giftflow-primary-color: #000000;
+  --giftflow-secondary-color: #10B981;
+  --giftflow-text-color: black;
+  --giftflow-text-light: #6B7280;
+  --giftflow-border-color: #E5E7EB;
+  --giftflow-background-color: #F9FAFB;
+  --giftflow-error-color: #EF4444;
+  --giftflow-success-color: #10B981;
+  --giftflow-border-radius: 6px;
+  --giftflow-transition: all 0.3s ease;
+  --giftflow-disabled: #fafafa;
+  --giftflow-disabled-text: #999;
 }
 
 .donation-form {
   max-width: 100%;
   margin: 0 auto;
   background: white;
-  border: 1px solid var(--giftflowwp-border-color);
+  border: 1px solid var(--giftflow-border-color);
   overflow: hidden;
-  border-radius: var(--giftflowwp-border-radius);
+  border-radius: var(--giftflow-border-radius);
   font-size: 1rem;
 }
 @media (max-width: 768px) {
@@ -37,7 +37,7 @@
 }
 .donation-form__header {
   padding: 2rem;
-  border-bottom: 1px solid var(--giftflowwp-border-color);
+  border-bottom: 1px solid var(--giftflow-border-color);
 }
 @media (max-width: 768px) {
   .donation-form__header {
@@ -65,8 +65,8 @@
   width: 120px;
   height: 120px;
   overflow: hidden;
-  border: 1px solid var(--giftflowwp-border-color);
-  border-radius: var(--giftflowwp-border-radius);
+  border: 1px solid var(--giftflow-border-color);
+  border-radius: var(--giftflow-border-radius);
 }
 @media (max-width: 768px) {
   .donation-form__campaign-thumbnail {
@@ -89,7 +89,7 @@
 }
 .donation-form__campaign-title {
   font-weight: 600;
-  color: var(--giftflowwp-text-color);
+  color: var(--giftflow-text-color);
   margin: 0 0 0.5rem 0;
 }
 @media (max-width: 480px) {
@@ -99,16 +99,16 @@
 }
 .donation-form__campaign-progress {
   margin-top: 0.5rem;
-  color: var(--giftflowwp-text-light);
+  color: var(--giftflow-text-light);
 }
-.donation-form__campaign-progress .giftflowwp-currency-formatted-amount {
-  color: var(--giftflowwp-text-color);
+.donation-form__campaign-progress .giftflow-currency-formatted-amount {
+  color: var(--giftflow-text-color);
   font-weight: 600;
 }
 .donation-form__step-nav {
   padding: 1.5rem 2rem;
-  background: var(--giftflowwp-background-color);
-  border-bottom: 1px solid var(--giftflowwp-border-color);
+  background: var(--giftflow-background-color);
+  border-bottom: 1px solid var(--giftflow-border-color);
 }
 @media (max-width: 768px) {
   .donation-form__step-nav {
@@ -142,7 +142,7 @@
 }
 .donation-form__step-separator {
   flex: 1 1 0;
-  border-bottom: 1px solid var(--giftflowwp-border-color);
+  border-bottom: 1px solid var(--giftflow-border-color);
 }
 .donation-form__step-item {
   text-align: center;
@@ -156,10 +156,10 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--giftflowwp-text-light);
+  color: var(--giftflow-text-light);
   text-decoration: none;
   padding: 0.5rem 1rem;
-  transition: var(--giftflowwp-transition);
+  transition: var(--giftflow-transition);
 }
 @media (max-width: 480px) {
   .donation-form__step-link {
@@ -167,15 +167,15 @@
   }
 }
 .donation-form__step-link.is-active .donation-form__step-number {
-  background: var(--giftflowwp-primary-color);
+  background: var(--giftflow-primary-color);
   color: white;
 }
 .donation-form__step-number {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--giftflowwp-border-color);
-  color: var(--giftflowwp-text-light);
+  background: var(--giftflow-border-color);
+  color: var(--giftflow-text-light);
   font-size: 1rem;
   font-weight: normal;
   display: flex;
@@ -210,7 +210,7 @@
   border: none;
   margin: 0 0 2rem;
   padding: 0;
-  border-top: solid 1px var(--giftflowwp-border-color);
+  border-top: solid 1px var(--giftflow-border-color);
 }
 @media (max-width: 480px) {
   .donation-form__fieldset {
@@ -219,7 +219,7 @@
 }
 .donation-form__legend {
   font-weight: 600;
-  color: var(--giftflowwp-text-color);
+  color: var(--giftflow-text-color);
   margin-bottom: 1rem;
   padding: 0 1rem 0 0;
 }
@@ -242,18 +242,18 @@
   display: none;
 }
 .donation-form__radio-group--donation-type input[type=radio]:checked + .donation-form__radio-label {
-  border-color: var(--giftflowwp-primary-color);
-  background-color: var(--giftflowwp-primary-color);
+  border-color: var(--giftflow-primary-color);
+  background-color: var(--giftflow-primary-color);
   color: white;
 }
 .donation-form__radio-label {
   position: relative;
   display: block;
   padding: 1.5rem;
-  border: 1px solid var(--giftflowwp-border-color);
+  border: 1px solid var(--giftflow-border-color);
   cursor: pointer;
-  transition: var(--giftflowwp-transition);
-  border-radius: var(--giftflowwp-border-radius);
+  transition: var(--giftflow-transition);
+  border-radius: var(--giftflow-border-radius);
 }
 .donation-form__radio-label:hover {
   transform: translateY(-1px);
@@ -268,10 +268,10 @@
   opacity: 0;
 }
 .donation-form__radio-label input[type=radio]:checked + .donation-form__radio-content {
-  color: var(--giftflowwp-primary-color);
+  color: var(--giftflow-primary-color);
 }
 .donation-form__radio-label:hover {
-  border-color: var(--giftflowwp-primary-color);
+  border-color: var(--giftflow-primary-color);
 }
 .donation-form__radio-content {
   display: flex;
@@ -291,7 +291,7 @@
 }
 .donation-form__radio-description {
   font-size: 0.875rem;
-  color: var(--giftflowwp-text-light);
+  color: var(--giftflow-text-light);
 }
 @media (max-width: 480px) {
   .donation-form__radio-description {
@@ -307,15 +307,15 @@
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--giftflowwp-text-light);
+  color: var(--giftflow-text-light);
 }
 .donation-form__amount-input input {
   width: 100%;
   padding: 1rem;
-  border: 1px solid var(--giftflowwp-border-color);
-  border-radius: var(--giftflowwp-border-radius);
+  border: 1px solid var(--giftflow-border-color);
+  border-radius: var(--giftflow-border-radius);
   background-color: white;
-  transition: var(--giftflowwp-transition);
+  transition: var(--giftflow-transition);
   box-sizing: border-box;
   font-size: 1rem;
   font-size: 1.25rem;
@@ -325,7 +325,7 @@
 }
 .donation-form__amount-input input:focus {
   outline: none;
-  border-color: var(--giftflowwp-primary-color);
+  border-color: var(--giftflow-primary-color);
 }
 .donation-form__amount-input input[readonly] {
   background-color: #f3f4f6;
@@ -337,7 +337,7 @@
   }
 }
 .donation-form__amount-input input.error {
-  border-color: var(--giftflowwp-error-color);
+  border-color: var(--giftflow-error-color);
 }
 .donation-form__preset-amounts {
   display: grid;
@@ -351,12 +351,12 @@
 }
 .donation-form__preset-amounts button {
   padding: 1rem;
-  border: 1px solid var(--giftflowwp-border-color);
+  border: 1px solid var(--giftflow-border-color);
   background: white;
-  color: var(--giftflowwp-text-color);
+  color: var(--giftflow-text-color);
   cursor: pointer;
-  transition: var(--giftflowwp-transition);
-  border-radius: var(--giftflowwp-border-radius);
+  transition: var(--giftflow-transition);
+  border-radius: var(--giftflow-border-radius);
 }
 .donation-form__preset-amounts button > * {
   pointer-events: none;
@@ -367,12 +367,12 @@
   }
 }
 .donation-form__preset-amounts button:hover {
-  border-color: var(--giftflowwp-primary-color);
-  color: var(--giftflowwp-primary-color);
+  border-color: var(--giftflow-primary-color);
+  color: var(--giftflow-primary-color);
 }
 .donation-form__preset-amounts button.active {
-  border-color: var(--giftflowwp-primary-color);
-  background: var(--giftflowwp-primary-color);
+  border-color: var(--giftflow-primary-color);
+  background: var(--giftflow-primary-color);
   color: white;
 }
 .donation-form__fields {
@@ -384,31 +384,31 @@
   margin-bottom: 0.5rem;
   font-weight: 500;
   font-size: 0.9rem;
-  color: var(--giftflowwp-text-light);
+  color: var(--giftflow-text-light);
 }
 .donation-form__field input[type=text], .donation-form__field input[type=email], .donation-form__field input[type=tel], .donation-form__field textarea {
   width: 100%;
   padding: 1rem;
-  border: 1px solid var(--giftflowwp-border-color);
-  border-radius: var(--giftflowwp-border-radius);
+  border: 1px solid var(--giftflow-border-color);
+  border-radius: var(--giftflow-border-radius);
   background-color: white;
-  transition: var(--giftflowwp-transition);
+  transition: var(--giftflow-transition);
   box-sizing: border-box;
   font-size: 1rem;
 }
 .donation-form__field input[type=text]:focus, .donation-form__field input[type=email]:focus, .donation-form__field input[type=tel]:focus, .donation-form__field textarea:focus {
   outline: none;
-  border-color: var(--giftflowwp-primary-color);
+  border-color: var(--giftflow-primary-color);
 }
 .donation-form__field input[type=text][readonly], .donation-form__field input[type=email][readonly], .donation-form__field input[type=tel][readonly], .donation-form__field textarea[readonly] {
   background-color: #f3f4f6;
   cursor: not-allowed;
 }
 .donation-form__field.error label {
-  color: var(--giftflowwp-error-color);
+  color: var(--giftflow-error-color);
 }
 .donation-form__field.error input[type=text], .donation-form__field.error input[type=email], .donation-form__field.error input[type=tel], .donation-form__field.error textarea {
-  border-color: var(--giftflowwp-error-color);
+  border-color: var(--giftflow-error-color);
 }
 .donation-form__field.error .donation-form__field-error {
   display: flex;
@@ -417,7 +417,7 @@
   display: none;
   align-items: center;
   gap: 0.3rem;
-  color: var(--giftflowwp-error-color);
+  color: var(--giftflow-error-color);
   font-size: 0.7rem;
   margin-top: 0.5rem;
   font-weight: 600;
@@ -452,10 +452,10 @@
   align-items: center;
   gap: 0.5rem;
   padding: 1rem;
-  border: 1px solid var(--giftflowwp-border-color);
+  border: 1px solid var(--giftflow-border-color);
   cursor: pointer;
-  transition: var(--giftflowwp-transition);
-  border-radius: var(--giftflowwp-border-radius);
+  transition: var(--giftflow-transition);
+  border-radius: var(--giftflow-border-radius);
 }
 @media (max-width: 480px) {
   .donation-form__payment-method {
@@ -481,14 +481,14 @@
   }
 }
 .donation-form__payment-method:hover {
-  border-color: var(--giftflowwp-primary-color);
+  border-color: var(--giftflow-primary-color);
 }
 .donation-form__summary {
   margin-top: 2rem;
   padding: 1.5rem;
-  background: var(--giftflowwp-background-color);
-  border: 1px solid var(--giftflowwp-border-color);
-  border-radius: var(--giftflowwp-border-radius);
+  background: var(--giftflow-background-color);
+  border: 1px solid var(--giftflow-border-color);
+  border-radius: var(--giftflow-border-radius);
 }
 @media (max-width: 480px) {
   .donation-form__summary {
@@ -499,10 +499,10 @@
 .donation-form__summary-title {
   margin: 0 0 1rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid var(--giftflowwp-border-color);
+  border-bottom: 1px solid var(--giftflow-border-color);
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--giftflowwp-text-color);
+  color: var(--giftflow-text-color);
 }
 @media (max-width: 480px) {
   .donation-form__summary-title {
@@ -527,12 +527,12 @@
   }
 }
 .donation-form__summary-item dt {
-  color: var(--giftflowwp-text-light);
+  color: var(--giftflow-text-light);
 }
 .donation-form__summary-item dd {
   margin: 0;
   font-weight: 500;
-  color: var(--giftflowwp-text-color);
+  color: var(--giftflow-text-color);
 }
 .donation-form__step-actions {
   display: flex;
@@ -553,10 +553,10 @@
 }
 .donation-form__button {
   padding: 1.3rem 1rem;
-  border-radius: var(--giftflowwp-border-radius);
+  border-radius: var(--giftflow-border-radius);
   font-weight: 500;
   cursor: pointer;
-  transition: var(--giftflowwp-transition);
+  transition: var(--giftflow-transition);
   font-size: 1rem;
   font-weight: 600;
   display: flex;
@@ -575,7 +575,7 @@
   }
 }
 .donation-form__button--next, .donation-form__button--submit {
-  background: var(--giftflowwp-primary-color);
+  background: var(--giftflow-primary-color);
   color: white;
   border: none;
 }
@@ -611,12 +611,12 @@
 }
 .donation-form__button--back {
   background: white;
-  color: var(--giftflowwp-text-color);
-  border: 1px solid var(--giftflowwp-border-color);
+  color: var(--giftflow-text-color);
+  border: 1px solid var(--giftflow-border-color);
 }
 .donation-form__button--back:hover {
-  border-color: var(--giftflowwp-primary-color);
-  color: var(--giftflowwp-primary-color);
+  border-color: var(--giftflow-primary-color);
+  color: var(--giftflow-primary-color);
 }
 .donation-form__button:hover {
   gap: 0.75rem;
@@ -625,8 +625,8 @@
   padding: 1.5rem 1rem;
   margin-top: 1.5rem;
   background-color: #f8f9fa;
-  border-radius: var(--giftflowwp-border-radius);
-  border-left: 3px solid var(--giftflowwp-secondary-color);
+  border-radius: var(--giftflow-border-radius);
+  border-left: 3px solid var(--giftflow-secondary-color);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -688,23 +688,23 @@
 .donation-form__payment-method-description {
   padding: 1rem;
   background-color: #f9f9f9;
-  border-radius: var(--giftflowwp-border-radius);
+  border-radius: var(--giftflow-border-radius);
   font-size: 0.875rem;
-  color: var(--giftflowwp-text-light);
+  color: var(--giftflow-text-light);
   line-height: 1.5;
 }
 .donation-form__payment-method-description--stripe #STRIPE-CARD-ELEMENT {
   margin-top: 1rem;
   padding: 1rem;
-  border: 1px solid var(--giftflowwp-border-color);
-  border-radius: var(--giftflowwp-border-radius);
+  border: 1px solid var(--giftflow-border-color);
+  border-radius: var(--giftflow-border-radius);
   background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: var(--giftflowwp-transition);
+  transition: var(--giftflow-transition);
 }
 .donation-form__payment-method-description--stripe #STRIPE-CARD-ELEMENT:focus-within {
-  border-color: var(--giftflowwp-primary-color);
-  box-shadow: 0 0 0 2px rgba(var(--giftflowwp-primary-color), 0.2);
+  border-color: var(--giftflow-primary-color);
+  box-shadow: 0 0 0 2px rgba(var(--giftflow-primary-color), 0.2);
 }
 .donation-form__payment-method-description--stripe #STRIPE-CARD-ELEMENT .StripeElement {
   width: 100%;
@@ -720,7 +720,7 @@
   }
 }
 .donation-form .custom-error {
-  border-color: var(--giftflowwp-error-color);
+  border-color: var(--giftflow-error-color);
 }
 .donation-form .custom-error .custom-error-message {
   display: flex;
@@ -731,19 +731,19 @@
   align-items: flex-start;
   margin-bottom: 1rem;
   padding: 0.75rem;
-  background-color: color-mix(in srgb, var(--giftflowwp-primary-color) 5%, transparent);
-  border-radius: var(--giftflowwp-border-radius);
+  background-color: color-mix(in srgb, var(--giftflow-primary-color) 5%, transparent);
+  border-radius: var(--giftflow-border-radius);
 }
 .donation-form__payment-notification .notification-icon {
   flex-shrink: 0;
   margin-right: 0.75rem;
   margin-top: 0.125rem;
-  color: var(--giftflowwp-primary-color);
+  color: var(--giftflow-primary-color);
 }
 .donation-form__payment-notification p {
   margin: 0;
   font-size: 0.8125rem;
-  color: var(--giftflowwp-text-light);
+  color: var(--giftflow-text-light);
   line-height: 1.4;
 }
 @media (max-width: 480px) {
@@ -772,7 +772,7 @@
 .donation-form__thank-you svg {
   width: 64px;
   height: 64px;
-  color: var(--giftflowwp-success-color);
+  color: var(--giftflow-success-color);
   margin-bottom: 1.5rem;
 }
 @media (max-width: 480px) {
@@ -785,7 +785,7 @@
 .donation-form__thank-you-title {
   font-size: 1.75rem;
   font-weight: 600;
-  color: var(--giftflowwp-text-color);
+  color: var(--giftflow-text-color);
   margin: 0 0 1.5rem;
 }
 @media (max-width: 480px) {
@@ -795,7 +795,7 @@
   }
 }
 .donation-form__thank-you-message {
-  color: var(--giftflowwp-text-light);
+  color: var(--giftflow-text-light);
   margin: 0 0 2rem;
   font-size: 1.1rem;
   line-height: 1.6;
@@ -807,9 +807,9 @@
   }
 }
 .donation-form__thank-you-summary {
-  background: var(--giftflowwp-background-color);
+  background: var(--giftflow-background-color);
   padding: 1.5rem;
-  border-radius: var(--giftflowwp-border-radius);
+  border-radius: var(--giftflow-border-radius);
   margin-bottom: 2rem;
 }
 @media (max-width: 480px) {
@@ -821,7 +821,7 @@
 .donation-form__thank-you-amount {
   font-size: 2rem;
   font-weight: 600;
-  color: var(--giftflowwp-success-color);
+  color: var(--giftflow-success-color);
   margin-bottom: 0.5rem;
 }
 @media (max-width: 480px) {
@@ -830,7 +830,7 @@
   }
 }
 .donation-form__thank-you-campaign {
-  color: var(--giftflowwp-text-light);
+  color: var(--giftflow-text-light);
   font-size: 0.9rem;
 }
 .donation-form__thank-you-actions {
@@ -853,16 +853,16 @@
   }
 }
 .donation-form__thank-you-actions .donation-form__button--share {
-  background-color: color-mix(in srgb, var(--giftflowwp-secondary-color) 10%, transparent);
-  color: var(--giftflowwp-secondary-color);
-  border: 1px solid color-mix(in srgb, var(--giftflowwp-secondary-color) 20%, transparent);
-  box-shadow: 0 1px 2px color-mix(in srgb, var(--giftflowwp-secondary-color) 5%, transparent);
+  background-color: color-mix(in srgb, var(--giftflow-secondary-color) 10%, transparent);
+  color: var(--giftflow-secondary-color);
+  border: 1px solid color-mix(in srgb, var(--giftflow-secondary-color) 20%, transparent);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--giftflow-secondary-color) 5%, transparent);
 }
 .donation-form__thank-you-actions .donation-form__button--share:hover {
-  background-color: color-mix(in srgb, var(--giftflowwp-secondary-color) 15%, transparent);
-  border-color: color-mix(in srgb, var(--giftflowwp-secondary-color) 30%, transparent);
+  background-color: color-mix(in srgb, var(--giftflow-secondary-color) 15%, transparent);
+  border-color: color-mix(in srgb, var(--giftflow-secondary-color) 30%, transparent);
   transform: translateY(-1px);
-  box-shadow: 0 2px 4px color-mix(in srgb, var(--giftflowwp-secondary-color) 10%, transparent);
+  box-shadow: 0 2px 4px color-mix(in srgb, var(--giftflow-secondary-color) 10%, transparent);
 }
 .donation-form__thank-you-actions .donation-form__button--share svg {
   width: 20px;
@@ -888,7 +888,7 @@
 .donation-form__error svg {
   width: 64px;
   height: 64px;
-  color: var(--giftflowwp-error-color);
+  color: var(--giftflow-error-color);
 }
 @media (max-width: 480px) {
   .donation-form__error svg {
@@ -903,7 +903,7 @@
 .donation-form__error-title {
   font-size: 1.75rem;
   font-weight: 600;
-  color: var(--giftflowwp-text-color);
+  color: var(--giftflow-text-color);
   margin: 0 0 1.5rem;
 }
 @media (max-width: 480px) {
@@ -913,7 +913,7 @@
   }
 }
 .donation-form__error-message {
-  color: var(--giftflowwp-error-color);
+  color: var(--giftflow-error-color);
   font-weight: 500;
   margin: 0 0 1.5rem;
 }
@@ -923,7 +923,7 @@
   }
 }
 .donation-form__error-help {
-  color: var(--giftflowwp-text-light);
+  color: var(--giftflow-text-light);
   margin: 0 0 1rem;
 }
 .donation-form__error-tips {
@@ -939,14 +939,14 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  color: var(--giftflowwp-text-color);
+  color: var(--giftflow-text-color);
   font-weight: 500;
   padding-left: 1.5rem;
   position: relative;
 }
 .donation-form__error-tips li:before {
   content: "•";
-  color: var(--giftflowwp-error-color);
+  color: var(--giftflow-error-color);
   position: absolute;
   left: 0;
   top: 0;
@@ -954,7 +954,7 @@
   line-height: 1;
 }
 .donation-form__error-tips li small {
-  color: var(--giftflowwp-text-light);
+  color: var(--giftflow-text-light);
   font-size: 0.875rem;
   font-weight: normal;
 }
@@ -995,25 +995,25 @@
   color: currentColor;
 }
 .donation-form__error-actions .donation-form__button--retry {
-  background-color: var(--giftflowwp-primary-color);
+  background-color: var(--giftflow-primary-color);
   color: white;
   border: none;
 }
 .donation-form__error-actions .donation-form__button--support {
   background-color: white;
-  color: var(--giftflowwp-text-color);
-  border: 1px solid var(--giftflowwp-border-color);
+  color: var(--giftflow-text-color);
+  border: 1px solid var(--giftflow-border-color);
   text-decoration: none;
 }
 .donation-form__error-actions .donation-form__button--support:hover {
-  border-color: var(--giftflowwp-primary-color);
-  color: var(--giftflowwp-primary-color);
+  border-color: var(--giftflow-primary-color);
+  color: var(--giftflow-primary-color);
 }
 
 .donation-form__error-title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--giftflowwp-error-color);
+  color: var(--giftflow-error-color);
   margin: 0 0 0.75rem;
 }
 @media (max-width: 480px) {
@@ -1022,14 +1022,14 @@
   }
 }
 .donation-form__error-text {
-  color: var(--giftflowwp-text-light);
+  color: var(--giftflow-text-light);
   font-size: 0.925rem;
   line-height: 1.5;
   margin: 0;
   padding: 0.75rem;
-  background-color: color-mix(in srgb, var(--giftflowwp-error-color) 5%, transparent);
-  border-radius: var(--giftflowwp-border-radius);
-  border-left: 3px solid var(--giftflowwp-error-color);
+  background-color: color-mix(in srgb, var(--giftflow-error-color) 5%, transparent);
+  border-radius: var(--giftflow-border-radius);
+  border-left: 3px solid var(--giftflow-error-color);
 }
 @media (max-width: 480px) {
   .donation-form__error-text {

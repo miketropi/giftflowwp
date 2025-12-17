@@ -45,7 +45,7 @@ export default function DonationsChart() {
         setError(null);
 
         // Cache key based on period
-        const cacheKey = `giftflowwp_chartdata_${period}`;
+        const cacheKey = `giftflow_chartdata_${period}`;
         const cacheRaw = localStorage.getItem(cacheKey);
         let cache = null;
         if (cacheRaw) {
@@ -103,8 +103,8 @@ export default function DonationsChart() {
   // Show loading state
   if (loading) {
     return (
-      <div className="giftflowwp-chart-loading __monospace">
-        <div className="giftflowwp-chart-loading__spinner"></div>
+      <div className="giftflow-chart-loading __monospace">
+        <div className="giftflow-chart-loading__spinner"></div>
         <p>Loading chart data...</p>
       </div>
     );
@@ -113,15 +113,15 @@ export default function DonationsChart() {
   // Show error state
   if (error) {
     return (
-      <div className="giftflowwp-chart-error __monospace">
-        <div className="giftflowwp-chart-error__icon">
+      <div className="giftflow-chart-error __monospace">
+        <div className="giftflow-chart-error__icon">
           <Ban size={24} color="#dc2626" />
         </div>
         <h4>Chart Error</h4>
         <p>{error}</p>
         <button 
           onClick={() => window.location.reload()} 
-          className="giftflowwp-chart-error__retry"
+          className="giftflow-chart-error__retry"
         >
           Retry
         </button>
@@ -138,8 +138,8 @@ export default function DonationsChart() {
     )
   ) {
     return (
-      <div className="giftflowwp-chart-empty __monospace">
-        <div className="giftflowwp-chart-empty__icon">
+      <div className="giftflow-chart-empty __monospace">
+        <div className="giftflow-chart-empty__icon">
           <ChartColumn size={24} color="#6b7280" />
         </div>
         <h4>No Data Available</h4>
@@ -248,7 +248,7 @@ export default function DonationsChart() {
         position: "left",
         title: {
           display: true,
-          text: `Donation Amount (${ giftflowwp_admin.currency_symbol })`,
+          text: `Donation Amount (${ giftflow_admin.currency_symbol })`,
           color: '#6b7280',
           font: {
             size: 12,
@@ -262,7 +262,7 @@ export default function DonationsChart() {
         ticks: {
           color: '#6b7280',
           callback: function(value) {
-            return giftflowwp_admin.currency_symbol + value.toFixed(0);
+            return giftflow_admin.currency_symbol + value.toFixed(0);
           }
         }
       },
@@ -292,14 +292,14 @@ export default function DonationsChart() {
   };
 
   return (
-    <div className="giftflowwp-chart-container">
-      <div className="giftflowwp-chart-wrapper">
+    <div className="giftflow-chart-container">
+      <div className="giftflow-chart-wrapper">
         <Line data={data} options={options} />
       </div>
-      <div className="giftflowwp-chart-description __monospace">
+      <div className="giftflow-chart-description __monospace">
         <p>
           <strong>Chart Description:</strong> This chart shows donation activity and donor registrations over the <select
-            className="giftflowwp-chart-description__select"
+            className="giftflow-chart-description__select"
             value={period}
             onChange={e => setPeriod(e.target.value)}
           >
@@ -311,12 +311,12 @@ export default function DonationsChart() {
            <span style={{ color: "rgba(34, 197, 94, 1)", fontWeight: 'bold' }}>Green bars</span> represent total donation amounts (<b>only completed donations</b>), while the <span style={{ color: "rgba(59, 130, 246, 1)", fontWeight: 'bold' }}>blue bars</span> show the number of new donors registered each day.
         </p>
       {/* Cache info and clear cache button */}
-      <div className="giftflowwp-chart-cache-note" style={{ marginTop: '1rem', fontSize: '0.95em', display: 'flex', alignItems: 'center', gap: '1.2em' }}>
+      <div className="giftflow-chart-cache-note" style={{ marginTop: '1rem', fontSize: '0.95em', display: 'flex', alignItems: 'center', gap: '1.2em' }}>
         <span>
           <strong>Note:</strong> Chart data is cached for 15 minutes to improve performance.
         </span>
         <button
-          className="giftflowwp-chart-clear-cache-btn"
+          className="giftflow-chart-clear-cache-btn"
           style={{
             background: '#f1f5f9',
             border: '1px solid #2563eb',
@@ -330,7 +330,7 @@ export default function DonationsChart() {
           onClick={() => {
             // Remove cache for all periods
             ['7d', '30d', '6m', '1y'].forEach(periodKey => {
-              localStorage.removeItem(`giftflowwp_chartdata_${periodKey}`);
+              localStorage.removeItem(`giftflow_chartdata_${periodKey}`);
             });
             // Reload to fetch fresh data
             window.location.reload();

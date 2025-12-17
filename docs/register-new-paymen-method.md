@@ -1,10 +1,10 @@
-# Integrating New Payment Methods with GiftFlowWP
+# Integrating New Payment Methods with GiftFlow
 
-This guide explains how to create custom payment gateway integrations for the GiftFlowWP donation plugin by extending the base gateway architecture.
+This guide explains how to create custom payment gateway integrations for the GiftFlow donation plugin by extending the base gateway architecture.
 
 ## Overview
 
-GiftFlowWP uses an extensible payment gateway system based on the `Gateway_Base` abstract class. All payment gateways extend this base class and implement the required abstract methods while optionally overriding default behaviors.
+GiftFlow uses an extensible payment gateway system based on the `Gateway_Base` abstract class. All payment gateways extend this base class and implement the required abstract methods while optionally overriding default behaviors.
 
 ## Gateway Base Architecture
 
@@ -43,7 +43,7 @@ Create a new PHP file in `includes/gateways/class-your-gateway.php`:
 
 ```php
 <?php
-namespace GiftFlowWp\Gateways;
+namespace GiftFlow\Gateways;
 
 class Your_Gateway extends Gateway_Base {
     
@@ -52,8 +52,8 @@ class Your_Gateway extends Gateway_Base {
      */
     protected function init_gateway() {
         $this->id = 'your_gateway';
-        $this->title = __('Your Payment Gateway', 'giftflowwp');
-        $this->description = __('Pay securely using Your Gateway', 'giftflowwp');
+        $this->title = __('Your Payment Gateway', 'giftflow');
+        $this->description = __('Pay securely using Your Gateway', 'giftflow');
         $this->icon = '<svg><!-- Your icon SVG --></svg>';
         $this->order = 20;
         $this->supports = array('webhooks');
@@ -82,8 +82,8 @@ class Your_Gateway extends Gateway_Base {
 Add registration hook at the end of your gateway file:
 
 ```php
-add_action('giftflowwp_register_gateways', function() {
-    new \GiftFlowWp\Gateways\Your_Gateway();
+add_action('giftflow_register_gateways', function() {
+    new \GiftFlow\Gateways\Your_Gateway();
 });
 ```
 
@@ -117,34 +117,34 @@ Define your gateway's configuration fields in `register_settings_fields()`:
 
 ```php
 public function register_settings_fields($payment_fields = array()) {
-    $payment_options = get_option('giftflowwp_payment_options');
+    $payment_options = get_option('giftflow_payment_options');
     
     $payment_fields['your_gateway'] = [
-        'id' => 'giftflowwp_your_gateway',
-        'name' => 'giftflowwp_payment_options[your_gateway]',
+        'id' => 'giftflow_your_gateway',
+        'name' => 'giftflow_payment_options[your_gateway]',
         'type' => 'accordion',
-        'label' => __('Your Gateway Settings', 'giftflowwp'),
+        'label' => __('Your Gateway Settings', 'giftflow'),
         'accordion_settings' => [
-            'label' => __('Configuration', 'giftflowwp'),
+            'label' => __('Configuration', 'giftflow'),
             'is_open' => true,
             'fields' => [
                 'enabled' => [
                     'type' => 'switch',
-                    'label' => __('Enable Your Gateway', 'giftflowwp'),
+                    'label' => __('Enable Your Gateway', 'giftflow'),
                     'value' => isset($payment_options['your_gateway']['enabled']) ? $payment_options['your_gateway']['enabled'] : false,
                 ],
                 'api_key' => [
                     'type' => 'textfield',
-                    'label' => __('API Key', 'giftflowwp'),
+                    'label' => __('API Key', 'giftflow'),
                     'input_type' => 'password',
                     'value' => isset($payment_options['your_gateway']['api_key']) ? $payment_options['your_gateway']['api_key'] : '',
                 ],
                 'mode' => [
                     'type' => 'select',
-                    'label' => __('Mode', 'giftflowwp'),
+                    'label' => __('Mode', 'giftflow'),
                     'options' => [
-                        'sandbox' => __('Sandbox', 'giftflowwp'),
-                        'live' => __('Live', 'giftflowwp')
+                        'sandbox' => __('Sandbox', 'giftflow'),
+                        'live' => __('Live', 'giftflow')
                     ],
                     'value' => isset($payment_options['your_gateway']['mode']) ? $payment_options['your_gateway']['mode'] : 'sandbox',
                 ]
@@ -174,7 +174,7 @@ public function template_html() {
     <div class="donation-form__payment-method-description">
         <!-- Your custom payment form fields -->
         <div class="donation-form__field">
-            <label><?php _e('Account Number', 'giftflowwp'); ?></label>
+            <label><?php _e('Account Number', 'giftflow'); ?></label>
             <input type="text" name="account_number" required>
         </div>
     </div>
@@ -192,9 +192,9 @@ Use the `add_script()` method in your `ready()` hook:
 ```php
 protected function ready() {
     $this->add_script('your-gateway-js', array(
-        'src' => GIFTFLOWWP_PLUGIN_URL . 'assets/js/your-gateway.js',
-        'deps' => array('jquery', 'giftflowwp-donation-forms'),
-        'version' => GIFTFLOWWP_VERSION,
+        'src' => GIFTFLOW_PLUGIN_URL . 'assets/js/your-gateway.js',
+        'deps' => array('jquery', 'giftflow-donation-forms'),
+        'version' => GIFTFLOW_VERSION,
         'frontend' => true,
         'localize' => array(
             'name' => 'yourGatewayData',
@@ -272,7 +272,7 @@ private function handle_successful_payment($response, $donation_id) {
     update_post_meta($donation_id, '_transaction_raw_data', wp_json_encode($response->getData()));
     
     // Trigger action hook
-    do_action('giftflowwp_' . $this->id . '_payment_completed', $donation_id, $transaction_id, $response->getData());
+    do_action('giftflow_' . $this->id . '_payment_completed', $donation_id, $transaction_id, $response->getData());
     
     return true;
 }
@@ -328,9 +328,9 @@ Study this implementation as a reference for advanced payment gateway features.
 
 ### WordPress Hooks
 Your gateway can use these action hooks:
-- `giftflowwp_{gateway_id}_payment_completed`
-- `giftflowwp_{gateway_id}_payment_failed`
-- `giftflowwp_{gateway_id}_webhook_received`
+- `giftflow_{gateway_id}_payment_completed`
+- `giftflow_{gateway_id}_payment_failed`
+- `giftflow_{gateway_id}_webhook_received`
 
 ## Security Considerations
 
@@ -357,4 +357,4 @@ admin/css/
     your-gateway-admin.css       # Admin styling (optional)
 ```
 
-This architecture ensures your custom payment gateway integrates seamlessly with GiftFlowWP's donation processing system while maintaining security and WordPress coding standards.
+This architecture ensures your custom payment gateway integrates seamlessly with GiftFlow's donation processing system while maintaining security and WordPress coding standards.

@@ -1,7 +1,7 @@
 /**
  * API 
  * 
- * @package GiftFlowWp
+ * @package GiftFlow
  * @since v1.0.0
  */
 
@@ -15,7 +15,7 @@
 export const __request = async (url, data = {}, method = 'GET') => {
 
   // set nonce
-  data.nonce = data.nonce || giftflowwp_admin.nonce;
+  data.nonce = data.nonce || giftflow_admin.nonce;
 
   const rest = await jQuery.ajax({
     method,
@@ -23,7 +23,7 @@ export const __request = async (url, data = {}, method = 'GET') => {
     data,
     headers: {
       'Content-Type': 'application/json',
-      "X-WP-Nonce": giftflowwp_admin.rest_nonce
+      "X-WP-Nonce": giftflow_admin.rest_nonce
     },
     error: (error) => {
       console.error('Error:', error);
@@ -50,13 +50,13 @@ export const getCampaigns = async (query = {}) => {
     })
     .join('&');
 
-  const urlWithParams = `/wp-json/giftflowwp/v1/campaigns${queryString ? `?${queryString}` : ''}`;
+  const urlWithParams = `/wp-json/giftflow/v1/campaigns${queryString ? `?${queryString}` : ''}`;
 
   return __request(urlWithParams, {});
 }
 
 export const getBasedata = async () => {
-  const urlWithParams = `/wp-json/giftflowwp/v1/dashboard/overview`;
+  const urlWithParams = `/wp-json/giftflow/v1/dashboard/overview`;
 
   return __request(urlWithParams, {});
 }
@@ -71,7 +71,7 @@ export const getDashboardStatisticsCharts = async (query = {}) => {
       return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
     })
 
-  const urlWithParams = `/wp-json/giftflowwp/v1/dashboard/statistics/charts${queryString ? `?${queryString}` : ''}`;
+  const urlWithParams = `/wp-json/giftflow/v1/dashboard/statistics/charts${queryString ? `?${queryString}` : ''}`;
 
   return __request(urlWithParams, {});
 }

@@ -140,7 +140,7 @@ $mobile: 480px;
       color: $text-light;
       // font-size: 0.875rem;
 
-      .giftflowwp-currency-formatted-amount {
+      .giftflow-currency-formatted-amount {
         color: $text-color;
         font-weight: 600;
       }
@@ -842,7 +842,7 @@ $mobile: 480px;
     align-items: flex-start;
     margin-bottom: 1rem;
     padding: 0.75rem;
-    background-color: color-mix(in srgb, var(--giftflowwp-primary-color) 5%, transparent);
+    background-color: color-mix(in srgb, var(--giftflow-primary-color) 5%, transparent);
     border-radius: $border-radius;
     
     .notification-icon {
@@ -970,16 +970,16 @@ $mobile: 480px;
       }
 
       &--share {
-        background-color: color-mix(in srgb, var(--giftflowwp-secondary-color) 10%, transparent);
-        color: var(--giftflowwp-secondary-color);
-        border: 1px solid color-mix(in srgb, var(--giftflowwp-secondary-color) 20%, transparent);
-        box-shadow: 0 1px 2px color-mix(in srgb, var(--giftflowwp-secondary-color) 5%, transparent);
+        background-color: color-mix(in srgb, var(--giftflow-secondary-color) 10%, transparent);
+        color: var(--giftflow-secondary-color);
+        border: 1px solid color-mix(in srgb, var(--giftflow-secondary-color) 20%, transparent);
+        box-shadow: 0 1px 2px color-mix(in srgb, var(--giftflow-secondary-color) 5%, transparent);
 
         &:hover {
-          background-color: color-mix(in srgb, var(--giftflowwp-secondary-color) 15%, transparent);
-          border-color: color-mix(in srgb, var(--giftflowwp-secondary-color) 30%, transparent);
+          background-color: color-mix(in srgb, var(--giftflow-secondary-color) 15%, transparent);
+          border-color: color-mix(in srgb, var(--giftflow-secondary-color) 30%, transparent);
           transform: translateY(-1px);
-          box-shadow: 0 2px 4px color-mix(in srgb, var(--giftflowwp-secondary-color) 10%, transparent);
+          box-shadow: 0 2px 4px color-mix(in srgb, var(--giftflow-secondary-color) 10%, transparent);
         }
 
         svg {
