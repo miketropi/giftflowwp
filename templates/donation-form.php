@@ -88,7 +88,10 @@ Donation form template 2 steps:
                         <legend class="donation-form__legend"><?php esc_html_e('Select donation type, one-time or monthly', 'giftflowwp'); ?></legend>
                         <div class="donation-form__radio-group donation-form__radio-group--donation-type">
                             <?php // foreach donation types ?>
-                            <?php foreach ($donation_types as $index => $donation_type) : 
+                            <?php 
+                            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+                            foreach ($donation_types as $index => $donation_type) : 
+                                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
                                 $is_checked = $index === 0 ? 'checked' : '';
                                 ?>
                                 <label>
@@ -122,7 +125,9 @@ Donation form template 2 steps:
                                 <input type="number" name="donation_amount" value="<?php echo esc_attr($default_amount); ?>" min="1" step="1" required data-validate="required">
                             </div>
                             <div class="donation-form__preset-amounts">
-                                <?php foreach ($preset_donation_amounts as $amount) : ?>
+                                <?php 
+                                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+                                foreach ($preset_donation_amounts as $amount) : ?>
                                     <button 
 																			type="button" 
 																			class="donation-form__preset-amount" 
@@ -189,6 +194,7 @@ Donation form template 2 steps:
                             <?php // echo '<pre>'; print_r($gateways); echo '</pre>'; ?>
 							<?php 
                             if (!empty($gateways)) {
+                                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
                                 foreach ($gateways as $method) {
                                     if($method->is_enabled()) {
                                         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

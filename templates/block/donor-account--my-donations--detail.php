@@ -12,25 +12,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 // print_r($donation);
 
 // Extract donation data
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $donation_id = $donation->ID;
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $donation_title = $donation->post_title;
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $donor_name = $donation->donor_name ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $donor_email = $donation->donor_email ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $amount = $donation->__amount_formatted ?? '$0.00';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $status = $donation->status ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $payment_method = $donation->payment_method ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $donation_date = $donation->__date_gmt ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $campaign_name = $donation->campaign_name ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $campaign_url = $donation->campaign_url ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $edit_url = $donation->donation_edit_url ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $message = $donation->message ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $anonymous = ucfirst($donation->anonymous ?? '');
 
 // Status styling
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $status_class = 'gfw-status-' . strtolower($status);
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $status_label = ucfirst($status);
 
 // Payment method styling
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $payment_method_label = ucfirst(str_replace('_', ' ', $payment_method));
 ?>
 

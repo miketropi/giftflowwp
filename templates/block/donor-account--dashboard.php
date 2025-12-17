@@ -6,9 +6,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 // current user
 $current_user = wp_get_current_user();
 
-// get name user
+// get name 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $name = implode(' ', [$current_user->first_name, $current_user->last_name]);
-if ( empty( trim( $name ) ) ) { $name = 'donor'; }
+if ( empty( trim( $name ) ) ) { 
+  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+  $name = 'donor'; 
+}
 ?>
 <div class="giftflowwp-donor-account-dashboard">
   <div class="giftflowwp-donor-account-dashboard__welcome">

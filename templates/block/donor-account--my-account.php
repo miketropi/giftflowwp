@@ -6,8 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 // =============================================================================
 // INITIALIZATION & VALIDATION
 // =============================================================================
-
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $current_user = $current_user ?? null; // wp user object
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $donor = $donor ?? null; // donor information
 
 // Return if required data is missing
@@ -147,8 +148,11 @@ function giftflowwp_render_form_section( $title, $icon, $fields, $form_class = '
 // =============================================================================
 
 // Ensure required data is available
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $account_result = $account_result ?? null;
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $password_result = $password_result ?? null;
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $form_data = $form_data ?? array();
 ?>
 

@@ -10,10 +10,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // echo '<pre>'; print_r($donations); echo '</pre>';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $donations = $donations ?? null;
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $page = $page ?? 1;
 
 // cache process bar
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $cache_process_bar = [];
 ?>
 <div class="gfw-my-donations-header">
@@ -40,13 +43,21 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) : ?>
     </thead>
     <tbody>
       <?php while ( $donations->have_posts() ) : $donations->the_post();
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
         $donation_id = get_the_ID();
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
         $date = get_the_date( 'Y-m-d H:i:s', $donation_id );
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
         $amount = get_post_meta( $donation_id, '_amount', true );
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
         $status = get_post_status( $donation_id );
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
         $campaign_id = get_post_meta( $donation_id, '_campaign_id', true );
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
         $campaign_title = $campaign_id ? get_the_title( $campaign_id ) : esc_html__('N/A', 'giftflowwp');
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
         $amount_formatted = giftflowwp_render_currency_formatted_amount( $amount );
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
         $payment_status = get_post_meta( $donation_id, '_status', true );
       ?>
         <tr>
@@ -59,7 +70,9 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) : ?>
                 if (!isset($cache_process_bar[$campaign_id])) {
                   ob_start();
                   giftflowwp_process_bar_of_campaign_donations($campaign_id);
+                  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
                   $process_bar_html = ob_get_clean();
+                  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
                   $cache_process_bar[$campaign_id] = $process_bar_html;
                   echo wp_kses_post($process_bar_html);
                 } else {
@@ -98,7 +111,9 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) : ?>
   <?php
   // Pagination (if needed)
   if ( isset( $donations->max_num_pages ) && $donations->max_num_pages > 1 ) :
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
     $big = 999999999; // need an unlikely integer
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
     $current_page = max( 1, $page );
     
     ?>

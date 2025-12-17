@@ -36,27 +36,27 @@ function giftflowwp_campaign_single_content_block_render($attributes, $content, 
   $tabs = array(
     'campaign' => array(
       'id' => 'campaign',
-      'label' => apply_filters('campaign_single_content_tab_campaign_label', __('Campaign', 'giftflowwp')),
-      'content' => apply_filters('campaign_single_content_tab_campaign', '', $post_id),
-      'icon' => apply_filters('campaign_single_content_tab_campaign_icon', $icons[0]),
+      'label' => apply_filters('giftflowwp:campaign_single_content_tab_campaign_label', __('Campaign', 'giftflowwp')),
+      'content' => apply_filters('giftflowwp:campaign_single_content_tab_campaign', '', $post_id),
+      'icon' => apply_filters('giftflowwp:campaign_single_content_tab_campaign_icon', $icons[0]),
       'is_active' => true,
     ),
     'donations' => array(
       'id' => 'donations',
-      'label' => apply_filters('campaign_single_content_tab_donations_label', __('Donations', 'giftflowwp')),
-      'content' => apply_filters('campaign_single_content_tab_donations', '', $post_id),
-      'icon' => apply_filters('campaign_single_content_tab_donations_icon', $icons[1]),
+      'label' => apply_filters('giftflowwp:campaign_single_content_tab_donations_label', __('Donations', 'giftflowwp')),
+      'content' => apply_filters('giftflowwp:campaign_single_content_tab_donations', '', $post_id),
+      'icon' => apply_filters('giftflowwp:campaign_single_content_tab_donations_icon', $icons[1]),
     ),
     'comments' => array(
       'id' => 'comments',
-      'label' => apply_filters('campaign_single_content_tab_comments_label', __('Comments', 'giftflowwp')),
-      'content' => apply_filters('campaign_single_content_tab_comments', '', $post_id),
-      'icon' => apply_filters('campaign_single_content_tab_comments_icon', $icons[2]),
+      'label' => apply_filters('giftflowwp:campaign_single_content_tab_comments_label', __('Comments', 'giftflowwp')),
+      'content' => apply_filters('giftflowwp:campaign_single_content_tab_comments', '', $post_id),
+      'icon' => apply_filters('giftflowwp:campaign_single_content_tab_comments_icon', $icons[2]),
     ),
   );
   
   // Allow filtering of tabs
-  $tabs = apply_filters('giftflowwp_campaign_single_content_tabs', $tabs, $post_id);
+  $tabs = apply_filters('giftflowwp:campaign_single_content_tabs', $tabs, $post_id);
 
   ob_start();
   ?>
@@ -139,7 +139,7 @@ function giftflowwp_campaign_single_content_block_render($attributes, $content, 
 }
 
 // add filter campaign_single_content_tab_campaign
-add_filter('campaign_single_content_tab_campaign', 'giftflowwp_campaign_single_content_tab_campaign', 10, 2);
+add_filter('giftflowwp:campaign_single_content_tab_campaign', 'giftflowwp_campaign_single_content_tab_campaign', 10, 2);
 
 function giftflowwp_campaign_single_content_tab_campaign($content, $post_id) {
   ob_start();
@@ -156,7 +156,7 @@ function giftflowwp_campaign_single_content_tab_campaign($content, $post_id) {
 }
 
 // add filter campaign_single_content_tab_donations
-add_filter('campaign_single_content_tab_donations', 'giftflowwp_campaign_single_content_tab_donations', 10, 2);
+add_filter('giftflowwp:campaign_single_content_tab_donations', 'giftflowwp_campaign_single_content_tab_donations', 10, 2);
 
 function giftflowwp_campaign_single_content_tab_donations($content, $post_id) {
   ob_start();
@@ -193,7 +193,7 @@ function giftflowwp_campaign_single_content_tab_donations($content, $post_id) {
   return ob_get_clean();
 }
 
-add_filter('campaign_single_content_tab_comments', 'giftflowwp_campaign_single_content_tab_comments', 10, 2);
+add_filter('giftflowwp:campaign_single_content_tab_comments', 'giftflowwp_campaign_single_content_tab_comments', 10, 2);
 
 function giftflowwp_campaign_single_content_tab_comments($content, $post_id) {
   ob_start();

@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $paged    = get_query_var('cpage') ? intval(get_query_var('cpage')) : 1;
 $per_page = get_option('comments_per_page');
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $args = [
   'post_id' => $post_id,
   'status'  => 'approve',
@@ -21,11 +22,13 @@ $comments = get_comments($args);
 <div class="gfw-campaign-comments">
   <?php 
   if ($comments) {
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
     $total_comments = get_comments([
       'post_id' => get_the_ID(),
       'status'  => 'approve',
       'count'   => true,
     ]);
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
     $total_pages = ceil($total_comments / $per_page);
     
     if ($total_pages > 1) {

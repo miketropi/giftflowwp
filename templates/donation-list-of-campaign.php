@@ -3,8 +3,11 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $posts = $donations['posts'] ?? [];
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $total = $donations['total'] ?? 0;
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $pagination = $donations['pagination'] ?? 1;
 ?>
 
@@ -24,7 +27,9 @@ $pagination = $donations['pagination'] ?? 1;
 
     <?php if (!empty($posts)): ?>
         <div class="gfw-donation-list">
-            <?php foreach ($posts as $donation): ?>
+            <?php 
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+            foreach ($posts as $donation): ?>
                 <div class="gfw-donation-item">
                     <div class="gfw-donation-row">
                         <div class="gfw-donation-left">

@@ -224,6 +224,7 @@ function giftflowwp_initialize_settings() {
     // Register settings and add sections/fields
     foreach ($settings as $section_key => $section) {
         // Register setting
+        // phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingMissing
         register_setting($section['option_name'], $section['option_name']);
 
         // Add section

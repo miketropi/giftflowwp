@@ -3,15 +3,21 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit; // Exit if accessed directly.
 }
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $tabs = $tabs ?? [];
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $current_user = $current_user ?? null;
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $attributes = $attributes ?? [];
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $active_tab = $active_tab ?? $tabs[0]['slug'];
 ?>
 
 <div class="giftflowwp-donor-account" role="tablist" aria-label="<?php esc_attr_e('Donor Account Navigation', 'giftflowwp'); ?>">
   <div class="giftflowwp-donor-account__tabs" role="tablist">
-    <?php foreach ($tabs as $index => $tab) : ?>
+    <?php 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+    foreach ($tabs as $index => $tab) : ?>
       <a 
         href="<?php echo esc_url(giftflowwp_donor_account_page_url($tab['slug'])); ?>" 
         class="giftflowwp-donor-account__tab<?php echo $tab['slug'] === $active_tab ? ' active' : ''; ?>"
@@ -25,7 +31,9 @@ $active_tab = $active_tab ?? $tabs[0]['slug'];
   </div>
   
   <div class="giftflowwp-donor-account__content">
-    <?php foreach ($tabs as $index => $tab) : 
+    <?php 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+    foreach ($tabs as $index => $tab) : 
       // if not active tab is continue 
   
       if ($tab['slug'] !== $active_tab) {
