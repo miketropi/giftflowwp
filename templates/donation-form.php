@@ -93,7 +93,7 @@
                             $validate_attr_value = 'required,number,min';
                             $max_attr = $max_amount ? 'max="' . esc_attr($max_amount) . '"' : '';
                             $extra_data = array(
-                                'min' => $min_amount,
+                                'min' => $min_amount ? $min_amount : 1,
                             );
 
                             if($max_attr) { 
