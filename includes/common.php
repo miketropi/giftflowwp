@@ -274,6 +274,12 @@ function giftflow_get_current_currency() {
   return $currency;
 }
 
+// get options by group and option
+function giftflow_get_options($option, $group = 'giftflow_general_options', $default = '') {
+  $options = get_option($group);
+  return isset($options[$option]) ? $options[$option] : $default;
+}
+
 // get symbol of currency
 function giftflow_get_currency_symbol($currency) {
   $currencies = giftflow_get_common_currency();

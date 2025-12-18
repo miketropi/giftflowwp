@@ -47,7 +47,7 @@
   
   // Common input styles
   .giftflow-field-input {
-    flex: 1;
+    // flex: 1;
     min-width: 200px; // Minimum width for input fields
     width: 100%;
     box-sizing: border-box;
@@ -134,7 +134,7 @@
   
   .giftflow-field-input {
     padding-left: 2rem;
-    flex: 1;
+    // flex: 1;
     
     &:last-child {
       padding-right: 2rem;

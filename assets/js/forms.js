@@ -152,23 +152,6 @@
 		}
 
 		async onSendData(data) {
-
-			// const res = await jQuery.ajax({
-			// 	url: window.giftflowDonationForms.ajaxurl,
-			// 	type: 'POST',
-			// 	data: {
-			// 		action: 'giftflow_donation_form',
-			// 		wp_nonce: data.wp_nonce,
-			// 		data
-			// 	},
-			// 	error: function (xhr, status, error) {
-			// 		console.error('Error:', [error, status]);
-			// 	}
-			// })
-
-			// return res;
-
-			// return;
 			let ajaxurl = `${window.giftflowDonationForms.ajaxurl}?action=giftflow_donation_form&wp_nonce=${data.wp_nonce}`;
 
 			const response = await fetch(ajaxurl, {
@@ -261,7 +244,7 @@
 				self.fields[event.target.name] = event.target.value;
 				let value = event.target.value;
 
-				console.log(event.target.name, value);
+				// console.log(event.target.name, value);
 
 				// validate event.target is checkbox field
 				if (event.target.type === 'checkbox') {
@@ -277,7 +260,7 @@
 				// update UI by field
 				self.onUpdateUIByField(event.target.name, value);
 
-				console.log('fields', self.fields);
+				// console.log('fields', self.fields);
 			});
 		}
 
@@ -291,8 +274,10 @@
 
 			const wrapperField = inputField.closest('.donation-form__field');
 			if (!wrapperField) {
-
-				if(!this.onValidateValue('required', value)) {
+				const type = inputField.dataset.validate;
+				const extraData = inputField.dataset.extraData ? JSON.parse(inputField.dataset.extraData) : null;
+				
+				if(!this.onValidateValue(type, value, extraData)) {
 					inputField.classList.add('error'); 
 					this.onUpdateOutputField(field, '');
 				} else {
@@ -304,7 +289,8 @@
 			}
 
 			if (inputField.dataset.validate) {
-				const pass = this.onValidateValue(inputField.dataset.validate, value);
+				const extraData = inputField.dataset.extraData ? JSON.parse(inputField.dataset.extraData) : null;
+				const pass = this.onValidateValue(inputField.dataset.validate, value, extraData);
 				if (!pass) {
 					// inputField.classList.add('error');
 					wrapperField.classList.add('error');
@@ -407,7 +393,8 @@
 				const fieldValue = field.value;
 				const fieldValidate = field.dataset.validate;
 				
-				if(!this.onValidateValue(fieldValidate, fieldValue)) {
+				const extraData = field.dataset.extraData ? JSON.parse(field.dataset.extraData) : null;
+				if(!this.onValidateValue(fieldValidate, fieldValue, extraData)) {
 					pass = false;
 				}
 				
@@ -429,25 +416,55 @@
 		}
 		
 		// validate field by type
-		onValidateValue(type, value) {
-			switch (type) {
-				// email
-				case 'email':
-					return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+		onValidateValue(type, value, extraData = null) {
+			
+			// Accept multiple comma-delimited validation types, pass if all pass
+			const types = type.split(',').map(s => s.trim());
+			let overallValid = true;
 
-				// phone
-				case 'phone':
-					// number or string + on the first position
-					return /^[0-9]+$/.test(value) || /^[a-zA-Z]+$/.test(value);
+			for (let t of types) {
+				
+				switch (t) {
+					// email
+					case 'email':
+						if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) overallValid = false;
+						break;
 
-				// required
-				case 'required':
-					return value.trim() !== '';
+					// phone
+					case 'phone':
+						// starts with optional +, then digits, optional spaces/hyphens
+						if (!/^\+?[0-9\s\-]+$/.test(value)) overallValid = false;
+						break;
 
-				// default
-				default:
-					return true;
+					// required
+					case 'required':
+						if (typeof value === 'undefined' || value === null || value.toString().trim() === '') overallValid = false;
+						break;
+
+					// number
+					case 'number':
+						if (isNaN(value) || value === '') overallValid = false;
+						break;
+
+					// min
+					case 'min':
+						if (value < (extraData?.min || 0) || value === '') overallValid = false;
+						break;
+
+					// max
+					case 'max':
+						if (value > (extraData?.max || 0) || value === '') overallValid = false;
+						break;
+
+					// default (pass)
+					default:
+						// do nothing, always pass unknown validators
+						break;
+				}
+				if (!overallValid) break; // stop on first failure
 			}
+
+			return overallValid;
 		}
 	}
 

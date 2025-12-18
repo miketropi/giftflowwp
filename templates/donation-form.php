@@ -4,38 +4,6 @@
  * 
  * @package GiftFlow
  */
-
-/* 
-Donation form template 2 steps:
-    Step 1:
-        - header 
-            - thumbnail
-            - campaign title
-            - raised / goal
-        - Amount input
-            - custom amount
-            - preset amounts
-        - User info
-            - name
-            - email
-            - phone
-            - message
-        - Anonymous donation checkbox
-        - Next step button
-    Step 2:
-        - Select payment method
-            - credit card
-            - paypal
-            - bank transfer
-        - Donation summary
-            - amount
-            - email
-            - campaign title
-        - Back button
-        - Donate button
-    thank you message:
-    error message:
-*/
 ?>
 
 <form class="donation-form" id="donation-form-<?php echo esc_attr($campaign_id); ?>">
@@ -120,18 +88,31 @@ Donation form template 2 steps:
                     <fieldset class="donation-form__fieldset">
                         <legend class="donation-form__legend"><?php esc_html_e('Donation Amount', 'giftflow'); ?></legend>
                         <div class="donation-form__amount">
+                            <?php 
+                            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+                            $max_attr = $max_amount ? 'max="' . esc_attr($max_amount) . '"' : '';
+                            ?>
                             <div class="donation-form__amount-input">
                                 <span class="donation-form__currency"><?php echo esc_html($currency_symbol); ?></span>
-                                <input type="number" name="donation_amount" value="<?php echo esc_attr($default_amount); ?>" min="1" step="1" required data-validate="required">
+                                <input 
+                                    type="number" 
+                                    name="donation_amount" 
+                                    value="<?php echo esc_attr($default_amount); ?>" 
+                                    min="<?php echo esc_attr($min_amount); ?>" 
+                                    <?php echo esc_attr($max_attr); ?>
+                                    step="1" 
+                                    required 
+                                    data-validate="required,number,min,max"
+                                    data-extra-data='{"min": <?php echo esc_attr($min_amount); ?>, "max": <?php echo esc_attr($max_amount); ?>}'>
                             </div>
                             <div class="donation-form__preset-amounts">
                                 <?php 
                                 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
                                 foreach ($preset_donation_amounts as $amount) : ?>
                                     <button 
-																			type="button" 
-																			class="donation-form__preset-amount" 
-																			data-amount="<?php echo esc_attr($amount['amount']); ?>">
+                                        type="button" 
+                                        class="donation-form__preset-amount" 
+                                        data-amount="<?php echo esc_attr($amount['amount']); ?>">
                                         <?php echo wp_kses_post(giftflow_render_currency_formatted_amount($amount['amount'])); ?>
                                     </button>
                                 <?php endforeach; ?>

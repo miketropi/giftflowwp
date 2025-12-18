@@ -138,6 +138,10 @@ class Shortcodes extends Base {
         $atts['user_email'] = $user_email;
         $atts['user_info_readonly'] = $user_info_readonly;
 
+        // get global options
+        $atts['min_amount'] = giftflow_get_options('min_amount', 'giftflow_general_options', 1);
+        $atts['max_amount'] = giftflow_get_options('max_amount', 'giftflow_general_options', '');
+
         // load the donation form template use class-template.php
         $template = new Template();
         $template->load_template('donation-form.php', $atts);

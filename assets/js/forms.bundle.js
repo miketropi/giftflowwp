@@ -225,6 +225,66 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function _createForOfIteratorHelper(r, e) {
+  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (!t) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) {
+      t && (r = t);
+      var _n = 0,
+        F = function F() {};
+      return {
+        s: F,
+        n: function n() {
+          return _n >= r.length ? {
+            done: !0
+          } : {
+            done: !1,
+            value: r[_n++]
+          };
+        },
+        e: function e(r) {
+          throw r;
+        },
+        f: F
+      };
+    }
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  var o,
+    a = !0,
+    u = !1;
+  return {
+    s: function s() {
+      t = t.call(r);
+    },
+    n: function n() {
+      var r = t.next();
+      return a = r.done, r;
+    },
+    e: function e(r) {
+      u = !0, o = r;
+    },
+    f: function f() {
+      try {
+        a || null == t["return"] || t["return"]();
+      } finally {
+        if (u) throw o;
+      }
+    }
+  };
+}
+function _unsupportedIterableToArray(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+  }
+}
+function _arrayLikeToArray(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
 function _regenerator() {
   /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */var e,
     t,
@@ -513,20 +573,6 @@ function _regeneratorDefine2(e, r, n, t) {
                   return _regenerator().w(function (_context2) {
                     while (1) switch (_context2.n) {
                       case 0:
-                        // const res = await jQuery.ajax({
-                        // 	url: window.giftflowDonationForms.ajaxurl,
-                        // 	type: 'POST',
-                        // 	data: {
-                        // 		action: 'giftflow_donation_form',
-                        // 		wp_nonce: data.wp_nonce,
-                        // 		data
-                        // 	},
-                        // 	error: function (xhr, status, error) {
-                        // 		console.error('Error:', [error, status]);
-                        // 	}
-                        // })
-                        // return res;
-                        // return;
                         ajaxurl = "".concat(window.giftflowDonationForms.ajaxurl, "?action=giftflow_donation_form&wp_nonce=").concat(data.wp_nonce);
                         _context2.n = 1;
                         return fetch(ajaxurl, {
@@ -644,7 +690,8 @@ function _regeneratorDefine2(e, r, n, t) {
                 this.form.addEventListener('change', function (event) {
                   self.fields[event.target.name] = event.target.value;
                   var value = event.target.value;
-                  console.log(event.target.name, value);
+
+                  // console.log(event.target.name, value);
 
                   // validate event.target is checkbox field
                   if (event.target.type === 'checkbox') {
@@ -659,7 +706,8 @@ function _regeneratorDefine2(e, r, n, t) {
 
                   // update UI by field
                   self.onUpdateUIByField(event.target.name, value);
-                  console.log('fields', self.fields);
+
+                  // console.log('fields', self.fields);
                 });
               }
             }, {
@@ -673,7 +721,9 @@ function _regeneratorDefine2(e, r, n, t) {
                 }
                 var wrapperField = inputField.closest('.donation-form__field');
                 if (!wrapperField) {
-                  if (!this.onValidateValue('required', value)) {
+                  var type = inputField.dataset.validate;
+                  var extraData = inputField.dataset.extraData ? JSON.parse(inputField.dataset.extraData) : null;
+                  if (!this.onValidateValue(type, value, extraData)) {
                     inputField.classList.add('error');
                     this.onUpdateOutputField(field, '');
                   } else {
@@ -683,7 +733,8 @@ function _regeneratorDefine2(e, r, n, t) {
                   return;
                 }
                 if (inputField.dataset.validate) {
-                  var pass = this.onValidateValue(inputField.dataset.validate, value);
+                  var _extraData = inputField.dataset.extraData ? JSON.parse(inputField.dataset.extraData) : null;
+                  var pass = this.onValidateValue(inputField.dataset.validate, value, _extraData);
                   if (!pass) {
                     // inputField.classList.add('error');
                     wrapperField.classList.add('error');
@@ -791,7 +842,8 @@ function _regeneratorDefine2(e, r, n, t) {
                   var fieldName = field.name;
                   var fieldValue = field.value;
                   var fieldValidate = field.dataset.validate;
-                  if (!_this4.onValidateValue(fieldValidate, fieldValue)) {
+                  var extraData = field.dataset.extraData ? JSON.parse(field.dataset.extraData) : null;
+                  if (!_this4.onValidateValue(fieldValidate, fieldValue, extraData)) {
                     pass = false;
                   }
                   self.onUpdateUIByField(fieldName, fieldValue);
@@ -812,24 +864,62 @@ function _regeneratorDefine2(e, r, n, t) {
             }, {
               key: "onValidateValue",
               value: function onValidateValue(type, value) {
-                switch (type) {
-                  // email
-                  case 'email':
-                    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+                var extraData = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+                // Accept multiple comma-delimited validation types, pass if all pass
+                var types = type.split(',').map(function (s) {
+                  return s.trim();
+                });
+                var overallValid = true;
+                var _iterator = _createForOfIteratorHelper(types),
+                  _step;
+                try {
+                  for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                    var t = _step.value;
+                    switch (t) {
+                      // email
+                      case 'email':
+                        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) overallValid = false;
+                        break;
 
-                  // phone
-                  case 'phone':
-                    // number or string + on the first position
-                    return /^[0-9]+$/.test(value) || /^[a-zA-Z]+$/.test(value);
+                      // phone
+                      case 'phone':
+                        // starts with optional +, then digits, optional spaces/hyphens
+                        if (!/^\+?[0-9\s\-]+$/.test(value)) overallValid = false;
+                        break;
 
-                  // required
-                  case 'required':
-                    return value.trim() !== '';
+                      // required
+                      case 'required':
+                        if (typeof value === 'undefined' || value === null || value.toString().trim() === '') overallValid = false;
+                        break;
 
-                  // default
-                  default:
-                    return true;
+                      // number
+                      case 'number':
+                        if (isNaN(value) || value === '') overallValid = false;
+                        break;
+
+                      // min
+                      case 'min':
+                        if (value < ((extraData === null || extraData === void 0 ? void 0 : extraData.min) || 0) || value === '') overallValid = false;
+                        break;
+
+                      // max
+                      case 'max':
+                        if (value > ((extraData === null || extraData === void 0 ? void 0 : extraData.max) || 0) || value === '') overallValid = false;
+                        break;
+
+                      // default (pass)
+                      default:
+                        // do nothing, always pass unknown validators
+                        break;
+                    }
+                    if (!overallValid) break; // stop on first failure
+                  }
+                } catch (err) {
+                  _iterator.e(err);
+                } finally {
+                  _iterator.f();
                 }
+                return overallValid;
               }
             }]);
           }();
