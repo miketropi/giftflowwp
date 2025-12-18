@@ -2,11 +2,11 @@
 /**
  * Base Meta Box Class
  *
- * @package GiftFlowWp
+ * @package GiftFlow
  * @subpackage Admin
  */
 
-namespace GiftFlowWp\Admin\MetaBoxes;
+namespace GiftFlow\Admin\MetaBoxes;
 
 /**
  * Base Meta Box Class

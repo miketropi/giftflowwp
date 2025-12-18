@@ -1,11 +1,11 @@
 /**
- * GiftFlowWP Field Styles
+ * GiftFlow Field Styles
  *
  * Modern, clean styling for form fields
  */
 
 // Base field styles
-.giftflowwp-field {
+.giftflow-field {
   margin-bottom: $spacing-lg;
   position: relative;
   display: grid;
@@ -30,7 +30,7 @@
     }
   }
   
-  .giftflowwp-field-wrapper {
+  .giftflow-field-wrapper {
     width: 100%;
   }
 
@@ -46,7 +46,7 @@
   }
   
   // Common input styles
-  .giftflowwp-field-input {
+  .giftflow-field-input {
     flex: 1;
     min-width: 200px; // Minimum width for input fields
     width: 100%;
@@ -80,22 +80,22 @@
 
   &-switch {
 
-    .giftflowwp-field-wrapper {
+    .giftflow-field-wrapper {
       padding-top: 1em;
     }
   }
 }
 
 // Text field
-.giftflowwp-field-textfield {
-  .giftflowwp-field-input {
+.giftflow-field-textfield {
+  .giftflow-field-input {
     // Additional text field specific styles if needed
   }
 }
 
 // Number field
-.giftflowwp-field-number {
-  .giftflowwp-field-input {
+.giftflow-field-number {
+  .giftflow-field-input {
     // Remove spinner buttons
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
@@ -110,14 +110,14 @@
 }
 
 // Currency field
-.giftflowwp-currency-field {
+.giftflow-currency-field {
   position: relative;
   display: flex;
   align-items: center;
   flex: 1;
   min-width: 200px;
   
-  .giftflowwp-currency-symbol {
+  .giftflow-currency-symbol {
     position: absolute;
     color: $text-light;
     font-size: $font-size-md;
@@ -132,7 +132,7 @@
     }
   }
   
-  .giftflowwp-field-input {
+  .giftflow-field-input {
     padding-left: 2rem;
     flex: 1;
     
@@ -143,8 +143,8 @@
 }
 
 // Select field
-.giftflowwp-field-select {
-  .giftflowwp-field-input {
+.giftflow-field-select {
+  .giftflow-field-input {
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8.825L1.175 4 2.238 2.938 6 6.7l3.763-3.762L10.825 4z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -171,7 +171,7 @@
 }
 
 // Textarea field
-.giftflowwp-field-textarea {
+.giftflow-field-textarea {
   flex-wrap: wrap;
   
   label {
@@ -179,14 +179,14 @@
     margin-top: 0.5rem;
   }
   
-  .giftflowwp-field-input {
+  .giftflow-field-input {
     min-height: 120px;
     resize: vertical;
   }
 }
 
 // Checkbox field
-.giftflowwp-field-checkbox {
+.giftflow-field-checkbox {
   display: flex;
   align-items: center;
   
@@ -197,7 +197,7 @@
     min-width: auto;
   }
   
-  .giftflowwp-field-input {
+  .giftflow-field-input {
     order: 1;
     width: auto;
     margin-right: $spacing-sm;
@@ -206,7 +206,7 @@
 }
 
 // Switch field
-.giftflowwp-switch {
+.giftflow-switch {
   position: relative;
   display: inline-block;
   width: 50px;
@@ -225,21 +225,21 @@
     margin: 0 !important;
     padding: 0 !important;
 
-    &:checked + .giftflowwp-switch-slider {
+    &:checked + .giftflow-switch-slider {
       background-color: $primary-color;
     }
     
-    &:focus + .giftflowwp-switch-slider {
+    &:focus + .giftflow-switch-slider {
       box-shadow: $box-shadow-focus;
     }
     
-    &:disabled + .giftflowwp-switch-slider {
+    &:disabled + .giftflow-switch-slider {
       opacity: 0.5;
       cursor: not-allowed;
     }
   }
   
-  .giftflowwp-switch-slider {
+  .giftflow-switch-slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -263,20 +263,20 @@
     }
   }
   
-  input:checked + .giftflowwp-switch-slider:before {
+  input:checked + .giftflow-switch-slider:before {
     transform: translateX(26px);
   }
 }
 
 // Datetime field
-.giftflowwp-field-datetime {
-  .giftflowwp-field-input {
+.giftflow-field-datetime {
+  .giftflow-field-input {
     // Additional datetime specific styles if needed
   }
 }
 
 // Color field
-.giftflowwp-color-field {
+.giftflow-color-field {
   display: flex;
   align-items: center;
   flex: 1;
@@ -301,14 +301,14 @@
     }
   }
   
-  .giftflowwp-color-text {
+  .giftflow-color-text {
     margin-left: $spacing-md;
     flex: 1;
   }
 }
 
 // Gallery field
-.giftflowwp-field-gallery {
+.giftflow-field-gallery {
   flex-direction: column;
   align-items: flex-start;
   
@@ -317,12 +317,12 @@
     min-width: 100%;
   }
   
-  .giftflowwp-gallery-field {
+  .giftflow-gallery-field {
     width: 100%;
     margin-top: $spacing-sm;
   }
   
-  .giftflowwp-gallery-preview {
+  .giftflow-gallery-preview {
     display: flex;
     flex-wrap: wrap;
     gap: $spacing-sm;
@@ -334,7 +334,7 @@
     background-color: #f9f9f9;
   }
   
-  .giftflowwp-gallery-image {
+  .giftflow-gallery-image {
     position: relative;
     width: 100px;
     height: 100px;
@@ -355,7 +355,7 @@
       object-fit: cover;
     }
     
-    .giftflowwp-gallery-remove {
+    .giftflow-gallery-remove {
       position: absolute;
       top: 5px;
       right: 5px;
@@ -376,7 +376,7 @@
     }
   }
   
-  .giftflowwp-gallery-controls {
+  .giftflow-gallery-controls {
     display: flex;
     gap: $spacing-md;
     
@@ -394,7 +394,7 @@
       //   background-color: #f5f5f5;
       // }
       
-      // &.giftflowwp-gallery-add {
+      // &.giftflow-gallery-add {
       //   background-color: $primary-color;
       //   color: #fff;
       //   border-color: $primary-color;
@@ -404,7 +404,7 @@
       //   }
       // }
       
-      // &.giftflowwp-gallery-remove-all {
+      // &.giftflow-gallery-remove-all {
       //   background-color: #f5f5f5;
       //   color: $error-color;
         
@@ -417,7 +417,7 @@
 }
 
 // Google Maps field
-.giftflowwp-field-googlemap {
+.giftflow-field-googlemap {
   flex-direction: column;
   align-items: flex-start;
   
@@ -425,33 +425,33 @@
     margin-bottom: $spacing-sm;
   }
   
-  .giftflowwp-googlemap-field {
+  .giftflow-googlemap-field {
     width: 100%;
   }
   
-  .giftflowwp-googlemap-address {
+  .giftflow-googlemap-address {
     display: flex;
     width: 100%;
     margin-bottom: $spacing-sm;
     
-    .giftflowwp-googlemap-address-input {
+    .giftflow-googlemap-address-input {
       flex: 1;
       margin-right: $spacing-sm;
     }
     
-    .giftflowwp-googlemap-search {
+    .giftflow-googlemap-search {
       white-space: nowrap;
     }
   }
   
-  .giftflowwp-googlemap-container {
+  .giftflow-googlemap-container {
     width: 100%;
     border: 1px solid $border-color;
     border-radius: $border-radius;
     overflow: hidden;
   }
   
-  .giftflowwp-googlemap-coordinates {
+  .giftflow-googlemap-coordinates {
     margin-top: $spacing-sm;
     font-size: $font-size-sm;
     color: $text-light;
@@ -468,7 +468,7 @@
 
 // Responsive adjustments
 @media (max-width: 768px) {
-  .giftflowwp-field {
+  .giftflow-field {
     flex-direction: column;
     align-items: flex-start;
     
@@ -482,7 +482,7 @@
       padding-left: 0;
     }
     
-    .giftflowwp-field-input {
+    .giftflow-field-input {
       width: 100%;
       font-size: 16px; // Prevent zoom on mobile
     }

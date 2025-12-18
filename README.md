@@ -1,4 +1,4 @@
-# GiftFlowWp - WordPress Donation Plugin
+# GiftFlow
 
 A comprehensive WordPress plugin for managing donations, donors, and campaigns with modern features and extensible architecture.
 
@@ -47,7 +47,7 @@ A comprehensive WordPress plugin for managing donations, donors, and campaigns w
 
 ## Payment Gateways
 
-GiftFlowWp supports the following payment gateways through official SDKs:
+GiftFlow supports the following payment gateways through official SDKs:
 
 1. **Stripe**
    - Direct integration using Stripe PHP SDK
@@ -65,9 +65,9 @@ Additional payment gateways can be added through the plugin's extensible archite
 
 ## Installation
 
-1. Upload the `giftflowwp` folder to the `/wp-content/plugins/` directory
+1. Upload the `giftflow` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to GiftFlowWp > Settings to configure the plugin
+3. Go to GiftFlow > Settings to configure the plugin
 
 ## Configuration
 
@@ -110,13 +110,13 @@ Additional payment gateways can be added through the plugin's extensible archite
 
 ### Shortcodes
 
-- `[giftflowwp_donation_form]` - Display a donation form
+- `[giftflow_donation_form]` - Display a donation form
   - Parameters:
     - `campaign` - Campaign ID (optional)
     - `amount` - Default amount (optional)
     - `recurring` - Enable recurring donations (true/false)
 
-- `[giftflowwp_donation_campaign]` - Display a campaign
+- `[giftflow_donation_campaign]` - Display a campaign
   - Parameters:
     - `id` - Campaign ID
     - `show_progress` - Show progress bar (true/false)
@@ -138,7 +138,7 @@ The plugin includes the following templates that can be overridden in your theme
 ### Directory Structure
 
 ```
-giftflowwp/
+giftflow/
 ├── admin/
 │   ├── assets/
 │   │   ├── css/
@@ -164,7 +164,7 @@ giftflowwp/
 ├── includes/
 │   └── core/
 ├── languages/
-└── giftflowwp.php
+└── giftflow.php
 ```
 
 ### Hooks
@@ -209,12 +209,12 @@ apply_filters('donation_payment_completed', $payment_data, $donation_id);
 
 ## Support
 
-For support, please visit our [support forum](https://giftflowwp.com/support) or email support@giftflowwp.com.
+For support, please visit our [support forum](https://giftflow.com/support) or email support@giftflow.com.
 
 ## License
 
-This plugin is licensed under the GPL v2 or later.
+GPL v2 or later. See [LICENSE](https://www.gnu.org/licenses/gpl-2.0.html) for details.
 
-## Credits
+---
 
-Developed by the GiftFlowWp Team. 
+**Developed by @GiftflowTeam**

@@ -1,18 +1,18 @@
-.giftflowwp-campaign-single-content {
+.giftflow-campaign-single-content {
   width: 100%;
   padding: 3em 0 2em;
   max-width: 860px;
   margin: 0 auto;
 }
-.giftflowwp-campaign-single-content .giftflowwp-tab-widget {
+.giftflow-campaign-single-content .giftflow-tab-widget {
   margin-bottom: 1.5rem;
 }
-.giftflowwp-campaign-single-content .giftflowwp-tab-widget-tabs {
+.giftflow-campaign-single-content .giftflow-tab-widget-tabs {
   display: flex;
   border-bottom: 1px solid #e2e8f0;
   margin-bottom: 1.5rem;
 }
-.giftflowwp-campaign-single-content .giftflowwp-tab-widget-tabs .giftflowwp-tab-widget-tab-item {
+.giftflow-campaign-single-content .giftflow-tab-widget-tabs .giftflow-tab-widget-tab-item {
   display: flex;
   align-items: center;
   padding: 0.75rem 1.25rem;
@@ -21,32 +21,32 @@
   transition: all 0.2s ease;
   background-color: #f6f6f6;
 }
-.giftflowwp-campaign-single-content .giftflowwp-tab-widget-tabs .giftflowwp-tab-widget-tab-item:hover {
+.giftflow-campaign-single-content .giftflow-tab-widget-tabs .giftflow-tab-widget-tab-item:hover {
   background-color: #000;
   color: #fff;
 }
-.giftflowwp-campaign-single-content .giftflowwp-tab-widget-tabs .giftflowwp-tab-widget-tab-item.active {
+.giftflow-campaign-single-content .giftflow-tab-widget-tabs .giftflow-tab-widget-tab-item.active {
   color: white;
   background-color: #000;
   font-weight: 500;
 }
-.giftflowwp-campaign-single-content .giftflowwp-tab-widget-tabs .giftflowwp-tab-widget-tab-item-icon {
+.giftflow-campaign-single-content .giftflow-tab-widget-tabs .giftflow-tab-widget-tab-item-icon {
   display: inline-flex;
   margin-right: 0.5rem;
   color: currentColor;
 }
-.giftflowwp-campaign-single-content .giftflowwp-tab-widget-tabs .giftflowwp-tab-widget-tab-item-label {
+.giftflow-campaign-single-content .giftflow-tab-widget-tabs .giftflow-tab-widget-tab-item-label {
   font-size: 0.95rem;
 }
-.giftflowwp-campaign-single-content .giftflowwp-tab-widget-content {
+.giftflow-campaign-single-content .giftflow-tab-widget-content {
   background-color: #fff;
   border-radius: 0.375rem;
 }
-.giftflowwp-campaign-single-content .giftflowwp-tab-widget-content-item {
+.giftflow-campaign-single-content .giftflow-tab-widget-content-item {
   display: none;
   padding: 1rem 0;
 }
-.giftflowwp-campaign-single-content .giftflowwp-tab-widget-content-item.active {
+.giftflow-campaign-single-content .giftflow-tab-widget-content-item.active {
   display: block;
   animation: fadeIn 0.3s ease;
 }
@@ -62,11 +62,11 @@
   }
 }
 @media (max-width: 768px) {
-  .giftflowwp-campaign-single-content .giftflowwp-tab-widget-tabs {
+  .giftflow-campaign-single-content .giftflow-tab-widget-tabs {
     overflow-x: auto;
     white-space: nowrap;
   }
-  .giftflowwp-campaign-single-content .giftflowwp-tab-widget-tabs .giftflowwp-tab-widget-tab-item {
+  .giftflow-campaign-single-content .giftflow-tab-widget-tabs .giftflow-tab-widget-tab-item {
     padding: 0.5rem 0.75rem;
   }
 }

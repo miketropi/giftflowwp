@@ -5,11 +5,11 @@ import { Disabled } from '@wordpress/components';
 const { useSelect } = wp.data;
 
 
-registerBlockType('giftflowwp/campaign-status-bar', {
+registerBlockType('giftflow/campaign-status-bar', {
     apiVersion: 3,
     title: 'Campaign Status Bar',
     icon: 'block-default',
-    category: 'giftflowwp',
+    category: 'giftflow',
     attributes: {
         __editorPostId: {
             type: 'number',
@@ -29,7 +29,7 @@ registerBlockType('giftflowwp/campaign-status-bar', {
             <div {...blockProps}>
                 <Disabled>
                     <ServerSideRender 
-                        block="giftflowwp/campaign-status-bar" 
+                        block="giftflow/campaign-status-bar" 
                         attributes={ attributes } />
                 </Disabled>
             </div>

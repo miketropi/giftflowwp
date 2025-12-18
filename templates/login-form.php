@@ -2,7 +2,7 @@
 /**
  * Login form template 
  * 
- * @package GiftFlowWP
+ * @package GiftFlow
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,6 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <form class="login-form" id="login-form">
     <div class="login-form__header">
-        <h2 class="login-form__title"><?php _e('Login', 'giftflowwp'); ?></h2>
+        <h2 class="login-form__title"><?php esc_html_e('Login', 'giftflow'); ?></h2>
     </div>
 </form>

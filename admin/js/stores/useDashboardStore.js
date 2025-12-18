@@ -16,7 +16,7 @@ export const useDashboardStore = create(
     })),
   // Add persist config to cache campaignsTracking in localStorage
   {
-    name: 'giftflowwp_dashboard_store',
+    name: 'giftflow_dashboard_store',
     partialize: (state) => ({
       campaignsTracking: state.campaignsTracking
     }),

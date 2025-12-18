@@ -1,6 +1,6 @@
 # Template Loading System
 
-The GiftFlowWP plugin includes a flexible template loading system that allows for theme overrides and customization. This document explains how the template system works and how to use it effectively.
+The GiftFlow plugin includes a flexible template loading system that allows for theme overrides and customization. This document explains how the template system works and how to use it effectively.
 
 ## Overview
 
@@ -19,7 +19,7 @@ The template loading system is implemented in the `Template` class (`includes/fr
 The system follows this hierarchy when looking for templates:
 
 1. Theme root directory
-2. Theme's `giftflowwp/` subdirectory
+2. Theme's `giftflow/` subdirectory
 3. Plugin's `templates/` directory
 
 ## Usage
@@ -28,7 +28,7 @@ The system follows this hierarchy when looking for templates:
 
 ```php
 // Initialize the template loader
-$template_loader = new \GiftFlowWP\Frontend\Template();
+$template_loader = new \GiftFlow\Frontend\Template();
 
 // Load a full template
 $template_loader->load_template('payment-form.php', [
@@ -54,28 +54,28 @@ Theme developers can override any template by placing their version in one of th
    wp-content/themes/your-theme/template-name.php
    ```
 
-2. Theme's giftflowwp subdirectory:
+2. Theme's giftflow subdirectory:
    ```
-   wp-content/themes/your-theme/giftflowwp/template-name.php
+   wp-content/themes/your-theme/giftflow/template-name.php
    ```
 
 ## Available Hooks
 
 ### Filters
 
-1. `giftflowwp_template_path`
+1. `giftflow_template_path`
    - Filter the template path
    - Parameters:
      - `$template_path` (string): Current template path
      - `$template_name` (string): Template name
    - Example:
      ```php
-     add_filter('giftflowwp_template_path', function($path, $name) {
+     add_filter('giftflow_template_path', function($path, $name) {
          return 'custom/path/' . $name;
      }, 10, 2);
      ```
 
-2. `giftflowwp_template_file`
+2. `giftflow_template_file`
    - Filter the template file
    - Parameters:
      - `$template_file` (string): Full path to template file
@@ -83,12 +83,12 @@ Theme developers can override any template by placing their version in one of th
      - `$args` (array): Template arguments
    - Example:
      ```php
-     add_filter('giftflowwp_template_file', function($file, $name, $args) {
+     add_filter('giftflow_template_file', function($file, $name, $args) {
          return $file;
      }, 10, 3);
      ```
 
-3. `giftflowwp_get_template_part`
+3. `giftflow_get_template_part`
    - Filter template part location
    - Parameters:
      - `$template` (string): Template file path
@@ -96,14 +96,14 @@ Theme developers can override any template by placing their version in one of th
      - `$name` (string): Template name
    - Example:
      ```php
-     add_filter('giftflowwp_get_template_part', function($template, $slug, $name) {
+     add_filter('giftflow_get_template_part', function($template, $slug, $name) {
          return $template;
      }, 10, 3);
      ```
 
 ### Actions
 
-1. `giftflowwp_before_template_load`
+1. `giftflow_before_template_load`
    - Fires before template is loaded
    - Parameters:
      - `$template_name` (string): Template name
@@ -111,12 +111,12 @@ Theme developers can override any template by placing their version in one of th
      - `$args` (array): Template arguments
    - Example:
      ```php
-     add_action('giftflowwp_before_template_load', function($name, $file, $args) {
+     add_action('giftflow_before_template_load', function($name, $file, $args) {
          // Do something before template loads
      }, 10, 3);
      ```
 
-2. `giftflowwp_after_template_load`
+2. `giftflow_after_template_load`
    - Fires after template is loaded
    - Parameters:
      - `$template_name` (string): Template name
@@ -124,7 +124,7 @@ Theme developers can override any template by placing their version in one of th
      - `$args` (array): Template arguments
    - Example:
      ```php
-     add_action('giftflowwp_after_template_load', function($name, $file, $args) {
+     add_action('giftflow_after_template_load', function($name, $file, $args) {
          // Do something after template loads
      }, 10, 3);
      ```
@@ -132,7 +132,7 @@ Theme developers can override any template by placing their version in one of th
 ## Best Practices
 
 1. **Theme Development**
-   - Place template overrides in the theme's `giftflowwp/` subdirectory
+   - Place template overrides in the theme's `giftflow/` subdirectory
    - Use the provided hooks for advanced customization
    - Maintain template structure similar to the plugin's original templates
 
@@ -155,7 +155,7 @@ To override the payment form template:
 
 1. Create file at:
    ```
-   wp-content/themes/your-theme/giftflowwp/payment-form.php
+   wp-content/themes/your-theme/giftflow/payment-form.php
    ```
 
 2. Customize the template as needed:
@@ -176,7 +176,7 @@ To modify template loading behavior:
 
 ```php
 // Change template path
-add_filter('giftflowwp_template_path', function($path, $name) {
+add_filter('giftflow_template_path', function($path, $name) {
     if ('payment-form.php' === $name) {
         return 'custom/path/';
     }
@@ -184,7 +184,7 @@ add_filter('giftflowwp_template_path', function($path, $name) {
 }, 10, 2);
 
 // Add custom data before template loads
-add_action('giftflowwp_before_template_load', function($name, $file, $args) {
+add_action('giftflow_before_template_load', function($name, $file, $args) {
     if ('payment-form.php' === $name) {
         // Add custom data
         $args['custom_data'] = 'value';

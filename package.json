@@ -1,5 +1,5 @@
 {
-  "name": "giftflowwp",
+  "name": "giftflow",
   "version": "1.0.0",
   "description": "A comprehensive WordPress plugin for managing donations, donors, and campaigns with modern features and extensible architecture.",
   "main": "index.js",

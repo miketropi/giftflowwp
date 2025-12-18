@@ -1,5 +1,5 @@
-// GiftFlowWP Quick Actions Component
-.giftflowwp-overview__widget {
+// GiftFlow Quick Actions Component
+.giftflow-overview__widget {
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
@@ -75,7 +75,7 @@
 }
 
 // Export Campaign Modal Styles
-.giftflowwp-export-campaign {
+.giftflow-export-campaign {
   &__select-container {
     display: flex;
     flex-direction: column;
@@ -165,13 +165,13 @@
       border: 2px solid #e5e7eb;
       border-top: 2px solid #3b82f6;
       border-radius: 50%;
-      animation: giftflowwp-spin 1s linear infinite;
+      animation: giftflow-spin 1s linear infinite;
     }
   }
 }
 
 // Export Donor Modal Styles
-.giftflowwp-export-donor {
+.giftflow-export-donor {
   &__select-container {
     display: flex;
     flex-direction: column;
@@ -260,20 +260,20 @@
       border: 2px solid #e5e7eb;
       border-top: 2px solid #3b82f6;
       border-radius: 50%;
-      animation: giftflowwp-spin 1s linear infinite;
+      animation: giftflow-spin 1s linear infinite;
     }
   }
 }
 
 // Loading spinner animation
-@keyframes giftflowwp-spin {
+@keyframes giftflow-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
 // Responsive design
 @media (max-width: 768px) {
-  .giftflowwp-overview__widget {
+  .giftflow-overview__widget {
     padding: 1rem;
 
     &__widget-title {
@@ -286,8 +286,8 @@
     }
   }
 
-  .giftflowwp-export-campaign,
-  .giftflowwp-export-donor {
+  .giftflow-export-campaign,
+  .giftflow-export-donor {
     &__select {
       padding: 0.625rem 0.875rem;
       font-size: 0.8rem;
@@ -306,7 +306,7 @@
 }
 
 @media (max-width: 480px) {
-  .giftflowwp-overview__widget {
+  .giftflow-overview__widget {
     padding: 0.75rem;
 
     &__action-list {

@@ -4,7 +4,7 @@
  * This hook provides a complete solution for managing modal state, including
  * keyboard navigation, body scroll prevention, and overlay interactions.
  * 
- * @author GiftFlowWP Team
+ * @author GiftFlow Team
  * @version 1.0.0
  * 
  * @example
@@ -27,11 +27,11 @@
  *     </button>
  * 
  *     {modal.isOpen && (
- *       <div className={`giftflowwp-modal ${modal.isOpen ? 'giftflowwp-modal--open' : ''} giftflowwp-modal--medium`}>
- *         <div className="giftflowwp-modal__content" onClick={modal.handleOverlayClick}>
- *           <div className="giftflowwp-modal__header">
- *             <h3 className="giftflowwp-modal__title">Modal Title</h3>
- *             <button className="giftflowwp-modal__close" onClick={modal.closeModal}>
+ *       <div className={`giftflow-modal ${modal.isOpen ? 'giftflow-modal--open' : ''} giftflow-modal--medium`}>
+ *         <div className="giftflow-modal__content" onClick={modal.handleOverlayClick}>
+ *           <div className="giftflow-modal__header">
+ *             <h3 className="giftflow-modal__title">Modal Title</h3>
+ *             <button className="giftflow-modal__close" onClick={modal.closeModal}>
  *               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
  *                 <line x1="18" y1="6" x2="6" y2="18"></line>
  *                 <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -39,16 +39,16 @@
  *             </button>
  *           </div>
  *           
- *           <div className="giftflowwp-modal__body">
+ *           <div className="giftflow-modal__body">
  *             Modal content here
  *           </div>
  *           
- *           <div className="giftflowwp-modal__footer">
- *             <div className="giftflowwp-modal__actions">
- *               <button className="giftflowwp-modal__button giftflowwp-modal__button--secondary" onClick={modal.closeModal}>
+ *           <div className="giftflow-modal__footer">
+ *             <div className="giftflow-modal__actions">
+ *               <button className="giftflow-modal__button giftflow-modal__button--secondary" onClick={modal.closeModal}>
  *                 Cancel
  *               </button>
- *               <button className="giftflowwp-modal__button giftflowwp-modal__button--primary">
+ *               <button className="giftflow-modal__button giftflow-modal__button--primary">
  *                 Confirm
  *               </button>
  *             </div>
@@ -80,82 +80,82 @@
  * @example
  * // Custom modal sizes
  * // Small modal (400px)
- * <div className="giftflowwp-modal giftflowwp-modal--small">
+ * <div className="giftflow-modal giftflow-modal--small">
  * 
  * // Medium modal (600px) - default
- * <div className="giftflowwp-modal giftflowwp-modal--medium">
+ * <div className="giftflow-modal giftflow-modal--medium">
  * 
  * // Large modal (800px)
- * <div className="giftflowwp-modal giftflowwp-modal--large">
+ * <div className="giftflow-modal giftflow-modal--large">
  * 
  * // Fullscreen modal
- * <div className="giftflowwp-modal giftflowwp-modal--fullscreen">
+ * <div className="giftflow-modal giftflow-modal--fullscreen">
  * 
  * @example
  * // Modal variants
  * // Modal with loading state
- * <div className="giftflowwp-modal giftflowwp-modal--loading">
- *   <div className="giftflowwp-modal__spinner"></div>
+ * <div className="giftflow-modal giftflow-modal--loading">
+ *   <div className="giftflow-modal__spinner"></div>
  * </div>
  * 
  * // Modal with image header
- * <div className="giftflowwp-modal giftflowwp-modal--with-image">
- *   <div className="giftflowwp-modal__header">
- *     <img src="image.jpg" alt="Header" className="giftflowwp-modal__image" />
- *     <h3 className="giftflowwp-modal__title">Title</h3>
+ * <div className="giftflow-modal giftflow-modal--with-image">
+ *   <div className="giftflow-modal__header">
+ *     <img src="image.jpg" alt="Header" className="giftflow-modal__image" />
+ *     <h3 className="giftflow-modal__title">Title</h3>
  *   </div>
  * </div>
  * 
  * // Modal with no padding
- * <div className="giftflowwp-modal giftflowwp-modal--no-padding">
+ * <div className="giftflow-modal giftflow-modal--no-padding">
  * 
  * @example
  * // Button variants in modal footer
- * <div className="giftflowwp-modal__actions">
- *   <button className="giftflowwp-modal__button giftflowwp-modal__button--primary">Primary</button>
- *   <button className="giftflowwp-modal__button giftflowwp-modal__button--secondary">Secondary</button>
- *   <button className="giftflowwp-modal__button giftflowwp-modal__button--danger">Danger</button>
- *   <button className="giftflowwp-modal__button giftflowwp-modal__button--ghost">Ghost</button>
+ * <div className="giftflow-modal__actions">
+ *   <button className="giftflow-modal__button giftflow-modal__button--primary">Primary</button>
+ *   <button className="giftflow-modal__button giftflow-modal__button--secondary">Secondary</button>
+ *   <button className="giftflow-modal__button giftflow-modal__button--danger">Danger</button>
+ *   <button className="giftflow-modal__button giftflow-modal__button--ghost">Ghost</button>
  * </div>
  * 
  * @example
  * // Footer alignment options
  * // Default (right aligned)
- * <div className="giftflowwp-modal__footer">
+ * <div className="giftflow-modal__footer">
  * 
  * // Center aligned
- * <div className="giftflowwp-modal__footer giftflowwp-modal__footer--center">
+ * <div className="giftflow-modal__footer giftflow-modal__footer--center">
  * 
  * // Space between
- * <div className="giftflowwp-modal__footer giftflowwp-modal__footer--space-between">
+ * <div className="giftflow-modal__footer giftflow-modal__footer--space-between">
  * 
  * @example
  * // Overlay variants
  * // Default overlay
- * <div className="giftflowwp-modal">
+ * <div className="giftflow-modal">
  * 
  * // Blur overlay
- * <div className="giftflowwp-modal giftflowwp-modal-overlay--blur">
+ * <div className="giftflow-modal giftflow-modal-overlay--blur">
  * 
  * // Dark overlay
- * <div className="giftflowwp-modal giftflowwp-modal-overlay--dark">
+ * <div className="giftflow-modal giftflow-modal-overlay--dark">
  * 
  * // Light overlay
- * <div className="giftflowwp-modal giftflowwp-modal-overlay--light">
+ * <div className="giftflow-modal giftflow-modal-overlay--light">
  * 
  * @example
  * // Modal positioning
  * // Top positioned
- * <div className="giftflowwp-modal giftflowwp-modal--top">
+ * <div className="giftflow-modal giftflow-modal--top">
  * 
  * // Bottom positioned
- * <div className="giftflowwp-modal giftflowwp-modal--bottom">
+ * <div className="giftflow-modal giftflow-modal--bottom">
  * 
  * // Left positioned
- * <div className="giftflowwp-modal giftflowwp-modal--left">
+ * <div className="giftflow-modal giftflow-modal--left">
  * 
  * // Right positioned
- * <div className="giftflowwp-modal giftflowwp-modal--right">
+ * <div className="giftflow-modal giftflow-modal--right">
  * 
  * @param {Object} options - Configuration options for the modal
  * @param {boolean} [options.initialOpen=false] - Initial open state

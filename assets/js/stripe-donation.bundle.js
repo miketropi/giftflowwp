@@ -564,7 +564,7 @@ function _regeneratorDefine2(e, r, n, t) {
  * 
  */
 
-var STRIPE_PUBLIC_KEY = giftflowwpStripeDonation.stripe_publishable_key;
+var STRIPE_PUBLIC_KEY = giftflowStripeDonation.stripe_publishable_key;
 (function (w) {
   'use strict';
 

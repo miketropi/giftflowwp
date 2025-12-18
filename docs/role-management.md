@@ -1,6 +1,6 @@
 # Role Management Documentation
 
-The GiftFlowWP plugin includes a simple role management system that creates a "Donor" role for easy user distinction. This document explains how to use the Role class effectively.
+The GiftFlow plugin includes a simple role management system that creates a "Donor" role for easy user distinction. This document explains how to use the Role class effectively.
 
 ## Overview
 
@@ -13,7 +13,7 @@ The Role class provides basic functionality to:
 ## Class Structure
 
 ```php
-namespace GiftFlowWp\Core;
+namespace GiftFlow\Core;
 
 class Role extends Base {
     // Role management methods
@@ -26,7 +26,7 @@ The Role class provides both class methods and global helper functions for easy 
 
 ### Global Functions (Recommended)
 
-#### `giftflowwp_assign_donor_role($user_id)`
+#### `giftflow_assign_donor_role($user_id)`
 
 Assigns the donor role to a specific user.
 
@@ -40,7 +40,7 @@ Assigns the donor role to a specific user.
 
 ```php
 // Simple function call - no class instantiation needed
-$success = giftflowwp_assign_donor_role(123);
+$success = giftflow_assign_donor_role(123);
 
 if ($success) {
     echo "Donor role assigned successfully!";
@@ -49,7 +49,7 @@ if ($success) {
 }
 ```
 
-#### `giftflowwp_remove_donor_role($user_id)`
+#### `giftflow_remove_donor_role($user_id)`
 
 Removes the donor role from a specific user.
 
@@ -63,7 +63,7 @@ Removes the donor role from a specific user.
 
 ```php
 // Simple function call
-$success = giftflowwp_remove_donor_role(123);
+$success = giftflow_remove_donor_role(123);
 
 if ($success) {
     echo "Donor role removed successfully!";
@@ -72,7 +72,7 @@ if ($success) {
 }
 ```
 
-#### `giftflowwp_user_has_donor_role($user_id)`
+#### `giftflow_user_has_donor_role($user_id)`
 
 Checks if a user has the donor role.
 
@@ -86,7 +86,7 @@ Checks if a user has the donor role.
 
 ```php
 // Simple function call
-if (giftflowwp_user_has_donor_role(123)) {
+if (giftflow_user_has_donor_role(123)) {
     echo "User is a donor!";
 } else {
     echo "User is not a donor.";
@@ -99,11 +99,11 @@ You can also use the class methods directly. The class uses a singleton pattern,
 
 ```php
 // Singleton approach - recommended for multiple operations
-$role_manager = \GiftFlowWp\Core\Role::get_instance();
+$role_manager = \GiftFlow\Core\Role::get_instance();
 $success = $role_manager->assign_donor_role(123);
 
 // Or use the helper function to get the instance
-$role_manager = giftflowwp_get_role_manager();
+$role_manager = giftflow_get_role_manager();
 $success = $role_manager->assign_donor_role(123);
 ```
 
@@ -118,7 +118,7 @@ The singleton pattern ensures that:
 ## Role Details
 
 ### Donor Role
-- **Role Name**: `giftflowwp_donor`
+- **Role Name**: `giftflow_donor`
 - **Display Name**: "Donor"
 - **Capabilities**: `read` (same as WordPress subscriber)
 - **Purpose**: Easy identification of users who are donors
@@ -130,10 +130,10 @@ Best for single operations or simple checks:
 
 ```php
 // Single operation
-giftflowwp_assign_donor_role($user_id);
+giftflow_assign_donor_role($user_id);
 
 // Simple check
-if (giftflowwp_user_has_donor_role($user_id)) {
+if (giftflow_user_has_donor_role($user_id)) {
     // Do something
 }
 ```
@@ -143,7 +143,7 @@ Best for multiple operations or when you need the same instance:
 
 ```php
 // Get the singleton instance once
-$role_manager = \GiftFlowWp\Core\Role::get_instance();
+$role_manager = \GiftFlow\Core\Role::get_instance();
 
 // Use it multiple times
 if ($role_manager->user_has_donor_role($user_id)) {
@@ -157,7 +157,7 @@ Alternative way to get the singleton instance:
 
 ```php
 // Get instance using helper function
-$role_manager = giftflowwp_get_role_manager();
+$role_manager = giftflow_get_role_manager();
 
 // Use it multiple times
 $role_manager->assign_donor_role($user_id);
@@ -172,7 +172,7 @@ $role_manager->remove_donor_role($user_id);
 // After a successful donation
 function handle_successful_donation($user_id, $donation_data) {
     // Simple function call - no class instantiation needed
-    giftflowwp_assign_donor_role($user_id);
+    giftflow_assign_donor_role($user_id);
     
     // Send thank you email
     // ... email logic here
@@ -184,7 +184,7 @@ function handle_successful_donation($user_id, $donation_data) {
 ```php
 // In a template or function
 function show_donor_content($user_id) {
-    if (giftflowwp_user_has_donor_role($user_id)) {
+    if (giftflow_user_has_donor_role($user_id)) {
         echo "<div class='donor-exclusive-content'>";
         echo "Thank you for being a donor!";
         echo "</div>";
@@ -200,7 +200,7 @@ function assign_donor_role_to_multiple_users($user_ids) {
     $results = array();
     
     foreach ($user_ids as $user_id) {
-        $results[$user_id] = giftflowwp_assign_donor_role($user_id);
+        $results[$user_id] = giftflow_assign_donor_role($user_id);
     }
     
     return $results;
@@ -224,7 +224,7 @@ function add_donor_column($columns) {
 add_filter('manage_users_custom_column', 'show_donor_status', 10, 3);
 function show_donor_status($value, $column_name, $user_id) {
     if ($column_name === 'donor_status') {
-        return giftflowwp_user_has_donor_role($user_id) ? 'Yes' : 'No';
+        return giftflow_user_has_donor_role($user_id) ? 'Yes' : 'No';
     }
     return $value;
 }
@@ -238,7 +238,7 @@ function show_donor_status($value, $column_name, $user_id) {
 // Assign donor role when user registers
 add_action('user_register', 'assign_donor_role_on_registration');
 function assign_donor_role_on_registration($user_id) {
-    giftflowwp_assign_donor_role($user_id);
+    giftflow_assign_donor_role($user_id);
 }
 ```
 
@@ -253,7 +253,7 @@ function process_donation_form($form_data) {
     $user_id = get_current_user_id();
     
     if ($user_id) {
-        giftflowwp_assign_donor_role($user_id);
+        giftflow_assign_donor_role($user_id);
     }
 }
 ```
@@ -270,7 +270,7 @@ function safe_assign_donor_role($user_id) {
         return new WP_Error('user_not_found', 'User does not exist');
     }
     
-    $success = giftflowwp_assign_donor_role($user_id);
+    $success = giftflow_assign_donor_role($user_id);
     
     if (!$success) {
         return new WP_Error('role_assignment_failed', 'Failed to assign donor role');
@@ -285,12 +285,12 @@ function safe_assign_donor_role($user_id) {
 ```php
 function assign_donor_role_with_logging($user_id) {
     // Check if user already has role
-    if (giftflowwp_user_has_donor_role($user_id)) {
+    if (giftflow_user_has_donor_role($user_id)) {
         error_log("User {$user_id} already has donor role");
         return false;
     }
     
-    $success = giftflowwp_assign_donor_role($user_id);
+    $success = giftflow_assign_donor_role($user_id);
     
     if ($success) {
         error_log("Successfully assigned donor role to user {$user_id}");
@@ -310,18 +310,18 @@ function assign_donor_role_with_logging($user_id) {
 // Good
 $user = get_user_by('id', $user_id);
 if ($user) {
-    giftflowwp_assign_donor_role($user_id);
+    giftflow_assign_donor_role($user_id);
 }
 
 // Bad
-giftflowwp_assign_donor_role($user_id); // No validation
+giftflow_assign_donor_role($user_id); // No validation
 ```
 
 ### 2. Handle Return Values
 
 ```php
 // Good
-$success = giftflowwp_assign_donor_role($user_id);
+$success = giftflow_assign_donor_role($user_id);
 if ($success) {
     // Success logic
 } else {
@@ -329,26 +329,26 @@ if ($success) {
 }
 
 // Bad
-giftflowwp_assign_donor_role($user_id); // Ignoring return value
+giftflow_assign_donor_role($user_id); // Ignoring return value
 ```
 
 ### 3. Choose the Right Approach
 
 ```php
 // For single operations - use global functions
-if (giftflowwp_user_has_donor_role($user_id)) {
+if (giftflow_user_has_donor_role($user_id)) {
     // Show donor content
 }
 
 // For multiple operations - use singleton instance
-$role_manager = \GiftFlowWp\Core\Role::get_instance();
+$role_manager = \GiftFlow\Core\Role::get_instance();
 if ($role_manager->user_has_donor_role($user_id)) {
     $role_manager->assign_donor_role($user_id);
     // More operations...
 }
 
 // Or use the helper function
-$role_manager = giftflowwp_get_role_manager();
+$role_manager = giftflow_get_role_manager();
 ```
 
 ## Troubleshooting
@@ -364,7 +364,7 @@ $role_manager = giftflowwp_get_role_manager();
 ```php
 // Enable debug logging
 function debug_role_assignment($user_id) {
-    $role_manager = new \GiftFlowWp\Core\Role();
+    $role_manager = new \GiftFlow\Core\Role();
     
     error_log("Attempting to assign donor role to user: {$user_id}");
     
@@ -386,7 +386,7 @@ function debug_role_assignment($user_id) {
 
 ## API Reference
 
-### Class: `\GiftFlowWp\Core\Role`
+### Class: `\GiftFlow\Core\Role`
 
 | Method | Parameters | Return Type | Description |
 |--------|------------|-------------|-------------|
@@ -398,7 +398,7 @@ function debug_role_assignment($user_id) {
 
 | Property | Value | Description |
 |----------|-------|-------------|
-| Role Name | `giftflowwp_donor` | Internal WordPress role name |
+| Role Name | `giftflow_donor` | Internal WordPress role name |
 | Display Name | "Donor" | Human-readable role name |
 | Capabilities | `read` | Standard WordPress read capability |
 

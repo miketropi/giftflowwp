@@ -3,14 +3,21 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit; // Exit if accessed directly.
 }
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $header = $header ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $content = $content ?? '';
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $footer = $footer ?? '';
 
 // Get site information for branding
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $site_name = get_bloginfo('name');
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $site_url = home_url();
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $admin_email = get_option('admin_email');
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $accent_color = '#0b57d0';
 ?>
 <!DOCTYPE html>
@@ -163,12 +170,12 @@ $accent_color = '#0b57d0';
         .social-links a {
             display: inline-block;
             margin: 0 10px;
-            color: <?php echo $accent_color; ?>;
+            color: <?php echo esc_attr($accent_color); ?>;
             text-decoration: none;
             font-size: .8rem;
         }
 
-        #giftflowwp-email-table p {
+        #giftflow-email-table p {
           margin-bottom: 0;
         }
         
@@ -193,7 +200,7 @@ $accent_color = '#0b57d0';
                               <?php if (!empty($header)): ?>
                                 <?php echo wp_kses_post($header); ?>
                               <?php else: ?>
-                                <?php esc_html_e( 'Thank you for your support', 'giftflowwp' ); ?>
+                                <?php esc_html_e( 'Thank you for your support', 'giftflow' ); ?>
                               <?php endif; ?>
                             </p>
                         </td>
@@ -217,10 +224,10 @@ $accent_color = '#0b57d0';
                         /* translators: 1: Site name, 2: Unsubscribe link */
                         esc_html__(
                             'This email was sent from %1$s. This is an automated notification. Please do not reply to this email. If you have any questions, please contact us at %2$s or email %3$s.',
-                            'giftflowwp'
+                            'giftflow'
                         ),
                         '<a href="' . esc_url($site_url) . '" style="color: ' . esc_attr($accent_color) . ';">' . esc_html($site_name) . '</a>',
-                        '<a href="' . esc_url($site_url) . '" style="color: ' . esc_attr($accent_color) . ';">' . esc_html__('Our website', 'giftflowwp') . '</a>',
+                        '<a href="' . esc_url($site_url) . '" style="color: ' . esc_attr($accent_color) . ';">' . esc_html__('Our website', 'giftflow') . '</a>',
                         '<a href="mailto:' . esc_attr($admin_email) . '" style="color: ' . esc_attr($accent_color) . ';">' . esc_html($admin_email) . '</a>'
                     );
                     ?>

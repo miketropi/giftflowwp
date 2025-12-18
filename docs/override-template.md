@@ -1,13 +1,13 @@
 # Overriding Templates in Themes
 
-GiftFlowWP allows theme developers to override any template by placing a file with the same name in their theme directory. This documentation explains how to override templates and the template hierarchy.
+GiftFlow allows theme developers to override any template by placing a file with the same name in their theme directory. This documentation explains how to override templates and the template hierarchy.
 
 ## Template Hierarchy
 
-GiftFlowWP follows WordPress template hierarchy best practices. When looking for a template, the system checks the following locations in order:
+GiftFlow follows WordPress template hierarchy best practices. When looking for a template, the system checks the following locations in order:
 
 1. Theme directory
-2. Theme's GiftFlowWP subdirectory
+2. Theme's GiftFlow subdirectory
 3. Plugin's template directory
 
 ## Available Templates
@@ -34,13 +34,13 @@ your-theme/
 └── archive-campaign.php
 ```
 
-### Method 2: GiftFlowWP Subdirectory
+### Method 2: GiftFlow Subdirectory
 
-Place the template file in a GiftFlowWP subdirectory within your theme:
+Place the template file in a GiftFlow subdirectory within your theme:
 
 ```
 your-theme/
-└── giftflowwp/
+└── giftflow/
     ├── single-campaign.php
     └── archive-campaign.php
 ```
@@ -73,10 +73,10 @@ get_footer();
 
 When overriding templates, you can use these helper functions:
 
-- `giftflowwp_get_campaign_raised_amount($campaign_id)` - Get total raised amount
-- `giftflowwp_get_campaign_progress_percentage($campaign_id)` - Get progress percentage
-- `giftflowwp_render_currency_formatted_amount($amount)` - Format amount with currency
-- `giftflowwp_get_campaign_status($campaign_id)` - Get campaign status
+- `giftflow_get_campaign_raised_amount($campaign_id)` - Get total raised amount
+- `giftflow_get_campaign_progress_percentage($campaign_id)` - Get progress percentage
+- `giftflow_render_currency_formatted_amount($amount)` - Format amount with currency
+- `giftflow_get_campaign_status($campaign_id)` - Get campaign status
 
 ## Example: Custom Single Campaign Template
 
@@ -101,8 +101,8 @@ get_header();
                 <div class="campaign-meta">
                     <?php
                     $goal_amount = get_post_meta(get_the_ID(), '_goal_amount', true);
-                    $raised_amount = giftflowwp_get_campaign_raised_amount(get_the_ID());
-                    $progress_percentage = giftflowwp_get_campaign_progress_percentage(get_the_ID());
+                    $raised_amount = giftflow_get_campaign_raised_amount(get_the_ID());
+                    $progress_percentage = giftflow_get_campaign_progress_percentage(get_the_ID());
                     ?>
                     
                     <div class="campaign-progress">
@@ -110,8 +110,8 @@ get_header();
                             <div class="progress" style="width: <?php echo esc_attr($progress_percentage); ?>%"></div>
                         </div>
                         <div class="progress-stats">
-                            <span class="raised"><?php echo giftflowwp_render_currency_formatted_amount($raised_amount); ?></span>
-                            <span class="goal"><?php echo sprintf(__('of %s goal', 'giftflowwp'), giftflowwp_render_currency_formatted_amount($goal_amount)); ?></span>
+                            <span class="raised"><?php echo giftflow_render_currency_formatted_amount($raised_amount); ?></span>
+                            <span class="goal"><?php echo sprintf(__('of %s goal', 'giftflow'), giftflow_render_currency_formatted_amount($goal_amount)); ?></span>
                         </div>
                     </div>
                 </div>
@@ -136,7 +136,7 @@ get_footer();
 
 1. Always maintain the basic template structure
 2. Use the provided helper functions for consistent data formatting
-3. Keep template overrides in a `giftflowwp` subdirectory for better organization
+3. Keep template overrides in a `giftflow` subdirectory for better organization
 4. Document your template overrides
 5. Test your overrides after plugin updates
 
@@ -154,5 +154,5 @@ If your template override isn't working:
 
 For additional help with template overrides, please refer to:
 - WordPress Template Hierarchy documentation
-- GiftFlowWP support documentation
+- GiftFlow support documentation
 - WordPress theme development documentation

@@ -2,11 +2,11 @@
 /**
  * Donor Contact Meta Box Class
  *
- * @package GiftFlowWp
+ * @package GiftFlow
  * @subpackage Admin
  */
 
-namespace GiftFlowWp\Admin\MetaBoxes;
+namespace GiftFlow\Admin\MetaBoxes;
 
 /**
  * Donor Contact Meta Box Class
@@ -17,7 +17,7 @@ class Donor_Contact_Meta extends Base_Meta_Box {
      */
     public function __construct() {
         $this->id = 'donor_contact_details';
-        $this->title = __( 'Contact Information', 'giftflowwp' );
+        $this->title = __( 'Contact Information', 'giftflow' );
         $this->post_type = 'donor';
         parent::__construct();
     }
@@ -31,63 +31,63 @@ class Donor_Contact_Meta extends Base_Meta_Box {
         return array(
             // first name
             'first_name' => array(
-                'label' => __( 'First Name', 'giftflowwp' ),
+                'label' => __( 'First Name', 'giftflow' ),
                 'type'  => 'textfield',
-                'description' => __( 'Enter the first name of the donor', 'giftflowwp' ),
+                'description' => __( 'Enter the first name of the donor', 'giftflow' ),
             ),
             // last name
             'last_name' => array(
-                'label' => __( 'Last Name', 'giftflowwp' ),
+                'label' => __( 'Last Name', 'giftflow' ),
                 'type'  => 'textfield',
-                'description' => __( 'Enter the last name of the donor', 'giftflowwp' ),
+                'description' => __( 'Enter the last name of the donor', 'giftflow' ),
             ),
             // email
             'email' => array(
-                'label' => __( 'Email', 'giftflowwp' ),
+                'label' => __( 'Email', 'giftflow' ),
                 'type'  => 'email',
-                'description' => __( 'Enter the email of the donor', 'giftflowwp' ),
+                'description' => __( 'Enter the email of the donor', 'giftflow' ),
             ),
             // phone
             'phone' => array(
-                'label' => __( 'Phone', 'giftflowwp' ),
+                'label' => __( 'Phone', 'giftflow' ),
                 'type'  => 'tel',
-                'description' => __( 'Enter the phone number of the donor', 'giftflowwp' ),
+                'description' => __( 'Enter the phone number of the donor', 'giftflow' ),
             ),
             // address
             'address' => array(
-                'label' => __( 'Address', 'giftflowwp' ),
+                'label' => __( 'Address', 'giftflow' ),
                 'type'  => 'textarea',
-                'description' => __( 'Enter the address of the donor', 'giftflowwp' ),
+                'description' => __( 'Enter the address of the donor', 'giftflow' ),
             ),
             // city
             'city' => array(
-                'label' => __( 'City', 'giftflowwp' ),
+                'label' => __( 'City', 'giftflow' ),
                 'type'  => 'textfield',
-                'description' => __( 'Enter the city of the donor', 'giftflowwp' ),
+                'description' => __( 'Enter the city of the donor', 'giftflow' ),
             ),
             // state
             'state' => array(
-                'label' => __( 'State/Province', 'giftflowwp' ),
+                'label' => __( 'State/Province', 'giftflow' ),
                 'type'  => 'textfield',
-                'description' => __( 'Enter the state/province of the donor', 'giftflowwp' ),
+                'description' => __( 'Enter the state/province of the donor', 'giftflow' ),
             ),
             // postal code
             'postal_code' => array(
-                'label' => __( 'Postal Code', 'giftflowwp' ),
+                'label' => __( 'Postal Code', 'giftflow' ),
                 'type'  => 'textfield',
-                'description' => __( 'Enter the postal code of the donor', 'giftflowwp' ),
+                'description' => __( 'Enter the postal code of the donor', 'giftflow' ),
             ),
             // country
             'country' => array(
-                'label' => __( 'Country', 'giftflowwp' ),
+                'label' => __( 'Country', 'giftflow' ),
                 'type'  => 'textfield',
-                'description' => __( 'Enter the country of the donor', 'giftflowwp' ),
+                'description' => __( 'Enter the country of the donor', 'giftflow' ),
             ),
             // donor username 
             // 'wp_user' => array(
-            //     'label' => __( 'WP User', 'giftflowwp' ),
+            //     'label' => __( 'WP User', 'giftflow' ),
             //     'type'  => 'select',
-            //     'description' => __( 'Enter the WP user of the donor', 'giftflowwp' ),
+            //     'description' => __( 'Enter the WP user of the donor', 'giftflow' ),
             //     'options' => $this->get_all_usernames(),
             // ),
         );
@@ -106,7 +106,7 @@ class Donor_Contact_Meta extends Base_Meta_Box {
             $value = get_post_meta( $post->ID, '_' . $field_id, true );
             $options = isset( $field['options'] ) ? $field['options'] : array();
             // Create field instance with all necessary parameters
-            $field_instance = new \GiftFlowWP_Field(
+            $field_instance = new \GiftFlow_Field(
                 $field_id,                    // id
                 $field_id,                    // name
                 $field['type'],              // type
@@ -114,8 +114,8 @@ class Donor_Contact_Meta extends Base_Meta_Box {
                     'value' => $value,
                     'label' => $field['label'],
                     'description' => $field['description'],
-                    'wrapper_classes' => array('giftflowwp-field-wrapper'),
-                    'classes' => array('giftflowwp-field-input'),
+                    'wrapper_classes' => array('giftflow-field-wrapper'),
+                    'classes' => array('giftflow-field-input'),
                     'options' => $options,
                     'attributes' => array(
                         'id' => $field_id,
@@ -125,6 +125,7 @@ class Donor_Contact_Meta extends Base_Meta_Box {
             );
             
             // Render the field
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo $field_instance->render();
         }
     }
@@ -149,17 +150,21 @@ class Donor_Contact_Meta extends Base_Meta_Box {
 
         $fields = $this->get_fields();
         foreach ( $fields as $field_id => $field ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
             if ( isset( $_POST[ $field_id ] ) ) {
+                // phpcs:ignore WordPress.Security.NonceVerification.Missing
                 if ( 'textarea' === $field['type'] ) {
                     update_post_meta(
                         $post_id,
                         '_' . $field_id,
+                        // phpcs:ignore WordPress.Security.NonceVerification.Missing
                         sanitize_textarea_field( wp_unslash( $_POST[ $field_id ] ) )
                     );
                 } else {
                     update_post_meta(
                         $post_id,
                         '_' . $field_id,
+                        // phpcs:ignore WordPress.Security.NonceVerification.Missing
                         sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) )
                     );
                 }
@@ -178,7 +183,7 @@ class Donor_Contact_Meta extends Base_Meta_Box {
         $u = array();
 
         // add empty option
-        // $u[''] = esc_html__('Select a username', 'giftflowwp');
+        // $u[''] = esc_html__('Select a username', 'giftflow');
 
         foreach ( $__users as $__user ) {
             $u[ $__user->ID ] = $__user->user_login . ' (#' . $__user->ID . ')';

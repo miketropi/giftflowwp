@@ -2,11 +2,11 @@
 /**
  * Campaign Post Type Class
  *
- * @package GiftFlowWp
+ * @package GiftFlow
  * @subpackage Admin
  */
 
-namespace GiftFlowWp\Admin\PostTypes;
+namespace GiftFlow\Admin\PostTypes;
 
 /**
  * Campaign Post Type Class
@@ -25,19 +25,19 @@ class Campaign extends Base_Post_Type {
     protected function init_post_type() {
         $this->post_type = 'campaign';
         $this->labels = array(
-            'name'                  => _x( 'Campaigns', 'Post type general name', 'giftflowwp' ),
-            'singular_name'         => _x( 'Campaign', 'Post type singular name', 'giftflowwp' ),
-            'menu_name'            => _x( 'Campaigns', 'Admin Menu text', 'giftflowwp' ),
-            'name_admin_bar'       => _x( 'Campaign', 'Add New on Toolbar', 'giftflowwp' ),
-            'add_new'              => __( 'Add New', 'giftflowwp' ),
-            'add_new_item'         => __( 'Add New Campaign', 'giftflowwp' ),
-            'new_item'             => __( 'New Campaign', 'giftflowwp' ),
-            'edit_item'            => __( 'Edit Campaign', 'giftflowwp' ),
-            'view_item'            => __( 'View Campaign', 'giftflowwp' ),
-            'all_items'            => __( 'All Campaigns', 'giftflowwp' ),
-            'search_items'         => __( 'Search Campaigns', 'giftflowwp' ),
-            'not_found'            => __( 'No campaigns found.', 'giftflowwp' ),
-            'not_found_in_trash'   => __( 'No campaigns found in Trash.', 'giftflowwp' ),
+            'name'                  => _x( 'Campaigns', 'Post type general name', 'giftflow' ),
+            'singular_name'         => _x( 'Campaign', 'Post type singular name', 'giftflow' ),
+            'menu_name'            => _x( 'Campaigns', 'Admin Menu text', 'giftflow' ),
+            'name_admin_bar'       => _x( 'Campaign', 'Add New on Toolbar', 'giftflow' ),
+            'add_new'              => __( 'Add New', 'giftflow' ),
+            'add_new_item'         => __( 'Add New Campaign', 'giftflow' ),
+            'new_item'             => __( 'New Campaign', 'giftflow' ),
+            'edit_item'            => __( 'Edit Campaign', 'giftflow' ),
+            'view_item'            => __( 'View Campaign', 'giftflow' ),
+            'all_items'            => __( 'All Campaigns', 'giftflow' ),
+            'search_items'         => __( 'Search Campaigns', 'giftflow' ),
+            'not_found'            => __( 'No campaigns found.', 'giftflow' ),
+            'not_found_in_trash'   => __( 'No campaigns found in Trash.', 'giftflow' ),
         );
 
         $this->args = array(
@@ -45,7 +45,7 @@ class Campaign extends Base_Post_Type {
             'public'             => true,
             'publicly_queryable' => true,
             'show_ui'            => true,
-            'show_in_menu'       => 'giftflowwp-dashboard',
+            'show_in_menu'       => 'giftflow-dashboard',
             'query_var'          => true,
             'rewrite'            => array( 'slug' => 'campaign' ),
             'capability_type'    => 'post',
@@ -64,17 +64,17 @@ class Campaign extends Base_Post_Type {
                 'args' => array(
                     'hierarchical'      => true,
                     'labels'            => array(
-                        'name'              => _x( 'Campaign Categories', 'taxonomy general name', 'giftflowwp' ),
-                        'singular_name'     => _x( 'Campaign Category', 'taxonomy singular name', 'giftflowwp' ),
-                        'search_items'      => __( 'Search Campaign Categories', 'giftflowwp' ),
-                        'all_items'         => __( 'All Campaign Categories', 'giftflowwp' ),
-                        'parent_item'       => __( 'Parent Campaign Category', 'giftflowwp' ),
-                        'parent_item_colon' => __( 'Parent Campaign Category:', 'giftflowwp' ),
-                        'edit_item'         => __( 'Edit Campaign Category', 'giftflowwp' ),
-                        'update_item'       => __( 'Update Campaign Category', 'giftflowwp' ),
-                        'add_new_item'      => __( 'Add New Campaign Category', 'giftflowwp' ),
-                        'new_item_name'     => __( 'New Campaign Category Name', 'giftflowwp' ),
-                        'menu_name'         => __( 'Campaign Categories', 'giftflowwp' ),
+                        'name'              => _x( 'Campaign Categories', 'taxonomy general name', 'giftflow' ),
+                        'singular_name'     => _x( 'Campaign Category', 'taxonomy singular name', 'giftflow' ),
+                        'search_items'      => __( 'Search Campaign Categories', 'giftflow' ),
+                        'all_items'         => __( 'All Campaign Categories', 'giftflow' ),
+                        'parent_item'       => __( 'Parent Campaign Category', 'giftflow' ),
+                        'parent_item_colon' => __( 'Parent Campaign Category:', 'giftflow' ),
+                        'edit_item'         => __( 'Edit Campaign Category', 'giftflow' ),
+                        'update_item'       => __( 'Update Campaign Category', 'giftflow' ),
+                        'add_new_item'      => __( 'Add New Campaign Category', 'giftflow' ),
+                        'new_item_name'     => __( 'New Campaign Category Name', 'giftflow' ),
+                        'menu_name'         => __( 'Campaign Categories', 'giftflow' ),
                     ),
                     'show_ui'           => true,
                     'show_admin_column' => true,
@@ -87,11 +87,11 @@ class Campaign extends Base_Post_Type {
 
         // Define custom admin columns
         $this->admin_columns = array(
-            'goal_amount' => __( 'Goal Amount', 'giftflowwp' ),
-            'raised_amount' => __( 'Raised Amount', 'giftflowwp' ),
-            'start_date'  => __( 'Start Date', 'giftflowwp' ),
-            'end_date'    => __( 'End Date', 'giftflowwp' ),
-            'status'      => __( 'Status', 'giftflowwp' ),
+            'goal_amount' => __( 'Goal Amount', 'giftflow' ),
+            'raised_amount' => __( 'Raised Amount', 'giftflow' ),
+            'start_date'  => __( 'Start Date', 'giftflow' ),
+            'end_date'    => __( 'End Date', 'giftflow' ),
+            'status'      => __( 'Status', 'giftflow' ),
         );
 
         // Define sortable columns
@@ -133,7 +133,7 @@ class Campaign extends Base_Post_Type {
 
         // if a raised amount column, get the raised amount
         if ( $column === 'raised_amount' ) {
-            $meta_value = giftflowwp_get_campaign_raised_amount( $post_id );
+            $meta_value = giftflow_get_campaign_raised_amount( $post_id );
         }
 
         // Default display for empty values
@@ -146,20 +146,20 @@ class Campaign extends Base_Post_Type {
         switch ( $column ) {
             case 'goal_amount':
                 // get currency symbol
-                // $currency_symbol = giftflowwp_get_currency_symbol(giftflowwp_get_current_currency());
+                // $currency_symbol = giftflow_get_currency_symbol(giftflow_get_current_currency());
                 // echo esc_html( $currency_symbol . number_format( $meta_value, 2 ) );
 
-                echo giftflowwp_render_currency_formatted_amount($meta_value);
+                echo wp_kses_post(giftflow_render_currency_formatted_amount($meta_value));
                 break;
                 
             case 'raised_amount':
                 // get currency symbol
-                // $currency_symbol = giftflowwp_get_currency_symbol(giftflowwp_get_current_currency());
+                // $currency_symbol = giftflow_get_currency_symbol(giftflow_get_current_currency());
                 // echo esc_html( $currency_symbol . number_format( $meta_value, 2 ) );
 
-                echo giftflowwp_render_currency_formatted_amount($meta_value);
+                echo wp_kses_post(giftflow_render_currency_formatted_amount($meta_value));
                 
-                echo sprintf( ' (%s%s)', giftflowwp_get_campaign_progress_percentage( $post_id ), '%' );
+                echo sprintf( ' (%s%s)', wp_kses_post(giftflow_get_campaign_progress_percentage( $post_id )), '%' );
                 break;
                 
             case 'start_date':
@@ -175,24 +175,24 @@ class Campaign extends Base_Post_Type {
                 
                 switch ( $meta_value ) {
                     case 'active':
-                        $status_text = __( 'Active', 'giftflowwp' );
+                        $status_text = __( 'Active', 'giftflow' );
                         $status_class = 'status-active';
                         break;
                     case 'completed':
-                        $status_text = __( 'Completed', 'giftflowwp' );
+                        $status_text = __( 'Completed', 'giftflow' );
                         $status_class = 'status-completed';
                         break;
                     // pending
                     case 'pending':
-                        $status_text = __( 'Pending', 'giftflowwp' );
+                        $status_text = __( 'Pending', 'giftflow' );
                         $status_class = 'status-pending';
                         break;
                     case 'closed':
-                        $status_text = __( 'Closed', 'giftflowwp' );
+                        $status_text = __( 'Closed', 'giftflow' );
                         $status_class = 'status-closed';
                         break;
                     default:
-                        $status_text = __( 'Unknown', 'giftflowwp' );
+                        $status_text = __( 'Unknown', 'giftflow' );
                         $status_class = 'status-unknown';
                 }
                 
@@ -211,9 +211,9 @@ class Campaign extends Base_Post_Type {
     public function register_campaign_taxonomy_submenu() {
         // add submenu page for campaign taxonomy
         add_submenu_page(
-            'giftflowwp-dashboard',
-            __( 'Campaign Categories', 'giftflowwp' ),
-            __( 'Campaign Categories', 'giftflowwp' ),
+            'giftflow-dashboard',
+            __( 'Campaign Categories', 'giftflow' ),
+            __( 'Campaign Categories', 'giftflow' ),
             'manage_options',
             'edit-tags.php?taxonomy=campaign-tax&post_type=campaign',
             null,
@@ -231,7 +231,7 @@ class Campaign extends Base_Post_Type {
         global $current_screen;
         
         if ( $current_screen->taxonomy === 'campaign-tax' ) {
-            $parent_file = 'giftflowwp-dashboard';
+            $parent_file = 'giftflow-dashboard';
         }
         
         return $parent_file;
@@ -260,16 +260,17 @@ class Campaign extends Base_Post_Type {
         global $typenow;
         
         if ( $typenow === 'campaign' ) {
-            $selected = isset( $_GET['campaign_status'] ) ? $_GET['campaign_status'] : '';
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $selected = isset( $_GET['campaign_status'] ) ? sanitize_text_field(wp_unslash($_GET['campaign_status'])) : '';
             $statuses = array( 'active', 'completed', 'closed', 'pending' );
             
             echo '<select name="campaign_status">';
-            echo '<option value="">' . __( 'All Statuses', 'giftflowwp' ) . '</option>';
+            echo '<option value="">' . esc_html__( 'All Statuses', 'giftflow' ) . '</option>';
             
             foreach ( $statuses as $status ) {
                 $status_label = ucfirst( $status );
                 $selected_attr = selected( $selected, $status, false );
-                echo '<option value="' . esc_attr( $status ) . '" ' . $selected_attr . '>' . esc_html( $status_label ) . '</option>';
+                echo '<option value="' . esc_attr( $status ) . '" ' . esc_attr($selected_attr) . '>' . esc_html( $status_label ) . '</option>';
             }
             
             echo '</select>';
@@ -283,7 +284,8 @@ class Campaign extends Base_Post_Type {
         global $typenow;
         
         if ( $typenow === 'campaign' ) {
-            $selected = isset( $_GET['campaign_category'] ) ? $_GET['campaign_category'] : '';
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $selected = isset( $_GET['campaign_category'] ) ? sanitize_text_field(wp_unslash($_GET['campaign_category'])) : '';
             
             // Get all campaign categories
             $categories = get_terms( array(
@@ -295,11 +297,11 @@ class Campaign extends Base_Post_Type {
             
             if ( !empty( $categories ) && !is_wp_error( $categories ) ) {
                 echo '<select name="campaign_category">';
-                echo '<option value="">' . __( 'All Categories', 'giftflowwp' ) . '</option>';
+                echo '<option value="">' . esc_html__( 'All Categories', 'giftflow' ) . '</option>';
                 
                 foreach ( $categories as $category ) {
                     $selected_attr = selected( $selected, $category->term_id, false );
-                    echo '<option value="' . esc_attr( $category->term_id ) . '" ' . $selected_attr . '>' . esc_html( $category->name ) . '</option>';
+                    echo '<option value="' . esc_attr( $category->term_id ) . '" ' . esc_attr($selected_attr) . '>' . esc_html( $category->name ) . '</option>';
                 }
                 
                 echo '</select>';
@@ -320,8 +322,10 @@ class Campaign extends Base_Post_Type {
             $tax_query = array();
             
             // Filter by status
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             if ( isset( $_GET['campaign_status'] ) && $_GET['campaign_status'] !== '' ) {
-                $status = sanitize_text_field( $_GET['campaign_status'] );
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                $status = sanitize_text_field( wp_unslash($_GET['campaign_status']) );
                 $meta_query[] = array(
                     'key'     => '_status',
                     'value'   => $status,
@@ -330,8 +334,10 @@ class Campaign extends Base_Post_Type {
             }
             
             // Filter by category
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             if ( isset( $_GET['campaign_category'] ) && $_GET['campaign_category'] !== '' ) {
-                $category_id = intval( $_GET['campaign_category'] );
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                $category_id = intval( wp_unslash($_GET['campaign_category']) );
                 $tax_query[] = array(
                     'taxonomy' => 'campaign-tax',
                     'field'    => 'term_id',

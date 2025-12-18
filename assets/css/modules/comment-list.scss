@@ -94,8 +94,8 @@
       .comment-content {
         padding: 1.5rem 2rem;
         background: white;
-        border: 1px solid var(--giftflowwp-border-color);
-        border-radius: var(--giftflowwp-border-radius);
+        border: 1px solid var(--giftflow-border-color);
+        border-radius: var(--giftflow-border-radius);
         font-size: 1rem;
 
         p {
@@ -148,24 +148,24 @@
     margin: 0 2px;
     border-radius: 4px;
     background: transparent;
-    color: var(--giftflowwp-primary, #333);
+    color: var(--giftflow-primary, #333);
     text-decoration: none;
     border: 1px solid transparent;
     transition: background 0.15s, color 0.15s, border 0.15s;
 
     &:hover,
     &:focus {
-      background: var(--giftflowwp-primary-light, #f5f5f5);
-      color: var(--giftflowwp-primary, #222);
-      border: 1px solid var(--giftflowwp-border-color, #e0e0e0);
+      background: var(--giftflow-primary-light, #f5f5f5);
+      color: var(--giftflow-primary, #222);
+      border: 1px solid var(--giftflow-border-color, #e0e0e0);
       text-decoration: none;
     }
 
     &.current,
     &[aria-current="page"] {
-      background: var(--giftflowwp-primary, #333);
+      background: var(--giftflow-primary, #333);
       color: #fff;
-      border: 1px solid var(--giftflowwp-primary, #333);
+      border: 1px solid var(--giftflow-primary, #333);
       cursor: default;
       pointer-events: none;
     }
@@ -175,13 +175,13 @@
       font-weight: 500;
       letter-spacing: 0.02em;
       background: transparent;
-      color: var(--giftflowwp-primary, #333);
+      color: var(--giftflow-primary, #333);
       border: 1px solid transparent;
 
       &:hover,
       &:focus {
-        background: var(--giftflowwp-primary-light, #f5f5f5);
-        border: 1px solid var(--giftflowwp-border-color, #e0e0e0);
+        background: var(--giftflow-primary-light, #f5f5f5);
+        border: 1px solid var(--giftflow-border-color, #e0e0e0);
       }
     }
   }
@@ -225,12 +225,12 @@
 
           .comment-reply-link {
             padding: 8px 12px; // Larger touch target
-            background: var(--giftflowwp-primary-light, #f5f5f5);
+            background: var(--giftflow-primary-light, #f5f5f5);
             border-radius: 4px;
             transition: background 0.15s;
 
             &:hover {
-              background: var(--giftflowwp-border-color, #e0e0e0);
+              background: var(--giftflow-border-color, #e0e0e0);
             }
           }
         }

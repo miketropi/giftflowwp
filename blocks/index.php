@@ -1,6 +1,13 @@
-<?php 
+<?php // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.InvalidPrefixPassed
+if ( ! defined( 'ABSPATH' ) ) {
+  exit; // Exit if accessed directly.
+}
+/**
+ * Block Loader
+ */
 
-class BlockLoader {
+
+class GiftFlow_Block_Loader {
     /**
      * Load all block files from subdirectories
      */
@@ -14,6 +21,6 @@ class BlockLoader {
 }
 
 // Initialize the block loader
-BlockLoader::load_blocks();
+GiftFlow_Block_Loader::load_blocks();
 
 

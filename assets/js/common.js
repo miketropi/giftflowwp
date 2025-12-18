@@ -9,10 +9,10 @@ import donationButton_Handle from './util/donation-button.js';
 
 ((w, $) => {
   "use strict"
-  const { ajax_url, nonce } = giftflowwp_common;
+  const { ajax_url, nonce } = giftflow_common;
 
-  w.giftflowwp = w.giftflowwp || {}
-  const gfw = w.giftflowwp
+  w.giftflow = w.giftflow || {}
+  const gfw = w.giftflow
 
   // load donation list
   gfw.loadDonationListPaginationTemplate_Handle = async function (elem) {
@@ -36,7 +36,7 @@ import donationButton_Handle from './util/donation-button.js';
       url: ajax_url,
       type: 'POST',
       data: {
-        action: 'giftflowwp_get_pagination_donation_list_html',
+        action: 'giftflow_get_pagination_donation_list_html',
         campaign,
         page,
         nonce,

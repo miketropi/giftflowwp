@@ -63,7 +63,7 @@ The block includes organized controls in the WordPress editor sidebar:
 The block generates the following CSS classes for styling:
 
 ```css
-.giftflowwp-donation-button                    /* Main container */
+.giftflow-donation-button                    /* Main container */
 .donation-btn                                  /* Base button styles */
 .donation-btn--disabled                        /* Disabled state */
 .donation-btn--full-width                     /* Full width button */
@@ -111,32 +111,32 @@ The block automatically integrates with:
 ### Basic Usage (Auto-detect)
 ```php
 <!-- In PHP template -->
-<?php echo do_blocks('<!-- wp:giftflowwp/donation-button /-->'); ?>
+<?php echo do_blocks('<!-- wp:giftflow/donation-button /-->'); ?>
 ```
 
 ### With Specific Campaign
 ```php
 <!-- In PHP template -->
-<?php echo do_blocks('<!-- wp:giftflowwp/donation-button {"campaignId":123} /-->'); ?>
+<?php echo do_blocks('<!-- wp:giftflow/donation-button {"campaignId":123} /-->'); ?>
 ```
 
 ### With Custom Styling
 ```php
 <!-- In PHP template -->
-<?php echo do_blocks('<!-- wp:giftflowwp/donation-button {"campaignId":123,"buttonText":"Support This Cause","backgroundColor":"#10b981","textColor":"#ffffff","borderRadius":12} /-->'); ?>
+<?php echo do_blocks('<!-- wp:giftflow/donation-button {"campaignId":123,"buttonText":"Support This Cause","backgroundColor":"#10b981","textColor":"#ffffff","borderRadius":12} /-->'); ?>
 ```
 
 ### With Full Width
 ```php
 <!-- In PHP template -->
-<?php echo do_blocks('<!-- wp:giftflowwp/donation-button {"fullWidth":true} /-->'); ?>
+<?php echo do_blocks('<!-- wp:giftflow/donation-button {"fullWidth":true} /-->'); ?>
 ```
 
 ### In Block Template
 ```html
-<!-- wp:giftflowwp/donation-button -->
-<!-- wp:giftflowwp/donation-button {"campaignId":123,"buttonText":"Support This Cause","backgroundColor":"#10b981","textColor":"#ffffff","borderRadius":12,"fullWidth":true} /-->
-<!-- /wp:giftflowwp/donation-button -->
+<!-- wp:giftflow/donation-button -->
+<!-- wp:giftflow/donation-button {"campaignId":123,"buttonText":"Support This Cause","backgroundColor":"#10b981","textColor":"#ffffff","borderRadius":12,"fullWidth":true} /-->
+<!-- /wp:giftflow/donation-button -->
 ```
 
 ### Common Use Cases

@@ -7,11 +7,11 @@ import { useState, useEffect } from '@wordpress/element';
 const { useSelect } = wp.data;
 
 
-registerBlockType('giftflowwp/donation-button', {
+registerBlockType('giftflow/donation-button', {
     apiVersion: 3,
     title: 'Donation Button',
     icon: 'heart',
-    category: 'giftflowwp',
+    category: 'giftflow',
     attributes: {
         campaignId: {
             type: 'number',
@@ -56,12 +56,12 @@ registerBlockType('giftflowwp/donation-button', {
 
         // Prepare campaign options for the dropdown
         const campaignOptions = campaigns ? [
-            { label: __('Use Current Post (Auto-detect)', 'giftflowwp'), value: 0 },
+            { label: __('Use Current Post (Auto-detect)', 'giftflow'), value: 0 },
             ...campaigns.map(campaign => ({
                 label: campaign.title.rendered,
                 value: campaign.id
             }))
-        ] : [{ label: __('Loading campaigns...', 'giftflowwp'), value: 0 }];
+        ] : [{ label: __('Loading campaigns...', 'giftflow'), value: 0 }];
 
         // Custom styles for better UI
         const panelStyles = {
@@ -122,42 +122,42 @@ registerBlockType('giftflowwp/donation-button', {
         return (
             <>
                 <InspectorControls>
-                    <PanelBody title={__('Campaign Settings', 'giftflowwp')} initialOpen={true} style={panelStyles}>
+                    <PanelBody title={__('Campaign Settings', 'giftflow')} initialOpen={true} style={panelStyles}>
                         <div style={controlStyles}>
                             <SelectControl
-                                label={__('Select Campaign', 'giftflowwp')}
+                                label={__('Select Campaign', 'giftflow')}
                                 value={attributes.campaignId}
                                 options={campaignOptions}
                                 onChange={(value) => updateAttribute('campaignId', parseInt(value))}
-                                help={__('Choose a specific campaign or leave as "Auto-detect" to use the current post.', 'giftflowwp')}
+                                help={__('Choose a specific campaign or leave as "Auto-detect" to use the current post.', 'giftflow')}
                             />
                         </div>
                     </PanelBody>
 
-                    <PanelBody title={__('Button Settings', 'giftflowwp')} initialOpen={true} style={panelStyles}>
+                    <PanelBody title={__('Button Settings', 'giftflow')} initialOpen={true} style={panelStyles}>
                         <div style={controlStyles}>
                             <TextControl
-                                label={__('Button Text', 'giftflowwp')}
+                                label={__('Button Text', 'giftflow')}
                                 value={attributes.buttonText}
                                 onChange={(value) => updateAttribute('buttonText', value)}
-                                help={__('Customize the text displayed on the donation button.', 'giftflowwp')}
+                                help={__('Customize the text displayed on the donation button.', 'giftflow')}
                             />
                         </div>
                         <div style={controlStyles}>
                             <ToggleControl
-                                label={__('Full Width Button', 'giftflowwp')}
+                                label={__('Full Width Button', 'giftflow')}
                                 checked={attributes.fullWidth}
                                 onChange={(value) => updateAttribute('fullWidth', value)}
-                                help={__('Make the button span the full width of its container.', 'giftflowwp')}
+                                help={__('Make the button span the full width of its container.', 'giftflow')}
                             />
                         </div>
                     </PanelBody>
 
-                    <PanelBody title={__('Button Styling', 'giftflowwp')} initialOpen={false} style={panelStyles}>
+                    <PanelBody title={__('Button Styling', 'giftflow')} initialOpen={false} style={panelStyles}>
                         <div style={controlStyles}>
                             <BaseControl
-                                label={__('Background Color', 'giftflowwp')}
-                                help={__('Choose the background color for your button.', 'giftflowwp')}
+                                label={__('Background Color', 'giftflow')}
+                                help={__('Choose the background color for your button.', 'giftflow')}
                             >
                                 <div style={colorPickerContainerStyles}>
                                     <ColorPicker
@@ -178,8 +178,8 @@ registerBlockType('giftflowwp/donation-button', {
 
                         <div style={controlStyles}>
                             <BaseControl
-                                label={__('Text Color', 'giftflowwp')}
-                                help={__('Choose the text color for your button.', 'giftflowwp')}
+                                label={__('Text Color', 'giftflow')}
+                                help={__('Choose the text color for your button.', 'giftflow')}
                             >
                                 <div style={colorPickerContainerStyles}>
                                     <ColorPicker
@@ -200,8 +200,8 @@ registerBlockType('giftflowwp/donation-button', {
 
                         <div style={controlStyles}>
                             <BaseControl
-                                label={__('Border Radius', 'giftflowwp')}
-                                help={__('Adjust the corner roundness of your button.', 'giftflowwp')}
+                                label={__('Border Radius', 'giftflow')}
+                                help={__('Adjust the corner roundness of your button.', 'giftflow')}
                             >
                                 <div style={rangeContainerStyles}>
                                     <input
@@ -231,7 +231,7 @@ registerBlockType('giftflowwp/donation-button', {
                 <div {...blockProps}>
                     <Disabled>
                         <ServerSideRender 
-                            block="giftflowwp/donation-button" 
+                            block="giftflow/donation-button" 
                             attributes={ attributes } />
                     </Disabled>
                 </div>
