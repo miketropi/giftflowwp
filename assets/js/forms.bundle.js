@@ -899,12 +899,14 @@ function _regeneratorDefine2(e, r, n, t) {
 
                       // min
                       case 'min':
-                        if (value < ((extraData === null || extraData === void 0 ? void 0 : extraData.min) || 0) || value === '') overallValid = false;
+                        var __min = parseInt((extraData === null || extraData === void 0 ? void 0 : extraData.min) || 0);
+                        if (value < __min || value === '') overallValid = false;
                         break;
 
                       // max
                       case 'max':
-                        if (value > ((extraData === null || extraData === void 0 ? void 0 : extraData.max) || 0) || value === '') overallValid = false;
+                        var __max = parseInt((extraData === null || extraData === void 0 ? void 0 : extraData.max) || 0);
+                        if (value > __max || value === '') overallValid = false;
                         break;
 
                       // default (pass)

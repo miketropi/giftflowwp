@@ -90,7 +90,16 @@
                         <div class="donation-form__amount">
                             <?php 
                             // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+                            $validate_attr_value = 'required,number,min';
                             $max_attr = $max_amount ? 'max="' . esc_attr($max_amount) . '"' : '';
+                            $extra_data = array(
+                                'min' => $min_amount,
+                            );
+
+                            if($max_attr) { 
+                                $validate_attr_value .= ',max'; 
+                                $extra_data['max'] = $max_amount;
+                            }
                             ?>
                             <div class="donation-form__amount-input">
                                 <span class="donation-form__currency"><?php echo esc_html($currency_symbol); ?></span>
@@ -102,8 +111,8 @@
                                     <?php echo esc_attr($max_attr); ?>
                                     step="1" 
                                     required 
-                                    data-validate="required,number,min,max"
-                                    data-extra-data='{"min": <?php echo esc_attr($min_amount); ?>, "max": <?php echo esc_attr($max_amount); ?>}'>
+                                    data-validate="<?php echo esc_attr($validate_attr_value); ?>"
+                                    data-extra-data='<?php echo esc_attr(json_encode($extra_data)); ?>'>
                             </div>
                             <div class="donation-form__preset-amounts">
                                 <?php 

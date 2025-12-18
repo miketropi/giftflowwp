@@ -448,12 +448,14 @@
 
 					// min
 					case 'min':
-						if (value < (extraData?.min || 0) || value === '') overallValid = false;
+						const __min = parseInt(extraData?.min || 0);
+						if (value < __min || value === '') overallValid = false;
 						break;
 
 					// max
 					case 'max':
-						if (value > (extraData?.max || 0) || value === '') overallValid = false;
+						const __max = parseInt(extraData?.max || 0);
+						if (value > __max || value === '') overallValid = false;
 						break;
 
 					// default (pass)
