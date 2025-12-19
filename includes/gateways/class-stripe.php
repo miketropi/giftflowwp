@@ -247,6 +247,11 @@ class Stripe_Gateway extends Gateway_Base {
     }
 
     public function template_html() {
+
+        // get opts 
+        $stripe_opts = giftflow_get_options('stripe', 'giftflow_payment_options');
+        $mode = isset($stripe_opts['stripe_mode']) ? $stripe_opts['stripe_mode'] : 'sandbox';
+
         ob_start();
         $icons = array(
             'error' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert-icon lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>',
@@ -265,8 +270,22 @@ class Stripe_Gateway extends Gateway_Base {
             class="donation-form__payment-method-description donation-form__payment-method-description--stripe donation-form__fields" 
             >
             <div class="donation-form__payment-notification">
-                <?php echo wp_kses($icons['checked'], giftflow_allowed_svg_tags()); ?>
-                <p><?php esc_html_e('We use Stripe to process payments. Your payment information is encrypted and never stored on our servers.', 'giftflow'); ?></p>
+                <span class="notification-icon"><?php echo wp_kses($icons['checked'], giftflow_allowed_svg_tags()); ?></span>
+                <div class="notification-message-entry">
+                    <p><?php esc_html_e('We use Stripe to process payments. Your payment information is encrypted and never stored on our servers.', 'giftflow'); ?></p>
+
+                    <?php if ($mode === 'sandbox') { ?>
+                    <hr />
+                    <div role="alert">
+                        <p>
+                            <strong><?php esc_html_e('You are currently in Stripe Sandbox Mode.', 'giftflow'); ?></strong>
+                            <?php esc_html_e('To test your payment, use the test card number', 'giftflow'); ?> <code class="gfw-monofont">4242 4242 4242 4242</code>
+                            <?php esc_html_e('with any CVC and any valid future expiration date.', 'giftflow'); ?>
+                            <?php esc_html_e('This will simulate a successful payment.', 'giftflow'); ?>
+                        </p>
+                    </div>
+                    <?php } ?>
+                </div>
             </div>
 
             <?php // name on card field ?>
