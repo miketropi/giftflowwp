@@ -54,6 +54,7 @@ class Shortcodes extends Base {
 
         // raised amount
         $raised_amount = giftflow_get_campaign_raised_amount($campaign_id);
+        
 
         // goal amount
         $goal_amount = giftflow_get_campaign_goal_amount($campaign_id);

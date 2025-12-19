@@ -24,7 +24,7 @@ $active_tab = $active_tab ?? $tabs[0]['slug'];
         role="tab"
         id="tab-<?php echo esc_attr($tab['slug']); ?>"
       >
-        <span class="giftflow-donor-account__tab-icon" aria-hidden="true"><?php echo wp_kses(giftflow_svg_icon($tab['icon']), giftflow_allowed_svg_tags()); ?></span>
+        <span class="giftflow-donor-account__tab-icon" aria-hidden="true"><?php echo wp_kses($tab['icon'], giftflow_allowed_svg_tags()); ?></span>
         <span class="giftflow-donor-account__tab-label"><?php echo esc_html($tab['label']); ?></span>
       </a>
     <?php endforeach; ?>

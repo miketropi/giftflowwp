@@ -373,7 +373,7 @@ function giftflow_get_preset_donation_amounts() {
  */
 function giftflow_get_preset_donation_amounts_by_campaign($campaign_id) {
   $preset_donation_amounts = get_post_meta($campaign_id, '_preset_donation_amounts', true);
-
+  // wp_send_json_success( [$campaign_id, $preset_donation_amounts] );
   // unserialize if exists
   if (is_serialized($preset_donation_amounts)) {
     $preset_donation_amounts = unserialize($preset_donation_amounts);
