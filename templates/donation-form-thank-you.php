@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 
                 <div class="donation-form__thank-you-summary">
                     <div class="donation-form__thank-you-amount">
-                        <span data-output="donation_amount" data-format-template="<?php echo esc_attr($currency_format_template); ?>"></span>
+                        <span class="gfw-monofont" data-output="donation_amount" data-format-template="<?php echo esc_attr($currency_format_template); ?>"></span>
                     </div>
                     <div class="donation-form__thank-you-campaign">
                         <?php echo esc_html($campaign_title); ?>
@@ -32,10 +32,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <a href="<?php echo esc_url(get_permalink($campaign_id)); ?>" class="donation-form__button">
                     <?php esc_html_e('Return to Campaign', 'giftflow'); ?>
                 </a>
-                <button type="button" class="donation-form__button donation-form__button--share">
-                    <?php echo wp_kses(giftflow_svg_icon('share'), giftflow_allowed_svg_tags()); ?>
-                    <?php esc_html_e('Share This Campaign', 'giftflow'); ?>
-                </button>
+                <!-- <button type="button" class="donation-form__button donation-form__button--share">
+                    <?php // echo wp_kses(giftflow_svg_icon('share'), giftflow_allowed_svg_tags()); ?>
+                    <?php // esc_html_e('Share This Campaign', 'giftflow'); ?>
+                </button> -->
             </div>
         </div>
     </div>

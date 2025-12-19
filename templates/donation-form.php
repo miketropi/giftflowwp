@@ -55,7 +55,9 @@
                     <fieldset class="donation-form__fieldset">
                         <legend class="donation-form__legend"><?php esc_html_e('Select donation type, one-time or monthly', 'giftflow'); ?></legend>
                         <div class="donation-form__radio-group donation-form__radio-group--donation-type">
-                            <?php // foreach donation types ?>
+                            <?php // foreach donation types 
+                                // print_r($donation_types);
+                            ?>
                             <?php 
                             // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
                             foreach ($donation_types as $index => $donation_type) : 
@@ -72,7 +74,7 @@
                                     <div class="donation-form__radio-label" for="donation_type_<?php echo esc_attr($donation_type['name']); ?>">
                                         <span class="donation-form__radio-content">
                                             <span class="donation-form__radio-title">
-                                                <?php echo wp_kses(giftflow_svg_icon($donation_type['icon']), giftflow_allowed_svg_tags()); ?>	
+                                                <?php echo wp_kses($donation_type['icon'], giftflow_allowed_svg_tags()); ?>	
                                                 <?php echo esc_html($donation_type['label']); ?>
                                             </span>
                                             <span class="donation-form__radio-description"><?php echo esc_html($donation_type['description']); ?></span>
