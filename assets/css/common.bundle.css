@@ -12,6 +12,7 @@
   --giftflow-transition: all 0.3s ease;
   --giftflow-disabled: #fafafa;
   --giftflow-disabled-text: #999;
+  --giftflow-font-family-monospace: monospace, "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Droid Sans Mono", "Source Code Pro", "Lucida Console", "Courier New";
 }
 
 .gfw-loading-spinner {
@@ -2077,4 +2078,7 @@
     font-size: 0.9rem;
     padding: 0 2px;
   }
+}
+.gfw-monofont {
+  font-family: var(--giftflow-font-family-monospace);
 }

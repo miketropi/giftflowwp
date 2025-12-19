@@ -11,6 +11,7 @@
   --giftflow-transition: all 0.3s ease;
   --giftflow-disabled: #fafafa;
   --giftflow-disabled-text: #999;
+  --giftflow-font-family-monospace: monospace, 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Droid Sans Mono', 'Source Code Pro', 'Lucida Console', 'Courier New';
 }
 
 // SCSS Variables (referencing CSS Custom Properties)
@@ -24,3 +25,4 @@ $error-color: var(--giftflow-error-color);
 $success-color: var(--giftflow-success-color);
 $border-radius: var(--giftflow-border-radius);
 $transition: var(--giftflow-transition);
+$font-family-monospace: var(--giftflow-font-family-monospace);

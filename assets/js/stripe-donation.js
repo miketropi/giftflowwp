@@ -37,7 +37,7 @@ const STRIPE_PUBLIC_KEY = giftflowStripeDonation.stripe_publishable_key;
       cardElement.mount($element);
 
       cardElement.on('change', async (event) => {
-        console.log('event', event);
+        // console.log('event', event);
 
         if (event.complete) {
           // console.log(self.formObject.fields);

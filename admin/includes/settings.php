@@ -170,7 +170,7 @@ function giftflow_initialize_settings() {
                     'name' => 'giftflow_general_options[max_amount]',
                     'type' => 'currency',
                     'label' => __('Maximum Donation Amount', 'giftflow'),
-                    'value' => isset($general_options['max_amount']) ? $general_options['max_amount'] : '',
+                    'value' => isset($general_options['max_amount']) ? $general_options['max_amount'] : '1000',
                     'min' => '0',
                     'step' => '1',
                     'description' => __('Set the maximum amount that can be donated', 'giftflow'),

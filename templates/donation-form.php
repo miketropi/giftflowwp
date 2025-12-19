@@ -87,17 +87,47 @@
                     <!-- Donation Amount -->
                     <fieldset class="donation-form__fieldset">
                         <legend class="donation-form__legend"><?php esc_html_e('Donation Amount', 'giftflow'); ?></legend>
+                        
+                        <?php // notification message ?>
+                        <div class="donation-form__amount-notification">
+                            <span class="notification-message-icon"><?php echo wp_kses(giftflow_svg_icon('info'), giftflow_allowed_svg_tags()); ?></span>
+                            <div class="notification-message-entry">
+                                <span class="notification-message-required">
+                                    <?php esc_html_e('Please enter your donation amount.', 'giftflow'); ?>
+                                </span>
+                                <span class="notification-message-min">
+                                    <?php esc_html_e('The minimum amount you can donate is', 'giftflow'); ?>
+                                    <strong class="gfw-monofont"><?php echo wp_kses_post(giftflow_render_currency_formatted_amount($min_amount)); ?></strong>.
+                                </span>
+                                <span class="notification-message-max">
+                                    <?php esc_html_e('The maximum amount you can donate is', 'giftflow'); ?>
+                                    <strong class="gfw-monofont">
+                                        <?php 
+                                            if ($max_amount) {
+                                                echo wp_kses_post(giftflow_render_currency_formatted_amount($max_amount));
+                                            } else {
+                                                esc_html_e('unlimited', 'giftflow');
+                                            }
+                                        ?>
+                                    </strong>.
+                                </span>
+                                <span class="notification-message-between">
+                                    <?php esc_html_e('Enter an amount between the minimum and maximum allowed values.', 'giftflow'); ?>
+                                </span>
+                            </div>
+                        </div>
+                        
                         <div class="donation-form__amount">
                             <?php 
                             // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-                            $validate_attr_value = 'required,number,min';
+                            $validate_attr_value = ['required', 'number', 'min'];
                             $max_attr = $max_amount ? 'max="' . esc_attr($max_amount) . '"' : '';
                             $extra_data = array(
                                 'min' => $min_amount ? $min_amount : 1,
                             );
 
                             if($max_attr) { 
-                                $validate_attr_value .= ',max'; 
+                                $validate_attr_value[] = 'max'; 
                                 $extra_data['max'] = $max_amount;
                             }
                             ?>
@@ -109,10 +139,10 @@
                                     value="<?php echo esc_attr($default_amount); ?>" 
                                     min="<?php echo esc_attr($min_amount); ?>" 
                                     <?php echo esc_attr($max_attr); ?>
-                                    step="1" 
+                                    step="<?php echo apply_filters('giftflow:donation_form_amount_step', 1); ?>" 
                                     required 
-                                    data-validate="<?php echo esc_attr($validate_attr_value); ?>"
-                                    data-extra-data='<?php echo esc_attr(json_encode($extra_data)); ?>'>
+                                    data-validate="<?php echo esc_attr(implode(',', $validate_attr_value)); ?>"
+                                    data-extra-data='<?php echo esc_attr(wp_json_encode($extra_data)); ?>'>
                             </div>
                             <div class="donation-form__preset-amounts">
                                 <?php 
@@ -133,6 +163,9 @@
                     <fieldset class="donation-form__fieldset">
                         <legend class="donation-form__legend"><?php esc_html_e('Your Information', 'giftflow'); ?></legend>
                         <div class="donation-form__fields">
+
+                            <?php do_action('giftflow:donation_form_before_donor_information'); ?>
+
                             <div class="donation-form__field">
                                 <label for="donor_name"><?php esc_html_e('Full Name', 'giftflow'); ?></label>
                                 <input type="text" id="donor_name" name="donor_name" value="<?php echo esc_attr($user_fullname); ?>" required data-validate="required" <?php echo $user_info_readonly ? 'readonly' : ''; ?>>
@@ -157,6 +190,9 @@
                                 <label for="donor_message"><?php esc_html_e('Message (Optional)', 'giftflow'); ?></label>
                                 <textarea id="donor_message" name="donor_message"></textarea>
                             </div>
+
+                            <?php do_action('giftflow:donation_form_after_donor_information'); ?>
+
                             <div class="donation-form__field">
                                 <label class="donation-form__checkbox-label">
                                     <input type="checkbox" name="anonymous_donation">
@@ -202,7 +238,7 @@
                         <dl class="donation-form__summary-list">
                             <div class="donation-form__summary-item">
                                 <dt><?php esc_html_e('Amount', 'giftflow'); ?></dt>
-                                <dd class="donation-form__summary-amount" data-output="donation_amount" data-format-template="<?php echo esc_attr($currency_format_template); ?>"></dd>
+                                <dd class="donation-form__summary-amount gfw-monofont" data-output="donation_amount" data-format-template="<?php echo esc_attr($currency_format_template); ?>"></dd>
                             </div>
                             <div class="donation-form__summary-item">
                                 <dt><?php esc_html_e('Email', 'giftflow'); ?></dt>

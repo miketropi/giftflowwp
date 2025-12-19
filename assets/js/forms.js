@@ -419,7 +419,7 @@
 		onValidateValue(type, value, extraData = null) {
 			
 			// Accept multiple comma-delimited validation types, pass if all pass
-			const types = type.split(',').map(s => s.trim());
+			const types = type ? type.split(',').map(s => s.trim()) : [];
 			let overallValid = true;
 
 			for (let t of types) {

@@ -12,6 +12,7 @@
   --giftflow-transition: all 0.3s ease;
   --giftflow-disabled: #fafafa;
   --giftflow-disabled-text: #999;
+  --giftflow-font-family-monospace: monospace, "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Droid Sans Mono", "Source Code Pro", "Lucida Console", "Courier New";
 }
 
 .donation-form {
@@ -322,6 +323,7 @@
   font-weight: 600;
   text-align: center;
   padding-left: 2.5rem;
+  font-family: var(--giftflow-font-family-monospace);
 }
 .donation-form__amount-input input:focus {
   outline: none;
@@ -357,6 +359,7 @@
   cursor: pointer;
   transition: var(--giftflow-transition);
   border-radius: var(--giftflow-border-radius);
+  font-family: var(--giftflow-font-family-monospace);
 }
 .donation-form__preset-amounts button > * {
   pointer-events: none;
@@ -870,7 +873,28 @@
   margin: 0;
   color: currentColor;
 }
-
+.donation-form__amount-notification {
+  align-items: start;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: var(--giftflow-background-color);
+  border-radius: var(--giftflow-border-radius);
+  display: flex;
+  gap: 0.7rem;
+  font-size: 0.8em;
+  line-height: 1.5em;
+  border: 1px solid var(--giftflow-border-color);
+  color: #313131;
+}
+.donation-form__amount-notification .notification-message-icon {
+  color: var(--giftflow-primary-color);
+}
+.donation-form__amount-notification .notification-message-icon svg {
+  width: 20px;
+  height: auto;
+  margin: 0;
+  color: currentColor;
+}
 .donation-form__error {
   text-align: center;
   padding: 3rem 2rem;

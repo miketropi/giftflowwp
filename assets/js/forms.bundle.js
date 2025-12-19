@@ -866,9 +866,9 @@ function _regeneratorDefine2(e, r, n, t) {
               value: function onValidateValue(type, value) {
                 var extraData = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
                 // Accept multiple comma-delimited validation types, pass if all pass
-                var types = type.split(',').map(function (s) {
+                var types = type ? type.split(',').map(function (s) {
                   return s.trim();
-                });
+                }) : [];
                 var overallValid = true;
                 var _iterator = _createForOfIteratorHelper(types),
                   _step;
