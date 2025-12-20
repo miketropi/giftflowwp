@@ -115,6 +115,12 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
                 'type'  => 'textarea',
                 'description' => __( 'Raw data of the transaction, useful for debugging', 'giftflow' ),
             ),
+            // _payment_reference
+            'reference_number' => array(
+                'label' => __( 'Reference Number', 'giftflow' ),
+                'type'  => 'textfield',
+                'description' => __( 'Enter the reference number for the donation to be used for bank transfer', 'giftflow' ),
+            ),
         );
     }
 

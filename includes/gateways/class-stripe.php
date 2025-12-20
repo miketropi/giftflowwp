@@ -248,9 +248,8 @@ class Stripe_Gateway extends Gateway_Base {
 
     public function template_html() {
 
-        // get opts 
-        $stripe_opts = giftflow_get_options('stripe', 'giftflow_payment_options');
-        $mode = isset($stripe_opts['stripe_mode']) ? $stripe_opts['stripe_mode'] : 'sandbox';
+        // get stripe_mode 
+        $mode = $this->get_setting('stripe_mode');
 
         ob_start();
         $icons = array(
@@ -291,7 +290,7 @@ class Stripe_Gateway extends Gateway_Base {
             <?php // name on card field ?>
             <div class="donation-form__field">
                 <label for="card_name" class="donation-form__field-label"><?php esc_html_e('Name on card', 'giftflow'); ?></label>
-                <input type="text" id="card_name" name="card_name" class="donation-form__field-input" required data-validate="required">
+                <input type="text" id="card_name" name="card_name" class="donation-form__field-input" data-validate="required">
 
                 <div class="donation-form__field-error custom-error-message">
                 <?php echo wp_kses($icons['error'], giftflow_allowed_svg_tags()); ?>

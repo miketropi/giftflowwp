@@ -86,6 +86,7 @@ function giftflow_load_files() {
     require_once GIFTFLOW_PLUGIN_DIR . 'includes/gateways/class-gateway-base.php';
     require_once GIFTFLOW_PLUGIN_DIR . 'includes/gateways/class-stripe.php';
     require_once GIFTFLOW_PLUGIN_DIR . 'includes/gateways/class-paypal.php';
+    require_once GIFTFLOW_PLUGIN_DIR . 'includes/gateways/class-direct-bank-transfer.php';
 
     // Blocks
     

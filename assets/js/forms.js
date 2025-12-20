@@ -259,8 +259,6 @@
 
 				// update UI by field
 				self.onUpdateUIByField(event.target.name, value);
-
-				// console.log('fields', self.fields);
 			});
 		}
 
