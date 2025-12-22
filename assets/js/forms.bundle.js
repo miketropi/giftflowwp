@@ -592,6 +592,7 @@ function _regeneratorDefine2(e, r, n, t) {
                           _context.n = 1;
                           break;
                         }
+                        self.onSetLoading(false);
                         return _context.a(2);
                       case 1:
                         _context.p = 1;

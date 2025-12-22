@@ -180,28 +180,28 @@ function giftflow_admin_bar_item($wp_admin_bar) {
     $wp_admin_bar->add_node($args);
 
     
-    // $wp_admin_bar->add_node([
-    //     'id'     => 'giftflow_admin_bar_item_donations',
-    //     'title'  => esc_html__('Donations', 'giftflow'),
-    //     'href'   => admin_url('edit.php?post_type=donation'),
-    //     'parent' => 'giftflow_admin_bar_item',
-    // ]);
+    $wp_admin_bar->add_node([
+        'id'     => 'giftflow_admin_bar_item_donations',
+        'title'  => esc_html__('Donations', 'giftflow'),
+        'href'   => admin_url('edit.php?post_type=donation'),
+        'parent' => 'giftflow_admin_bar_item',
+    ]);
 
     
-    // $wp_admin_bar->add_node([
-    //     'id'     => 'giftflow_admin_bar_item_donors',
-    //     'title'  => esc_html__('Donors', 'giftflow'),
-    //     'href'   => admin_url('edit.php?post_type=donor'),
-    //     'parent' => 'giftflow_admin_bar_item',
-    // ]);
+    $wp_admin_bar->add_node([
+        'id'     => 'giftflow_admin_bar_item_donors',
+        'title'  => esc_html__('Donors', 'giftflow'),
+        'href'   => admin_url('edit.php?post_type=donor'),
+        'parent' => 'giftflow_admin_bar_item',
+    ]);
 
     
-    // $wp_admin_bar->add_node([
-    //     'id'     => 'giftflow_admin_bar_item_campaigns',
-    //     'title'  => esc_html__('Campaigns', 'giftflow'),
-    //     'href'   => admin_url('edit.php?post_type=campaign'),
-    //     'parent' => 'giftflow_admin_bar_item',
-    // ]);
+    $wp_admin_bar->add_node([
+        'id'     => 'giftflow_admin_bar_item_campaigns',
+        'title'  => esc_html__('Campaigns', 'giftflow'),
+        'href'   => admin_url('edit.php?post_type=campaign'),
+        'parent' => 'giftflow_admin_bar_item',
+    ]);
 
     // Add child item
     $wp_admin_bar->add_node([

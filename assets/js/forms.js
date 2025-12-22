@@ -107,6 +107,7 @@ import { applySlideEffect } from './util/helpers';
 			const pass = self.onValidateFieldsCurrentStep();
 			// console.log('pass', pass);
 			if (!pass) {
+				self.onSetLoading(false);
 				return;
 			}
 
