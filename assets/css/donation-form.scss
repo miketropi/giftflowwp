@@ -515,15 +515,36 @@ $mobile: 480px;
     gap: 1rem;
   }
 
+  &__payment-method-item {
+    background-color: #f9f9f9;
+    border-radius: $border-radius;
+    border: 1px solid $border-color;
+
+    &:not(.is-active) {
+      
+      label.donation-form__payment-method {
+        border-bottom-color: transparent;
+      }
+    }
+
+    &.is-active {
+      
+      .donation-form__payment-method-description {
+        // display: grid;
+      }
+    }
+  }
+
   &__payment-method {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     padding: 1rem;
-    border: 1px solid $border-color;
+    // border: 1px solid $border-color;
     cursor: pointer;
     transition: $transition;
-    border-radius: $border-radius;
+    // border-radius: $border-radius;
+    border-bottom: 1px solid $border-color;
     
     @include mobile {
       padding: 0.75rem;
@@ -550,7 +571,7 @@ $mobile: 480px;
     }
 
     &:hover {
-      border-color: $primary-color;
+      // border-color: $primary-color;
     }
   }
 
@@ -747,6 +768,7 @@ $mobile: 480px;
     border-radius: $border-radius;
     padding: 1rem;
     border: 1px solid $border-color;
+    background: white;
 
     @include tablet {
       padding: 0.75rem;
@@ -866,6 +888,8 @@ $mobile: 480px;
     background-color: #f9f9f9;
     border-radius: $border-radius;
     font-size: 0.875rem;
+
+    // display: none;
     // color: $text-light;
     // line-height: .8;
 

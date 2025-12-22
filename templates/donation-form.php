@@ -225,8 +225,10 @@
                                 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
                                 foreach ($gateways as $method) {
                                     if($method->is_enabled()) {
+                                        echo '<div class="donation-form__payment-method-item payment-method-'.$method->get_id().'">';
                                         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                                         echo $method->template_html();
+                                        echo '</div>';
                                     }
                                 }
                             } 

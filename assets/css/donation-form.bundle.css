@@ -450,15 +450,22 @@
   display: grid;
   gap: 1rem;
 }
+.donation-form__payment-method-item {
+  background-color: #f9f9f9;
+  border-radius: var(--giftflow-border-radius);
+  border: 1px solid var(--giftflow-border-color);
+}
+.donation-form__payment-method-item:not(.is-active) label.donation-form__payment-method {
+  border-bottom-color: transparent;
+}
 .donation-form__payment-method {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 1rem;
-  border: 1px solid var(--giftflow-border-color);
   cursor: pointer;
   transition: var(--giftflow-transition);
-  border-radius: var(--giftflow-border-radius);
+  border-bottom: 1px solid var(--giftflow-border-color);
 }
 @media (max-width: 480px) {
   .donation-form__payment-method {
@@ -482,9 +489,6 @@
     width: 16px;
     height: 16px;
   }
-}
-.donation-form__payment-method:hover {
-  border-color: var(--giftflow-primary-color);
 }
 .donation-form__summary {
   margin-top: 2rem;
@@ -664,6 +668,7 @@
   border-radius: var(--giftflow-border-radius);
   padding: 1rem;
   border: 1px solid var(--giftflow-border-color);
+  background: white;
 }
 @media (max-width: 768px) {
   .donation-form__bank-details {

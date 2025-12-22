@@ -2,6 +2,86 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./assets/js/util/helpers.js":
+/*!***********************************!*\
+  !*** ./assets/js/util/helpers.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   applySlideEffect: () => (/* binding */ applySlideEffect),
+/* harmony export */   replaceContentBySelector: () => (/* binding */ replaceContentBySelector)
+/* harmony export */ });
+var replaceContentBySelector = function replaceContentBySelector(selector, content) {
+  var elem = document.querySelector(selector);
+  if (elem) {
+    elem.innerHTML = content;
+  } else {
+    console.error("Element not found for selector: ".concat(selector));
+  }
+};
+
+/**
+ * Apply a slideDown or slideUp effect to a DOM element.
+ * @param {HTMLElement} dom - The target element.
+ * @param {'slidedown'|'slideup'} effect - The effect type.
+ * @param {number} duration - Duration in ms. Default: 300
+ * @param {string} displayType - The display style to use (e.g., 'block', 'grid'). Default: 'block'
+ */
+function applySlideEffect(dom) {
+  var effect = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'slidedown';
+  var duration = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 300;
+  var displayType = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'block';
+  if (!dom) return;
+  if (!['slidedown', 'slideup'].includes(effect)) {
+    console.error('Invalid effect:', effect);
+    return;
+  }
+  dom.style.overflow = 'hidden';
+  if (effect === 'slidedown') {
+    dom.style.display = displayType;
+    var height = dom.scrollHeight;
+    dom.style.height = '0px';
+
+    // force reflow to ensure setting height is registered
+    // eslint-disable-next-line no-unused-expressions
+    dom.offsetHeight;
+    dom.style.transition = "height ".concat(duration, "ms ease");
+    dom.style.height = height + 'px';
+    var _onEnd = function onEnd() {
+      dom.style.display = displayType;
+      dom.style.height = '';
+      dom.style.overflow = '';
+      dom.style.transition = '';
+      dom.removeEventListener('transitionend', _onEnd);
+    };
+    dom.addEventListener('transitionend', _onEnd);
+  } else if (effect === 'slideup') {
+    // Remember current display style in case we want to restore it
+    var prevDisplay = dom.style.display;
+    var _height = dom.scrollHeight;
+    dom.style.height = _height + 'px';
+
+    // force reflow
+    // eslint-disable-next-line no-unused-expressions
+    dom.offsetHeight;
+    dom.style.transition = "height ".concat(duration, "ms ease");
+    dom.style.height = '0px';
+    var _onEnd2 = function onEnd() {
+      dom.style.display = 'none';
+      dom.style.height = '';
+      dom.style.overflow = '';
+      dom.style.transition = '';
+      dom.removeEventListener('transitionend', _onEnd2);
+      // Optionally restore previous style if needed in future
+    };
+    dom.addEventListener('transitionend', _onEnd2);
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js":
 /*!*********************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js ***!
@@ -222,6 +302,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./util/helpers */ "./assets/js/util/helpers.js");
 
 
 
@@ -392,6 +473,8 @@ function _regeneratorDefine2(e, r, n, t) {
     }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2));
   }, _regeneratorDefine2(e, r, n, t);
 }
+
+
 /**
  * Donation Form
  */
@@ -441,6 +524,9 @@ function _regeneratorDefine2(e, r, n, t) {
                 this.form.addEventListener('input', function (event) {
                   if (event.target.name === 'donation_amount') {
                     _this.onUpdateAmountField(event.target.value);
+                  }
+                  if (event.target.name === 'payment_method') {
+                    _this.onChangePaymentMethod(event.target.value);
                   }
                 });
 
@@ -642,6 +728,9 @@ function _regeneratorDefine2(e, r, n, t) {
                 // panel
                 self.form.querySelector('.donation-form__step-panel.is-active').classList.remove('is-active');
                 self.form.querySelector('.donation-form__step-panel.step-' + self.currentStep).classList.add('is-active');
+
+                // change payment method
+                this.onChangePaymentMethod(self.fields.payment_method);
               }
             }, {
               key: "onPreviousStep",
@@ -709,10 +798,24 @@ function _regeneratorDefine2(e, r, n, t) {
                 });
               }
             }, {
+              key: "onChangePaymentMethod",
+              value: function onChangePaymentMethod(methodId) {
+                var paymentMethodDescription = this.form.querySelector(".donation-form__payment-method-item.payment-method-".concat(methodId));
+                this.form.querySelectorAll(".donation-form__payment-method-item:not(.payment-method-".concat(methodId, ")")).forEach(function (paymentMethodDescription) {
+                  // remove class is-active
+                  paymentMethodDescription.classList.remove('is-active');
+                  paymentMethodDescription.querySelector('.donation-form__payment-method-description').classList.add('out-validate-field-inner');
+                  (0,_util_helpers__WEBPACK_IMPORTED_MODULE_3__.applySlideEffect)(paymentMethodDescription.querySelector('.donation-form__payment-method-description'), 'slideup');
+                });
+                if (paymentMethodDescription) {
+                  paymentMethodDescription.classList.add('is-active');
+                  paymentMethodDescription.querySelector('.donation-form__payment-method-description').classList.remove('out-validate-field-inner');
+                  (0,_util_helpers__WEBPACK_IMPORTED_MODULE_3__.applySlideEffect)(paymentMethodDescription.querySelector('.donation-form__payment-method-description'), 'slidedown', 300, 'grid');
+                }
+              }
+            }, {
               key: "onUpdateUIByField",
               value: function onUpdateUIByField(field, value) {
-                // console.log('onUpdateUIByField', field, value);
-
                 var inputField = this.form.querySelector("input[name=\"".concat(field, "\"]"));
                 if (!inputField) {
                   return;

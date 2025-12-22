@@ -1,3 +1,5 @@
+import { applySlideEffect } from './util/helpers';
+
 /**
  * Donation Form
  */
@@ -40,6 +42,10 @@
 			this.form.addEventListener('input', (event) => {
 				if (event.target.name === 'donation_amount') {
 					this.onUpdateAmountField(event.target.value);
+				}
+
+				if (event.target.name === 'payment_method') {
+					this.onChangePaymentMethod(event.target.value);
 				}
 			});
 
@@ -197,6 +203,9 @@
 			// panel
 			self.form.querySelector('.donation-form__step-panel.is-active').classList.remove('is-active');
 			self.form.querySelector('.donation-form__step-panel.step-' + self.currentStep).classList.add('is-active');
+
+			// change payment method
+			this.onChangePaymentMethod(self.fields.payment_method);
 		}
 
 		onPreviousStep() {
@@ -262,8 +271,23 @@
 			});
 		}
 
+		onChangePaymentMethod(methodId) {
+			const paymentMethodDescription = this.form.querySelector(`.donation-form__payment-method-item.payment-method-${methodId}`);
+			this.form.querySelectorAll(`.donation-form__payment-method-item:not(.payment-method-${methodId})`).forEach((paymentMethodDescription) => {
+				// remove class is-active
+				paymentMethodDescription.classList.remove('is-active')
+				paymentMethodDescription.querySelector('.donation-form__payment-method-description').classList.add('out-validate-field-inner'); 
+				applySlideEffect(paymentMethodDescription.querySelector('.donation-form__payment-method-description'), 'slideup');
+			});
+
+			if (paymentMethodDescription) {
+				paymentMethodDescription.classList.add('is-active')
+				paymentMethodDescription.querySelector('.donation-form__payment-method-description').classList.remove('out-validate-field-inner'); 
+				applySlideEffect(paymentMethodDescription.querySelector('.donation-form__payment-method-description'), 'slidedown', 300, 'grid');
+			}
+		}		
+
 		onUpdateUIByField(field, value) {
-			// console.log('onUpdateUIByField', field, value);
 
 			const inputField = this.form.querySelector(`input[name="${field}"]`);
 			if (!inputField) {
