@@ -1,7 +1,6 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Direct Bank Transfer Payment Gateway for GiftFlow
- *
  * This class implements direct bank transfer payment processing.
  * Payments are marked as pending until manually confirmed.
  *
@@ -26,7 +25,7 @@ class Direct_Bank_Transfer_Gateway extends Gateway_Base {
 		$this->title       = __( 'Direct Bank Transfer', 'giftflow' );
 		$this->description = __( 'Make a payment directly into our bank account', 'giftflow' );
 
-		// SVG icon
+		// SVG icon.
 		$this->icon = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-landmark-icon lucide-landmark"><path d="M10 18v-7"/><path d="M11.12 2.198a2 2 0 0 1 1.76.006l7.866 3.847c.476.233.31.949-.22.949H3.474c-.53 0-.695-.716-.22-.949z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/></svg>';
 
 		$this->order    = 20;
@@ -37,13 +36,13 @@ class Direct_Bank_Transfer_Gateway extends Gateway_Base {
 	 * Additional initialization after gateway setup
 	 */
 	protected function ready() {
-		// Any additional setup needed
+		// Any additional setup needed.
 	}
 
 	/**
 	 * Get gateway settings fields
 	 *
-	 * @param array $payment_fields Existing payment fields
+	 * @param array $payment_fields Existing payment fields.
 	 * @return array
 	 */
 	public function register_settings_fields( $payment_fields = array() ) {
@@ -156,27 +155,27 @@ class Direct_Bank_Transfer_Gateway extends Gateway_Base {
 			<p><?php esc_html_e( 'Make your donation directly into our bank account.', 'giftflow' ); ?></p>
 			<hr />
 			<?php
-			// Try to get reference number from request (for thank you page, user, etc.)
+			// Try to get reference number from request (for thank you page, user, etc.).
 			$reference_number = $this->generate_reference_number();
 			?>
 			<p>
 				<strong><?php esc_html_e( 'Important:', 'giftflow' ); ?></strong>
 				<?php
 					printf(
-					/* translators: %s is the reference number for bank transfer */
 						wp_kses(
-							__( 'Please include your Reference Number (<strong class="gfw-monofont">%s</strong>) in the payment description so we can correctly identify your donation.', 'giftflow' ),
+							// translators: %s is the reference number for bank transfer.
+							'Please include your Reference Number (<strong class="gfw-monofont">%s</strong>) in the payment description so we can correctly identify your donation.',
 							array(
 								'code'   => array( 'class' => true ),
 								'strong' => array( 'class' => true ),
 							)
 						),
-						esc_html( $reference_number ? $reference_number : esc_html( 'your reference number', 'giftflow' ) )
+						$reference_number ? esc_html( $reference_number ) : esc_html__( 'your reference number', 'giftflow' )
 					);
 				?>
 			</p>
 			</div>
-			<input type="hidden" name="reference_number" value="<?php echo $reference_number; ?>" />
+			<input type="hidden" name="reference_number" value="<?php echo esc_attr( $reference_number ); ?>" />
 		</div>
 
 		<?php if ( ! empty( $instructions ) ) : ?>
@@ -239,8 +238,8 @@ class Direct_Bank_Transfer_Gateway extends Gateway_Base {
 	/**
 	 * Process payment
 	 *
-	 * @param array $data Payment data
-	 * @param int   $donation_id Donation ID
+	 * @param array $data Payment data.
+	 * @param int   $donation_id Donation ID.
 	 * @return mixed
 	 */
 	public function process_payment( $data, $donation_id = 0 ) {
@@ -249,23 +248,23 @@ class Direct_Bank_Transfer_Gateway extends Gateway_Base {
 		}
 
 		try {
-			// Mark donation as pending - payment will be confirmed manually
+			// Mark donation as pending - payment will be confirmed manually.
 			update_post_meta( $donation_id, '_payment_method', 'direct_bank_transfer' );
 			update_post_meta( $donation_id, '_status', 'pending' );
 			update_post_meta( $donation_id, '_payment_status', 'pending' );
 			update_post_meta( $donation_id, '_bank_transfer_pending', 'yes' );
 
-			// Store payment data
+			// Store payment data.
 			update_post_meta( $donation_id, '_donation_amount', floatval( $data['donation_amount'] ) );
 
-			// Generate a unique reference number for this donation
+			// Generate a unique reference number for this donation.
 			$reference_number = ''; // $this->generate_reference_number($donation_id);
 			update_post_meta( $donation_id, '_reference_number', $reference_number );
 
-			// Log the pending payment
+			// Log the pending payment.
 			$this->log_pending_payment( $donation_id, $reference_number );
 
-			// Fire action for pending payment
+			// Fire action for pending payment.
 			do_action( 'giftflow_bank_transfer_payment_pending', $donation_id, $reference_number, $data );
 
 			return true;
@@ -282,7 +281,7 @@ class Direct_Bank_Transfer_Gateway extends Gateway_Base {
 	 * @return string
 	 */
 	private function generate_reference_number() {
-		// Generate a unique reference: {RANDOM}-{TIMESTAMP}
+		// Generate a unique reference: {RANDOM}-{TIMESTAMP}.
 		$random = wp_generate_password( 2, false );
 		return sprintf( '%s-%s', strtoupper( $random ), time() );
 	}
@@ -290,8 +289,8 @@ class Direct_Bank_Transfer_Gateway extends Gateway_Base {
 	/**
 	 * Log pending payment
 	 *
-	 * @param int    $donation_id
-	 * @param string $reference_number
+	 * @param int    $donation_id Donation ID.
+	 * @param string $reference_number Reference number.
 	 */
 	private function log_pending_payment( $donation_id, $reference_number ) {
 		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
@@ -305,16 +304,16 @@ class Direct_Bank_Transfer_Gateway extends Gateway_Base {
 			'timestamp'        => current_time( 'mysql' ),
 		);
 
-        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		error_log( '[GiftFlow Bank Transfer Pending] ' . wp_json_encode( $log_data ) );
 	}
 
 	/**
 	 * Log error
 	 *
-	 * @param string $type
-	 * @param string $message
-	 * @param int    $donation_id
+	 * @param string $type Type of error.
+	 * @param string $message Message of error.
+	 * @param int    $donation_id Donation ID.
 	 */
 	private function log_error( $type, $message, $donation_id ) {
 		$log_data = array(
@@ -325,11 +324,12 @@ class Direct_Bank_Transfer_Gateway extends Gateway_Base {
 			'timestamp'     => current_time( 'mysql' ),
 		);
 
-        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		error_log( '[GiftFlow Bank Transfer Error] ' . wp_json_encode( $log_data ) );
 	}
 }
 
+// register direct bank transfer gateway.
 add_action(
 	'giftflow_register_gateways',
 	function () {
@@ -342,7 +342,7 @@ add_action(
  *
  * @return Direct_Bank_Transfer_Gateway|null
  */
+// phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed, Squiz.Commenting.FunctionComment.Missing
 function giftflow_get_direct_bank_transfer_gateway() {
 	return Gateway_Base::get_gateway( 'direct_bank_transfer' );
 }
-
