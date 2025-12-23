@@ -1,7 +1,6 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
- * AJAX Handler Class
- *
+ * AJAX Handler Class.
  * Handles AJAX requests for the GiftFlow plugin.
  *
  * @package GiftFlow
@@ -24,13 +23,13 @@ class GiftFlow_Ajax {
 	 * Constructor
 	 */
 	public function __construct() {
-		// Register AJAX actions
+		// Register AJAX actions.
 		add_action( 'wp_ajax_giftflow_get_gallery_images', array( $this, 'get_gallery_images' ) );
 
 		add_action( 'wp_ajax_giftflow_get_pagination_donation_list_html', array( $this, 'get_pagination_donation_list_html' ) );
 		add_action( 'wp_ajax_nopriv_giftflow_get_pagination_donation_list_html', array( $this, 'get_pagination_donation_list_html' ) );
 
-		// giftflow_get_campaign_donation_form
+		// giftflow_get_campaign_donation_form.
 		add_action( 'wp_ajax_giftflow_get_campaign_donation_form', array( $this, 'get_campaign_donation_form' ) );
 		add_action( 'wp_ajax_nopriv_giftflow_get_campaign_donation_form', array( $this, 'get_campaign_donation_form' ) );
 	}
@@ -39,23 +38,23 @@ class GiftFlow_Ajax {
 	 * Get gallery images
 	 */
 	public function get_gallery_images() {
-		// Check nonce
+		// Check nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'giftflow_gallery_nonce' ) ) {
 			wp_send_json_error( __( 'Security check failed', 'giftflow' ) );
 		}
 
-		// Check if IDs are provided
+		// Check if IDs are provided.
 		if ( ! isset( $_POST['ids'] ) || ! is_array( $_POST['ids'] ) ) {
 			wp_send_json_error( __( 'No image IDs provided', 'giftflow' ) );
 		}
 
-		// Get image size
+		// Get image size.
 		$size = isset( $_POST['size'] ) ? sanitize_text_field( wp_unslash( $_POST['size'] ) ) : 'thumbnail';
 
-		// Get image IDs
+		// Get image IDs.
 		$ids = array_map( 'intval', $_POST['ids'] );
 
-		// Get image data
+		// Get image data.
 		$images = array();
 		foreach ( $ids as $id ) {
 			$image_url = wp_get_attachment_image_url( $id, $size );
@@ -67,12 +66,15 @@ class GiftFlow_Ajax {
 			}
 		}
 
-		// Send response
+		// Send response.
 		wp_send_json_success( $images );
 	}
 
+	/**
+	 * Get pagination donation list HTML.
+	 */
 	public function get_pagination_donation_list_html() {
-		// ajax check nonce
+		// ajax check nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'giftflow_common_nonce' ) ) {
 			wp_send_json_error( __( 'Security check failed', 'giftflow' ) );
 		}
@@ -80,7 +82,7 @@ class GiftFlow_Ajax {
 		$campaign = isset( $_POST['campaign'] ) ? intval( $_POST['campaign'] ) : 0;
 		$paged    = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
 
-		// validate $campaign
+		// validate $campaign.
 		if ( $campaign <= 0 ) {
 			wp_send_json_error( __( 'Invalid campaign ID', 'giftflow' ) );
 		}
@@ -117,8 +119,11 @@ class GiftFlow_Ajax {
 		);
 	}
 
+	/**
+	 * Get campaign donation form.
+	 */
 	public function get_campaign_donation_form() {
-		// ajax check nonce
+		// ajax check nonce.
 		if ( ! isset( $_GET['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'giftflow_common_nonce' ) ) {
 			wp_send_json_error( __( 'Security check failed', 'giftflow' ) );
 		}
@@ -134,5 +139,5 @@ class GiftFlow_Ajax {
 	}
 }
 
-// Initialize the AJAX handler
+// Initialize the AJAX handler.
 new GiftFlow_Ajax();

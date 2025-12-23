@@ -13,13 +13,16 @@ namespace GiftFlow\Admin\PostTypes;
  */
 class Donation extends Base_Post_Type {
 	/**
-	 * Initialize the donation post type
+	 * Initialize the donation post type.
 	 */
+	// phpcs:ignore Generic.CodeAnalysis.UselessOverridingMethod.Found, Squiz.Commenting.FunctionComment.Missing
 	public function __construct() {
-
 		parent::__construct();
 	}
 
+	/**
+	 * Initialize post type properties.
+	 */
 	protected function init_post_type() {
 		$this->post_type = 'donation';
 		$this->labels    = array(
@@ -55,12 +58,12 @@ class Donation extends Base_Post_Type {
 			'show_in_rest'       => true,
 		);
 
-		// Add custom columns
+		// Add custom columns.
 		add_filter( 'manage_donation_posts_columns', array( $this, 'set_custom_columns' ) );
 		add_action( 'manage_donation_posts_custom_column', array( $this, 'render_custom_columns' ), 10, 2 );
 		add_filter( 'manage_edit-donation_sortable_columns', array( $this, 'set_sortable_columns' ) );
 
-		// Add filters
+		// Add filters.
 		add_action( 'restrict_manage_posts', array( $this, 'add_status_filter' ) );
 		add_action( 'restrict_manage_posts', array( $this, 'add_donor_filter' ) );
 		add_action( 'restrict_manage_posts', array( $this, 'add_campaign_filter' ) );
@@ -68,16 +71,16 @@ class Donation extends Base_Post_Type {
 	}
 
 	/**
-	 * Set custom columns for donation post type
+	 * Set custom columns for donation post type.
 	 *
-	 * @param array $columns Array of column names
-	 * @return array Modified array of column names
+	 * @param array $columns Array of column names.
+	 * @return array Modified array of column names.
 	 */
 	public function set_custom_columns( $columns ) {
 		$new_columns = array();
 
 		foreach ( $columns as $key => $value ) {
-			if ( $key === 'title' ) {
+			if ( 'title' === $key ) {
 				$new_columns['title']          = __( 'Donation ID', 'giftflow' );
 				$new_columns['amount']         = __( 'Amount', 'giftflow' );
 				$new_columns['payment_method'] = __( 'Payment Method', 'giftflow' );
@@ -93,18 +96,14 @@ class Donation extends Base_Post_Type {
 	}
 
 	/**
-	 * Render custom column content
+	 * Render custom column content.
 	 *
-	 * @param string $column Column name
-	 * @param int    $post_id Post ID
+	 * @param string $column Column name.
+	 * @param int    $post_id Post ID.
 	 */
 	public function render_custom_columns( $column, $post_id ) {
 		switch ( $column ) {
 			case 'amount':
-				// get currency symbol
-				// $currency_symbol = giftflow_get_currency_symbol(giftflow_get_current_currency());
-				// $amount = get_post_meta( $post_id, '_amount', true );
-				// echo esc_html( $currency_symbol . number_format( floatval( $amount ), 2 ) );
 				$amount = get_post_meta( $post_id, '_amount', true );
 				echo wp_kses_post( giftflow_render_currency_formatted_amount( $amount ) );
 				break;
@@ -146,10 +145,10 @@ class Donation extends Base_Post_Type {
 	}
 
 	/**
-	 * Set sortable columns
+	 * Set sortable columns.
 	 *
-	 * @param array $columns Array of sortable columns
-	 * @return array Modified array of sortable columns
+	 * @param array $columns Array of sortable columns.
+	 * @return array Modified array of sortable columns.
 	 */
 	public function set_sortable_columns( $columns ) {
 		$columns['amount']   = 'amount';
@@ -160,13 +159,13 @@ class Donation extends Base_Post_Type {
 	}
 
 	/**
-	 * Add status filter dropdown
+	 * Add status filter dropdown.
 	 */
 	public function add_status_filter() {
 		global $typenow;
 
-		if ( $typenow === 'donation' ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( 'donation' === $typenow ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$selected = isset( $_GET['donation_status'] ) ? sanitize_text_field( wp_unslash( $_GET['donation_status'] ) ) : '';
 			$statuses = array( 'pending', 'completed', 'failed', 'refunded' );
 
@@ -184,31 +183,31 @@ class Donation extends Base_Post_Type {
 	}
 
 	/**
-	 * Add donor filter dropdown
+	 * Add donor filter dropdown.
+
+	 * @return void
 	 */
 	public function add_donor_filter() {
 		global $typenow;
 
-		if ( $typenow === 'donation' ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( 'donation' === $typenow ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$selected = isset( $_GET['donation_donor'] ) ? sanitize_text_field( wp_unslash( $_GET['donation_donor'] ) ) : '';
 
-			// Get all unique donors from donations
+			// Get all unique donors from donations.
 			global $wpdb;
 
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$donors = $wpdb->get_results(
-				"
-                SELECT DISTINCT pm.meta_value as donor_id, 
-                       CONCAT(pm2.meta_value, ' ', pm3.meta_value) as donor_name
-                FROM {$wpdb->postmeta} pm
-                LEFT JOIN {$wpdb->postmeta} pm2 ON pm.meta_value = pm2.post_id AND pm2.meta_key = '_first_name'
-                LEFT JOIN {$wpdb->postmeta} pm3 ON pm.meta_value = pm3.post_id AND pm3.meta_key = '_last_name'
-                WHERE pm.meta_key = '_donor_id' 
-                AND pm.meta_value != '' 
-                AND pm.meta_value != '0'
-                ORDER BY donor_name ASC
-            "
+				"SELECT DISTINCT pm.meta_value as donor_id, 
+				CONCAT(pm2.meta_value, ' ', pm3.meta_value) as donor_name
+				FROM {$wpdb->postmeta} pm
+				LEFT JOIN {$wpdb->postmeta} pm2 ON pm.meta_value = pm2.post_id AND pm2.meta_key = '_first_name'
+				LEFT JOIN {$wpdb->postmeta} pm3 ON pm.meta_value = pm3.post_id AND pm3.meta_key = '_last_name'
+				WHERE pm.meta_key = '_donor_id' 
+				AND pm.meta_value != '' 
+				AND pm.meta_value != '0'
+				ORDER BY donor_name ASC"
 			);
 
 			echo '<select name="donation_donor">';
@@ -229,29 +228,29 @@ class Donation extends Base_Post_Type {
 
 	/**
 	 * Add campaign filter dropdown
+
+	 * @return void
 	 */
 	public function add_campaign_filter() {
 		global $typenow;
 
-		if ( $typenow === 'donation' ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( 'donation' === $typenow ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$selected = isset( $_GET['donation_campaign'] ) ? sanitize_text_field( wp_unslash( $_GET['donation_campaign'] ) ) : '';
 
-			// Get all unique campaigns from donations
+			// Get all unique campaigns from donations.
 			global $wpdb;
 
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$campaigns = $wpdb->get_results(
-				"
-                SELECT DISTINCT pm.meta_value as campaign_id, p.post_title as campaign_title
-                FROM {$wpdb->postmeta} pm
-                LEFT JOIN {$wpdb->posts} p ON pm.meta_value = p.ID
-                WHERE pm.meta_key = '_campaign_id' 
-                AND pm.meta_value != '' 
-                AND pm.meta_value != '0'
-                AND p.post_status = 'publish'
-                ORDER BY campaign_title ASC
-            "
+				"SELECT DISTINCT pm.meta_value as campaign_id, p.post_title as campaign_title
+				FROM {$wpdb->postmeta} pm
+				LEFT JOIN {$wpdb->posts} p ON pm.meta_value = p.ID
+				WHERE pm.meta_key = '_campaign_id' 
+				AND pm.meta_value != '' 
+				AND pm.meta_value != '0'
+				AND p.post_status = 'publish'
+				ORDER BY campaign_title ASC"
 			);
 
 			echo '<select name="donation_campaign">';
@@ -268,20 +267,20 @@ class Donation extends Base_Post_Type {
 	}
 
 	/**
-	 * Filter donations by status, donor, and campaign
-	 *
-	 * @param WP_Query $query The WP_Query instance
+	 * Filter donations by status, donor, and campaign.
+
+	 * @param WP_Query $query The WP_Query instance.
 	 */
 	public function filter_donations( $query ) {
 		global $pagenow, $typenow;
 
-		if ( $pagenow === 'edit.php' && $typenow === 'donation' ) {
+		if ( 'edit.php' === $pagenow && 'donation' === $typenow ) {
 			$meta_query = array();
 
-			// Filter by status
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			if ( isset( $_GET['donation_status'] ) && $_GET['donation_status'] !== '' ) {
-                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			// Filter by status.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( isset( $_GET['donation_status'] ) && '' !== $_GET['donation_status'] ) {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				$status       = sanitize_text_field( wp_unslash( $_GET['donation_status'] ) );
 				$meta_query[] = array(
 					'key'     => '_status',
@@ -290,10 +289,10 @@ class Donation extends Base_Post_Type {
 				);
 			}
 
-			// Filter by donor
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			if ( isset( $_GET['donation_donor'] ) && $_GET['donation_donor'] !== '' ) {
-                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			// Filter by donor.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( isset( $_GET['donation_donor'] ) && '' !== $_GET['donation_donor'] ) {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				$donor_id     = intval( $_GET['donation_donor'] );
 				$meta_query[] = array(
 					'key'     => '_donor_id',
@@ -302,10 +301,10 @@ class Donation extends Base_Post_Type {
 				);
 			}
 
-			// Filter by campaign
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended    
-			if ( isset( $_GET['donation_campaign'] ) && $_GET['donation_campaign'] !== '' ) {
-                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			// Filter by campaign.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended    
+			if ( isset( $_GET['donation_campaign'] ) && '' !== $_GET['donation_campaign'] ) {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				$campaign_id  = intval( $_GET['donation_campaign'] );
 				$meta_query[] = array(
 					'key'     => '_campaign_id',
@@ -314,7 +313,7 @@ class Donation extends Base_Post_Type {
 				);
 			}
 
-			// Apply meta query if we have filters
+			// Apply meta query if we have filters.
 			if ( ! empty( $meta_query ) ) {
 				$query->set( 'meta_query', $meta_query );
 			}

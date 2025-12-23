@@ -9,18 +9,21 @@
 namespace GiftFlow\Admin\PostTypes;
 
 /**
- * Campaign Post Type Class
+ * Campaign Post Type Class.
  */
 class Campaign extends Base_Post_Type {
 	/**
-	 * Initialize the campaign post type
+	 * Initialize the campaign post type.
+	 *
+	 * @return void
 	 */
+	// phpcs:ignore Generic.CodeAnalysis.UselessOverridingMethod.Found, Squiz.Commenting.FunctionComment.Missing
 	public function __construct() {
 		parent::__construct();
 	}
 
 	/**
-	 * Initialize post type properties
+	 * Initialize post type properties.
 	 */
 	protected function init_post_type() {
 		$this->post_type = 'campaign';
@@ -57,7 +60,7 @@ class Campaign extends Base_Post_Type {
 			'show_in_rest'       => true,
 		);
 
-		// Define custom taxonomies
+		// Define custom taxonomies.
 		$this->taxonomies = array(
 			array(
 				'name' => 'campaign-tax',
@@ -85,7 +88,7 @@ class Campaign extends Base_Post_Type {
 			),
 		);
 
-		// Define custom admin columns
+		// Define custom admin columns.
 		$this->admin_columns = array(
 			'goal_amount'   => __( 'Goal Amount', 'giftflow' ),
 			'raised_amount' => __( 'Raised Amount', 'giftflow' ),
@@ -94,7 +97,7 @@ class Campaign extends Base_Post_Type {
 			'status'        => __( 'Status', 'giftflow' ),
 		);
 
-		// Define sortable columns
+		// Define sortable columns.
 		$this->sortable_columns = array(
 			'goal_amount',
 			'raised_amount',
@@ -103,21 +106,21 @@ class Campaign extends Base_Post_Type {
 			'status',
 		);
 
-		// Add filter to highlight parent menu when on taxonomy page
+		// Add filter to highlight parent menu when on taxonomy page.
 		add_filter( 'parent_file', array( $this, 'highlight_parent_menu' ) );
 		add_filter( 'submenu_file', array( $this, 'highlight_submenu' ) );
 
-		// Register submenu page for campaign taxonomy
+		// Register submenu page for campaign taxonomy.
 		add_action( 'admin_menu', array( $this, 'register_campaign_taxonomy_submenu' ) );
 
-		// Add filters
+		// Add filters.
 		add_action( 'restrict_manage_posts', array( $this, 'add_status_filter' ) );
 		add_action( 'restrict_manage_posts', array( $this, 'add_category_filter' ) );
 		add_filter( 'parse_query', array( $this, 'filter_campaigns' ) );
 	}
 
 	/**
-	 * Render custom column content
+	 * Render custom column content.
 	 *
 	 * @param string $column The column name.
 	 * @param int    $post_id The post ID.
@@ -127,38 +130,29 @@ class Campaign extends Base_Post_Type {
 			return;
 		}
 
-		// Get the meta key for this column
+		// Get the meta key for this column.
 		$meta_key   = '_' . $column;
 		$meta_value = get_post_meta( $post_id, $meta_key, true );
 
-		// if a raised amount column, get the raised amount
-		if ( $column === 'raised_amount' ) {
+		// if a raised amount column, get the raised amount.
+		if ( 'raised_amount' === $column ) {
 			$meta_value = giftflow_get_campaign_raised_amount( $post_id );
 		}
 
-		// Default display for empty values
+		// Default display for empty values.
 		if ( empty( $meta_value ) ) {
 			echo '—';
 			return;
 		}
 
-		// Special handling for different column types
+		// Special handling for different column types.
 		switch ( $column ) {
 			case 'goal_amount':
-				// get currency symbol
-				// $currency_symbol = giftflow_get_currency_symbol(giftflow_get_current_currency());
-				// echo esc_html( $currency_symbol . number_format( $meta_value, 2 ) );
-
 				echo wp_kses_post( giftflow_render_currency_formatted_amount( $meta_value ) );
 				break;
 
 			case 'raised_amount':
-				// get currency symbol
-				// $currency_symbol = giftflow_get_currency_symbol(giftflow_get_current_currency());
-				// echo esc_html( $currency_symbol . number_format( $meta_value, 2 ) );
-
 				echo wp_kses_post( giftflow_render_currency_formatted_amount( $meta_value ) );
-
 				printf( ' (%s%s)', wp_kses_post( giftflow_get_campaign_progress_percentage( $post_id ) ), '%' );
 				break;
 
@@ -182,7 +176,7 @@ class Campaign extends Base_Post_Type {
 						$status_text  = __( 'Completed', 'giftflow' );
 						$status_class = 'status-completed';
 						break;
-					// pending
+					// pending.
 					case 'pending':
 						$status_text  = __( 'Pending', 'giftflow' );
 						$status_class = 'status-pending';
@@ -200,16 +194,16 @@ class Campaign extends Base_Post_Type {
 				break;
 
 			default:
-				// Default display for other columns
+				// Default display for other columns.
 				echo esc_html( $meta_value );
 		}
 	}
 
 	/**
-	 * Register the campaign taxonomy submenu
+	 * Register the campaign taxonomy submenu.
 	 */
 	public function register_campaign_taxonomy_submenu() {
-		// add submenu page for campaign taxonomy
+		// add submenu page for campaign taxonomy.
 		add_submenu_page(
 			'giftflow-dashboard',
 			__( 'Campaign Categories', 'giftflow' ),
@@ -222,15 +216,15 @@ class Campaign extends Base_Post_Type {
 	}
 
 	/**
-	 * Highlight the parent menu when on the campaign taxonomy page
-	 *
+	 * Highlight the parent menu when on the campaign taxonomy page.
+
 	 * @param string $parent_file The parent file.
 	 * @return string The modified parent file.
 	 */
 	public function highlight_parent_menu( $parent_file ) {
 		global $current_screen;
 
-		if ( $current_screen->taxonomy === 'campaign-tax' ) {
+		if ( 'campaign-tax' === $current_screen->taxonomy ) {
 			$parent_file = 'giftflow-dashboard';
 		}
 
@@ -238,15 +232,15 @@ class Campaign extends Base_Post_Type {
 	}
 
 	/**
-	 * Highlight the submenu when on the campaign taxonomy page
-	 *
+	 * Highlight the submenu when on the campaign taxonomy page.
+
 	 * @param string $submenu_file The submenu file.
 	 * @return string The modified submenu file.
 	 */
 	public function highlight_submenu( $submenu_file ) {
 		global $current_screen;
 
-		if ( $current_screen->taxonomy === 'campaign-tax' ) {
+		if ( 'campaign-tax' === $current_screen->taxonomy ) {
 			$submenu_file = 'edit-tags.php?taxonomy=campaign-tax&post_type=campaign';
 		}
 
@@ -259,8 +253,8 @@ class Campaign extends Base_Post_Type {
 	public function add_status_filter() {
 		global $typenow;
 
-		if ( $typenow === 'campaign' ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( 'campaign' === $typenow ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$selected = isset( $_GET['campaign_status'] ) ? sanitize_text_field( wp_unslash( $_GET['campaign_status'] ) ) : '';
 			$statuses = array( 'active', 'completed', 'closed', 'pending' );
 
@@ -278,16 +272,16 @@ class Campaign extends Base_Post_Type {
 	}
 
 	/**
-	 * Add category filter dropdown
+	 * Add category filter dropdown.
 	 */
 	public function add_category_filter() {
 		global $typenow;
 
-		if ( $typenow === 'campaign' ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( 'campaign' === $typenow ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$selected = isset( $_GET['campaign_category'] ) ? sanitize_text_field( wp_unslash( $_GET['campaign_category'] ) ) : '';
 
-			// Get all campaign categories
+			// Get all campaign categories.
 			$categories = get_terms(
 				array(
 					'taxonomy'   => 'campaign-tax',
@@ -312,21 +306,21 @@ class Campaign extends Base_Post_Type {
 	}
 
 	/**
-	 * Filter campaigns by status and category
-	 *
-	 * @param WP_Query $query The WP_Query instance
+	 * Filter campaigns by status and category.
+
+	 * @param WP_Query $query The WP_Query instance.
 	 */
 	public function filter_campaigns( $query ) {
 		global $pagenow, $typenow;
 
-		if ( $pagenow === 'edit.php' && $typenow === 'campaign' ) {
+		if ( 'edit.php' === $pagenow && 'campaign' === $typenow ) {
 			$meta_query = array();
 			$tax_query  = array();
 
-			// Filter by status
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			if ( isset( $_GET['campaign_status'] ) && $_GET['campaign_status'] !== '' ) {
-                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			// Filter by status.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( isset( $_GET['campaign_status'] ) && '' !== $_GET['campaign_status'] ) {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				$status       = sanitize_text_field( wp_unslash( $_GET['campaign_status'] ) );
 				$meta_query[] = array(
 					'key'     => '_status',
@@ -335,10 +329,10 @@ class Campaign extends Base_Post_Type {
 				);
 			}
 
-			// Filter by category
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			if ( isset( $_GET['campaign_category'] ) && $_GET['campaign_category'] !== '' ) {
-                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			// Filter by category.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( isset( $_GET['campaign_category'] ) && '' !== $_GET['campaign_category'] ) {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				$category_id = intval( wp_unslash( $_GET['campaign_category'] ) );
 				$tax_query[] = array(
 					'taxonomy' => 'campaign-tax',
@@ -348,12 +342,12 @@ class Campaign extends Base_Post_Type {
 				);
 			}
 
-			// Apply meta query if we have status filter
+			// Apply meta query if we have status filter.
 			if ( ! empty( $meta_query ) ) {
 				$query->set( 'meta_query', $meta_query );
 			}
 
-			// Apply tax query if we have category filter
+			// Apply tax query if we have category filter.
 			if ( ! empty( $tax_query ) ) {
 				$query->set( 'tax_query', $tax_query );
 			}

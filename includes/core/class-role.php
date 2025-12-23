@@ -40,24 +40,15 @@ class Role extends Base {
 	 */
 	private function __construct() {
 		parent::__construct();
-		// $this->init_hooks();
 		$this->register_roles();
 		$this->add_capabilities();
 	}
 
 	/**
-	 * Initialize WordPress hooks
-	 */
-	// private function init_hooks() {
-	// add_action('init', array($this, 'register_roles'));
-	// add_action('init', array($this, 'add_capabilities'));
-	// }
-
-	/**
-	 * Register custom user roles
+	 * Register custom user roles.
 	 */
 	public function register_roles() {
-		// Donor role like subscriber role
+		// Donor role like subscriber role.
 		add_role(
 			'giftflow_donor',
 			__( 'Donor', 'giftflow' ),
@@ -71,23 +62,22 @@ class Role extends Base {
 	 * Add custom capabilities to existing roles
 	 */
 	public function add_capabilities() {
-		// No additional capabilities needed for basic setup
+		// No additional capabilities needed for basic setup.
 	}
 
 	/**
-	 * Assign donor role to user
-	 *
-	 * @param int $user_id
+	 * Assign donor role to user.
+
+	 * @param int $user_id User ID.
 	 * @return bool
 	 */
 	public function assign_donor_role( $user_id ) {
 		$user = get_user_by( 'id', $user_id );
-		if ( $user && ! in_array( 'giftflow_donor', $user->roles ) ) {
-			// $user->add_role('giftflow_donor');
-			// set role
+		if ( $user && ! in_array( 'giftflow_donor', $user->roles, true ) ) {
+			// set role.
 			$user->set_role( 'giftflow_donor' );
 
-			// add more role subscriber
+			// add more role subscriber.
 			$user->add_role( 'subscriber' );
 
 			return true;
@@ -97,13 +87,13 @@ class Role extends Base {
 
 	/**
 	 * Remove donor role from user
-	 *
-	 * @param int $user_id
+
+	 * @param int $user_id User ID.
 	 * @return bool
 	 */
 	public function remove_donor_role( $user_id ) {
 		$user = get_user_by( 'id', $user_id );
-		if ( $user && in_array( 'giftflow_donor', $user->roles ) ) {
+		if ( $user && in_array( 'giftflow_donor', $user->roles, true ) ) {
 			$user->remove_role( 'giftflow_donor' );
 			return true;
 		}
@@ -113,12 +103,12 @@ class Role extends Base {
 	/**
 	 * Check if user has donor role
 	 *
-	 * @param int $user_id
+	 * @param int $user_id User ID.
 	 * @return bool
 	 */
 	public function user_has_donor_role( $user_id ) {
 		$user = get_user_by( 'id', $user_id );
-		return $user && in_array( 'giftflow_donor', $user->roles );
+		return $user && in_array( 'giftflow_donor', $user->roles, true );
 	}
 
 	/**
@@ -132,6 +122,6 @@ class Role extends Base {
 	 * Remove custom capabilities from existing roles
 	 */
 	public function remove_capabilities() {
-		// No custom capabilities to remove
+		// No custom capabilities to remove.
 	}
 }

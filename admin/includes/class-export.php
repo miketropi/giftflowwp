@@ -1,27 +1,75 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Export functionality for GiftFlow
  *
  * @package GiftFlow
- * @subpackage Admin
  */
 
-// Exit if accessed directly
+// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * GiftFlow Export class.
+
+ * @since 1.0.0
+ */
 class GiftFlow_Export {
+	/**
+	 * The format of the export.
+
+	 * @var string
+	 */
 	public $format;
+	/**
+	 * The ID of the campaign.
+
+	 * @var string
+	 */
 	public $campaign_id;
+	/**
+	 * The period of the export.
+
+	 * @var string
+	 */
 	public $period;
+	/**
+	 * The start date of the export.
+
+	 * @var string
+	 */
 	public $date_from;
+	/**
+	 * The end date of the export.
+
+	 * @var string
+	 */
 	public $date_to;
+	/**
+	 * Whether to include the donor in the export.
+
+	 * @var bool
+	 */
 	public $include_donor;
+	/**
+	 * Whether to include the campaign in the export.
+
+	 * @var bool
+	 */
 	public $include_campaign;
 
 	/**
 	 * Initialize the export functionality
+
+	 * @param string $campaign_id The ID of the campaign.
+	 * @param string $period The period of the export.
+	 * @param string $date_from The start date of the export.
+	 * @param string $date_to The end date of the export.
+	 * @param bool $include_donor Whether to include the donor in the export.
+	 * @param bool $include_campaign Whether to include the campaign in the export.
+	 * @param string $format The format of the export.
+	 * @return void
 	 */
 	public function __construct(
 		$campaign_id = '',
@@ -44,20 +92,20 @@ class GiftFlow_Export {
 	}
 
 	/**
-	 * Export donations based on criteria
+	 * Export donations based on criteria.
 	 */
 	public function export_donations() {
 
-		// Build query args
+		// Build query args.
 		$args = array(
 			'post_type'   => 'donation',
 			'post_status' => 'publish',
 			'numberposts' => -1,
-            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query'  => array(),
 		);
 
-		// Add campaign filter
+		// Add campaign filter.
 		if ( ! empty( $this->campaign_id ) ) {
 			$args['meta_query'][] = array(
 				'key'     => '_campaign_id',
@@ -66,21 +114,21 @@ class GiftFlow_Export {
 			);
 		}
 
-		// Add date filter
+		// Add date filter.
 		$date_query = $this->get_date_query( $this->period, $this->date_from, $this->date_to );
 		if ( $date_query ) {
 			$args['date_query'] = $date_query;
 		}
 
-		// Get donations
+		// Get donations.
 		$donations = get_posts( $args );
 
 		if ( empty( $donations ) ) {
-			/* translators: %s: Campaign name */
+			// translators: %s: Campaign name.
 			wp_die( sprintf( esc_html__( 'No donations found for the selected campaign: %s', 'giftflow' ), esc_html( get_the_title( $this->campaign_id ) ) ) );
 		}
 
-		// Generate export based on format
+		// Generate export based on format.
 		switch ( $this->format ) {
 			case 'csv':
 				$this->export_csv( $donations, $this->include_donor, $this->include_campaign );
@@ -91,7 +139,7 @@ class GiftFlow_Export {
 	}
 
 	/**
-	 * Get date query based on period
+	 * Get date query based on period.
 	 */
 	private function get_date_query() {
 		switch ( $this->period ) {
@@ -136,7 +184,12 @@ class GiftFlow_Export {
 	}
 
 	/**
-	 * Export donations to CSV
+	 * Export donations to CSV.
+
+	 * @param array $donations The donations to export.
+	 * @param bool $include_donor Whether to include the donor in the export.
+	 * @param bool $include_campaign Whether to include the campaign in the export.
+	 * @return void
 	 */
 	private function export_csv( $donations, $include_donor, $include_campaign ) {
 		$campaign_name = get_the_title( $this->campaign_id );
@@ -149,7 +202,7 @@ class GiftFlow_Export {
 
 		$output = fopen( 'php://output', 'w' );
 
-		// CSV headers
+		// CSV headers.
 		$headers = array( 'ID', 'Date', 'Amount', 'Status' );
 
 		if ( $include_donor ) {
@@ -165,7 +218,7 @@ class GiftFlow_Export {
 
 		fputcsv( $output, $headers );
 
-		// CSV data
+		// CSV data.
 		foreach ( $donations as $donation ) {
 			$row = array(
 				$donation->ID,
@@ -201,7 +254,7 @@ class GiftFlow_Export {
 			fputcsv( $output, $row );
 		}
 
-        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 		fclose( $output );
 		exit;
 	}

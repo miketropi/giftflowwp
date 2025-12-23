@@ -32,8 +32,6 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
 			'amount'               => array(
 				'label'       => __( 'Amount', 'giftflow' ),
 				'type'        => 'currency',
-				// 'step'  => '0.01',
-				// 'currency_symbol' => '$',
 				'description' => __( 'Enter the amount of the donation', 'giftflow' ),
 			),
 			'payment_method'       => array(
@@ -136,22 +134,7 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
 		foreach ( $fields as $field_id => $field_args ) {
 			$value = get_post_meta( $post->ID, '_' . $field_id, true );
 
-			// Create field instance
-			// $field_args = array(
-			// 'value' => $value,
-			// 'label' => $field['label'],
-			// );
-
-			// // Add additional field properties based on type
-			// if ( isset( $field['options'] ) ) {
-			// $field_args['options'] = $field['options'];
-			// }
-
-			// if ( isset( $field['step'] ) ) {
-			// $field_args['step'] = $field['step'];
-			// }
-
-			// Create and render the field
+			// Create and render the field.
 			$field_instance = new \GiftFlow_Field(
 				$field_id,
 				$field_id,
@@ -160,18 +143,17 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
 					$field_args,
 					array(
 						'value' => $value,
-
 					)
 				)
 			);
 
-            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $field_instance->render();
 		}
 	}
 
 	/**
-	 * Save the meta box
+	 * Save the meta box.
 	 *
 	 * @param int $post_id Post ID.
 	 */
@@ -190,9 +172,9 @@ class Donation_Transaction_Meta extends Base_Meta_Box {
 
 		$fields = $this->get_fields();
 		foreach ( $fields as $field_id => $field ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( isset( $_POST[ $field_id ] ) ) {
-                // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing
 				update_post_meta( $post_id, '_' . $field_id, sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) ) );
 			}
 		}

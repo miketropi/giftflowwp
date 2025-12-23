@@ -39,7 +39,6 @@ class Campaign_Details_Meta extends Base_Meta_Box {
 			},
 			$preset_donation_amounts
 		);
-		// var_dump($preset_donation_amounts);die;
 
 		return array(
 			'regular'  => array(
@@ -48,20 +47,17 @@ class Campaign_Details_Meta extends Base_Meta_Box {
 					'type'        => 'currency',
 					'step'        => '1',
 					'min'         => '0',
-					// 'currency_symbol' => '$',
-					// description
+					// description.
 					'description' => esc_html__( 'Enter the goal amount for the campaign', 'giftflow' ),
 				),
 				'start_date'         => array(
 					'label'       => esc_html__( 'Start Date', 'giftflow' ),
 					'type'        => 'datetime',
-					// 'date_format' => 'Y-m-d',
 					'description' => esc_html__( 'Select the start date for the campaign 📅.', 'giftflow' ),
 				),
 				'end_date'           => array(
 					'label'       => esc_html__( 'End Date', 'giftflow' ),
 					'type'        => 'datetime',
-					// 'date_format' => 'Y-m-d',
 					'description' => esc_html__( 'Select the end date for the campaign 📅, If empty, the campaign will be active indefinitely ♾️', 'giftflow' ),
 				),
 				'status'             => array(
@@ -70,35 +66,35 @@ class Campaign_Details_Meta extends Base_Meta_Box {
 					'options'     => array(
 						'active'    => esc_html__( 'Active', 'giftflow' ),
 						'completed' => esc_html__( 'Completed', 'giftflow' ),
-						// closed
+						// closed.
 						'closed'    => esc_html__( 'Closed', 'giftflow' ),
-						// pending
+						// pending.
 						'pending'   => esc_html__( 'Pending', 'giftflow' ),
 					),
 					'description' => '
-                        <p>' . esc_html__( 'Select the status for the campaign donations:', 'giftflow' ) . '</p>
-                        <ul>
-                            <li><strong>' . esc_html__( 'Active', 'giftflow' ) . '</strong> 🟢: ' . esc_html__( 'Campaign is open for donations', 'giftflow' ) . ' 💰</li>
-                            <li><strong>' . esc_html__( 'Completed', 'giftflow' ) . '</strong> 🏆: ' . esc_html__( 'Campaign is closed and all donations are collected  ✅, but donations are still allowed.', 'giftflow' ) . '</li>
-                            <li><strong>' . esc_html__( 'Closed', 'giftflow' ) . '</strong> 🔒: ' . esc_html__( 'Campaign is closed and no more donations are allowed', 'giftflow' ) . ' ⛔</li>
-                            <li><strong>' . esc_html__( 'Pending', 'giftflow' ) . '</strong> ⏳: ' . esc_html__( 'Campaign donations are pending and auto-activated when start date is reached', 'giftflow' ) . ' 📅</li>
-                        </ul>',
+						<p>' . esc_html__( 'Select the status for the campaign donations:', 'giftflow' ) . '</p>
+						<ul>
+								<li><strong>' . esc_html__( 'Active', 'giftflow' ) . '</strong> 🟢: ' . esc_html__( 'Campaign is open for donations', 'giftflow' ) . ' 💰</li>
+								<li><strong>' . esc_html__( 'Completed', 'giftflow' ) . '</strong> 🏆: ' . esc_html__( 'Campaign is closed and all donations are collected  ✅, but donations are still allowed.', 'giftflow' ) . '</li>
+								<li><strong>' . esc_html__( 'Closed', 'giftflow' ) . '</strong> 🔒: ' . esc_html__( 'Campaign is closed and no more donations are allowed', 'giftflow' ) . ' ⛔</li>
+								<li><strong>' . esc_html__( 'Pending', 'giftflow' ) . '</strong> ⏳: ' . esc_html__( 'Campaign donations are pending and auto-activated when start date is reached', 'giftflow' ) . ' 📅</li>
+						</ul>',
 				),
-				// on / off one-time donation
+				// on / off one-time donation.
 				'one_time'           => array(
 					'label'       => esc_html__( 'One-Time', 'giftflow' ),
 					'type'        => 'switch',
 					'description' => esc_html__( 'Allow one-time donations', 'giftflow' ),
 					'default'     => 1,
 				),
-				// on / off recurring
+				// on / off recurring.
 				'recurring'          => array(
 					'label'       => esc_html__( 'Recurring', 'giftflow' ),
 					'type'        => 'switch',
 					'description' => esc_html__( 'Allow recurring donations', 'giftflow' ),
 					'default'     => 0,
 				),
-				// select recurring interval
+				// select recurring interval.
 				'recurring_interval' => array(
 					'label'       => esc_html__( 'Recurring Interval', 'giftflow' ),
 					'type'        => 'select',
@@ -115,7 +111,6 @@ class Campaign_Details_Meta extends Base_Meta_Box {
 
 			),
 			'advanced' => array(
-				// repeater preset donation amounts ($10, $25, $50, $100, $250)
 				'preset_donation_amounts'       => array(
 					'label'             => esc_html__( 'Preset Donation Amounts', 'giftflow' ),
 					'type'              => 'repeater',
@@ -128,15 +123,13 @@ class Campaign_Details_Meta extends Base_Meta_Box {
 								'type'        => 'currency',
 								'step'        => '1',
 								'min'         => '0',
-								// 'value' => 10,
 								'description' => esc_html__( 'Enter the amount for the donation', 'giftflow' ),
-								// 'currency_symbol' => '$',
 							),
 						),
 					),
 				),
 
-				// On / Off switch allow custom donation amounts
+				// On / Off switch allow custom donation amounts.
 				'allow_custom_donation_amounts' => array(
 					'label'       => esc_html__( 'Allow Custom Donation Amounts', 'giftflow' ),
 					'type'        => 'switch',
@@ -216,8 +209,8 @@ class Campaign_Details_Meta extends Base_Meta_Box {
 					if ( metadata_exists( 'post', $post->ID, '_' . $field_id ) ) {
 						$value = get_post_meta( $post->ID, '_' . $field_id, true );
 
-						if ( $field_args['type'] == 'repeater' && $value ) {
-							$value = unserialize( $value );
+						if ( 'repeater' === $field_args['type'] && $value ) {
+							$value = maybe_unserialize( $value );
 						}
 					} else {
 						$value = $field_args['default'] ?? '';
@@ -314,15 +307,13 @@ class Campaign_Details_Meta extends Base_Meta_Box {
 		}
 
 		$fields = $this->get_fields();
-		// var_dump(is_array($_POST['allow_custom_donation_amounts']));die;
 
-		// Save regular fields
+		// Save regular fields.
 		foreach ( $fields['regular'] as $field_id => $field ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( isset( $_POST[ $field_id ] ) ) {
-                // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing
 				$value = sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) );
-				// $value = sanitize_text_field( wp_unslash( $value ) );
 
 				update_post_meta(
 					$post_id,
@@ -338,18 +329,19 @@ class Campaign_Details_Meta extends Base_Meta_Box {
 			}
 		}
 
-		// Save advanced fields
+		// Save advanced fields.
 		foreach ( $fields['advanced'] as $field_id => $field ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( isset( $_POST[ $field_id ] ) ) {
-                // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 				$value = $_POST[ $field_id ];
 
-				// if value is an array, then we need to save each value as a separate post meta
+				// if value is an array, then we need to save each value as a separate post meta.
 				if ( is_array( $value ) ) {
+					// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 					$value = serialize( $value );
 				} else {
-                    // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+					// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 					$value = sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) );
 				}
 

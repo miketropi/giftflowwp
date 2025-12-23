@@ -6,23 +6,34 @@
  * @subpackage Admin
  */
 
-// Exit if accessed directly
+// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// add custom nav item under plugin title in WordPress admin plugin list
+// add custom nav item under plugin title in WordPress admin plugin list.
 add_filter( 'plugin_action_links_' . GIFTFLOW_PLUGIN_BASENAME, 'giftflow_add_settings_link' );
 
+/**
+ * Add settings link to plugin action links.
+
+ * @param array $links The plugin action links.
+ * @return array The plugin action links.
+ */
 function giftflow_add_settings_link( $links ) {
 	$settings_link = '<a href="admin.php?page=giftflow-settings">' . __( 'Settings', 'giftflow' ) . '</a>';
 	array_unshift( $links, $settings_link );
 	return $links;
 }
 
-// add submenu page to giftflow-dashboard menu
+// add submenu page to giftflow-dashboard menu.
 add_action( 'admin_menu', 'giftflow_add_settings_page', 30 );
 
+/**
+ * Add settings page to giftflow-dashboard menu.
+
+ * @return void
+ */
 function giftflow_add_settings_page() {
 	add_submenu_page(
 		'giftflow-dashboard',
@@ -34,37 +45,34 @@ function giftflow_add_settings_page() {
 	);
 }
 
+/**
+ * Display the settings page.
+ *
+ * @return void
+ */
 function giftflow_settings_page() {
-	// Check user capabilities
+	// Check user capabilities.
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
 	}
 
-	// Get active tab
-    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	// Get active tab.
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'general';
 
-	// build array of tabs
+	// build array of tabs.
 	$tabs = apply_filters(
 		'giftflow_settings_tabs',
 		array(
 			'general' => __( 'General', 'giftflow' ),
 			'payment' => __( 'Payment', 'giftflow' ),
 			'email'   => __( 'Email', 'giftflow' ),
-		// 'design' => __('Design', 'giftflow'),
 		)
 	);
-
-	// Get all options
-	// $general_options = get_option('giftflow_general_options');
-	// $payment_options = get_option('giftflow_payment_options');
-	// $email_options = get_option('giftflow_email_options');
-	// $design_options = get_option('giftflow_design_options');
 	?>
 	<div class="giftflow_page_giftflow-settings">
 		<div class="wrap">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-			
 			<h2 class="nav-tab-wrapper">
 				<?php foreach ( $tabs as $tab_key => $tab_label ) : ?>
 					<a href="?page=giftflow-settings&tab=<?php echo esc_attr( $tab_key ); ?>" class="nav-tab <?php echo $active_tab === $tab_key ? 'nav-tab-active' : ''; ?>">
@@ -72,7 +80,6 @@ function giftflow_settings_page() {
 					</a>
 				<?php endforeach; ?>
 			</h2>
-
 			<form method="post" action="options.php">
 				<?php
 				switch ( $active_tab ) {
@@ -88,14 +95,8 @@ function giftflow_settings_page() {
 						settings_fields( 'giftflow_email_options' );
 						do_settings_sections( 'giftflow-email' );
 						break;
-					// case 'design':
-					// settings_fields('giftflow_design_options');
-					// do_settings_sections('giftflow-design');
-					// break;
 				}
-
 				do_action( 'giftflow_settings_tabs', $active_tab );
-
 				submit_button( __( 'Save Settings', 'giftflow' ) );
 				?>
 			</form>
@@ -105,16 +106,18 @@ function giftflow_settings_page() {
 }
 
 /**
- * Initialize plugin settings
+ * Initialize plugin settings.
+
+ * @return void
  */
 function giftflow_initialize_settings() {
-	// Get current options
+	// Get current options.
 	$general_options = get_option( 'giftflow_general_options' );
 	$payment_options = get_option( 'giftflow_payment_options' );
 	$email_options   = get_option( 'giftflow_email_options' );
 	$design_options  = get_option( 'giftflow_design_options' );
 
-	// Define settings structure
+	// Define settings structure.
 	$settings = array(
 		'general'         => array(
 			'option_name'      => 'giftflow_general_options',
@@ -133,7 +136,7 @@ function giftflow_initialize_settings() {
 						array_column( giftflow_get_common_currency(), 'code' ),
 						array_map(
 							function ( $currency ) {
-								// countries
+								// countries.
 								return $currency['countries'][0] . ' (' . $currency['code'] . ' ' . $currency['symbol'] . ')';
 							},
 							giftflow_get_common_currency()
@@ -141,7 +144,7 @@ function giftflow_initialize_settings() {
 					),
 					'description' => __( 'Select the default currency for donations', 'giftflow' ),
 				),
-				// currency template
+				// currency template.
 				'currency_template'       => array(
 					'id'          => 'giftflow_currency_template',
 					'name'        => 'giftflow_general_options[currency_template]',
@@ -150,7 +153,7 @@ function giftflow_initialize_settings() {
 					'value'       => giftflow_get_currency_template(),
 					'description' => __( 'Enter the template for the currency formatted amount (default: {{currency_symbol}} {{amount}})', 'giftflow' ),
 				),
-				// preset donation amounts
+				// preset donation amounts.
 				'preset_donation_amounts' => array(
 					'id'          => 'giftflow_preset_donation_amounts',
 					'name'        => 'giftflow_general_options[preset_donation_amounts]',
@@ -169,7 +172,7 @@ function giftflow_initialize_settings() {
 					'step'        => '1',
 					'description' => __( 'Set the minimum amount that can be donated', 'giftflow' ),
 				),
-				// max amount
+				// max amount.
 				'max_amount'              => array(
 					'id'          => 'giftflow_max_amount',
 					'name'        => 'giftflow_general_options[max_amount]',
@@ -180,7 +183,7 @@ function giftflow_initialize_settings() {
 					'step'        => '1',
 					'description' => __( 'Set the maximum amount that can be donated', 'giftflow' ),
 				),
-				// donor account page
+				// donor account page.
 				'donor_account_page'      => array(
 					'id'          => 'giftflow_donor_account_page',
 					'name'        => 'giftflow_general_options[donor_account_page]',
@@ -190,6 +193,7 @@ function giftflow_initialize_settings() {
 					'label'       => __( 'Donor Account Page', 'giftflow' ),
 					'description' => __( 'Select the donor account page', 'giftflow' ),
 				),
+				// thank donor page.
 				'thank_donor_page'        => array(
 					'id'          => 'giftflow_thank_donor_page',
 					'name'        => 'giftflow_general_options[thank_donor_page]',
@@ -201,7 +205,7 @@ function giftflow_initialize_settings() {
 				),
 			),
 		),
-		'payment_methods' => giftflow_payment_methods_options(),
+		'payment_methods' => giftflow_payment_methods_options(), // payment methods options.
 		'email'           => array(
 			'option_name'      => 'giftflow_email_options',
 			'page'             => 'giftflow-email',
@@ -237,13 +241,13 @@ function giftflow_initialize_settings() {
 		),
 	);
 
-	// Register settings and add sections/fields
+	// Register settings and add sections/fields.
 	foreach ( $settings as $section_key => $section ) {
-		// Register setting
-        // phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingMissing
+		// Register setting.
+		// phpcs:ignore PluginCheck.CodeAnalysis.SettingSanitization.register_settingMissing
 		register_setting( $section['option_name'], $section['option_name'] );
 
-		// Add section
+		// Add section.
 		add_settings_section(
 			$section['section'],
 			$section['section_title'],
@@ -251,15 +255,13 @@ function giftflow_initialize_settings() {
 			$section['page']
 		);
 
-		// Add fields
+		// Add fields.
 		foreach ( $section['fields'] as $field_key => $field ) {
 			$field_instance = new GiftFlow_Field(
 				$field['id'],
 				$field['name'],
 				$field['type'],
 				array_merge(
-					// ['label' => $field['label']],
-					// isset($field['label']) ? ['label' => $field['label']] : [],
 					isset( $field['value'] ) ? array( 'value' => $field['value'] ) : array(),
 					isset( $field['options'] ) ? array( 'options' => $field['options'] ) : array(),
 					isset( $field['description'] ) ? array( 'description' => $field['description'] ) : array(),
@@ -277,7 +279,7 @@ function giftflow_initialize_settings() {
 				$field['id'],
 				$field['label'],
 				function () use ( $field_instance ) {
-                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $field_instance->render();
 				},
 				$section['page'],
@@ -288,31 +290,55 @@ function giftflow_initialize_settings() {
 }
 add_action( 'admin_init', 'giftflow_initialize_settings' );
 
-// Section Callbacks
+/**
+ * General settings callback.
+ *
+ * @return void
+ */
 function giftflow_general_settings_callback() {
 	echo '<p>' . esc_html__( 'Configure general settings for GiftFlow.', 'giftflow' ) . '</p>';
 }
 
+/**
+ * Payment settings callback.
+ *
+ * @return void
+ */
 function giftflow_payment_settings_callback() {
 	echo '<p>' . esc_html__( 'Configure payment gateway settings.', 'giftflow' ) . '</p>';
 }
 
+/**
+ * Email settings callback.
+ *
+ * @return void
+ */
 function giftflow_email_settings_callback() {
 	echo '<p>' . esc_html__( 'Configure email for notifications.', 'giftflow' ) . '</p>';
 }
 
+/**
+ * Design settings callback.
+ *
+ * @return void
+ */
 function giftflow_design_settings_callback() {
 	echo '<p>' . esc_html__( 'Customize the appearance of donation forms.', 'giftflow' ) . '</p>';
 }
 
-// payment methods options register
+/**
+ * Payment methods options.
+ *
+ * @return array
+ */
 function giftflow_payment_methods_options() {
 	$payment_options = get_option( 'giftflow_payment_options' );
-	// var_dump($payment_options);
 
 	/**
-	 * @hook giftflow_payment_methods_settings : giftflow_payment_methods_options_stripe - 8
-	 * @hook giftflow_payment_methods_settings : giftflow_payment_methods_options_paypal - 10
+	 * Allow developers to customize the payment methods settings.
+	 *
+	 * @hook giftflow_payment_methods_settings : giftflow_payment_methods_options_stripe:8
+	 * @hook giftflow_payment_methods_settings : giftflow_payment_methods_options_paypal:10
 	 */
 	$payment_fields = apply_filters( 'giftflow_payment_methods_settings', array() );
 
@@ -326,12 +352,17 @@ function giftflow_payment_methods_options() {
 	);
 }
 
+/**
+ * Test mail HTML.
+ *
+ * @return string
+ */
 function giftflow_test_mail_html() {
-	// get mail options
+	// get mail options.
 	$email_opts  = get_option( 'giftflow_email_options' );
 	$admin_email = $email_opts['email_admin_address'] ?? get_bloginfo( 'admin_email' );
 
-	// Define the default notification buttons
+	// Define the default notification buttons.
 	$notification_buttons = array(
 		array(
 			'id'    => 'admin_new_donation',
@@ -354,7 +385,7 @@ function giftflow_test_mail_html() {
 	 */
 	$notification_buttons = apply_filters( 'giftflow_test_email_notification_buttons', $notification_buttons );
 
-	// Render the buttons
+	// Render the buttons.
 	ob_start();
 	echo '<div class="giftflow-email-notification-buttons" style="display: flex; gap: 10px; flex-wrap: wrap;">';
 	foreach ( $notification_buttons as $button ) {
@@ -371,7 +402,7 @@ function giftflow_test_mail_html() {
 	}
 
 	echo '</div>';
-	// Add a message to indicate the recipient of the test email
+	// Add a message to indicate the recipient of the test email.
 	echo '<div style="margin-top:10px; color:#666; font-size:13px;">';
 	esc_html_e( 'Test emails will be sent to the admin email address above: ', 'giftflow' );
 	echo '<u>' . wp_kses_post( $admin_email ) . '</u>';
@@ -379,10 +410,15 @@ function giftflow_test_mail_html() {
 	return ob_get_clean();
 }
 
+/**
+ * Get pages.
+ *
+ * @return array
+ */
 function giftflow_get_pages() {
 	$pages = get_pages();
 
-	// return [key => value]
+	// return [key => value].
 	return array_combine(
 		array_column( $pages, 'ID' ),
 		array_map(

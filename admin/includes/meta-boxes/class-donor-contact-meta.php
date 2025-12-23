@@ -29,67 +29,60 @@ class Donor_Contact_Meta extends Base_Meta_Box {
 	 */
 	protected function get_fields() {
 		return array(
-			// first name
+			// first name.
 			'first_name'  => array(
 				'label'       => __( 'First Name', 'giftflow' ),
 				'type'        => 'textfield',
 				'description' => __( 'Enter the first name of the donor', 'giftflow' ),
 			),
-			// last name
+			// last name.
 			'last_name'   => array(
 				'label'       => __( 'Last Name', 'giftflow' ),
 				'type'        => 'textfield',
 				'description' => __( 'Enter the last name of the donor', 'giftflow' ),
 			),
-			// email
+			// email.
 			'email'       => array(
 				'label'       => __( 'Email', 'giftflow' ),
 				'type'        => 'email',
 				'description' => __( 'Enter the email of the donor', 'giftflow' ),
 			),
-			// phone
+			// phone.
 			'phone'       => array(
 				'label'       => __( 'Phone', 'giftflow' ),
 				'type'        => 'tel',
 				'description' => __( 'Enter the phone number of the donor', 'giftflow' ),
 			),
-			// address
+			// address.
 			'address'     => array(
 				'label'       => __( 'Address', 'giftflow' ),
 				'type'        => 'textarea',
 				'description' => __( 'Enter the address of the donor', 'giftflow' ),
 			),
-			// city
+			// city.
 			'city'        => array(
 				'label'       => __( 'City', 'giftflow' ),
 				'type'        => 'textfield',
 				'description' => __( 'Enter the city of the donor', 'giftflow' ),
 			),
-			// state
+			// state.
 			'state'       => array(
 				'label'       => __( 'State/Province', 'giftflow' ),
 				'type'        => 'textfield',
 				'description' => __( 'Enter the state/province of the donor', 'giftflow' ),
 			),
-			// postal code
+			// postal code.
 			'postal_code' => array(
 				'label'       => __( 'Postal Code', 'giftflow' ),
 				'type'        => 'textfield',
 				'description' => __( 'Enter the postal code of the donor', 'giftflow' ),
 			),
-			// country
+			// country.
 			'country'     => array(
 				'label'       => __( 'Country', 'giftflow' ),
 				'type'        => 'textfield',
 				'description' => __( 'Enter the country of the donor', 'giftflow' ),
 			),
-			// donor username
-			// 'wp_user' => array(
-			// 'label' => __( 'WP User', 'giftflow' ),
-			// 'type'  => 'select',
-			// 'description' => __( 'Enter the WP user of the donor', 'giftflow' ),
-			// 'options' => $this->get_all_usernames(),
-			// ),
 		);
 	}
 
@@ -105,11 +98,11 @@ class Donor_Contact_Meta extends Base_Meta_Box {
 		foreach ( $fields as $field_id => $field ) {
 			$value   = get_post_meta( $post->ID, '_' . $field_id, true );
 			$options = isset( $field['options'] ) ? $field['options'] : array();
-			// Create field instance with all necessary parameters
+			// Create field instance with all necessary parameters.
 			$field_instance = new \GiftFlow_Field(
-				$field_id,                    // id
-				$field_id,                    // name
-				$field['type'],              // type
+				$field_id,                    // id.
+				$field_id,                    // name.
+				$field['type'],              // type.
 				array(
 					'value'           => $value,
 					'label'           => $field['label'],
@@ -124,8 +117,8 @@ class Donor_Contact_Meta extends Base_Meta_Box {
 				)
 			);
 
-			// Render the field
-            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			// Render the field.
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $field_instance->render();
 		}
 	}
@@ -150,21 +143,21 @@ class Donor_Contact_Meta extends Base_Meta_Box {
 
 		$fields = $this->get_fields();
 		foreach ( $fields as $field_id => $field ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( isset( $_POST[ $field_id ] ) ) {
-                // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing
 				if ( 'textarea' === $field['type'] ) {
 					update_post_meta(
 						$post_id,
 						'_' . $field_id,
-                        // phpcs:ignore WordPress.Security.NonceVerification.Missing
+						// phpcs:ignore WordPress.Security.NonceVerification.Missing
 						sanitize_textarea_field( wp_unslash( $_POST[ $field_id ] ) )
 					);
 				} else {
 					update_post_meta(
 						$post_id,
 						'_' . $field_id,
-                        // phpcs:ignore WordPress.Security.NonceVerification.Missing
+						// phpcs:ignore WordPress.Security.NonceVerification.Missing
 						sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) )
 					);
 				}
@@ -172,7 +165,11 @@ class Donor_Contact_Meta extends Base_Meta_Box {
 		}
 	}
 
-	// get all user names for select field
+	/**
+	 * Get all user names for select field.
+
+	 * @return array
+	 */
 	private function get_all_usernames() {
 		$__users = get_users(
 			array(
@@ -181,9 +178,6 @@ class Donor_Contact_Meta extends Base_Meta_Box {
 		);
 
 		$u = array();
-
-		// add empty option
-		// $u[''] = esc_html__('Select a username', 'giftflow');
 
 		foreach ( $__users as $__user ) {
 			$u[ $__user->ID ] = $__user->user_login . ' (#' . $__user->ID . ')';

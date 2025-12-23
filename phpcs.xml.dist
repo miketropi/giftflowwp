@@ -24,6 +24,10 @@
   <rule ref="WordPress.Arrays.MultipleStatementAlignment">
     <severity>0</severity>
   </rule>
+
+  <rule ref="Squiz.Commenting.FunctionComment.SpacingAfterParamType">
+    <severity>0</severity>
+  </rule>
   
   <!-- Include main plugin file -->
   <file>giftflow.php</file>

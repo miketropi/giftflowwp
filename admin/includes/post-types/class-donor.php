@@ -15,11 +15,14 @@ class Donor extends Base_Post_Type {
 	/**
 	 * Initialize the donor post type
 	 */
+	// phpcs:ignore Generic.CodeAnalysis.UselessOverridingMethod.Found, Squiz.Commenting.FunctionComment.Missing
 	public function __construct() {
-
 		parent::__construct();
 	}
 
+	/**
+	 * Initialize post type properties.
+	 */
 	protected function init_post_type() {
 		$this->post_type = 'donor';
 		$this->labels    = array(
@@ -55,27 +58,27 @@ class Donor extends Base_Post_Type {
 			'show_in_rest'       => true,
 		);
 
-		// Add custom columns
+		// Add custom columns.
 		add_filter( 'manage_donor_posts_columns', array( $this, 'set_custom_columns' ) );
 		add_action( 'manage_donor_posts_custom_column', array( $this, 'render_custom_columns' ), 10, 2 );
 		add_filter( 'manage_edit-donor_sortable_columns', array( $this, 'set_sortable_columns' ) );
 
-		// Add filters
+		// Add filters.
 		add_action( 'restrict_manage_posts', array( $this, 'add_user_filter' ) );
 		add_filter( 'parse_query', array( $this, 'filter_donors' ) );
 	}
 
 	/**
-	 * Set custom columns for donor post type
-	 *
-	 * @param array $columns Array of column names
-	 * @return array Modified array of column names
+	 * Set custom columns for donor post type.
+
+	 * @param array $columns Array of column names.
+	 * @return array Modified array of column names.
 	 */
 	public function set_custom_columns( $columns ) {
 		$new_columns = array();
 
 		foreach ( $columns as $key => $value ) {
-			if ( $key === 'title' ) {
+			if ( 'title' === $key ) {
 				$new_columns['title']     = __( 'Donor ID', 'giftflow' );
 				$new_columns['full_name'] = __( 'Full Name', 'giftflow' );
 				$new_columns['email']     = __( 'Email', 'giftflow' );
@@ -90,10 +93,10 @@ class Donor extends Base_Post_Type {
 	}
 
 	/**
-	 * Render custom column content
+	 * Render custom column content.
 	 *
-	 * @param string $column Column name
-	 * @param int    $post_id Post ID
+	 * @param string $column Column name.
+	 * @param int    $post_id Post ID.
 	 */
 	public function render_custom_columns( $column, $post_id ) {
 		switch ( $column ) {
@@ -143,10 +146,10 @@ class Donor extends Base_Post_Type {
 	}
 
 	/**
-	 * Set sortable columns
+	 * Set sortable columns.
 	 *
-	 * @param array $columns Array of sortable columns
-	 * @return array Modified array of sortable columns
+	 * @param array $columns Array of sortable columns.
+	 * @return array Modified array of sortable columns.
 	 */
 	public function set_sortable_columns( $columns ) {
 		$columns['full_name'] = 'full_name';
@@ -155,32 +158,32 @@ class Donor extends Base_Post_Type {
 	}
 
 	/**
-	 * Add user filter dropdown
+	 * Add user filter dropdown.
+
+	 * @return void
 	 */
 	public function add_user_filter() {
 		global $typenow;
 
-		if ( $typenow === 'donor' ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( 'donor' === $typenow ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$selected = isset( $_GET['donor_user'] ) ? sanitize_text_field( wp_unslash( $_GET['donor_user'] ) ) : '';
 
-			// Get all users who have associated donor records
+			// Get all users who have associated donor records.
 			global $wpdb;
 
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$users = $wpdb->get_results(
-				"
-                SELECT DISTINCT u.ID, u.display_name, u.user_email
-                FROM {$wpdb->users} u
-                INNER JOIN {$wpdb->postmeta} pm ON u.user_email = pm.meta_value
-                WHERE pm.meta_key = '_email'
-                AND pm.post_id IN (
-                    SELECT ID FROM {$wpdb->posts} 
-                    WHERE post_type = 'donor' 
-                    AND post_status = 'publish'
-                )
-                ORDER BY u.display_name ASC
-            "
+				"SELECT DISTINCT u.ID, u.display_name, u.user_email
+				FROM {$wpdb->users} u
+				INNER JOIN {$wpdb->postmeta} pm ON u.user_email = pm.meta_value
+				WHERE pm.meta_key = '_email'
+				AND pm.post_id IN (
+					SELECT ID FROM {$wpdb->posts} 
+					WHERE post_type = 'donor' 
+					AND post_status = 'publish'
+				)
+				ORDER BY u.display_name ASC"
 			);
 
 			if ( ! empty( $users ) ) {
@@ -199,23 +202,24 @@ class Donor extends Base_Post_Type {
 	}
 
 	/**
-	 * Filter donors by user
+	 * Filter donors by user.
 	 *
-	 * @param WP_Query $query The WP_Query instance
+	 * @param WP_Query $query The WP_Query instance.
 	 */
 	public function filter_donors( $query ) {
 		global $pagenow, $typenow;
-        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( $pagenow === 'edit.php' && $typenow === 'donor' && isset( $_GET['donor_user'] ) && $_GET['donor_user'] !== '' ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( 'edit.php' === $pagenow && 'donor' === $typenow && isset( $_GET['donor_user'] ) && '' !== $_GET['donor_user'] ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$user_id = intval( wp_unslash( $_GET['donor_user'] ) );
 
-			// Get the user's email
+			// Get the user's email.
 			$user = get_user_by( 'ID', $user_id );
 			if ( $user ) {
 				$user_email = $user->user_email;
 
-				// Filter by email meta field
+				// Filter by email meta field.
 				$query->set( 'meta_key', '_email' );
 				$query->set( 'meta_value', $user_email );
 			}

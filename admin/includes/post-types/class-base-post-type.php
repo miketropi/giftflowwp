@@ -58,21 +58,21 @@ abstract class Base_Post_Type {
 	 * Initialize the post type
 	 */
 	public function __construct() {
-		// Initialize post type properties
+		// Initialize post type properties.
 		$this->init_post_type();
-		// Register post type and taxonomies
-		// add_action( 'init', array( $this, 'register_post_type' ) );
-		// add_action( 'init', array( $this, 'register_taxonomies' ) );
 
+		// Register the post type.
 		$this->register_post_type();
+
+		// Register the taxonomies.
 		$this->register_taxonomies();
 
-		// Register admin columns if defined
+		// Register admin columns if defined.
 		if ( ! empty( $this->admin_columns ) ) {
 			add_filter( 'manage_' . $this->post_type . '_posts_columns', array( $this, 'set_custom_columns' ) );
 			add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'render_custom_columns' ), 10, 2 );
 
-			// Register sortable columns if defined
+			// Register sortable columns if defined.
 			if ( ! empty( $this->sortable_columns ) ) {
 				add_filter( 'manage_edit-' . $this->post_type . '_sortable_columns', array( $this, 'set_sortable_columns' ) );
 				add_action( 'pre_get_posts', array( $this, 'sort_custom_columns' ) );
@@ -81,7 +81,7 @@ abstract class Base_Post_Type {
 	}
 
 	/**
-	 * Initialize post type properties
+	 * Initialize post type properties.
 	 * This method should be implemented by child classes to set up post type properties
 	 */
 	abstract protected function init_post_type();
@@ -131,11 +131,11 @@ abstract class Base_Post_Type {
 	public function set_custom_columns( $columns ) {
 		$new_columns = array();
 
-		// Insert columns after title
+		// Insert columns after title.
 		foreach ( $columns as $key => $value ) {
 			$new_columns[ $key ] = $value;
 
-			if ( $key === 'title' ) {
+			if ( 'title' === $key ) {
 				foreach ( $this->admin_columns as $column_key => $column_label ) {
 					$new_columns[ $column_key ] = $column_label;
 				}
@@ -157,23 +157,23 @@ abstract class Base_Post_Type {
 			return;
 		}
 
-		// Get the meta key for this column
+		// Get the meta key for this column.
 		$meta_key   = '_' . $column;
 		$meta_value = get_post_meta( $post_id, $meta_key, true );
 
-		// Default display for empty values
+		// Default display for empty values.
 		if ( empty( $meta_value ) ) {
 			echo '—';
 			return;
 		}
 
-		// Default display for all columns
+		// Default display for all columns.
 		echo esc_html( $meta_value );
 	}
 
 	/**
-	 * Set sortable columns
-	 *
+	 * Set sortable columns.
+
 	 * @param array $columns The sortable columns.
 	 * @return array The modified sortable columns.
 	 */
@@ -195,16 +195,18 @@ abstract class Base_Post_Type {
 			return;
 		}
 
+		// Get the orderby.
 		$orderby = $query->get( 'orderby' );
 
-		if ( in_array( $orderby, $this->sortable_columns ) ) {
+		// Sort the columns if they are defined.
+		if ( in_array( $orderby, $this->sortable_columns, true ) ) {
 			$query->set( 'meta_key', '_' . $orderby );
 			$query->set( 'orderby', 'meta_value' );
 		}
 	}
 
 	/**
-	 * Get post type name
+	 * Get post type name.
 	 *
 	 * @return string
 	 */
