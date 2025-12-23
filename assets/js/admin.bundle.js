@@ -3266,18 +3266,19 @@ function _regeneratorDefine2(e, r, n, t) {
   }, _regeneratorDefine2(e, r, n, t);
 }
 /**
- * API 
- * 
+ * API utilities
+
  * @package GiftFlow
  * @since v1.0.0
  */
 
 /**
- * 
- * @param {*} url 
- * @param {*} data 
- * @param {*} method 
- * @returns 
+ * Make a request to the API.
+
+ * @param {string} url The URL to request.
+ * @param {object} data The data to send.
+ * @param {string} method The method to use.
+ * @returns {Promise<object>} The response from the API.
  */
 var __request = /*#__PURE__*/function () {
   var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])(/*#__PURE__*/_regenerator().m(function _callee(url) {
@@ -3290,8 +3291,10 @@ var __request = /*#__PURE__*/function () {
         case 0:
           data = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
           method = _args.length > 2 && _args[2] !== undefined ? _args[2] : 'GET';
-          // set nonce
+          // set nonce.
           data.nonce = data.nonce || giftflow_admin.nonce;
+
+          // Make the request.
           _context.n = 1;
           return jQuery.ajax({
             method: method,
@@ -3321,6 +3324,12 @@ var __request = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
+
+/**
+ * Get campaigns.
+ * @param {object} query The query parameters.
+ * @returns {Promise<object>} The response from the API.
+ */
 var getCampaigns = /*#__PURE__*/function () {
   var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])(/*#__PURE__*/_regenerator().m(function _callee2() {
     var query,
@@ -3331,7 +3340,7 @@ var getCampaigns = /*#__PURE__*/function () {
       while (1) switch (_context2.n) {
         case 0:
           query = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : {};
-          // Build the API URL with query parameters
+          // Build the API URL with query parameters.
           queryString = Object.entries(query).filter(function (_ref3) {
             var _ref4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref3, 2),
               _ = _ref4[0],
@@ -3357,6 +3366,11 @@ var getCampaigns = /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }();
+
+/**
+ * Get basedata.
+ * @returns {Promise<object>} The response from the API.
+ */
 var getBasedata = /*#__PURE__*/function () {
   var _ref7 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])(/*#__PURE__*/_regenerator().m(function _callee3() {
     var urlWithParams;
@@ -3372,6 +3386,12 @@ var getBasedata = /*#__PURE__*/function () {
     return _ref7.apply(this, arguments);
   };
 }();
+
+/**
+ * Get dashboard statistics charts.
+ * @param {object} query The query parameters.
+ * @returns {Promise<object>} The response from the API.
+ */
 var getDashboardStatisticsCharts = /*#__PURE__*/function () {
   var _ref8 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])(/*#__PURE__*/_regenerator().m(function _callee4() {
     var query,

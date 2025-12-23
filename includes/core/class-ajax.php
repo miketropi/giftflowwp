@@ -26,13 +26,13 @@ class GiftFlow_Ajax {
 	public function __construct() {
 		// Register AJAX actions
 		add_action( 'wp_ajax_giftflow_get_gallery_images', array( $this, 'get_gallery_images' ) );
-		
-		add_action('wp_ajax_giftflow_get_pagination_donation_list_html', array($this, 'get_pagination_donation_list_html'));
-		add_action('wp_ajax_nopriv_giftflow_get_pagination_donation_list_html', array($this, 'get_pagination_donation_list_html'));
-	
+
+		add_action( 'wp_ajax_giftflow_get_pagination_donation_list_html', array( $this, 'get_pagination_donation_list_html' ) );
+		add_action( 'wp_ajax_nopriv_giftflow_get_pagination_donation_list_html', array( $this, 'get_pagination_donation_list_html' ) );
+
 		// giftflow_get_campaign_donation_form
-		add_action('wp_ajax_giftflow_get_campaign_donation_form', array($this, 'get_campaign_donation_form'));
-		add_action('wp_ajax_nopriv_giftflow_get_campaign_donation_form', array($this, 'get_campaign_donation_form'));
+		add_action( 'wp_ajax_giftflow_get_campaign_donation_form', array( $this, 'get_campaign_donation_form' ) );
+		add_action( 'wp_ajax_nopriv_giftflow_get_campaign_donation_form', array( $this, 'get_campaign_donation_form' ) );
 	}
 
 	/**
@@ -77,38 +77,43 @@ class GiftFlow_Ajax {
 			wp_send_json_error( __( 'Security check failed', 'giftflow' ) );
 		}
 
-		$campaign = isset($_POST['campaign']) ? intval($_POST['campaign']) : 0;
-		$paged = isset($_POST['page']) ? intval($_POST['page']) : 1;
+		$campaign = isset( $_POST['campaign'] ) ? intval( $_POST['campaign'] ) : 0;
+		$paged    = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
 
-		// validate $campaign 
-		if ($campaign <= 0) {
+		// validate $campaign
+		if ( $campaign <= 0 ) {
 			wp_send_json_error( __( 'Invalid campaign ID', 'giftflow' ) );
 		}
 
-		$args = array(
+		$args    = array(
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query' => array(
 				array(
-					'key' => '_status',
-					'value' => 'completed',
-					'compare' => '='
-				)
-			)
+					'key'     => '_status',
+					'value'   => 'completed',
+					'compare' => '=',
+				),
+			),
 		);
-		$_paged = $paged;
-		$results = giftflow_get_campaign_donations($campaign, $args, $_paged);
+		$_paged  = $paged;
+		$results = giftflow_get_campaign_donations( $campaign, $args, $_paged );
 
 		ob_start();
-		giftflow_load_template('donation-list-of-campaign.php', array(
-			'donations' => $results,
-			'paged' => $_paged,
-			'campaign_id' => $campaign,
-		));
+		giftflow_load_template(
+			'donation-list-of-campaign.php',
+			array(
+				'donations'   => $results,
+				'paged'       => $_paged,
+				'campaign_id' => $campaign,
+			)
+		);
 		$html = ob_get_clean();
 
-		wp_send_json_success( array( 
-			'__html' => $html, 
-			'__replace_content_selector' => '.__donations-list-by-campaign-' . $campaign ) 
+		wp_send_json_success(
+			array(
+				'__html'                     => $html,
+				'__replace_content_selector' => '.__donations-list-by-campaign-' . $campaign,
+			)
 		);
 	}
 
@@ -117,17 +122,17 @@ class GiftFlow_Ajax {
 		if ( ! isset( $_GET['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'giftflow_common_nonce' ) ) {
 			wp_send_json_error( __( 'Security check failed', 'giftflow' ) );
 		}
-		
-		$campaign_id = isset($_GET['campaign_id']) ? intval(wp_unslash($_GET['campaign_id'])) : 0;
 
-		if ($campaign_id <= 0) {
+		$campaign_id = isset( $_GET['campaign_id'] ) ? intval( wp_unslash( $_GET['campaign_id'] ) ) : 0;
+
+		if ( $campaign_id <= 0 ) {
 			wp_send_json_error( __( 'Invalid campaign ID', 'giftflow' ) );
 		}
 
-		echo do_shortcode('[giftflow_donation_form campaign_id="' . $campaign_id . '"]');
+		echo do_shortcode( '[giftflow_donation_form campaign_id="' . $campaign_id . '"]' );
 		die();
 	}
 }
 
 // Initialize the AJAX handler
-new GiftFlow_Ajax(); 
+new GiftFlow_Ajax();

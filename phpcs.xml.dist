@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<ruleset name="GiftFlow Plugin">
+  <arg name="extensions" value="php"/>
+  <description>PHP CodeSniffer configuration for GiftFlow WordPress plugin</description>
+
+  <arg name="colors"/>
+  <arg value="sp"/>
+
+  <config name="minimum_supported_wp_version" value="6.0"/>
+  <config name="testVersion" value="7.4-8.3"/>
+
+
+  <!-- Include WordPress Coding Standards -->
+  <rule ref="WordPress" />
+  <rule ref="WordPress-Core" />
+  <rule ref="WordPress-Extra" />
+  <rule ref="WordPress-Docs" />
+
+  <!-- Disable alignment / cosmetic spacing -->
+  <rule ref="Generic.Formatting.MultipleStatementAlignment">
+    <severity>0</severity>
+  </rule>
+
+  <rule ref="WordPress.Arrays.MultipleStatementAlignment">
+    <severity>0</severity>
+  </rule>
+  
+  <!-- Include main plugin file -->
+  <file>giftflow.php</file>
+
+  <!-- Include plugin directories -->
+  <file>admin</file>
+  <file>includes</file>
+  <file>blocks</file>
+  <file>templates</file>
+
+  <!-- Exclude vendor dependencies -->
+  <exclude-pattern>vendor/*</exclude-pattern>
+
+  <!-- Exclude node modules -->
+  <exclude-pattern>node_modules/*</exclude-pattern>
+
+  <!-- Exclude built/compiled files -->
+  <exclude-pattern>blocks-build/*</exclude-pattern>
+  <exclude-pattern>assets/js/*.bundle.*</exclude-pattern>
+  <exclude-pattern>assets/css/*.bundle.*</exclude-pattern>
+
+  <!-- Exclude language files (if any PHP files exist there) -->
+  <exclude-pattern>languages/*</exclude-pattern>
+</ruleset>
