@@ -1,6 +1,19 @@
 <?php
 /**
+ * Mail system for GiftFlow plugin.
+ *
+ * @package GiftFlow
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+/**
  * Sendmail
+ *
+ * @param array $args Email arguments.
+ * @return bool Whether the email was sent successfully.
  */
 function giftflow_send_mail_template( $args = array() ) {
 	$args = wp_parse_args(
@@ -23,7 +36,7 @@ function giftflow_send_mail_template( $args = array() ) {
 		'Content-Type: text/html; charset=UTF-8',
 	);
 
-	// get html
+	// get html.
 	ob_start();
 	giftflow_load_template(
 		'email/template-default.php',
@@ -38,24 +51,35 @@ function giftflow_send_mail_template( $args = array() ) {
 	return wp_mail( $args['to'], $args['subject'], $__html, $headers );
 }
 
-// test mail ajax
+// test mail ajax.
 add_action( 'wp_ajax_giftflow_test_send_mail', 'giftflow_test_send_mail_ajax' );
-function giftflow_test_send_mail_ajax() {
 
-	// check nonce
+/**
+ * Test send mail ajax.
+ */
+function giftflow_test_send_mail_ajax() {
+	// check nonce.
 	if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'giftflow_admin_nonce' ) ) {
 		wp_send_json_error( 'Invalid nonce' );
 	}
 
-	// name
+	// name.
 	$name = isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '';
 
-	// do action test mail
+	// do action test mail.
 	do_action( 'giftflow_test_send_mail', $name );
 	die();
 }
 
+// test send mail action.
 add_action( 'giftflow_test_send_mail', 'giftflow_test_send_mail_action' );
+
+/**
+ * Test send mail action.
+ *
+ * @param string $name Name of the test email.
+ * @return bool Whether the email was sent successfully.
+ */
 function giftflow_test_send_mail_action( $name ) {
 
 	$email_opts  = get_option( 'giftflow_email_options' );
@@ -79,6 +103,7 @@ function giftflow_test_send_mail_action( $name ) {
 				)
 			);
 			$content = ob_get_clean();
+
 			return giftflow_send_mail_template(
 				array(
 					'to'      => $admin_email,
@@ -87,7 +112,6 @@ function giftflow_test_send_mail_action( $name ) {
 					'content' => $content,
 				)
 			);
-		break;
 
 		case 'donor_thanks':
 			ob_start();
@@ -113,7 +137,6 @@ function giftflow_test_send_mail_action( $name ) {
 					'content' => $content,
 				)
 			);
-		break;
 
 		case 'new_user_first_time_donation':
 			ob_start();
@@ -135,26 +158,27 @@ function giftflow_test_send_mail_action( $name ) {
 					'content' => $content,
 				)
 			);
-		break;
 	}
 }
 
+// send mail notification donation to admin.
 add_action( 'giftflow_donation_after_payment_processed', 'giftflow_send_mail_notification_donation_to_admin', 10, 2 );
-function giftflow_send_mail_notification_donation_to_admin( $donation_id, $payment_result ) {
+
+/**
+ * Send mail notification donation to admin.
+ *
+ * @param int $donation_id The donation ID.
+ * @return bool Whether the email was sent successfully.
+ */
+function giftflow_send_mail_notification_donation_to_admin( $donation_id ) {
 	$email_opts  = get_option( 'giftflow_email_options' );
 	$admin_email = $email_opts['email_admin_address'];
 
-	// get donation data
+	// get donation data.
 	$donation_data = giftflow_get_donation_data_by_id( $donation_id );
 
 	ob_start();
-	/**
-	 * Allow filtering/modifying the arguments passed to the admin new donation email template.
-	 *
-	 * @param array $args The arguments for the email template.
-	 * @param int $donation_id The donation ID.
-	 * @param object $donation_data The donation data object.
-	 */
+	// Allow filtering/modifying the arguments passed to the admin new donation email template.
 	$admin_email_args = apply_filters(
 		'giftflow_new_donation_admin_email_args',
 		array(
@@ -179,7 +203,7 @@ function giftflow_send_mail_notification_donation_to_admin( $donation_id, $payme
 	return giftflow_send_mail_template(
 		array(
 			'to'      => $admin_email,
-			/* translators: %s: Campaign name for the new donation notification email subject */
+			// translators: %s: Campaign name for the new donation notification email subject.
 			'subject' => sprintf( esc_html__( 'New Donation — %s', 'giftflow' ), $donation_data->campaign_name ),
 			'header'  => esc_html__( 'New donation received', 'giftflow' ),
 			'content' => $content,
@@ -187,27 +211,30 @@ function giftflow_send_mail_notification_donation_to_admin( $donation_id, $payme
 	);
 }
 
+// send mail thank you to donor payment successful.
 add_action( 'giftflow_donation_after_payment_processed', 'giftflow_send_mail_thank_you_to_donor_payment_successful', 12, 2 );
+
+/**
+ * Send mail thank you to donor payment successful.
+ *
+ * @param int $donation_id The donation ID.
+ * @param mixed $payment_result The payment result.
+ * @return bool Whether the email was sent successfully.
+ */
 function giftflow_send_mail_thank_you_to_donor_payment_successful( $donation_id, $payment_result ) {
-	if ( $payment_result != true ) {
+	if ( true !== $payment_result ) {
 		return;
 	}
 
-	// get giftflow_get_donor_account_page() url
+	// get giftflow_get_donor_account_page() url.
 	$donor_account_url = get_permalink( giftflow_get_donor_account_page() );
 
-	// get donation data
+	// get donation data.
 	$donation_data = giftflow_get_donation_data_by_id( $donation_id );
 
-	// send thanks email
+	// send thanks email.
 	ob_start();
-	/**
-	 * Allow filtering/modifying the arguments passed to the donor thank you email template.
-	 *
-	 * @param array $args The arguments for the email template.
-	 * @param int $donation_id The donation ID.
-	 * @param object $donation_data The donation data object.
-	 */
+	// Allow filtering/modifying the arguments passed to the donor thank you email template.
 	$thanks_donor_args = apply_filters(
 		'giftflow_thanks_donor_email_args',
 		array(
@@ -230,7 +257,7 @@ function giftflow_send_mail_thank_you_to_donor_payment_successful( $donation_id,
 	return giftflow_send_mail_template(
 		array(
 			'to'      => $donation_data->donor_email,
-			/* translators: %s: Campaign name for donor thank you email subject */
+			// translators: %s: Campaign name for donor thank you email subject.
 			'subject' => sprintf( esc_html__( 'Thank You for Your Donation — %s', 'giftflow' ), $donation_data->campaign_name ),
 			'header'  => esc_html__( 'Thank You for Your Donation', 'giftflow' ),
 			'content' => $content,

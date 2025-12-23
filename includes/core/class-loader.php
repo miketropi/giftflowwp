@@ -40,21 +40,16 @@ class Loader extends Base {
 		);
 	}
 
+	/**
+	 * Enqueue scripts
+	 */
 	public function enqueue_scripts() {
-		// block-campaign-status-bar.bundle.css
 		wp_enqueue_style( 'giftflow-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version() );
-
-		// // donation-form.bundle.css
-		// wp_enqueue_style('giftflow-donation-form', $this->get_plugin_url() . 'assets/css/donation-form.bundle.css', array(), $this->get_version());
-
-		// // forms.bundle.js
-		// wp_enqueue_script('giftflow-forms', $this->get_plugin_url() . 'assets/js/forms.bundle.js', array('jquery'), $this->get_version(), true);
-
-		// // stripe-donation.bundle.js
-		// wp_enqueue_script('giftflow-stripe-donation', $this->get_plugin_url() . 'assets/js/stripe-donation.bundle.js', array('jquery', 'giftflow-forms'), $this->get_version(), true);
 	}
 
-	// enqueue blocks
+	/**
+	 * Enqueue blocks
+	 */
 	public function enqueue_blocks() {
 		wp_enqueue_style( 'giftflow-common', $this->get_plugin_url() . 'assets/css/common.bundle.css', array(), $this->get_version() );
 
@@ -63,11 +58,11 @@ class Loader extends Base {
 		wp_enqueue_style( 'giftflow-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version() );
 		wp_enqueue_style( 'giftflow-block-campaign-single-content', $this->get_plugin_url() . 'assets/css/block-campaign-single-content.bundle.css', array(), $this->get_version() );
 
-		// load common js
+		// load common js.
 		$args_common = require $this->get_plugin_dir() . '/assets/js/common.bundle.asset.php';
 		wp_enqueue_script( 'giftflow-common', $this->get_plugin_url() . 'assets/js/common.bundle.js', array( 'jquery' ), $args_common['version'], true );
 
-		// localize script
+		// localize script.
 		wp_localize_script(
 			'giftflow-common',
 			'giftflow_common',
@@ -78,7 +73,12 @@ class Loader extends Base {
 		);
 	}
 
-	// Creating a new (custom) block category
+	/**
+	 * Creating a new (custom) block category.
+
+	 * @param array $categories The block categories.
+	 * @return array The block categories.
+	 */
 	public function register_block_category( $categories ) {
 		$categories[] = array(
 			'slug'  => 'giftflow',
@@ -105,49 +105,49 @@ class Loader extends Base {
 	 * Load plugin textdomain
 	 */
 	public function load_textdomain() {
-		// load_plugin_textdomain(
-		// 'giftflow',
-		// false,
-		// dirname( plugin_basename( GIFTFLOW_PLUGIN_DIR ) ) . '/languages/'
-		// );
+		// load plugin textdomain.
 	}
 
 	/**
 	 * Initialize plugin components
 	 */
 	public function init() {
-		// core
+		// core.
 		new \GiftFlow\Core\Block_Template();
 		\GiftFlow\Core\Role::get_instance();
 
-		// Initialize post types
+		// Initialize post types.
 		new \GiftFlow\Admin\PostTypes\Donation();
 		new \GiftFlow\Admin\PostTypes\Donor();
 		new \GiftFlow\Admin\PostTypes\Campaign();
 
-		// Initialize meta boxes
+		// Initialize meta boxes.
 		new \GiftFlow\Admin\MetaBoxes\Donation_Transaction_Meta();
 		new \GiftFlow\Admin\MetaBoxes\Donor_Contact_Meta();
 		new \GiftFlow\Admin\MetaBoxes\Campaign_Details_Meta();
 
-		// Initialize frontend components
+		// Initialize frontend components.
 		new \GiftFlow\Frontend\Shortcodes();
 		new \GiftFlow\Frontend\Forms();
 
 		\GiftFlow\Gateways\Gateway_Base::init_gateways();
 	}
 
+	/**
+	 * Activate the plugin
+	 */
 	public function activate() {
-
 		$this->create_pages_init();
 
-		// reset permalinks
+		// reset permalinks.
 		flush_rewrite_rules();
 	}
 
+	/**
+	 * Create 2 pages donor-account and thank-donor & set template for there.
+	 */
 	public function create_pages_init() {
-
-		// create 2 pages donor-account and thank-donor & set template for there
+		// create 2 pages donor-account and thank-donor & set template for there.
 		$donor_account_page = get_page_by_path( 'donor-account' );
 		if ( ! $donor_account_page ) {
 
@@ -187,8 +187,11 @@ class Loader extends Base {
 		}
 	}
 
+	/**
+	 * Deactivate the plugin
+	 */
 	public function deactivate() {
-		// Clean up roles and capabilities
+		// Clean up roles and capabilities.
 		$role_manager = \GiftFlow\Core\Role::get_instance();
 		$role_manager->remove_roles();
 		$role_manager->remove_capabilities();

@@ -9,7 +9,7 @@
 namespace GiftFlow\Frontend;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Template {
 	/**
-	 * Plugin template directory
+	 * Plugin template directory.
 	 *
 	 * @var string
 	 */
@@ -38,10 +38,10 @@ class Template {
 	 * @return string
 	 */
 	public function get_template_path( $template_name, $template_path = '' ) {
-		// Allow theme developers to filter the template path
+		// Allow theme developers to filter the template path.
 		$template_path = apply_filters( 'giftflow_template_path', $template_path, $template_name );
 
-		// Check theme directory first
+		// Check theme directory first.
 		$theme_template = locate_template(
 			array(
 				$template_path . $template_name,
@@ -53,7 +53,7 @@ class Template {
 			return $theme_template;
 		}
 
-		// Return plugin template path
+		// Return plugin template path.
 		return $this->plugin_template_dir . $template_path . $template_name;
 	}
 
@@ -67,7 +67,7 @@ class Template {
 	public function load_template( $template_name, $args = array(), $template_path = '' ) {
 		$template_file = $this->get_template_path( $template_name, $template_path );
 
-		// Allow theme developers to filter the template file
+		// Allow theme developers to filter the template file.
 		$template_file = apply_filters( 'giftflow_template_file', $template_file, $template_name, $args );
 
 		if ( ! file_exists( $template_file ) ) {
@@ -80,17 +80,17 @@ class Template {
 			return;
 		}
 
-		// Extract args if they exist
+		// Extract args if they exist.
 		if ( ! empty( $args ) && is_array( $args ) ) {
 			extract( $args ); // phpcs:ignore WordPress.PHP.DontExtract.extract_extract
 		}
 
-		// Allow theme developers to do something before template is loaded
+		// Allow theme developers to do something before template is loaded.
 		do_action( 'giftflow_before_template_load', $template_name, $template_file, $args );
 
 		include $template_file;
 
-		// Allow theme developers to do something after template is loaded
+		// Allow theme developers to do something after template is loaded.
 		do_action( 'giftflow_after_template_load', $template_name, $template_file, $args );
 	}
 
@@ -104,7 +104,7 @@ class Template {
 	public function get_template_part( $slug, $name = '', $args = array() ) {
 		$template = '';
 
-		// Look in yourtheme/slug-name.php and yourtheme/giftflow/slug-name.php
+		// Look in yourtheme/slug-name.php and yourtheme/giftflow/slug-name.php.
 		if ( $name ) {
 			$template = locate_template(
 				array(
@@ -114,12 +114,12 @@ class Template {
 			);
 		}
 
-		// Get default slug-name.php
+		// Get default slug-name.php.
 		if ( ! $template && $name && file_exists( $this->plugin_template_dir . "{$slug}-{$name}.php" ) ) {
 			$template = $this->plugin_template_dir . "{$slug}-{$name}.php";
 		}
 
-		// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/giftflow/slug.php
+		// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/giftflow/slug.php.
 		if ( ! $template ) {
 			$template = locate_template(
 				array(
@@ -129,7 +129,7 @@ class Template {
 			);
 		}
 
-		// Allow 3rd party plugins to filter template file from their plugin
+		// Allow 3rd party plugins to filter template file from their plugin.
 		$template = apply_filters( 'giftflow_get_template_part', $template, $slug, $name );
 
 		if ( $template ) {

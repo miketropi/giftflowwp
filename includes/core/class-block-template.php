@@ -18,7 +18,6 @@ class Block_Template {
 	 * Initialize the class
 	 */
 	public function __construct() {
-		// add_action( 'init', array( $this, 'register_block_templates' ) );
 		$this->register_block_templates();
 	}
 
@@ -27,12 +26,11 @@ class Block_Template {
 	 */
 	public function register_block_templates() {
 
-		// Register templates for pages
+		// Register templates for pages.
 		$templates = array(
 			'archive-campaign'      => array(
 				'title'       => esc_html__( 'Campaign Archive', 'giftflow' ),
 				'description' => esc_html__( 'A template for the campaign archive page.', 'giftflow' ),
-				// 'post_types' => array( 'page' ),
 				'template'    => 'archive-campaign',
 			),
 			'taxonomy-campaign-tax' => array(
@@ -62,6 +60,7 @@ class Block_Template {
 
 		foreach ( $templates as $slug => $template ) {
 
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 			$content             = file_get_contents( GIFTFLOW_PLUGIN_DIR . 'block-templates/' . $template['template'] . '.html' );
 			$template['content'] = apply_filters( 'giftflow_block_template_content', $content, $template );
 

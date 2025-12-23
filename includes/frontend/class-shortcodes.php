@@ -32,7 +32,7 @@ class Shortcodes extends Base {
 	/**
 	 * Render donation form shortcode
 	 *
-	 * @param array $atts Shortcode attributes
+	 * @param array $atts Shortcode attributes.
 	 * @return string
 	 */
 	public function render_donation_form( $atts ) {
@@ -46,40 +46,39 @@ class Shortcodes extends Base {
 		$campaign_id = intval( $atts['campaign_id'] );
 		if ( ! $campaign_id ) {
 			return;
-			// return '<div class="giftflow-error">' . __('Invalid campaign ID', 'giftflow') . '</div>';
 		}
 
-		// gateways
+		// gateways.
 		$gateways = \GiftFlow\Gateways\Gateway_Base::get_registered_gateways();
 
-		// preset donation amounts
+		// preset donation amounts.
 		$preset_donation_amounts = giftflow_get_preset_donation_amounts_by_campaign( $campaign_id );
 
-		// raised amount
+		// raised amount.
 		$raised_amount = giftflow_get_campaign_raised_amount( $campaign_id );
 
-		// goal amount
+		// goal amount.
 		$goal_amount = giftflow_get_campaign_goal_amount( $campaign_id );
 
-		// Get default donation amount (first preset amount or 10)
+		// Get default donation amount (first preset amount or 10).
 		$default_amount = ! empty( $preset_donation_amounts ) ? $preset_donation_amounts[0]['amount'] : 10;
 
-		// Get campaign title
+		// Get campaign title.
 		$campaign_title = get_the_title( $campaign_id );
 
-		// Get currency symbol
+		// Get currency symbol.
 		$currency_symbol = giftflow_get_global_currency_symbol();
 
-		// Get currency format template
+		// Get currency format template.
 		$currency_format_template = giftflow_get_currency_js_format_template();
 
-		// array of donation types
+		// array of donation types.
 		$donation_types = array();
 
-		// get one-time donation
+		// get one-time donation.
 		$one_time_donation = get_post_meta( $campaign_id, '_one_time', true );
 
-		// if one-time donation is on, add it to the array
+		// if one-time donation is on, add it to the array.
 		if ( $one_time_donation ) {
 			$donation_types[] = array(
 				'name'        => 'one-time',
@@ -89,12 +88,12 @@ class Shortcodes extends Base {
 			);
 		}
 
-		// get recurring donation
+		// get recurring donation.
 		$recurring_donation = get_post_meta( $campaign_id, '_recurring', true );
-		// get recurring interval
+		// get recurring interval.
 		$recurring_interval = get_post_meta( $campaign_id, '_recurring_interval', true );
 
-		// if recurring donation is on, add it to the array
+		// if recurring donation is on, add it to the array.
 		if ( $recurring_donation ) {
 
 			$recurring_label_array = array(
@@ -140,11 +139,11 @@ class Shortcodes extends Base {
 		$atts['user_email']               = $user_email;
 		$atts['user_info_readonly']       = $user_info_readonly;
 
-		// get global options
+		// get global options.
 		$atts['min_amount'] = giftflow_get_options( 'min_amount', 'giftflow_general_options', 1 );
 		$atts['max_amount'] = giftflow_get_options( 'max_amount', 'giftflow_general_options', 1000 );
 
-		// load the donation form template use class-template.php
+		// load the donation form template use class-template.php.
 		$template = new Template();
 		$template->load_template( 'donation-form.php', $atts );
 		return ob_get_clean();

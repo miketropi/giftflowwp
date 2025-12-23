@@ -1,4 +1,10 @@
 <?php
+/**
+ * Icons for GiftFlow plugin.
+ *
+ * @package GiftFlow
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
