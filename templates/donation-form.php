@@ -124,15 +124,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 						
 						<div class="donation-form__amount">
 							<?php
-                            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+							// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 							$validate_attr_value = array( 'required', 'number', 'min' );
+							// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 							$max_attr            = $max_amount ? 'max="' . esc_attr( $max_amount ) . '"' : '';
+							// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 							$extra_data          = array(
 								'min' => $min_amount ? $min_amount : 1,
 							);
 
 							if ( $max_attr ) {
+								// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 								$validate_attr_value[] = 'max';
+								// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 								$extra_data['max']     = $max_amount;
 							}
 							?>
