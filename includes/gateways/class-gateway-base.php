@@ -218,6 +218,11 @@ abstract class Gateway_Base extends Base {
 	 */
 	protected $styles = array();
 
+	/**
+	 * Template HTML
+	 *
+	 * @var string
+	 */
 	protected $template_html = '';
 
 	/**
@@ -234,7 +239,7 @@ abstract class Gateway_Base extends Base {
 		parent::__construct();
 		$this->init_gateway();
 		$this->init_settings();
-		$this->ready(); // Allow child classes to do additional initialization
+		$this->ready(); // Allow child classes to do additional initialization.
 		$this->init_hooks();
 		$this->register_gateway();
 	}
@@ -244,9 +249,12 @@ abstract class Gateway_Base extends Base {
 	 * Child classes should override this method
 	 */
 	protected function init_gateway() {
-		// Override in child classes
+		// Override in child classes.
 	}
 
+	/**
+	 * Ready function
+	 */
 	protected function ready() {
 	}
 
@@ -254,11 +262,10 @@ abstract class Gateway_Base extends Base {
 	 * Initialize gateway settings
 	 */
 	protected function init_settings() {
-		$opts           = get_option( 'giftflow_payment_options', array() ); // all options of payment gateways
-		$this->settings = isset( $opts[ $this->id ] ) ? $opts[ $this->id ] : array(); // get_option('giftflow_gateway_' . $this->id, array());
-
-		$enabledFieldName    = $this->id . '_enabled';
-		$enabled             = isset( $this->settings[ $enabledFieldName ] ) ? $this->settings[ $enabledFieldName ] == '1' : false;
+		$opts           = get_option( 'giftflow_payment_options', array() ); // all options of payment gateways.
+		$this->settings = isset( $opts[ $this->id ] ) ? $opts[ $this->id ] : array();
+		$enabled_field_name    = $this->id . '_enabled';
+		$enabled             = isset( $this->settings[ $enabled_field_name ] ) ? '1' === $this->settings[ $enabled_field_name ] : false;
 		$this->enabled       = $enabled;
 		$this->template_html = $this->template_html();
 	}
@@ -267,18 +274,18 @@ abstract class Gateway_Base extends Base {
 	 * Initialize WordPress hooks
 	 */
 	protected function init_hooks() {
-		// Core gateway hooks
+		// Core gateway hooks.
 		add_filter( 'giftflow_payment_gateways', array( $this, 'add_gateway_to_list' ) );
 		add_action( 'giftflow_payment_methods_settings', array( $this, 'register_settings_fields' ) );
 
-		// Asset hooks
+		// Asset hooks.
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_assets' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
 
-		// Additional hooks for child classes
+		// Additional hooks for child classes.
 		$this->init_additional_hooks();
 
-		// Allow third parties to add hooks
+		// Allow third parties to add hooks.
 		do_action( 'giftflow_gateway_init_hooks', $this );
 	}
 
@@ -286,7 +293,7 @@ abstract class Gateway_Base extends Base {
 	 * Additional hooks for child classes
 	 */
 	protected function init_additional_hooks() {
-		// Override in child classes
+		// Override in child classes.
 	}
 
 	/**
@@ -296,7 +303,7 @@ abstract class Gateway_Base extends Base {
 		if ( ! empty( $this->id ) ) {
 			self::$gateway_registry[ $this->id ] = $this;
 
-			// Fire action after gateway registration
+			// Fire action after gateway registration.
 			do_action( 'giftflow_gateway_registered', $this->id, $this );
 		}
 	}
@@ -304,7 +311,7 @@ abstract class Gateway_Base extends Base {
 	/**
 	 * Add gateway to the gateways list
 	 *
-	 * @param array $gateways List of gateways
+	 * @param array $gateways List of gateways.
 	 * @return array
 	 */
 	public function add_gateway_to_list( $gateways ) {
@@ -331,7 +338,7 @@ abstract class Gateway_Base extends Base {
 			return;
 		}
 
-		// Enqueue scripts
+		// Enqueue scripts.
 		foreach ( $this->scripts as $handle => $script ) {
 			if ( isset( $script['frontend'] ) && $script['frontend'] ) {
 				wp_enqueue_script(
@@ -342,14 +349,14 @@ abstract class Gateway_Base extends Base {
 					$script['in_footer'] ?? true
 				);
 
-				// Localize script if data provided
+				// Localize script if data provided.
 				if ( isset( $script['localize'] ) ) {
 					wp_localize_script( $handle, $script['localize']['name'], $script['localize']['data'] );
 				}
 			}
 		}
 
-		// Enqueue styles
+		// Enqueue styles.
 		foreach ( $this->styles as $handle => $style ) {
 			if ( isset( $style['frontend'] ) && $style['frontend'] ) {
 				wp_enqueue_style(
@@ -362,7 +369,7 @@ abstract class Gateway_Base extends Base {
 			}
 		}
 
-		// Allow additional frontend assets
+		// Allow additional frontend assets.
 		do_action( 'giftflow_gateway_enqueue_frontend_assets', $this->id );
 	}
 
@@ -374,7 +381,7 @@ abstract class Gateway_Base extends Base {
 			return;
 		}
 
-		// Enqueue admin scripts
+		// Enqueue admin scripts.
 		foreach ( $this->scripts as $handle => $script ) {
 			if ( isset( $script['admin'] ) && $script['admin'] ) {
 				wp_enqueue_script(
@@ -385,14 +392,14 @@ abstract class Gateway_Base extends Base {
 					$script['in_footer'] ?? true
 				);
 
-				// Localize script if data provided
+				// Localize script if data provided.
 				if ( isset( $script['localize'] ) ) {
 					wp_localize_script( $handle, $script['localize']['name'], $script['localize']['data'] );
 				}
 			}
 		}
 
-		// Enqueue admin styles
+		// Enqueue admin styles.
 		foreach ( $this->styles as $handle => $style ) {
 			if ( isset( $style['admin'] ) && $style['admin'] ) {
 				wp_enqueue_style(
@@ -405,15 +412,15 @@ abstract class Gateway_Base extends Base {
 			}
 		}
 
-		// Allow additional admin assets
+		// Allow additional admin assets.
 		do_action( 'giftflow_gateway_enqueue_admin_assets', $this->id );
 	}
 
 	/**
 	 * Add script to be enqueued
 	 *
-	 * @param string $handle
-	 * @param array  $script_args
+	 * @param string $handle Script handle.
+	 * @param array  $script_args Script arguments.
 	 */
 	protected function add_script( $handle, $script_args ) {
 		$this->scripts[ $handle ] = $script_args;
@@ -422,15 +429,15 @@ abstract class Gateway_Base extends Base {
 	/**
 	 * Add style to be enqueued
 	 *
-	 * @param string $handle
-	 * @param array  $style_args
+	 * @param string $handle Style handle.
+	 * @param array  $style_args Style arguments.
 	 */
 	protected function add_style( $handle, $style_args ) {
 		$this->styles[ $handle ] = $style_args;
 	}
 
 	/**
-	 * Get all registered gateways
+	 * Get all registered gateways.
 	 *
 	 * @return array
 	 */
@@ -441,7 +448,7 @@ abstract class Gateway_Base extends Base {
 	/**
 	 * Get gateway by ID
 	 *
-	 * @param string $gateway_id
+	 * @param string $gateway_id Gateway ID.
 	 * @return Gateway_Base|null
 	 */
 	public static function get_gateway( $gateway_id ) {
@@ -452,10 +459,10 @@ abstract class Gateway_Base extends Base {
 	 * Initialize all gateways
 	 */
 	public static function init_gateways() {
-		// Allow plugins to register gateways
+		// Allow plugins to register gateways.
 		do_action( 'giftflow_register_gateways' );
 
-		// Sort gateways by order
+		// Sort gateways by order.
 		uasort(
 			self::$gateway_registry,
 			function ( $a, $b ) {
@@ -463,46 +470,106 @@ abstract class Gateway_Base extends Base {
 			}
 		);
 
-		// Fire action after all gateways initialized
+		// Fire action after all gateways initialized.
 		do_action( 'giftflow_gateways_initialized', self::$gateway_registry );
 	}
 
 	/**
-	 * Get gateway settings fields
+	 * Get gateway settings fields.
 	 *
 	 * @return array
 	 */
 	abstract protected function register_settings_fields();
 
+	/**
+	 * Get gateway template HTML.
+	 *
+	 * @return string
+	 */
 	abstract public function template_html();
 
 	/**
 	 * Process payment
 	 *
-	 * @param array $data Payment data
-	 * @param int   $donation_id Donation ID
+	 * @param array $data Payment data.
+	 * @param int   $donation_id Donation ID.
 	 * @return mixed
 	 */
 	abstract public function process_payment( $data, $donation_id = 0 );
 
-	// Getters
+	// Getters.
+	/**
+	 * Get gateway ID.
+	 *
+	 * @return string
+	 */
 	public function get_id() {
 		return $this->id; }
+
+	/**
+	 * Get gateway title.
+	 *
+	 * @return string
+	 */
 	public function get_title() {
 		return $this->title; }
+
+	/**
+	 * Get gateway description.
+	 *
+	 * @return string
+	 */
 	public function get_description() {
 		return $this->description; }
+
+	/**
+	 * Get gateway icon.
+	 *
+	 * @return string
+	 */
 	public function get_icon() {
 		return $this->icon; }
+
+	/**
+	 * Get gateway enabled status.
+	 *
+	 * @return bool
+	 */
 	public function is_enabled() {
 		return $this->enabled; }
+
+	/**
+	 * Get gateway order.
+	 *
+	 * @return int
+	 */
 	public function get_order() {
 		return $this->order; }
+
+	/**
+	 * Get gateway supports.
+	 *
+	 * @return array
+	 */
 	public function get_supports() {
 		return $this->supports; }
+
+	/**
+	 * Get gateway settings.
+	 *
+	 * @return array
+	 */
 	public function get_settings() {
 		return $this->settings; }
-	public function get_setting( $key, $default = '' ) {
-		return isset( $this->settings[ $key ] ) ? $this->settings[ $key ] : $default;
+
+	/**
+	 * Get gateway setting.
+	 *
+	 * @param string $key Setting key.
+	 * @param string $value_default Default value.
+	 * @return string
+	 */
+	public function get_setting( $key, $value_default = '' ) {
+		return isset( $this->settings[ $key ] ) ? $this->settings[ $key ] : $value_default;
 	}
 }

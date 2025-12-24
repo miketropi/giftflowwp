@@ -1,7 +1,17 @@
 <?php
+/**
+ * Donation button block.
+ *
+ * @package GiftFlow
+ * @since 1.0.0
+ */
 
+/**
+ * Register donation button block.
+ *
+ * @return void
+ */
 function giftflow_donation_button_block() {
-
 	register_block_type(
 		'giftflow/donation-button',
 		array(
@@ -37,17 +47,32 @@ function giftflow_donation_button_block() {
 	);
 }
 
+/**
+ * Add action to register donation button block.
+ *
+ * @return void
+ */
 add_action( 'init', 'giftflow_donation_button_block' );
 
+/**
+ * Render donation button block.
+ *
+ * @param array $attributes Block attributes.
+ * @param string $content Block content.
+ * @param WP_Block $block Block object.
+ * @return string Block output.
+ */
 function giftflow_donation_button_block_render( $attributes, $content, $block ) {
+	unset( $content );
+	unset( $block );
 	$campaign_id = $attributes['campaignId'] ?? 0;
 
-	// If no specific campaign is selected, use the current post ID
+	// If no specific campaign is selected, use the current post ID.
 	if ( empty( $campaign_id ) ) {
 		$campaign_id = get_the_ID();
 	}
 
-	// if still no campaign ID, return error message
+	// if still no campaign ID, return error message.
 	if ( empty( $campaign_id ) ) {
 		ob_start();
 		?>
@@ -74,23 +99,23 @@ function giftflow_donation_button_block_render( $attributes, $content, $block ) 
 		return ob_get_clean();
 	}
 
-	// Get campaign data
+	// Get campaign data.
 	$goal_amount    = get_post_meta( $campaign_id, '_goal_amount', true );
 	$raised_amount  = giftflow_get_campaign_raised_amount( $campaign_id );
 	$campaign_title = get_the_title( $campaign_id );
 
-	// Check if campaign exists and is active
+	// Check if campaign exists and is active.
 	$campaign_status = get_post_status( $campaign_id );
-	$is_active       = $campaign_status === 'publish';
+	$is_active       = 'publish' === $campaign_status;
 
-	// Get button attributes
+	// Get button attributes.
 	$button_text      = $attributes['buttonText'] ?? esc_html__( 'Donate Now', 'giftflow' );
 	$background_color = $attributes['backgroundColor'] ?? '#000000';
 	$text_color       = $attributes['textColor'] ?? '#ffffff';
 	$border_radius    = $attributes['borderRadius'] ?? 0;
 	$full_width       = $attributes['fullWidth'] ?? false;
 
-	// Build CSS classes
+	// Build CSS classes.
 	$button_classes = array(
 		'donation-btn',
 	);
@@ -105,20 +130,20 @@ function giftflow_donation_button_block_render( $attributes, $content, $block ) 
 
 	$button_class_string = implode( ' ', $button_classes );
 
-	// Build inline styles for the button
+	// Build inline styles for the button.
 	$button_styles = array(
 		'background-color: ' . esc_attr( $background_color ),
 		'color: ' . esc_attr( $text_color ),
 		'border-radius: ' . esc_attr( $border_radius ) . 'px',
 	);
 
-	// Add full width styling if enabled
+	// Add full width styling if enabled.
 	if ( $full_width ) {
 		$button_styles[] = 'width: 100%';
 		$button_styles[] = 'max-width: none';
 	}
 
-	// Add disabled state styling if campaign is not active
+	// Add disabled state styling if campaign is not active.
 	if ( ! $is_active ) {
 		$button_styles[] = 'opacity: 0.6';
 		$button_styles[] = 'cursor: not-allowed';
