@@ -608,7 +608,8 @@ var STRIPE_PUBLIC_KEY = giftflowStripeDonation.stripe_publishable_key;
                     return _regenerator().w(function (_context) {
                       while (1) switch (_context.n) {
                         case 0:
-                          console.log('event', event);
+                          // console.log('event', event);
+
                           if (event.complete) {
                             // console.log(self.formObject.fields);
                             // console.log('Card information is complete.');

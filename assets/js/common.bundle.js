@@ -512,6 +512,7 @@ function _donationButton_Handle() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   applySlideEffect: () => (/* binding */ applySlideEffect),
 /* harmony export */   replaceContentBySelector: () => (/* binding */ replaceContentBySelector)
 /* harmony export */ });
 var replaceContentBySelector = function replaceContentBySelector(selector, content) {
@@ -522,6 +523,64 @@ var replaceContentBySelector = function replaceContentBySelector(selector, conte
     console.error("Element not found for selector: ".concat(selector));
   }
 };
+
+/**
+ * Apply a slideDown or slideUp effect to a DOM element.
+ * @param {HTMLElement} dom - The target element.
+ * @param {'slidedown'|'slideup'} effect - The effect type.
+ * @param {number} duration - Duration in ms. Default: 300
+ * @param {string} displayType - The display style to use (e.g., 'block', 'grid'). Default: 'block'
+ */
+function applySlideEffect(dom) {
+  var effect = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'slidedown';
+  var duration = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 300;
+  var displayType = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'block';
+  if (!dom) return;
+  if (!['slidedown', 'slideup'].includes(effect)) {
+    console.error('Invalid effect:', effect);
+    return;
+  }
+  dom.style.overflow = 'hidden';
+  if (effect === 'slidedown') {
+    dom.style.display = displayType;
+    var height = dom.scrollHeight;
+    dom.style.height = '0px';
+
+    // force reflow to ensure setting height is registered
+    // eslint-disable-next-line no-unused-expressions
+    dom.offsetHeight;
+    dom.style.transition = "height ".concat(duration, "ms ease");
+    dom.style.height = height + 'px';
+    var _onEnd = function onEnd() {
+      dom.style.display = displayType;
+      dom.style.height = '';
+      dom.style.overflow = '';
+      dom.style.transition = '';
+      dom.removeEventListener('transitionend', _onEnd);
+    };
+    dom.addEventListener('transitionend', _onEnd);
+  } else if (effect === 'slideup') {
+    // Remember current display style in case we want to restore it
+    var prevDisplay = dom.style.display;
+    var _height = dom.scrollHeight;
+    dom.style.height = _height + 'px';
+
+    // force reflow
+    // eslint-disable-next-line no-unused-expressions
+    dom.offsetHeight;
+    dom.style.transition = "height ".concat(duration, "ms ease");
+    dom.style.height = '0px';
+    var _onEnd2 = function onEnd() {
+      dom.style.display = 'none';
+      dom.style.height = '';
+      dom.style.overflow = '';
+      dom.style.transition = '';
+      dom.removeEventListener('transitionend', _onEnd2);
+      // Optionally restore previous style if needed in future
+    };
+    dom.addEventListener('transitionend', _onEnd2);
+  }
+}
 
 /***/ }),
 

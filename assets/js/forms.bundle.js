@@ -2,6 +2,86 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./assets/js/util/helpers.js":
+/*!***********************************!*\
+  !*** ./assets/js/util/helpers.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   applySlideEffect: () => (/* binding */ applySlideEffect),
+/* harmony export */   replaceContentBySelector: () => (/* binding */ replaceContentBySelector)
+/* harmony export */ });
+var replaceContentBySelector = function replaceContentBySelector(selector, content) {
+  var elem = document.querySelector(selector);
+  if (elem) {
+    elem.innerHTML = content;
+  } else {
+    console.error("Element not found for selector: ".concat(selector));
+  }
+};
+
+/**
+ * Apply a slideDown or slideUp effect to a DOM element.
+ * @param {HTMLElement} dom - The target element.
+ * @param {'slidedown'|'slideup'} effect - The effect type.
+ * @param {number} duration - Duration in ms. Default: 300
+ * @param {string} displayType - The display style to use (e.g., 'block', 'grid'). Default: 'block'
+ */
+function applySlideEffect(dom) {
+  var effect = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'slidedown';
+  var duration = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 300;
+  var displayType = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'block';
+  if (!dom) return;
+  if (!['slidedown', 'slideup'].includes(effect)) {
+    console.error('Invalid effect:', effect);
+    return;
+  }
+  dom.style.overflow = 'hidden';
+  if (effect === 'slidedown') {
+    dom.style.display = displayType;
+    var height = dom.scrollHeight;
+    dom.style.height = '0px';
+
+    // force reflow to ensure setting height is registered
+    // eslint-disable-next-line no-unused-expressions
+    dom.offsetHeight;
+    dom.style.transition = "height ".concat(duration, "ms ease");
+    dom.style.height = height + 'px';
+    var _onEnd = function onEnd() {
+      dom.style.display = displayType;
+      dom.style.height = '';
+      dom.style.overflow = '';
+      dom.style.transition = '';
+      dom.removeEventListener('transitionend', _onEnd);
+    };
+    dom.addEventListener('transitionend', _onEnd);
+  } else if (effect === 'slideup') {
+    // Remember current display style in case we want to restore it
+    var prevDisplay = dom.style.display;
+    var _height = dom.scrollHeight;
+    dom.style.height = _height + 'px';
+
+    // force reflow
+    // eslint-disable-next-line no-unused-expressions
+    dom.offsetHeight;
+    dom.style.transition = "height ".concat(duration, "ms ease");
+    dom.style.height = '0px';
+    var _onEnd2 = function onEnd() {
+      dom.style.display = 'none';
+      dom.style.height = '';
+      dom.style.overflow = '';
+      dom.style.transition = '';
+      dom.removeEventListener('transitionend', _onEnd2);
+      // Optionally restore previous style if needed in future
+    };
+    dom.addEventListener('transitionend', _onEnd2);
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js":
 /*!*********************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js ***!
@@ -222,9 +302,70 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./util/helpers */ "./assets/js/util/helpers.js");
 
 
 
+function _createForOfIteratorHelper(r, e) {
+  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (!t) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) {
+      t && (r = t);
+      var _n = 0,
+        F = function F() {};
+      return {
+        s: F,
+        n: function n() {
+          return _n >= r.length ? {
+            done: !0
+          } : {
+            done: !1,
+            value: r[_n++]
+          };
+        },
+        e: function e(r) {
+          throw r;
+        },
+        f: F
+      };
+    }
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  var o,
+    a = !0,
+    u = !1;
+  return {
+    s: function s() {
+      t = t.call(r);
+    },
+    n: function n() {
+      var r = t.next();
+      return a = r.done, r;
+    },
+    e: function e(r) {
+      u = !0, o = r;
+    },
+    f: function f() {
+      try {
+        a || null == t["return"] || t["return"]();
+      } finally {
+        if (u) throw o;
+      }
+    }
+  };
+}
+function _unsupportedIterableToArray(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+  }
+}
+function _arrayLikeToArray(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
 function _regenerator() {
   /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */var e,
     t,
@@ -332,6 +473,8 @@ function _regeneratorDefine2(e, r, n, t) {
     }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2));
   }, _regeneratorDefine2(e, r, n, t);
 }
+
+
 /**
  * Donation Form
  */
@@ -381,6 +524,9 @@ function _regeneratorDefine2(e, r, n, t) {
                 this.form.addEventListener('input', function (event) {
                   if (event.target.name === 'donation_amount') {
                     _this.onUpdateAmountField(event.target.value);
+                  }
+                  if (event.target.name === 'payment_method') {
+                    _this.onChangePaymentMethod(event.target.value);
                   }
                 });
 
@@ -446,6 +592,7 @@ function _regeneratorDefine2(e, r, n, t) {
                           _context.n = 1;
                           break;
                         }
+                        self.onSetLoading(false);
                         return _context.a(2);
                       case 1:
                         _context.p = 1;
@@ -513,20 +660,6 @@ function _regeneratorDefine2(e, r, n, t) {
                   return _regenerator().w(function (_context2) {
                     while (1) switch (_context2.n) {
                       case 0:
-                        // const res = await jQuery.ajax({
-                        // 	url: window.giftflowDonationForms.ajaxurl,
-                        // 	type: 'POST',
-                        // 	data: {
-                        // 		action: 'giftflow_donation_form',
-                        // 		wp_nonce: data.wp_nonce,
-                        // 		data
-                        // 	},
-                        // 	error: function (xhr, status, error) {
-                        // 		console.error('Error:', [error, status]);
-                        // 	}
-                        // })
-                        // return res;
-                        // return;
                         ajaxurl = "".concat(window.giftflowDonationForms.ajaxurl, "?action=giftflow_donation_form&wp_nonce=").concat(data.wp_nonce);
                         _context2.n = 1;
                         return fetch(ajaxurl, {
@@ -596,6 +729,9 @@ function _regeneratorDefine2(e, r, n, t) {
                 // panel
                 self.form.querySelector('.donation-form__step-panel.is-active').classList.remove('is-active');
                 self.form.querySelector('.donation-form__step-panel.step-' + self.currentStep).classList.add('is-active');
+
+                // change payment method
+                this.onChangePaymentMethod(self.fields.payment_method);
               }
             }, {
               key: "onPreviousStep",
@@ -644,7 +780,8 @@ function _regeneratorDefine2(e, r, n, t) {
                 this.form.addEventListener('change', function (event) {
                   self.fields[event.target.name] = event.target.value;
                   var value = event.target.value;
-                  console.log(event.target.name, value);
+
+                  // console.log(event.target.name, value);
 
                   // validate event.target is checkbox field
                   if (event.target.type === 'checkbox') {
@@ -659,21 +796,36 @@ function _regeneratorDefine2(e, r, n, t) {
 
                   // update UI by field
                   self.onUpdateUIByField(event.target.name, value);
-                  console.log('fields', self.fields);
                 });
+              }
+            }, {
+              key: "onChangePaymentMethod",
+              value: function onChangePaymentMethod(methodId) {
+                var paymentMethodDescription = this.form.querySelector(".donation-form__payment-method-item.payment-method-".concat(methodId));
+                this.form.querySelectorAll(".donation-form__payment-method-item:not(.payment-method-".concat(methodId, ")")).forEach(function (paymentMethodDescription) {
+                  // remove class is-active
+                  paymentMethodDescription.classList.remove('is-active');
+                  paymentMethodDescription.querySelector('.donation-form__payment-method-description').classList.add('out-validate-field-inner');
+                  (0,_util_helpers__WEBPACK_IMPORTED_MODULE_3__.applySlideEffect)(paymentMethodDescription.querySelector('.donation-form__payment-method-description'), 'slideup');
+                });
+                if (paymentMethodDescription) {
+                  paymentMethodDescription.classList.add('is-active');
+                  paymentMethodDescription.querySelector('.donation-form__payment-method-description').classList.remove('out-validate-field-inner');
+                  (0,_util_helpers__WEBPACK_IMPORTED_MODULE_3__.applySlideEffect)(paymentMethodDescription.querySelector('.donation-form__payment-method-description'), 'slidedown', 300, 'grid');
+                }
               }
             }, {
               key: "onUpdateUIByField",
               value: function onUpdateUIByField(field, value) {
-                // console.log('onUpdateUIByField', field, value);
-
                 var inputField = this.form.querySelector("input[name=\"".concat(field, "\"]"));
                 if (!inputField) {
                   return;
                 }
                 var wrapperField = inputField.closest('.donation-form__field');
                 if (!wrapperField) {
-                  if (!this.onValidateValue('required', value)) {
+                  var type = inputField.dataset.validate;
+                  var extraData = inputField.dataset.extraData ? JSON.parse(inputField.dataset.extraData) : null;
+                  if (!this.onValidateValue(type, value, extraData)) {
                     inputField.classList.add('error');
                     this.onUpdateOutputField(field, '');
                   } else {
@@ -683,7 +835,8 @@ function _regeneratorDefine2(e, r, n, t) {
                   return;
                 }
                 if (inputField.dataset.validate) {
-                  var pass = this.onValidateValue(inputField.dataset.validate, value);
+                  var _extraData = inputField.dataset.extraData ? JSON.parse(inputField.dataset.extraData) : null;
+                  var pass = this.onValidateValue(inputField.dataset.validate, value, _extraData);
                   if (!pass) {
                     // inputField.classList.add('error');
                     wrapperField.classList.add('error');
@@ -791,7 +944,8 @@ function _regeneratorDefine2(e, r, n, t) {
                   var fieldName = field.name;
                   var fieldValue = field.value;
                   var fieldValidate = field.dataset.validate;
-                  if (!_this4.onValidateValue(fieldValidate, fieldValue)) {
+                  var extraData = field.dataset.extraData ? JSON.parse(field.dataset.extraData) : null;
+                  if (!_this4.onValidateValue(fieldValidate, fieldValue, extraData)) {
                     pass = false;
                   }
                   self.onUpdateUIByField(fieldName, fieldValue);
@@ -812,24 +966,64 @@ function _regeneratorDefine2(e, r, n, t) {
             }, {
               key: "onValidateValue",
               value: function onValidateValue(type, value) {
-                switch (type) {
-                  // email
-                  case 'email':
-                    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+                var extraData = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+                // Accept multiple comma-delimited validation types, pass if all pass
+                var types = type ? type.split(',').map(function (s) {
+                  return s.trim();
+                }) : [];
+                var overallValid = true;
+                var _iterator = _createForOfIteratorHelper(types),
+                  _step;
+                try {
+                  for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                    var t = _step.value;
+                    switch (t) {
+                      // email
+                      case 'email':
+                        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) overallValid = false;
+                        break;
 
-                  // phone
-                  case 'phone':
-                    // number or string + on the first position
-                    return /^[0-9]+$/.test(value) || /^[a-zA-Z]+$/.test(value);
+                      // phone
+                      case 'phone':
+                        // starts with optional +, then digits, optional spaces/hyphens
+                        if (!/^\+?[0-9\s\-]+$/.test(value)) overallValid = false;
+                        break;
 
-                  // required
-                  case 'required':
-                    return value.trim() !== '';
+                      // required
+                      case 'required':
+                        if (typeof value === 'undefined' || value === null || value.toString().trim() === '') overallValid = false;
+                        break;
 
-                  // default
-                  default:
-                    return true;
+                      // number
+                      case 'number':
+                        if (isNaN(value) || value === '') overallValid = false;
+                        break;
+
+                      // min
+                      case 'min':
+                        var __min = parseInt((extraData === null || extraData === void 0 ? void 0 : extraData.min) || 0);
+                        if (value < __min || value === '') overallValid = false;
+                        break;
+
+                      // max
+                      case 'max':
+                        var __max = parseInt((extraData === null || extraData === void 0 ? void 0 : extraData.max) || 0);
+                        if (value > __max || value === '') overallValid = false;
+                        break;
+
+                      // default (pass)
+                      default:
+                        // do nothing, always pass unknown validators
+                        break;
+                    }
+                    if (!overallValid) break; // stop on first failure
+                  }
+                } catch (err) {
+                  _iterator.e(err);
+                } finally {
+                  _iterator.f();
                 }
+                return overallValid;
               }
             }]);
           }();

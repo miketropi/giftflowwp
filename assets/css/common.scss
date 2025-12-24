@@ -16,3 +16,8 @@
 
 // gfw-pagination style
 @import './modules/giftflow-pagination'; 
+
+// monofont global class name
+.gfw-monofont {
+  font-family: $font-family-monospace;
+}

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "mix watch",
-    "build": "mix"
+    "build": "mix",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -31,9 +32,17 @@
     "@babel/preset-react": "^7.27.1",
     "@babel/runtime": "^7.28.3",
     "@wordpress/babel-preset-default": "^8.21.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "regenerator-runtime": "^0.14.1",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.86.2",
     "sass-loader": "^12.6.0"
+  },
+  "lint-staged": {
+    "*.php": [
+      "vendor/bin/phpcbf",
+      "vendor/bin/phpcs"
+    ]
   }
 }

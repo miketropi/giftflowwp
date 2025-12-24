@@ -12,6 +12,7 @@
   --giftflow-transition: all 0.3s ease;
   --giftflow-disabled: #fafafa;
   --giftflow-disabled-text: #999;
+  --giftflow-font-family-monospace: monospace, "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Droid Sans Mono", "Source Code Pro", "Lucida Console", "Courier New";
 }
 
 .donation-form {
@@ -322,6 +323,7 @@
   font-weight: 600;
   text-align: center;
   padding-left: 2.5rem;
+  font-family: var(--giftflow-font-family-monospace);
 }
 .donation-form__amount-input input:focus {
   outline: none;
@@ -357,6 +359,7 @@
   cursor: pointer;
   transition: var(--giftflow-transition);
   border-radius: var(--giftflow-border-radius);
+  font-family: var(--giftflow-font-family-monospace);
 }
 .donation-form__preset-amounts button > * {
   pointer-events: none;
@@ -447,15 +450,22 @@
   display: grid;
   gap: 1rem;
 }
+.donation-form__payment-method-item {
+  background-color: #f9f9f9;
+  border-radius: var(--giftflow-border-radius);
+  border: 1px solid var(--giftflow-border-color);
+}
+.donation-form__payment-method-item:not(.is-active) label.donation-form__payment-method {
+  border-bottom-color: transparent;
+}
 .donation-form__payment-method {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 1rem;
-  border: 1px solid var(--giftflow-border-color);
   cursor: pointer;
   transition: var(--giftflow-transition);
-  border-radius: var(--giftflow-border-radius);
+  border-bottom: 1px solid var(--giftflow-border-color);
 }
 @media (max-width: 480px) {
   .donation-form__payment-method {
@@ -479,9 +489,6 @@
     width: 16px;
     height: 16px;
   }
-}
-.donation-form__payment-method:hover {
-  border-color: var(--giftflow-primary-color);
 }
 .donation-form__summary {
   margin-top: 2rem;
@@ -654,6 +661,87 @@
   font-size: 1.25rem;
   display: flex;
 }
+.donation-form__bank-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-radius: var(--giftflow-border-radius);
+  padding: 1rem;
+  border: 1px solid var(--giftflow-border-color);
+  background: white;
+}
+@media (max-width: 768px) {
+  .donation-form__bank-details {
+    padding: 0.75rem;
+    gap: 0.4rem;
+  }
+}
+@media (max-width: 480px) {
+  .donation-form__bank-details {
+    padding: 0.5rem;
+    gap: 0.3rem;
+  }
+}
+.donation-form__bank-detail {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  align-items: center;
+  gap: 0.75rem 2rem;
+  font-size: 0.85rem;
+  color: var(--giftflow-text-light);
+  padding: 0.25rem 0;
+}
+@media (max-width: 768px) {
+  .donation-form__bank-detail {
+    grid-template-columns: 1fr;
+    gap: 0.4rem 0;
+    font-size: 0.9rem;
+    padding: 0.3rem 0;
+  }
+}
+@media (max-width: 480px) {
+  .donation-form__bank-detail {
+    grid-template-columns: 1fr;
+    gap: 0.25rem 0;
+    font-size: 1rem;
+    padding: 0.2rem 0;
+  }
+}
+.donation-form__bank-detail strong {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  min-width: 120px;
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .donation-form__bank-detail strong {
+    min-width: unset;
+    white-space: normal;
+  }
+}
+@media (max-width: 480px) {
+  .donation-form__bank-detail strong {
+    min-width: unset;
+    white-space: normal;
+    font-size: 1em;
+  }
+}
+.donation-form__bank-detail span {
+  font-weight: 400;
+  color: var(--giftflow-text-color);
+  letter-spacing: 0.01em;
+  word-break: break-all;
+}
+@media (max-width: 768px) {
+  .donation-form__bank-detail span {
+    font-size: 1em;
+  }
+}
+@media (max-width: 480px) {
+  .donation-form__bank-detail span {
+    font-size: 1em;
+  }
+}
 
 @media (max-width: 768px) {
   .donation-form__campaign {
@@ -690,8 +778,6 @@
   background-color: #f9f9f9;
   border-radius: var(--giftflow-border-radius);
   font-size: 0.875rem;
-  color: var(--giftflow-text-light);
-  line-height: 1.5;
 }
 .donation-form__payment-method-description--stripe #STRIPE-CARD-ELEMENT {
   margin-top: 1rem;
@@ -727,7 +813,7 @@
 }
 .donation-form__payment-notification {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.7rem;
   align-items: flex-start;
   margin-bottom: 1rem;
   padding: 0.75rem;
@@ -736,14 +822,18 @@
 }
 .donation-form__payment-notification .notification-icon {
   flex-shrink: 0;
-  margin-right: 0.75rem;
-  margin-top: 0.125rem;
   color: var(--giftflow-primary-color);
+}
+.donation-form__payment-notification .notification-icon svg {
+  width: 20px;
+  height: auto;
+  margin: 0;
+  color: currentColor;
 }
 .donation-form__payment-notification p {
   margin: 0;
   font-size: 0.8125rem;
-  color: var(--giftflow-text-light);
+  color: #313131;
   line-height: 1.4;
 }
 @media (max-width: 480px) {
@@ -870,7 +960,28 @@
   margin: 0;
   color: currentColor;
 }
-
+.donation-form__amount-notification {
+  align-items: start;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: var(--giftflow-background-color);
+  border-radius: var(--giftflow-border-radius);
+  display: flex;
+  gap: 0.7rem;
+  font-size: 0.8em;
+  line-height: 1.5em;
+  border: 1px solid var(--giftflow-border-color);
+  color: #313131;
+}
+.donation-form__amount-notification .notification-message-icon {
+  color: var(--giftflow-primary-color);
+}
+.donation-form__amount-notification .notification-message-icon svg {
+  width: 20px;
+  height: auto;
+  margin: 0;
+  color: currentColor;
+}
 .donation-form__error {
   text-align: center;
   padding: 3rem 2rem;
