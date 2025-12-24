@@ -1,5 +1,15 @@
 <?php
+/**
+ * Share Block.
+ *
+ * @package GiftFlow
+ */
 
+/**
+ * Register share block.
+ *
+ * @return void
+ */
 function giftflow_share_block() {
 	register_block_type(
 		'giftflow/share',
@@ -34,18 +44,31 @@ function giftflow_share_block() {
 
 add_action( 'init', 'giftflow_share_block' );
 
+/**
+ * Render share block.
+ *
+ * @param array $attributes Block attributes.
+ * @param string $content Block content.
+ * @param WP_Block $block Block object.
+ * @return string Block output.
+ */
 function giftflow_share_block_render( $attributes, $content, $block ) {
+	unset( $content );
+	unset( $block );
+
 	$title         = $attributes['title'] ?? esc_html__( 'Share this', 'giftflow' );
 	$show_socials  = $attributes['showSocials'] ?? true;
 	$show_email    = $attributes['showEmail'] ?? true;
 	$show_copy_url = $attributes['showCopyUrl'] ?? true;
 	$custom_url    = $attributes['customUrl'] ?? '';
 
-	// Get the URL to share - if customUrl is empty, get current post/page URL
+	// Get the URL to share - if customUrl is empty, get current post/page URL.
 	if ( ! empty( $custom_url ) ) {
 		$share_url = $custom_url;
+
+		// phpcs:ignore Universal.ControlStructures.DisallowLonelyIf.Found
 	} else {
-		// Get current post/page URL
+		// Get current post/page URL.
 		if ( is_singular() ) {
 			$share_url = get_permalink();
 		} elseif ( is_home() || is_front_page() ) {
@@ -59,30 +82,31 @@ function giftflow_share_block_render( $attributes, $content, $block ) {
 		} elseif ( is_date() ) {
 			$share_url = get_pagenum_link();
 		} elseif ( is_search() ) {
+			// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.urlencode_urlencode
 			$share_url = home_url( '/?s=' . urlencode( get_search_query() ) );
 		} else {
 			$share_url = home_url( add_query_arg( array() ) );
 		}
 	}
 
-	// Get title and description for sharing
+	// Get title and description for sharing.
 	if ( is_singular() ) {
 		$share_title       = get_the_title();
-		$share_description = get_the_excerpt() ?: get_bloginfo( 'description' );
+		$share_description = get_the_excerpt() ? get_the_excerpt() : get_bloginfo( 'description' );
 	} elseif ( is_home() || is_front_page() ) {
 		$share_title       = get_bloginfo( 'name' );
 		$share_description = get_bloginfo( 'description' );
 	} elseif ( is_category() ) {
 		$category          = get_queried_object();
 		$share_title       = single_cat_title( '', false );
-		$share_description = category_description() ?: get_bloginfo( 'description' );
+		$share_description = category_description() ? category_description() : get_bloginfo( 'description' );
 	} elseif ( is_tag() ) {
 		$share_title       = single_tag_title( '', false );
-		$share_description = tag_description() ?: get_bloginfo( 'description' );
+		$share_description = tag_description() ? tag_description() : get_bloginfo( 'description' );
 	} elseif ( is_author() ) {
 		$author            = get_queried_object();
 		$share_title       = get_the_author_meta( 'display_name', $author->ID );
-		$share_description = get_the_author_meta( 'description', $author->ID ) ?: get_bloginfo( 'description' );
+		$share_description = get_the_author_meta( 'description', $author->ID ) ? get_the_author_meta( 'description', $author->ID ) : get_bloginfo( 'description' );
 	} elseif ( is_date() ) {
 		$share_title       = get_the_date();
 		$share_description = get_bloginfo( 'description' );
@@ -95,7 +119,7 @@ function giftflow_share_block_render( $attributes, $content, $block ) {
 		$share_description = get_bloginfo( 'description' );
 	}
 
-	// Default social platforms (Facebook, X/Twitter, LinkedIn)
+	// Default social platforms (Facebook, X/Twitter, LinkedIn).
 	$social_platforms = array( 'twitter', 'facebook', 'linkedin' );
 
 	ob_start();
@@ -118,9 +142,6 @@ function giftflow_share_block_render( $attributes, $content, $block ) {
 					title="<?php esc_attr_e( 'Share via Email', 'giftflow' ); ?>"
 					target="_blank"
 					rel="noopener noreferrer">
-					<!-- <span class="giftflow-share__icon">
-						<?php // echo giftflow_svg_icon('mail'); ?>
-					</span> -->
 					<span class="giftflow-share__text"><?php esc_html_e( 'Email', 'giftflow' ); ?></span>
 				</a>
 			<?php endif; ?>
@@ -131,9 +152,6 @@ function giftflow_share_block_render( $attributes, $content, $block ) {
 					data-url="<?php echo esc_attr( $share_url ); ?>"
 					title="<?php esc_attr_e( 'Copy URL to clipboard', 'giftflow' ); ?>"
 					onclick="giftflowCopyUrlToClipboard('<?php echo esc_js( $share_url ); ?>', this)">
-					<!-- <span class="giftflow-share__icon">
-						<?php // echo giftflow_svg_icon('link'); ?>
-					</span> -->
 					<span class="giftflow-share__text"><?php esc_html_e( 'Copy Link', 'giftflow' ); ?></span>
 				</a>
 			<?php endif; ?>
@@ -152,7 +170,7 @@ function giftflow_share_block_render( $attributes, $content, $block ) {
 	<script>
 	function giftflowCopyUrlToClipboard(url, button) {
 		if (navigator.clipboard && window.isSecureContext) {
-			// Use modern clipboard API
+			// Use modern clipboard API.
 			navigator.clipboard.writeText(url).then(function() {
 				giftflowShowCopyFeedback(button);
 			}).catch(function(err) {
@@ -160,7 +178,7 @@ function giftflow_share_block_render( $attributes, $content, $block ) {
 				giftflowFallbackCopy(url, button);
 			});
 		} else {
-			// Fallback for older browsers
+			// Fallback for older browsers.
 			giftflowFallbackCopy(url, button);
 		}
 	}
@@ -201,11 +219,22 @@ function giftflow_share_block_render( $attributes, $content, $block ) {
 	return ob_get_clean();
 }
 
+/**
+ * Render social share button.
+ *
+ * @param string $platform The platform name.
+ * @param string $url The URL to share.
+ * @param string $title The title to share.
+ * @param string $description The description to share.
+ * @return string The social share button HTML.
+ */
 function giftflow_render_social_share_button( $platform, $url, $title, $description ) {
+	unset( $description );
+
 	$share_urls = array(
-		'facebook' => 'https://www.facebook.com/sharer/sharer.php?u=' . urlencode( $url ),
-		'twitter'  => 'https://twitter.com/intent/tweet?url=' . urlencode( $url ) . '&text=' . urlencode( $title ),
-		'linkedin' => 'https://www.linkedin.com/sharing/share-offsite/?url=' . urlencode( $url ),
+		'facebook' => 'https://www.facebook.com/sharer/sharer.php?u=' . rawurlencode( $url ),
+		'twitter'  => 'https://twitter.com/intent/tweet?url=' . rawurlencode( $url ) . '&text=' . rawurlencode( $title ),
+		'linkedin' => 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencode( $url ),
 	);
 
 	$platform_names = array(
@@ -229,15 +258,13 @@ function giftflow_render_social_share_button( $platform, $url, $title, $descript
 	$icon_name     = $platform_icons[ $platform ];
 
 	ob_start();
+
+	// translators: %s is the platform name.
+	$a_title = sprintf( esc_html__( 'Share on %s', 'giftflow' ), $platform_name );
 	?>
 	<a href="<?php echo esc_url( $share_url ); ?>" 
 		class="giftflow-share__button giftflow-share__button--<?php echo esc_attr( $platform ); ?>"
-		title="
-		<?php
-		/* translators: %s is the platform name */
-		echo esc_attr( sprintf( esc_html__( 'Share on %s', 'giftflow' ), esc_html( $platform_name ) ) );
-		?>
-		"
+		title="<?php echo esc_attr( $a_title ); ?>"
 		target="_blank"
 		rel="noopener noreferrer">
 		<span class="giftflow-share__text"><?php echo esc_html( $platform_name ); ?></span>
@@ -246,11 +273,20 @@ function giftflow_render_social_share_button( $platform, $url, $title, $descript
 	return ob_get_clean();
 }
 
+/**
+ * Get email share URL.
+ *
+ * @param string $url The URL to share.
+ * @param string $title The title to share.
+ * @param string $description The description to share.
+ * @return string The email share URL.
+ */
 function giftflow_get_email_share_url( $url, $title, $description ) {
-	/* translators: %s is the title */
+	// translators: %s is the title.
 	$subject = sprintf( __( 'Check out: %s', 'giftflow' ), $title );
-	/* translators: 1: is the title, 2: is the description, 3: is the URL */
+	// translators: 1: is the title, 2: is the description, 3: is the URL.
 	$body = sprintf( __( 'I thought you might be interested in this:\n\n%1$s\n\n%2$s\n\n%3$s', 'giftflow' ), $title, $description, $url );
 
+	// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.urlencode_urlencode
 	return 'mailto:?subject=' . urlencode( $subject ) . '&body=' . urlencode( $body );
 }

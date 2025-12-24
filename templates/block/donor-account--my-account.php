@@ -1,4 +1,11 @@
 <?php
+/**
+ * Template for my account
+ *
+ * @package GiftFlow
+ * @since 1.0.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -6,12 +13,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 // =============================================================================
 // INITIALIZATION & VALIDATION
 // =============================================================================
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.WP.GlobalVariablesOverride.Prohibited
+$current_user = $current_user ?? null; // wp user object.
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-$current_user = $current_user ?? null; // wp user object
-// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-$donor = $donor ?? null; // donor information
+$donor = $donor ?? null; // donor information.
 
-// Return if required data is missing
+// Return if required data is missing.
 if ( ! $current_user || ! $donor ) {
 	return;
 }
@@ -19,6 +26,8 @@ if ( ! $current_user || ! $donor ) {
 
 /**
  * Render page header
+ *
+ * @return void
  */
 function giftflow_render_page_header() {
 	?>
@@ -35,9 +44,13 @@ function giftflow_render_page_header() {
 
 /**
  * Render success/error messages
+ *
+ * @param array $account_result The account result.
+ * @param array $password_result The password result.
+ * @return void
  */
 function giftflow_render_messages( $account_result, $password_result ) {
-	// Account form messages
+	// Account form messages.
 	if ( $account_result ) {
 		if ( $account_result['success'] ) {
 			giftflow_render_message( $account_result['message'], 'success' );
@@ -46,7 +59,7 @@ function giftflow_render_messages( $account_result, $password_result ) {
 		}
 	}
 
-	// Password form messages
+	// Password form messages.
 	if ( $password_result ) {
 		if ( $password_result['success'] ) {
 			giftflow_render_message( $password_result['message'], 'success' );
@@ -58,6 +71,10 @@ function giftflow_render_messages( $account_result, $password_result ) {
 
 /**
  * Render a single message
+ *
+ * @param string $message The message.
+ * @param string $type The type of message.
+ * @return void
  */
 function giftflow_render_message( $message, $type ) {
 	$class = 'gfw-message gfw-message--' . $type;
@@ -75,6 +92,9 @@ function giftflow_render_message( $message, $type ) {
 
 /**
  * Render form field
+ *
+ * @param array $field_config The field configuration.
+ * @return void
  */
 function giftflow_render_form_field( $field_config ) {
 	$field_id         = $field_config['id'];
@@ -103,7 +123,7 @@ function giftflow_render_form_field( $field_config ) {
 		<?php echo esc_html( $field_label ); ?><?php echo wp_kses_post( $required_span ); ?>
 	</label>
 	
-	<?php if ( $field_type === 'textarea' ) : ?>
+	<?php if ( 'textarea' === $field_type ) : ?>
 		<textarea 
 		id="<?php echo esc_attr( $field_id ); ?>" 
 		name="<?php echo esc_attr( $field_name ); ?>" 
@@ -125,20 +145,26 @@ function giftflow_render_form_field( $field_config ) {
 
 /**
  * Render form section
+ *
+ * @param string $title The title of the section.
+ * @param string $icon The icon of the section.
+ * @param array $fields The fields of the section.
+ * @param string $form_class The class of the form.
+ * @return void
  */
-function giftflow_render_form_section( $title, $icon, $fields, $form_class = 'gfw-account-form' ) {
+function giftflow_render_form_section( $title, $icon, $fields, $form_class = '' ) {
 	?>
-	<div class="gfw-form-section">
-	<h3 class="gfw-form-section-title">
-		<?php echo wp_kses( giftflow_svg_icon( $icon ), giftflow_allowed_svg_tags() ); ?>
-		<?php echo esc_html( $title ); ?>
-	</h3>
-	
-	<div class="gfw-form-fields">
-		<?php foreach ( $fields as $field ) : ?>
-			<?php giftflow_render_form_field( $field ); ?>
-		<?php endforeach; ?>
-	</div>
+	<div class="gfw-form-section <?php echo esc_attr( $form_class ); ?>">
+		<h3 class="gfw-form-section-title">
+			<?php echo wp_kses( giftflow_svg_icon( $icon ), giftflow_allowed_svg_tags() ); ?>
+			<?php echo esc_html( $title ); ?>
+		</h3>
+		
+		<div class="gfw-form-fields">
+			<?php foreach ( $fields as $field ) : ?>
+				<?php giftflow_render_form_field( $field ); ?>
+			<?php endforeach; ?>
+		</div>
 	</div>
 	<?php
 }
@@ -147,7 +173,7 @@ function giftflow_render_form_section( $title, $icon, $fields, $form_class = 'gf
 // DATA VALIDATION
 // =============================================================================
 
-// Ensure required data is available
+// Ensure required data is available.
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $account_result = $account_result ?? null;
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
@@ -171,9 +197,12 @@ $form_data = $form_data ?? array();
 
 /**
  * Render account information form
+ *
+ * @param array $form_data The form data.
+ * @return void
  */
 function giftflow_render_account_form( $form_data ) {
-	// Personal information fields
+	// Personal information fields.
 	$personal_fields = array(
 		array(
 			'id'       => 'first_name',
@@ -209,7 +238,7 @@ function giftflow_render_account_form( $form_data ) {
 		),
 	);
 
-	// Address information fields
+	// Address information fields.
 	$address_fields = array(
 		array(
 			'id'         => 'address',
@@ -268,6 +297,8 @@ function giftflow_render_account_form( $form_data ) {
 
 /**
  * Render password change form
+ *
+ * @return void
  */
 function giftflow_render_password_form() {
 	$password_fields = array(

@@ -10,13 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-// echo '<pre>'; print_r($donations); echo '</pre>';
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $donations = $donations ?? null;
-// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.WP.GlobalVariablesOverride.Prohibited
 $page = $page ?? 1;
 
-// cache process bar
+// cache process bar.
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $cache_process_bar = array();
 ?>
@@ -29,7 +28,7 @@ $cache_process_bar = array();
 
 
 <?php
-// Check if $donations is a WP_Query object and has posts
+// Check if $donations is a WP_Query object and has posts.
 if ( $donations instanceof WP_Query && $donations->have_posts() ) :
 	?>
 	<table class="giftflow-table gfw-my-donations-table" style="">
@@ -53,7 +52,7 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) :
 			$date = get_the_date( 'Y-m-d H:i:s', $donation_id );
 		  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 			$amount = get_post_meta( $donation_id, '_amount', true );
-		  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+		  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.WP.GlobalVariablesOverride.Prohibited
 			$status = get_post_status( $donation_id );
 		  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 			$campaign_id = get_post_meta( $donation_id, '_campaign_id', true );
@@ -113,10 +112,10 @@ if ( $donations instanceof WP_Query && $donations->have_posts() ) :
 	</table>
 
 	<?php
-	// Pagination (if needed)
+	// Comment: Pagination (if needed).
 	if ( isset( $donations->max_num_pages ) && $donations->max_num_pages > 1 ) :
 	  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-		$big = 999999999; // need an unlikely integer
+		$big = 999999999; // need an unlikely integer.
 	  // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		$current_page = max( 1, $page );
 

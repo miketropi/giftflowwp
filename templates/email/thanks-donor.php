@@ -1,4 +1,10 @@
 <?php
+/**
+ * Template for thanks donor email
+ *
+ * @package GiftFlow
+ * @since 1.0.0
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -21,7 +27,7 @@ $date = $date ?? '';
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $donor_dashboard_url = $donor_dashboard_url ?? '';
 
-// Get site information
+// Get site information.
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $site_name = get_bloginfo( 'name' );
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

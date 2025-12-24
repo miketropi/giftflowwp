@@ -3,7 +3,13 @@
  * Donation form template
  *
  * @package GiftFlow
+ * @since 1.0.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 ?>
 
 <form class="donation-form" id="donation-form-<?php echo esc_attr( $campaign_id ); ?>">
@@ -56,14 +62,10 @@
 						<legend class="donation-form__legend"><?php esc_html_e( 'Select donation type, one-time or monthly', 'giftflow' ); ?></legend>
 						<div class="donation-form__radio-group donation-form__radio-group--donation-type">
 							<?php
-							// foreach donation types
-								// print_r($donation_types);
-							?>
-							<?php
-                            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+							// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 							foreach ( $donation_types as $index => $donation_type ) :
-                                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-								$is_checked = $index === 0 ? 'checked' : '';
+								// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+								$is_checked = 0 === $index ? 'checked' : '';
 								?>
 								<label>
 									<input 
@@ -91,7 +93,7 @@
 					<fieldset class="donation-form__fieldset">
 						<legend class="donation-form__legend"><?php esc_html_e( 'Donation Amount', 'giftflow' ); ?></legend>
 						
-						<?php // notification message ?>
+						<?php // notification message. ?>
 						<div class="donation-form__amount-notification">
 							<span class="notification-message-icon"><?php echo wp_kses( giftflow_svg_icon( 'info' ), giftflow_allowed_svg_tags() ); ?></span>
 							<div class="notification-message-entry">
@@ -142,7 +144,7 @@
 									value="<?php echo esc_attr( $default_amount ); ?>" 
 									min="<?php echo esc_attr( $min_amount ); ?>" 
 									<?php echo esc_attr( $max_attr ); ?>
-									step="<?php echo apply_filters( 'giftflow:donation_form_amount_step', 1 ); ?>" 
+									step="<?php echo esc_attr( apply_filters( 'giftflow_donation_form_amount_step', 1 ) ); ?>" 
 									required 
 									data-validate="<?php echo esc_attr( implode( ',', $validate_attr_value ) ); ?>"
 									data-extra-data='<?php echo esc_attr( wp_json_encode( $extra_data ) ); ?>'>
@@ -168,13 +170,13 @@
 						<legend class="donation-form__legend"><?php esc_html_e( 'Your Information', 'giftflow' ); ?></legend>
 						<div class="donation-form__fields">
 
-							<?php do_action( 'giftflow:donation_form_before_donor_information' ); ?>
+							<?php do_action( 'giftflow_donation_form_before_donor_information' ); ?>
 
 							<div class="donation-form__field">
 								<label for="donor_name"><?php esc_html_e( 'Full Name', 'giftflow' ); ?></label>
 								<input type="text" id="donor_name" name="donor_name" value="<?php echo esc_attr( $user_fullname ); ?>" required data-validate="required" <?php echo $user_info_readonly ? 'readonly' : ''; ?>>
 
-								<?php // error message ?>
+								<?php // error message. ?>
 								<div class="donation-form__field-error">
 									<?php echo wp_kses( giftflow_svg_icon( 'error' ), giftflow_allowed_svg_tags() ); ?>
 									<?php esc_html_e( 'This field is required, please enter your name', 'giftflow' ); ?>
@@ -184,7 +186,7 @@
 								<label for="donor_email"><?php esc_html_e( 'Email Address', 'giftflow' ); ?></label>
 								<input type="email" id="donor_email" name="donor_email" value="<?php echo esc_attr( $user_email ); ?>" required data-validate="email" <?php echo $user_info_readonly ? 'readonly' : ''; ?>>
 
-								<?php // error message ?>
+								<?php // error message. ?>
 								<div class="donation-form__field-error">
 									<?php echo wp_kses( giftflow_svg_icon( 'error' ), giftflow_allowed_svg_tags() ); ?>
 									<?php esc_html_e( 'This field is required, please enter your email', 'giftflow' ); ?>
@@ -195,7 +197,7 @@
 								<textarea id="donor_message" name="donor_message"></textarea>
 							</div>
 
-							<?php do_action( 'giftflow:donation_form_after_donor_information' ); ?>
+							<?php do_action( 'giftflow_donation_form_after_donor_information' ); ?>
 
 							<div class="donation-form__field">
 								<label class="donation-form__checkbox-label">
@@ -221,14 +223,13 @@
 					<fieldset class="donation-form__fieldset">
 						<legend class="donation-form__legend"><?php esc_html_e( 'Select Payment Method', 'giftflow' ); ?></legend>
 						<div class="donation-form__payment-methods">
-							<?php // echo '<pre>'; print_r($gateways); echo '</pre>'; ?>
 							<?php
 							if ( ! empty( $gateways ) ) {
-                                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+								// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 								foreach ( $gateways as $method ) {
 									if ( $method->is_enabled() ) {
-										echo '<div class="donation-form__payment-method-item payment-method-' . $method->get_id() . '">';
-                                        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+										echo '<div class="donation-form__payment-method-item payment-method-' . esc_attr( $method->get_id() ) . '">';
+										// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 										echo $method->template_html();
 										echo '</div>';
 									}
@@ -260,14 +261,14 @@
 					</div>
 				</div>
 
-				<?php // notice scurity payment check ?>
+				<?php // notice scurity payment check. ?>
 				<div class="donation-form__security-notice">
 					<span class="donation-form__security-notice-icon"><?php echo wp_kses( giftflow_svg_icon( 'shield-check' ), giftflow_allowed_svg_tags() ); ?></span>
 					<p><?php esc_html_e( 'We use methods of payment that are secure and trusted. Your payment information is encrypted and never stored on our servers.', 'giftflow' ); ?></p>
 				</div>
 
 				<div class="donation-form__step-actions">
-					<?php // hidden fields campaign id, wp nonce, form nonce, recurring interval ?>
+					<?php // hidden fields campaign id, wp nonce, form nonce, recurring interval. ?>
 					<input type="hidden" name="campaign_id" value="<?php echo esc_attr( $campaign_id ); ?>">
 					<input type="hidden" name="wp_nonce" value="<?php echo esc_attr( wp_create_nonce( 'giftflow_donation_form' ) ); ?>">
 					<input type="hidden" name="recurring_interval" value="<?php echo esc_attr( $recurring_interval ); ?>">
@@ -277,7 +278,7 @@
 						<?php esc_html_e( 'Back', 'giftflow' ); ?>
 					</button>
 										
-					<?php // support class loading show icon loading when submit ?>
+					<?php // support class loading show icon loading when submit. ?>
 					<button type="submit" class="donation-form__button donation-form__button--submit">
 						<?php esc_html_e( 'Complete Donation', 'giftflow' ); ?>
 						<?php echo wp_kses( giftflow_svg_icon( 'next' ), giftflow_allowed_svg_tags() ); ?>
@@ -286,10 +287,12 @@
 			</section>
 			
 			<?php
-			// do action to allow other plugins to add custom content after the payment method step
+			// do action to allow other plugins to add custom content after the payment method step.
 			/**
-			 * @see giftflow_donation_form_thank_you_section_html - 20
-			 * @see giftflow_donation_form_error_section_html - 22
+			 * Action hook: giftflow_donation_form_after_payment_method.
+			 *
+			 * @see giftflow_donation_form_thank_you_section_html - 20.
+			 * @see giftflow_donation_form_error_section_html - 22.
 			 */
 			do_action( 'giftflow_donation_form_after_payment_method', $args );
 			?>

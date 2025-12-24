@@ -10,9 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-// print_r($donation);
-
-// Extract donation data
+// Extract donation data.
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $donation_id = $donation->ID;
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
@@ -23,7 +21,7 @@ $donor_name = $donation->donor_name ?? '';
 $donor_email = $donation->donor_email ?? '';
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $amount = $donation->__amount_formatted ?? '$0.00';
-// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.WP.GlobalVariablesOverride.Prohibited
 $status = $donation->status ?? '';
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $payment_method = $donation->payment_method ?? '';
@@ -40,13 +38,13 @@ $message = $donation->message ?? '';
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $anonymous = ucfirst( $donation->anonymous ?? '' );
 
-// Status styling
+// Status styling.
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $status_class = 'gfw-status-' . strtolower( $status );
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $status_label = ucfirst( $status );
 
-// Payment method styling
+// Payment method styling.
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $payment_method_label = ucfirst( str_replace( '_', ' ', $payment_method ) );
 ?>
@@ -122,12 +120,14 @@ $payment_method_label = ucfirst( str_replace( '_', ' ', $payment_method ) );
 
 	<!-- Actions -->
 	<div class="gfw-donation-detail-actions">
-	<a href="<?php echo esc_url( wp_get_referer() ?: home_url( '/donor-account' ) ); ?>" class="gfw-view-detail-link">
-		← Back to Donations
+	<a href="<?php echo esc_url( wp_get_referer() ? wp_get_referer() : home_url( '/donor-account' ) ); ?>" class="gfw-view-detail-link">
+		<?php echo wp_kses( giftflow_svg_icon( 'prev' ), giftflow_allowed_svg_tags() ); ?>
+		<?php esc_html_e( 'Back to Donations', 'giftflow' ); ?>
 	</a>
 	<?php if ( ! empty( $campaign_url ) ) : ?>
 	<a href="<?php echo esc_url( $campaign_url ); ?>" class="gfw-view-detail-link" target="_blank">
-		View Campaign →
+		<?php esc_html_e( 'View Campaign', 'giftflow' ); ?>
+		<?php echo wp_kses( giftflow_svg_icon( 'next' ), giftflow_allowed_svg_tags() ); ?>
 	</a>
 	<?php endif; ?>
 	</div>

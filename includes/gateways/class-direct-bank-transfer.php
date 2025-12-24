@@ -258,7 +258,7 @@ class Direct_Bank_Transfer_Gateway extends Gateway_Base {
 			update_post_meta( $donation_id, '_donation_amount', floatval( $data['donation_amount'] ) );
 
 			// Generate a unique reference number for this donation.
-			$reference_number = ''; // $this->generate_reference_number($donation_id);
+			$reference_number = isset( $data['reference_number'] ) ? $data['reference_number'] : '';
 			update_post_meta( $donation_id, '_reference_number', $reference_number );
 
 			// Log the pending payment.

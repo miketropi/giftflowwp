@@ -1,4 +1,10 @@
 <?php
+/**
+ * Template for new donation admin email
+ *
+ * @package GiftFlow
+ * @since 1.0.0
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -15,7 +21,7 @@ $campaign_url = $campaign_url ?? '';
 $donor_name = $donor_name ?? '';
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
-// Get site information
+// Get site information.
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $site_name = get_bloginfo( 'name' );
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

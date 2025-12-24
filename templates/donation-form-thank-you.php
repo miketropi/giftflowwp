@@ -1,4 +1,11 @@
 <?php
+/**
+ * Template for donation form thank you
+ *
+ * @package GiftFlow
+ * @since 1.0.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -6,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <section id="donation-thank-you" class="donation-form__step-panel step-thank-you" data-step="thank-you">
 	<div class="donation-form__step-panel-content donation-form__thank-you">
-		<?php echo wp_kses( giftflow_svg_icon( 'checkmark-circle' ), giftflow_allowed_svg_tags() ); // Add success icon ?>
+		<?php echo wp_kses( giftflow_svg_icon( 'checkmark-circle' ), giftflow_allowed_svg_tags() ); // Add success icon. ?>
 		
 		<div class="donation-form__thank-you-content">
 			<h2 class="donation-form__thank-you-title">
@@ -32,10 +39,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<a href="<?php echo esc_url( get_permalink( $campaign_id ) ); ?>" class="donation-form__button">
 					<?php esc_html_e( 'Return to Campaign', 'giftflow' ); ?>
 				</a>
-				<!-- <button type="button" class="donation-form__button donation-form__button--share">
-					<?php // echo wp_kses(giftflow_svg_icon('share'), giftflow_allowed_svg_tags()); ?>
-					<?php // esc_html_e('Share This Campaign', 'giftflow'); ?>
-				</button> -->
 			</div>
 		</div>
 	</div>

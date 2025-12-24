@@ -1,11 +1,18 @@
 <?php
+/**
+ * Template for donor account
+ *
+ * @package GiftFlow
+ * @since 1.0.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.WP.GlobalVariablesOverride.Prohibited
 $tabs = $tabs ?? array();
-// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.WP.GlobalVariablesOverride.Prohibited
 $current_user = $current_user ?? null;
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $attributes = $attributes ?? array();
@@ -16,7 +23,7 @@ $active_tab = $active_tab ?? $tabs[0]['slug'];
 <div class="giftflow-donor-account" role="tablist" aria-label="<?php esc_attr_e( 'Donor Account Navigation', 'giftflow' ); ?>">
 	<div class="giftflow-donor-account__tabs" role="tablist">
 	<?php
-    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.WP.GlobalVariablesOverride.Prohibited
 	foreach ( $tabs as $index => $tab ) :
 		?>
 		<a 
@@ -33,10 +40,9 @@ $active_tab = $active_tab ?? $tabs[0]['slug'];
   
 	<div class="giftflow-donor-account__content">
 	<?php
-    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.WP.GlobalVariablesOverride.Prohibited
 	foreach ( $tabs as $index => $tab ) :
-		// if not active tab is continue
-
+		// if not active tab is continue.
 		if ( $tab['slug'] !== $active_tab ) {
 			continue;
 		}
@@ -48,7 +54,7 @@ $active_tab = $active_tab ?? $tabs[0]['slug'];
 		aria-labelledby="tab-<?php echo esc_attr( $tab['slug'] ); ?>"
 		>
 		<?php
-		// Execute callback function if it exists
+		// Execute callback function if it exists.
 		if ( is_callable( $tab['callback'] ) ) {
 			call_user_func( $tab['callback'], $current_user, $attributes );
 

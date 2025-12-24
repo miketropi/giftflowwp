@@ -1,9 +1,16 @@
 <?php
+/**
+ * Template for donation list of campaign
+ *
+ * @package GiftFlow
+ * @since 1.0.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.WP.GlobalVariablesOverride.Prohibited
 $posts = $donations['posts'] ?? array();
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $total = $donations['total'] ?? 0;
@@ -28,7 +35,7 @@ $pagination = $donations['pagination'] ?? 1;
 	<?php if ( ! empty( $posts ) ) : ?>
 		<div class="gfw-donation-list">
 			<?php
-            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 			foreach ( $posts as $donation ) :
 				?>
 				<div class="gfw-donation-item">
@@ -36,7 +43,7 @@ $pagination = $donations['pagination'] ?? 1;
 						<div class="gfw-donation-left">
 							<div class="gfw-donor-info">
 								<?php echo esc_html( $donation['donor_meta']['name'] ); ?>
-								<?php if ( $donation['is_anonymous'] !== 'yes' && ! empty( $donation['donor_meta']['city'] ) && ! empty( $donation['donor_meta']['country'] ) ) : ?>
+								<?php if ( 'yes' !== $donation['is_anonymous'] && ! empty( $donation['donor_meta']['city'] ) && ! empty( $donation['donor_meta']['country'] ) ) : ?>
 									<span class="gfw-location">from <?php echo esc_html( $donation['donor_meta']['city'] ); ?>, <?php echo esc_html( $donation['donor_meta']['country'] ); ?></span>
 								<?php endif; ?>
 							</div>

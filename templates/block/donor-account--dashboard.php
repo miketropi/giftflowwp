@@ -1,12 +1,20 @@
 <?php
+/**
+ * Template for dashboard
+ *
+ * @package GiftFlow
+ * @since 1.0.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-// current user
+// current user.
+// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 $current_user = wp_get_current_user();
 
-// get name
+// get name.
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $name = implode( ' ', array( $current_user->first_name, $current_user->last_name ) );
 if ( empty( trim( $name ) ) ) {

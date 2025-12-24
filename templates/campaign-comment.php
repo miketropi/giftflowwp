@@ -1,9 +1,18 @@
 <?php
+/**
+ * Template for campaign comments
+ *
+ * @package GiftFlow
+ * @since 1.0.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 $paged    = get_query_var( 'cpage' ) ? intval( get_query_var( 'cpage' ) ) : 1;
+// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 $per_page = get_option( 'comments_per_page' );
 
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
@@ -16,6 +25,7 @@ $args = array(
 	'order'   => 'DESC',
 );
 
+// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 $comments = get_comments( $args );
 
 ?>
@@ -77,11 +87,12 @@ $comments = get_comments( $args );
 		}
 	} else {
 
-		// check post comment is closed
+		// check post comment is closed.
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		$comment_status = comments_open( get_the_ID() );
 
-		if ( $comment_status !== true ) {
-			// return message that comment is closed
+		if ( true !== $comment_status ) {
+			// return message that comment is closed.
 			?>
 		<div class="gfw-no-comments">
 		<p>
