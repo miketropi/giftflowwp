@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Field Class
  *
@@ -201,8 +201,8 @@ class GiftFlow_Field {
 	 * @var array
 	 */
 	private $gallery_settings = array(
-		'max_images' => 0,
-		'image_size' => 'thumbnail',
+		'max_images'  => 0,
+		'image_size'  => 'thumbnail',
 		'button_text' => 'Select Images',
 		'remove_text' => 'Remove All',
 	);
@@ -213,12 +213,12 @@ class GiftFlow_Field {
 	 * @var array
 	 */
 	private $repeater_settings = array(
-		'fields' => array(),
+		'fields'      => array(),
 		'button_text' => 'Add Row',
 		'remove_text' => 'Remove Row',
-		'min_rows' => 0,
-		'max_rows' => 0,
-		'row_label' => 'Row',
+		'min_rows'    => 0,
+		'max_rows'    => 0,
+		'row_label'   => 'Row',
 	);
 
 	/**
@@ -227,9 +227,9 @@ class GiftFlow_Field {
 	 * @var array
 	 */
 	private $accordion_settings = array(
-		'fields' => array(),
-		'is_open' => false,
-		'icon' => 'dashicons-arrow-down-alt2',
+		'fields'        => array(),
+		'is_open'       => false,
+		'icon'          => 'dashicons-arrow-down-alt2',
 		'icon_position' => 'right',
 	);
 
@@ -242,7 +242,7 @@ class GiftFlow_Field {
 	 * @param array  $args Field arguments.
 	 */
 	public function __construct( $id, $name, $type, $args = array() ) {
-		$this->id = $id;
+		$this->id   = $id;
 		$this->name = $name;
 		$this->type = $type;
 
@@ -287,15 +287,14 @@ class GiftFlow_Field {
 
 		// Set field step value.
 		$this->step = isset( $args['step'] ) ? $args['step'] : null;
-		
-		// set field html
+
+		// set field html.
 		if ( 'html' === $type ) {
 			$this->html = $args['html'];
 		}
 
-
-    // default currency symbol
-    $default_currency_symbol = giftflow_get_currency_symbol(giftflow_get_current_currency());
+		// default currency symbol.
+		$default_currency_symbol = giftflow_get_currency_symbol( giftflow_get_current_currency() );
 
 		// Set field currency symbol.
 		$this->currency_symbol = isset( $args['currency_symbol'] ) ? $args['currency_symbol'] : $default_currency_symbol;
@@ -332,11 +331,10 @@ class GiftFlow_Field {
 		if ( 'accordion' === $type && isset( $args['accordion_settings'] ) ) {
 			$this->accordion_settings = wp_parse_args( $args['accordion_settings'], $this->accordion_settings );
 		}
-		
 	}
 
 	/**
-	 * Render field
+	 * Render field.
 	 *
 	 * @return string
 	 */
@@ -350,7 +348,6 @@ class GiftFlow_Field {
 		$output .= $this->get_field_label();
 
 		$output .= '<div class="giftflow-field-wrapper">';
-    
 
 		// Render field based on type.
 		switch ( $this->type ) {
@@ -404,10 +401,10 @@ class GiftFlow_Field {
 				break;
 		}
 
-    // Render field description.
+		// Render field description.
 		$output .= $this->get_field_description();
 
-    $output .= '</div>';
+		$output .= '</div>';
 
 		// End field wrapper.
 		$output .= $this->get_field_wrapper_end();
@@ -423,7 +420,7 @@ class GiftFlow_Field {
 	private function get_field_wrapper_start() {
 		$wrapper_classes = array_merge( array( 'giftflow-field', 'giftflow-field-' . $this->type ), $this->wrapper_classes );
 		$wrapper_classes = array_filter( $wrapper_classes );
-		$wrapper_class = implode( ' ', $wrapper_classes );
+		$wrapper_class   = implode( ' ', $wrapper_classes );
 
 		return '<div class="' . esc_attr( $wrapper_class ) . '">';
 	}
@@ -494,9 +491,9 @@ class GiftFlow_Field {
 		}
 
 		// Add classes.
-		$classes = array_merge( array( 'giftflow-field-input' ), $this->classes );
-		$classes = array_filter( $classes );
-		$class = implode( ' ', $classes );
+		$classes      = array_merge( array( 'giftflow-field-input' ), $this->classes );
+		$classes      = array_filter( $classes );
+		$class        = implode( ' ', $classes );
 		$attributes[] = 'class="' . esc_attr( $class ) . '"';
 
 		// Add custom attributes.
@@ -507,6 +504,11 @@ class GiftFlow_Field {
 		return implode( ' ', $attributes );
 	}
 
+	/**
+	 * Render HTML.
+	 *
+	 * @return string
+	 */
 	private function render_html() {
 		return '<div class="giftflow-html-field">' . $this->html . '</div>';
 	}
@@ -594,7 +596,7 @@ class GiftFlow_Field {
 	 */
 	private function render_select() {
 		$attributes = $this->get_field_attributes();
-		$output = '<select ' . $attributes . '>';
+		$output     = '<select ' . $attributes . '>';
 
 		// Add empty option if no value is selected.
 		if ( empty( $this->value ) ) {
@@ -604,7 +606,7 @@ class GiftFlow_Field {
 		// Add options.
 		foreach ( $this->options as $option_value => $option_label ) {
 			$selected = selected( $this->value, $option_value, false );
-			$output .= '<option value="' . esc_attr( $option_value ) . '" ' . $selected . '>' . esc_html( $option_label ) . '</option>';
+			$output  .= '<option value="' . esc_attr( $option_value ) . '" ' . $selected . '>' . esc_html( $option_label ) . '</option>';
 		}
 
 		$output .= '</select>';
@@ -618,7 +620,7 @@ class GiftFlow_Field {
 	 * @return string
 	 */
 	private function render_multiple_select() {
-		$attributes = $this->get_field_attributes();
+		$attributes  = $this->get_field_attributes();
 		$attributes .= ' multiple';
 
 		// Convert value to array if it's not already.
@@ -629,7 +631,7 @@ class GiftFlow_Field {
 		// Add options.
 		foreach ( $this->options as $option_value => $option_label ) {
 			$selected = in_array( $option_value, $values, true ) ? ' selected' : '';
-			$output .= '<option value="' . esc_attr( $option_value ) . '"' . $selected . '>' . esc_html( $option_label ) . '</option>';
+			$output  .= '<option value="' . esc_attr( $option_value ) . '"' . $selected . '>' . esc_html( $option_label ) . '</option>';
 		}
 
 		$output .= '</select>';
@@ -643,7 +645,7 @@ class GiftFlow_Field {
 	 * @return string
 	 */
 	private function render_textarea() {
-		$attributes = $this->get_field_attributes();
+		$attributes  = $this->get_field_attributes();
 		$attributes .= ' rows="' . esc_attr( $this->rows ) . '"';
 		$attributes .= ' cols="' . esc_attr( $this->cols ) . '"';
 
@@ -657,7 +659,7 @@ class GiftFlow_Field {
 	 */
 	private function render_checkbox() {
 		$attributes = $this->get_field_attributes();
-		$checked = checked( $this->value, true, false );
+		$checked    = checked( $this->value, true, false );
 
 		return '<input type="checkbox" ' . $attributes . ' ' . $checked . ' />';
 	}
@@ -669,9 +671,9 @@ class GiftFlow_Field {
 	 */
 	private function render_switch() {
 		$attributes = $this->get_field_attributes();
-		$checked = checked( $this->value, true, false );
+		$checked    = checked( $this->value, true, false );
 
-		$output = '<div class="giftflow-switch">';
+		$output  = '<div class="giftflow-switch">';
 		$output .= '<input type="checkbox" ' . $attributes . ' ' . $checked . ' value="1" />';
 		$output .= '<span class="giftflow-switch-slider"></span>';
 		$output .= '</div>';
@@ -686,7 +688,7 @@ class GiftFlow_Field {
 	 */
 	private function render_datetime() {
 		$attributes = $this->get_field_attributes();
-		$value = ! empty( $this->value ) ? gmdate( $this->date_format, strtotime( $this->value ) ) : '';
+		$value      = ! empty( $this->value ) ? gmdate( $this->date_format, strtotime( $this->value ) ) : '';
 
 		return '<input type="datetime-local" ' . $attributes . ' value="' . esc_attr( $value ) . '" onfocus="this.showPicker()" />';
 	}
@@ -699,7 +701,7 @@ class GiftFlow_Field {
 	private function render_color() {
 		$attributes = $this->get_field_attributes();
 
-		$output = '<div class="giftflow-color-field">';
+		$output  = '<div class="giftflow-color-field">';
 		$output .= '<input type="color" ' . $attributes . ' value="' . esc_attr( $this->value ) . '" />';
 		$output .= '<input type="text" class="giftflow-color-text" value="' . esc_attr( $this->value ) . '" />';
 		$output .= '</div>';
@@ -713,13 +715,13 @@ class GiftFlow_Field {
 	 * @return string
 	 */
 	private function render_gallery() {
-		// Start output buffering
+		// Start output buffering.
 		ob_start();
-		
-		// Ensure value is an array
-		$image_ids = $this->value ? explode(',', $this->value) : array();
-		
-		// Generate a unique ID for the gallery
+
+		// Ensure value is an array.
+		$image_ids = $this->value ? explode( ',', $this->value ) : array();
+
+		// Generate a unique ID for the gallery.
 		$gallery_id = 'giftflow-gallery-' . $this->id;
 		?>
 		<div class="giftflow-gallery-field" id="<?php echo esc_attr( $gallery_id ); ?>">
@@ -729,7 +731,7 @@ class GiftFlow_Field {
 			<!-- Gallery preview container -->
 			<div class="giftflow-gallery-preview">
 				<?php
-				// Display selected images
+				// Display selected images.
 				if ( ! empty( $image_ids ) ) {
 					foreach ( $image_ids as $image_id ) {
 						$image_url = wp_get_attachment_image_url( $image_id, $this->gallery_settings['image_size'] );
@@ -895,8 +897,8 @@ class GiftFlow_Field {
 			</script>
 		</div><!-- End gallery field -->
 		<?php
-		
-		// Return the buffered content
+
+		// Return the buffered content.
 		return ob_get_clean();
 	}
 
@@ -906,30 +908,30 @@ class GiftFlow_Field {
 	 * @return string
 	 */
 	private function render_googlemap() {
-		// Start output buffering
+		// Start output buffering.
 		ob_start();
-		
-		// Generate a unique ID for the map
+
+		// Generate a unique ID for the map.
 		$map_id = 'giftflow-map-' . $this->id;
-		
-		// Get the current value
-		$value = $this->value;
+
+		// Get the current value.
+		$value   = $this->value;
 		$address = '';
-		$lat = '';
-		$lng = '';
-		
-		// Parse the value if it exists
-		if (!empty($value)) {
-			$value_data = json_decode($value, true);
-			if (is_array($value_data)) {
-				$address = isset($value_data['address']) ? $value_data['address'] : '';
-				$lat = isset($value_data['lat']) ? $value_data['lat'] : '';
-				$lng = isset($value_data['lng']) ? $value_data['lng'] : '';
+		$lat     = '';
+		$lng     = '';
+
+		// Parse the value if it exists.
+		if ( ! empty( $value ) ) {
+			$value_data = json_decode( $value, true );
+			if ( is_array( $value_data ) ) {
+				$address = isset( $value_data['address'] ) ? $value_data['address'] : '';
+				$lat     = isset( $value_data['lat'] ) ? $value_data['lat'] : '';
+				$lng     = isset( $value_data['lng'] ) ? $value_data['lng'] : '';
 			}
 		}
-		
-		// Get Google Maps API key from settings or use a default
-		$api_key = defined('GIFTFLOW_GOOGLE_MAPS_API_KEY') ? GIFTFLOW_GOOGLE_MAPS_API_KEY : '';
+
+		// Get Google Maps API key from settings or use a default.
+		$api_key = defined( 'GIFTFLOW_GOOGLE_MAPS_API_KEY' ) ? GIFTFLOW_GOOGLE_MAPS_API_KEY : '';
 		?>
 		<div class="giftflow-googlemap-field" id="<?php echo esc_attr( $map_id ); ?>">
 			<!-- Hidden input to store location data -->
@@ -964,9 +966,9 @@ class GiftFlow_Field {
 					var $lngDisplay = $mapField.find(".giftflow-googlemap-lng");
 					
 					var map, marker, geocoder;
-					var defaultLat = <?php echo !empty($lat) ? esc_js($lat) : esc_js('40.7128'); ?>;
-					var defaultLng = <?php echo !empty($lng) ? esc_js($lng) : esc_js('-74.0060'); ?>;
-					var defaultZoom = <?php echo !empty($lat) && !empty($lng) ? esc_js('15') : esc_js('2'); ?>;
+					var defaultLat = <?php echo ! empty( $lat ) ? esc_js( $lat ) : esc_js( '40.7128' ); ?>;
+					var defaultLng = <?php echo ! empty( $lng ) ? esc_js( $lng ) : esc_js( '-74.0060' ); ?>;
+					var defaultZoom = <?php echo ! empty( $lat ) && ! empty( $lng ) ? esc_js( '15' ) : esc_js( '2' ); ?>;
 					
 					// Initialize the map
 					function initMap() {
@@ -1081,8 +1083,8 @@ class GiftFlow_Field {
 			</script>
 		</div><!-- End Google Maps field -->
 		<?php
-		
-		// Return the buffered content
+
+		// Return the buffered content.
 		return ob_get_clean();
 	}
 
@@ -1092,47 +1094,48 @@ class GiftFlow_Field {
 	 * @return string
 	 */
 	private function render_repeater() {
-		// Start output buffering
+		// Start output buffering.
 		ob_start();
 
-		// Get the repeater settings
+		// Get the repeater settings.
 		$repeater_settings = $this->repeater_settings;
-		$fields = $repeater_settings['fields'];
-		$button_text = $repeater_settings['button_text'];
-		$remove_text = $repeater_settings['remove_text'];
-		$min_rows = $repeater_settings['min_rows'];
-		$max_rows = $repeater_settings['max_rows'];
-		$row_label = $repeater_settings['row_label'];
+		$fields            = $repeater_settings['fields'];
+		$button_text       = $repeater_settings['button_text'];
+		$remove_text       = $repeater_settings['remove_text'];
+		$min_rows          = $repeater_settings['min_rows'];
+		$max_rows          = $repeater_settings['max_rows'];
+		$row_label         = $repeater_settings['row_label'];
 
-		// Ensure value is an array
-		$values = is_array($this->value) ? $this->value : array();
-		if (empty($values) && $min_rows > 0) {
-			// Initialize with empty rows if minimum rows required
-			$values = array_fill(0, $min_rows, array());
+		// Ensure value is an array.
+		$values = is_array( $this->value ) ? $this->value : array();
+		if ( empty( $values ) && $min_rows > 0 ) {
+			// Initialize with empty rows if minimum rows required.
+			$values = array_fill( 0, $min_rows, array() );
 		}
 
-		// Generate a unique ID for the repeater
+		// Generate a unique ID for the repeater.
 		$repeater_id = 'giftflow-repeater-' . $this->id;
 		?>
-		<div class="giftflow-repeater-field" id="<?php echo esc_attr($repeater_id); ?>">
+		<div class="giftflow-repeater-field" id="<?php echo esc_attr( $repeater_id ); ?>">
 			<!-- Hidden input to store all values -->
-			<input type="hidden" name="<?php echo esc_attr($this->name); ?>" id="<?php echo esc_attr($this->id); ?>" value="<?php echo esc_attr(json_encode($values)); ?>" />
+			<input type="hidden" name="<?php echo esc_attr( $this->name ); ?>" id="<?php echo esc_attr( $this->id ); ?>" value="<?php echo esc_attr( wp_json_encode( $values ) ); ?>" />
 			
 			<!-- Repeater rows container -->
 			<div class="giftflow-repeater-rows">
-				<?php foreach ($values as $row_index => $row_values): ?>
-					<div class="giftflow-repeater-row" data-index="<?php echo esc_attr($row_index); ?>">
+				<?php foreach ( $values as $row_index => $row_values ) : ?>
+					<div class="giftflow-repeater-row" data-index="<?php echo esc_attr( $row_index ); ?>">
 						<div class="giftflow-repeater-row-header">
-							<span class="giftflow-repeater-row-title"><?php echo esc_html($row_label . ' ' . ($row_index + 1)); ?></span>
-							<button type="button" class="button giftflow-repeater-remove-row"><?php echo esc_html($remove_text); ?></button>
+							<span class="giftflow-repeater-row-title"><?php echo esc_html( $row_label . ' ' . ( $row_index + 1 ) ); ?></span>
+							<button type="button" class="button giftflow-repeater-remove-row"><?php echo esc_html( $remove_text ); ?></button>
 						</div>
 						<div class="giftflow-repeater-row-content">
-							<?php foreach ($fields as $field_id => $field_args): 
-								$field_value = isset($row_values[$field_id]) ? $row_values[$field_id] : '';
-								$field_name = $this->name . '[' . $row_index . '][' . $field_id . ']';
-								$field_id = $this->id . '_' . $row_index . '_' . $field_id;
-								
-								// Create field instance
+							<?php
+							foreach ( $fields as $field_id => $field_args ) :
+								$field_value = isset( $row_values[ $field_id ] ) ? $row_values[ $field_id ] : '';
+								$field_name  = $this->name . '[' . $row_index . '][' . $field_id . ']';
+								$field_id    = $this->id . '_' . $row_index . '_' . $field_id;
+
+								// Create field instance.
 								$field = new GiftFlow_Field(
 									$field_id,
 									$field_name,
@@ -1141,33 +1144,34 @@ class GiftFlow_Field {
 										$field_args,
 										array(
 											'value' => $field_value,
-											'wrapper_classes' => array('giftflow-repeater-field'),
+											'wrapper_classes' => array( 'giftflow-repeater-field' ),
 										)
 									)
 								);
-								
+
 								// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								echo $field->render();
-							endforeach; ?>
+							endforeach;
+							?>
 						</div>
 					</div>
 				<?php endforeach; ?>
 			</div>
 			
 			<!-- Add row button -->
-			<button type="button" class="button giftflow-repeater-add-row" <?php echo ($max_rows > 0 && count($values) >= $max_rows) ? 'disabled' : ''; ?>>
-				<?php echo esc_html($button_text); ?>
+			<button type="button" class="button giftflow-repeater-add-row" <?php echo ( $max_rows > 0 && count( $values ) >= $max_rows ) ? 'disabled' : ''; ?>>
+				<?php echo esc_html( $button_text ); ?>
 			</button>
 			
 			<!-- JavaScript for repeater functionality -->
 			<script type="text/javascript">
 				jQuery(document).ready(function($) {
-					var $repeater = $("#<?php echo esc_js($repeater_id); ?>");
+					var $repeater = $("#<?php echo esc_js( $repeater_id ); ?>");
 					var $rows = $repeater.find(".giftflow-repeater-rows");
 					var $addButton = $repeater.find(".giftflow-repeater-add-row");
 					var $hiddenInput = $repeater.find("input[type=hidden]");
-					var maxRows = <?php echo intval($max_rows); ?>;
-					var rowTemplate = <?php echo json_encode($this->get_repeater_row_template($fields)); ?>;
+					var maxRows = <?php echo intval( $max_rows ); ?>;
+					var rowTemplate = <?php echo wp_json_encode( $this->get_repeater_row_template( $fields ) ); ?>;
 					
 					// Add new row
 					$addButton.on("click", function() {
@@ -1197,7 +1201,7 @@ class GiftFlow_Field {
 						// Update row indices
 						$rows.find(".giftflow-repeater-row").each(function(index) {
 							$(this).attr("data-index", index);
-							$(this).find(".giftflow-repeater-row-title").text("<?php echo esc_js($row_label); ?> " + (index + 1));
+							$(this).find(".giftflow-repeater-row-title").text("<?php echo esc_js( $row_label ); ?> " + (index + 1));
 							$(this).find("input, select, textarea").each(function() {
 								var name = $(this).attr("name");
 								name = name.replace(/\[\d+\]/, "[" + index + "]");
@@ -1242,8 +1246,8 @@ class GiftFlow_Field {
 			</script>
 		</div>
 		<?php
-		
-		// Return the buffered content
+
+		// Return the buffered content.
 		return ob_get_clean();
 	}
 
@@ -1253,23 +1257,24 @@ class GiftFlow_Field {
 	 * @param array $fields Fields configuration.
 	 * @return string
 	 */
-	private function get_repeater_row_template($fields) {
+	private function get_repeater_row_template( $fields ) {
 		ob_start();
 		?>
 		<div class="giftflow-repeater-row" data-index="__INDEX__">
 			<div class="giftflow-repeater-row-header">
 				<span class="giftflow-repeater-row-title">
-					<?php echo esc_html($this->repeater_settings['row_label']); ?> 
+					<?php echo esc_html( $this->repeater_settings['row_label'] ); ?> 
 					<!-- __INDEX_PLUS_1__ -->
 				</span>
-				<button type="button" class="button giftflow-repeater-remove-row"><?php echo esc_html($this->repeater_settings['remove_text']); ?></button>
+				<button type="button" class="button giftflow-repeater-remove-row"><?php echo esc_html( $this->repeater_settings['remove_text'] ); ?></button>
 			</div>
 			<div class="giftflow-repeater-row-content">
-				<?php foreach ($fields as $field_id => $field_args): 
+				<?php
+				foreach ( $fields as $field_id => $field_args ) :
 					$field_name = $this->name . '[__INDEX__][' . $field_id . ']';
-					$field_id = $this->id . '___INDEX__' . $field_id;
-					
-					// Create field instance
+					$field_id   = $this->id . '___INDEX__' . $field_id;
+
+					// Create field instance.
 					$field = new GiftFlow_Field(
 						$field_id,
 						$field_name,
@@ -1277,15 +1282,16 @@ class GiftFlow_Field {
 						array_merge(
 							$field_args,
 							array(
-								'value' => '',
-								'wrapper_classes' => array('giftflow-repeater-field'),
+								'value'           => '',
+								'wrapper_classes' => array( 'giftflow-repeater-field' ),
 							)
 						)
 					);
-					
+
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $field->render();
-				endforeach; ?>
+				endforeach;
+				?>
 			</div>
 		</div>
 		<?php
@@ -1298,47 +1304,48 @@ class GiftFlow_Field {
 	 * @return string
 	 */
 	private function render_accordion() {
-		// Start output buffering
+		// Start output buffering.
 		ob_start();
-		
-		// Get accordion settings
-		$settings = $this->accordion_settings;
-		$is_open = $settings['is_open'] ? 'open' : '';
-		$icon = $settings['icon'];
+
+		// Get accordion settings.
+		$settings      = $this->accordion_settings;
+		$is_open       = $settings['is_open'] ? 'open' : '';
+		$icon          = $settings['icon'];
 		$icon_position = $settings['icon_position'];
-		$label = $settings['label'];
-		
-		// Generate unique ID for the accordion
+		$label         = $settings['label'];
+
+		// Generate unique ID for the accordion.
 		$accordion_id = 'giftflow-accordion-' . $this->id;
 		?>
-		<div class="giftflow-accordion-section <?php echo esc_attr($is_open); ?>" id="<?php echo esc_attr($accordion_id); ?>">
+		<div class="giftflow-accordion-section <?php echo esc_attr( $is_open ); ?>" id="<?php echo esc_attr( $accordion_id ); ?>">
 			<!-- Accordion header -->
 			<div class="giftflow-accordion-header">
-				<?php if ($icon_position === 'left'): ?>
-					<span class="dashicons <?php echo esc_attr($icon); ?>"></span>
+				<?php if ( 'left' === $icon_position ) : ?>
+					<span class="dashicons <?php echo esc_attr( $icon ); ?>"></span>
 				<?php endif; ?>
 				
-				<h3><?php echo esc_html($label); ?></h3>
+				<h3><?php echo esc_html( $label ); ?></h3>
 				
-				<?php if ($icon_position === 'right'): ?>
-					<span class="dashicons <?php echo esc_attr($icon); ?>"></span>
+				<?php if ( 'right' === $icon_position ) : ?>
+					<span class="dashicons <?php echo esc_attr( $icon ); ?>"></span>
 				<?php endif; ?>
 			</div>
 			
 			<!-- Accordion content -->
 			<div class="giftflow-accordion-content">
-				<?php if (!empty($this->description)): ?>
-					<p class="description"><?php echo esc_html($this->description); ?></p>
+				<?php if ( ! empty( $this->description ) ) : ?>
+					<p class="description"><?php echo esc_html( $this->description ); ?></p>
 				<?php endif; ?>
 				
-				<?php if (!empty($settings['fields'])): ?>
+				<?php if ( ! empty( $settings['fields'] ) ) : ?>
 					<div class="giftflow-accordion-fields">
-						<?php foreach ($settings['fields'] as $field_id => $field_args): 
-							$field_value = isset($field_args['value']) ? $field_args['value'] : '';
-							$field_name = $this->name . '[' . $field_id . ']';
-							$field_id = $this->id . '_' . $field_id;
-							
-							// Create field instance
+						<?php
+						foreach ( $settings['fields'] as $field_id => $field_args ) :
+							$field_value = isset( $field_args['value'] ) ? $field_args['value'] : '';
+							$field_name  = $this->name . '[' . $field_id . ']';
+							$field_id    = $this->id . '_' . $field_id;
+
+							// Create field instance.
 							$field = new GiftFlow_Field(
 								$field_id,
 								$field_name,
@@ -1346,28 +1353,31 @@ class GiftFlow_Field {
 								array_merge(
 									$field_args,
 									array(
-										'value' => $field_value,
-										'wrapper_classes' => array('giftflow-accordion-field'),
+										'value'           => $field_value,
+										'wrapper_classes' => array( 'giftflow-accordion-field' ),
 									)
 								)
 							);
-							
+
 							// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							echo $field->render();
-						endforeach; ?>
+						endforeach;
+						?>
 					</div>
 				<?php endif; ?>
 				
-				<?php if (isset($this->content) && is_callable($this->content)): 
-					call_user_func($this->content);
-				endif; ?>
+				<?php
+				if ( isset( $this->content ) && is_callable( $this->content ) ) :
+					call_user_func( $this->content );
+				endif;
+				?>
 			</div>
 		</div>
 		
 		<!-- JavaScript for accordion functionality -->
 		<script type="text/javascript">
 			jQuery(document).ready(function($) {
-				var $accordion = $("#<?php echo esc_js($accordion_id); ?>");
+				var $accordion = $("#<?php echo esc_js( $accordion_id ); ?>");
 				var $header = $accordion.find(".giftflow-accordion-header");
 				var $content = $accordion.find(".giftflow-accordion-content");
 				var $icon = $header.find(".dashicons");
@@ -1398,7 +1408,7 @@ class GiftFlow_Field {
 		
 		<!-- Styles for accordion -->
 		<style type="text/css">
-			 {
+			{
 				border: 1px solid #ddd;
 				margin-bottom: 10px;
 				border-radius: 4px;
@@ -1446,8 +1456,8 @@ class GiftFlow_Field {
 			}
 		</style>
 		<?php
-		
-		// Return the buffered content
+
+		// Return the buffered content.
 		return ob_get_clean();
 	}
 
