@@ -133,7 +133,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								'min' => $min_amount ? $min_amount : 1,
 							);
 
-							if ( $max_attr ) { 
+							if ( $max_attr ) {  
 								// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 								$validate_attr_value[] = 'max';
 								// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
