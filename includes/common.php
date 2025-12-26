@@ -923,3 +923,25 @@ function giftflow_get_donor_user_information( $user_id ) {
 
 	return $donor_information;
 }
+
+/**
+ * Get payment methods options
+ *
+ * @return array
+ */
+function giftflow_get_payment_methods_options() {
+	/**
+	 * Get registered gateways.
+	 */
+	$gateways = \GiftFlow\Gateways\Gateway_Base::get_registered_gateways();
+	$options = array();
+
+	foreach ( $gateways as $gateway ) {
+		$options[ $gateway->get_id() ] = $gateway->get_title();
+	}
+
+	/**
+	 * Allow developers to customize the payment methods options.
+	 */
+	return apply_filters( 'giftflow_payment_methods_options', $options );
+}
