@@ -248,6 +248,9 @@ function giftflow_initialize_settings() {
 		'options_with_api_keys' => giftflow_options_with_api_keys_options(), // options with API keys options.
 	);
 
+	// apply filter for settings.
+	$settings = apply_filters( 'giftflow_general_settings', $settings );
+
 	// Register settings and add sections/fields.
 	foreach ( $settings as $section_key => $section ) {
 		// Register setting.
@@ -460,7 +463,7 @@ function giftflow_options_with_api_keys_options() {
 			'name'  => 'giftflow_options_with_api_keys_options[google_recaptcha]',
 			'type'  => 'accordion',
 			'label' => __( 'Google reCAPTCHA (v3)', 'giftflow' ),
-			'description' => __( 'This configuration will be used for Google reCAPTCHA on all forms throughout this plugin.', 'giftflow' ),
+			'description' => __( 'Configure Google reCAPTCHA (v3) for enhanced spam protection across all forms in this plugin. To get your API keys: visit https://www.google.com/recaptcha/admin/create, sign in with your Google account, register your site, and choose reCAPTCHA v3. Copy your generated Site Key and Secret Key into the fields below.', 'giftflow' ),
 			'accordion_settings' => array(
 				'label'   => __( 'Google reCAPTCHA Settings', 'giftflow' ),
 				'is_open' => true,
@@ -469,22 +472,42 @@ function giftflow_options_with_api_keys_options() {
 						'id'          => 'giftflow_google_recaptcha_enabled',
 						'type'        => 'switch',
 						'label'       => __( 'Enable Google reCAPTCHA', 'giftflow' ),
-						'value'       => isset( $options_with_api_keys_options['google_recaptcha_enabled'] ) ? $options_with_api_keys_options['google_recaptcha_enabled'] : false,
+						'value'       => isset( $options_with_api_keys_options['google_recaptcha']['google_recaptcha_enabled'] ) ? $options_with_api_keys_options['google_recaptcha']['google_recaptcha_enabled'] : false,
 						'description' => __( 'Turn on to enable Google reCAPTCHA protection on your forms.', 'giftflow' ),
 					),
 					'google_recaptcha_site_key' => array(
 						'id'          => 'giftflow_google_recaptcha_site_key',
 						'type'        => 'text',
 						'label'       => __( 'Site Key', 'giftflow' ),
-						'value'       => isset( $options_with_api_keys_options['google_recaptcha_site_key'] ) ? $options_with_api_keys_options['google_recaptcha_site_key'] : '',
+						'value'       => isset( $options_with_api_keys_options['google_recaptcha']['google_recaptcha_site_key'] ) ? $options_with_api_keys_options['google_recaptcha']['google_recaptcha_site_key'] : '',
 						'description' => __( 'Enter your Google reCAPTCHA Site Key.', 'giftflow' ),
 					),
 					'google_recaptcha_secret_key' => array(
 						'id'          => 'giftflow_google_recaptcha_secret_key',
 						'type'        => 'text',
 						'label'       => __( 'Secret Key', 'giftflow' ),
-						'value'       => isset( $options_with_api_keys_options['google_recaptcha_secret_key'] ) ? $options_with_api_keys_options['google_recaptcha_secret_key'] : '',
+						'value'       => isset( $options_with_api_keys_options['google_recaptcha']['google_recaptcha_secret_key'] ) ? $options_with_api_keys_options['google_recaptcha']['google_recaptcha_secret_key'] : '',
 						'description' => __( 'Enter your Google reCAPTCHA Secret Key.', 'giftflow' ),
+					),
+				),
+			),
+		),
+		'google_maps' => array(
+			'id'    => 'giftflow_google_maps',
+			'name'  => 'giftflow_options_with_api_keys_options[google_maps]',
+			'type'  => 'accordion',
+			'label' => __( 'Google Maps', 'giftflow' ),
+			'description' => __( 'To enable map features in the plugin, you need to create a Google Maps API key: Go to https://console.cloud.google.com/apis/credentials, sign in with your Google account, create a new project if needed, and generate an API key for "Maps JavaScript API". Then copy and paste your API key here.', 'giftflow' ),
+			'accordion_settings' => array(
+				'label'   => __( 'Google Maps API Settings', 'giftflow' ),
+				'is_open' => true,
+				'fields'  => array(
+					'google_maps_api_key' => array(
+						'id'          => 'giftflow_google_maps_api_key',
+						'type'        => 'text',
+						'label'       => __( 'Google Maps API Key', 'giftflow' ),
+						'value'       => isset( $options_with_api_keys_options['google_maps']['google_maps_api_key'] ) ? $options_with_api_keys_options['google_maps']['google_maps_api_key'] : '',
+						'description' => __( 'Enter your Google Maps API key.', 'giftflow' ),
 					),
 				),
 			),

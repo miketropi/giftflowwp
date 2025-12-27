@@ -2748,9 +2748,6 @@
   color: #666;
 }
 
-.giftflow_page_giftflow-settings {
-  padding-right: 2em;
-}
 .giftflow_page_giftflow-settings .wrap {
   margin: 20px 0;
 }
@@ -2837,7 +2834,6 @@
 .giftflow_page_giftflow-settings form .form-table td input[type=number],
 .giftflow_page_giftflow-settings form .form-table td textarea,
 .giftflow_page_giftflow-settings form .form-table td select {
-  width: 400px;
   max-width: 100%;
 }
 .giftflow_page_giftflow-settings form .form-table td textarea {
