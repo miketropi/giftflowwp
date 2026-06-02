@@ -5,7 +5,8 @@
  * enhanced security and SCA (Strong Customer Authentication) support.
  */
 import {loadStripe} from '@stripe/stripe-js';
-const STRIPE_PUBLIC_KEY = giftflowStripeDonation.stripe_publishable_key;
+
+const getStripeData = () => window.giftflowStripeDonation || {};
 
 ((w) => {
   'use strict';
@@ -47,7 +48,7 @@ const STRIPE_PUBLIC_KEY = giftflowStripeDonation.stripe_publishable_key;
       const self = this;
       
       // Load Stripe.js
-      this.stripe = await loadStripe(STRIPE_PUBLIC_KEY);
+      this.stripe = await loadStripe(getStripeData().stripe_publishable_key);
       
       if (!this.stripe) {
         console.error('Failed to load Stripe.js');
@@ -202,7 +203,7 @@ const STRIPE_PUBLIC_KEY = giftflowStripeDonation.stripe_publishable_key;
               });
 
               // Optionally reload or redirect
-              window.location.href = paymentData.return_url || giftflowStripeDonation.return_url;
+              window.location.href = paymentData.return_url || getStripeData().return_url;
             }
           } catch (error) {
             console.error('3D Secure confirmation error:', error);

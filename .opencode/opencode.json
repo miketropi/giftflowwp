@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    ["file:///Volumes/Mike/tools/opencode-qdrant-plugin", {
+        "qdrantUrl": "http://localhost:6333",
+        "embeddingProvider": "local",
+        "indexOnStart": true
+    }]
+  ]
+}

@@ -124,7 +124,7 @@ class GiftFlow_Ajax {
 	 */
 	public function get_campaign_donation_form() {
 		// ajax check nonce.
-		if ( ! isset( $_GET['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'giftflow_common_nonce' ) ) {
+		if ( ! isset( $_GET['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_GET['nonce'] ) ), 'giftflow_common_nonce' ) ) {
 			wp_send_json_error( __( 'Security check failed', 'giftflow' ) );
 		}
 
@@ -134,7 +134,13 @@ class GiftFlow_Ajax {
 			wp_send_json_error( __( 'Invalid campaign ID', 'giftflow' ) );
 		}
 
-		echo do_shortcode( '[giftflow_donation_form campaign_id="' . $campaign_id . '"]' );
+		try {
+			$content = do_shortcode( '[giftflow_donation_form campaign_id="' . $campaign_id . '"]' );
+			echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Shortcode output is already escaped by templates.
+		} catch ( \Throwable $e ) {
+			wp_send_json_error( $e->getMessage() );
+		}
+
 		die();
 	}
 }

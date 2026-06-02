@@ -2,7 +2,7 @@
  * GiftFlow Common JS
  */
 import './util/comment-form.js';
-import './util/modal.js';
+import GiftFlowModal from './util/modal.js';
 import './util/campaign-single.js'; 
 import './util/share-block.js';
 import './util/campaign-images-gallery.js';
@@ -11,9 +11,14 @@ import { replaceContentBySelector, initClickToCopyByClass } from './util/helpers
 import donationButton_Handle from './util/donation-button.js';
 import { createGiftflowLightbox } from './util/gfw-image-lightbox.js';
 
+// Donation form — defines window.donationForm_Class
+import './forms.js';
+
 ((w, $) => { 
   "use strict"
   const { ajax_url, nonce } = giftflow_common;
+
+  w.GiftFlowModal = GiftFlowModal;
 
   w.giftflow = w.giftflow || {}
   const gfw = w.giftflow 
@@ -61,6 +66,31 @@ import { createGiftflowLightbox } from './util/gfw-image-lightbox.js';
   }
 
   gfw.donationButton_Handle = donationButton_Handle;
+
+  gfw.copyShareUrl = function (btn) {
+    const url = btn.dataset.url;
+    if (!url) return;
+
+    navigator.clipboard.writeText(url).then(() => {
+      const copied = btn.parentElement.querySelector('.giftflow-share__copied');
+      if (copied) {
+        copied.hidden = false;
+        setTimeout(() => { copied.hidden = true; }, 2000);
+      }
+    }).catch(() => {
+      const input = document.createElement('input');
+      input.value = url;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      const copied = btn.parentElement.querySelector('.giftflow-share__copied');
+      if (copied) {
+        copied.hidden = false;
+        setTimeout(() => { copied.hidden = true; }, 2000);
+      }
+    });
+  };
 
   // lightbox (vanilla overlay — avoids PhotoSwipe globals / `.pswp` clashes with other plugins)
   gfw.lightbox_initialize = function() {

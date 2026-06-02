@@ -1,0 +1,67 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/donation-button",
+	"version": "1.0.0",
+	"title": "Donation Button",
+	"category": "giftflow",
+	"icon": "heart",
+	"description": "Displays a donation button that opens the donation flow for a campaign.",
+	"keywords": ["donate", "button", "give", "fundraising"],
+	"supports": {
+		"color": {
+			"background": true,
+			"text": true,
+			"link": false
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"align": ["left", "center", "right", "wide", "full"],
+		"border": {
+			"radius": true
+		},
+		"html": false
+	},
+	"attributes": {
+		"campaignId": {
+			"type": "number",
+			"default": 0
+		},
+		"buttonText": {
+			"type": "string",
+			"default": "Donate Now"
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": "#000000"
+		},
+		"textColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"borderRadius": {
+			"type": "number",
+			"default": 0
+		},
+		"fullWidth": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"usesContext": ["postId", "postType"],
+	"example": {
+		"attributes": {
+			"buttonText": "Donate Now",
+			"fullWidth": false
+		}
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-donation-button",
+	"style": "file:./style.css"
+}

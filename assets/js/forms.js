@@ -47,6 +47,10 @@ import { AsyncEventHub } from './util/async-event-hub';
 			});
 			this.onListenerFormFieldUpdate();
 
+			// Ensure selected payment method panel is visible before dispatching
+			// donationFormLoaded so gateway JS (Stripe/PayPal) can mount elements.
+			this.onChangePaymentMethod(options.paymentMethodSelected || 'stripe');
+
 			// create event trigger on load form to document.
 			document.dispatchEvent(new CustomEvent('donationFormLoaded', {
 				detail: {

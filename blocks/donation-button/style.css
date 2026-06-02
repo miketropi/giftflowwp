@@ -1,0 +1,34 @@
+.giftflow-donation-button__btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	cursor: pointer;
+	transition: opacity 0.2s ease, transform 0.2s ease;
+	border: none;
+	text-decoration: none;
+}
+
+.giftflow-donation-button__btn:hover {
+	opacity: 0.9;
+	transform: translateY(-1px);
+}
+
+.giftflow-donation-button__btn:active {
+	transform: translateY(0);
+}
+
+.giftflow-donation-button__btn--full-width {
+	display: flex;
+	width: 100%;
+}
+
+.giftflow-donation-button__btn--disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.giftflow-donation-button__btn--disabled:hover {
+	opacity: 0.5;
+	transform: none;
+}

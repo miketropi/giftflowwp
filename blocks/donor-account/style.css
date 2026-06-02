@@ -1,0 +1,29 @@
+.giftflow-donor-account__nav {
+	display: flex;
+	gap: 0;
+	border-bottom: 2px solid var(--wp--preset--color--base, #e0e0e0);
+	margin-bottom: 1.5rem;
+}
+
+.giftflow-donor-account__nav-item {
+	padding: 0.75rem 1.5rem;
+	text-decoration: none;
+	color: var(--wp--preset--color--contrast-2, #666);
+	font-weight: 500;
+	border-bottom: 2px solid transparent;
+	margin-bottom: -2px;
+	transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.giftflow-donor-account__nav-item:hover {
+	color: var(--wp--preset--color--contrast, #333);
+}
+
+.giftflow-donor-account__nav-item.is-active {
+	color: var(--wp--preset--color--vivid-cyan-blue, #005ae0);
+	border-bottom-color: var(--wp--preset--color--vivid-cyan-blue, #005ae0);
+}
+
+.giftflow-donor-account__content {
+	min-height: 300px;
+}

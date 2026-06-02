@@ -169,12 +169,17 @@ class GiftFlowModal {
         
         this.modalElement.appendChild(this.contentElement);
         
-        // Append to DOM
+        // Append to DOM first so elements are in document before onLoad fires
         if (this.options.overlay) {
             this.overlayElement.appendChild(this.modalElement);
             document.body.appendChild(this.overlayElement);
         } else {
             document.body.appendChild(this.modalElement);
+        }
+
+        // Fire onLoad for non-AJAX content (AJAX content fires in loadAjaxContent)
+        if (!this.options.ajax && this.options.onLoad) {
+            this.options.onLoad(this.options.content, this);
         }
         
         // Add animation classes

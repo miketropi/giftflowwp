@@ -1,0 +1,106 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "GiftFlow",
+	"styles": {
+		"blocks": {
+			"giftflow/donation-button": {
+				"color": {
+					"background": "var(--wp--preset--color--contrast, #000000)",
+					"text": "var(--wp--preset--color--base, #ffffff)"
+				},
+				"typography": {
+					"fontSize": "var(--wp--preset--font-size--medium, 1rem)",
+					"fontWeight": "600"
+				},
+				"spacing": {
+					"padding": {
+						"top": "0.75rem",
+						"bottom": "0.75rem",
+						"left": "1.5rem",
+						"right": "1.5rem"
+					}
+				},
+				"border": {
+					"radius": "8px"
+				}
+			},
+			"giftflow/campaign-status-bar": {
+				"color": {
+					"background": "var(--wp--preset--color--base, #f0f0f0)",
+					"text": "var(--wp--preset--color--contrast, #333333)"
+				},
+				"spacing": {
+					"margin": {
+						"bottom": "var(--wp--preset--spacing--40, 1rem)"
+					}
+				}
+			},
+			"giftflow/campaign-single-content": {
+				"spacing": {
+					"margin": {
+						"top": "var(--wp--preset--spacing--40, 1rem)",
+						"bottom": "var(--wp--preset--spacing--40, 1rem)"
+					}
+				}
+			},
+			"giftflow/campaign-single-images": {
+				"spacing": {
+					"margin": {
+						"bottom": "var(--wp--preset--spacing--40, 1rem)"
+					}
+				}
+			},
+			"giftflow/campaigns-grid": {
+				"spacing": {
+					"blockGap": "var(--wp--preset--spacing--40, 1.5rem)"
+				}
+			},
+			"giftflow/donor-account": {
+				"spacing": {
+					"margin": {
+						"top": "var(--wp--preset--spacing--50, 2rem)",
+						"bottom": "var(--wp--preset--spacing--50, 2rem)"
+					}
+				}
+			},
+			"giftflow/share": {
+				"spacing": {
+					"margin": {
+						"top": "var(--wp--preset--spacing--30, 0.75rem)",
+						"bottom": "var(--wp--preset--spacing--30, 0.75rem)"
+					}
+				}
+			},
+			"giftflow/thank-donor": {
+				"spacing": {
+					"padding": {
+						"top": "var(--wp--preset--spacing--60, 3rem)",
+						"bottom": "var(--wp--preset--spacing--60, 3rem)",
+						"left": "var(--wp--preset--spacing--40, 1rem)",
+						"right": "var(--wp--preset--spacing--40, 1rem)"
+					},
+					"margin": {
+						"top": "var(--wp--preset--spacing--50, 2rem)",
+						"bottom": "var(--wp--preset--spacing--50, 2rem)"
+					}
+				},
+				"color": {
+					"background": "var(--wp--preset--color--base, #f9f9f9)",
+					"text": "var(--wp--preset--color--contrast, #333333)"
+				},
+				"border": {
+					"radius": "12px"
+				}
+			}
+		}
+	},
+	"custom": {
+		"giftflow": {
+			"version": "1.0.16",
+			"settings": {
+				"inheritFromGlobal": true
+			}
+		}
+	}
+}

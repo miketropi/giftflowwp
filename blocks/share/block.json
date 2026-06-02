@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/share",
+	"version": "1.0.0",
+	"title": "Share Campaign",
+	"category": "giftflow",
+	"icon": "share",
+	"description": "Displays social sharing buttons for a campaign with copy-link functionality.",
+	"keywords": ["share", "social", "facebook", "twitter", "linkedin", "email"],
+	"supports": {
+		"color": {
+			"text": true,
+			"background": false
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		},
+		"align": ["left", "center", "right", "wide"],
+		"html": false
+	},
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": "Share this"
+		},
+		"customUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"showSocials": {
+			"type": "boolean",
+			"default": true
+		},
+		"showEmail": {
+			"type": "boolean",
+			"default": true
+		},
+		"showCopyUrl": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-share",
+	"style": "file:./style.css"
+}

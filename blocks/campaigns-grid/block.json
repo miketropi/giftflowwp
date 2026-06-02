@@ -1,0 +1,60 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/campaigns-grid",
+	"version": "1.0.0",
+	"title": "Campaigns Grid",
+	"category": "giftflow",
+	"icon": "grid-view",
+	"description": "Displays a grid of fundraising campaigns with filtering and pagination.",
+	"keywords": ["campaigns", "grid", "list", "fundraising", "all"],
+	"supports": {
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true
+		},
+		"align": ["wide", "full"],
+		"html": false
+	},
+	"attributes": {
+		"perPage": {
+			"type": "number",
+			"default": 9
+		},
+		"orderby": {
+			"type": "string",
+			"enum": ["date", "title", "modified", "menu_order"],
+			"default": "date"
+		},
+		"order": {
+			"type": "string",
+			"enum": ["ASC", "DESC"],
+			"default": "DESC"
+		},
+		"category": {
+			"type": "string",
+			"default": ""
+		},
+		"search": {
+			"type": "string",
+			"default": ""
+		},
+		"columns": {
+			"type": "integer",
+			"default": 3
+		},
+		"customClass": {
+			"type": "string",
+			"default": ""
+		},
+		"inheritCampaignTaxonomy": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"usesContext": ["query", "queryId", "postId"],
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-campaigns-grid",
+	"style": "file:./style.css"
+}

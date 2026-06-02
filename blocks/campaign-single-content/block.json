@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/campaign-single-content",
+	"version": "1.0.0",
+	"title": "Campaign Content",
+	"category": "giftflow",
+	"icon": "media-document",
+	"description": "Displays campaign details in a tabbed layout with Story, Donations, and Comments tabs.",
+	"keywords": ["campaign", "content", "tabs", "story", "donations"],
+	"supports": {
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"align": ["wide", "full"],
+		"html": false
+	},
+	"usesContext": ["postId", "postType"],
+	"attributes": {
+		"__editorPostId": {
+			"type": "number",
+			"default": 0
+		}
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-campaign-single-content",
+	"style": "file:./style.css"
+}

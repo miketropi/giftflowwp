@@ -1,0 +1,49 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["AGENTS.md"],
+  "skills": {
+    "paths": [".opencode/skills"]
+  },
+  "agent": {
+    "gf-review": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "mode": "subagent",
+      "description": "Reviews PHP & JS changes for WordPress plugin standards, security, i18n, and GiftFlow conventions."
+    },
+    "gf-explore": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "mode": "subagent",
+      "description": "Deep exploration agent for the GiftFlow plugin codebase — traces flows, finds patterns, explains architecture."
+    }
+  },
+  "permission": {
+    "edit": "allow",
+    "bash": {
+      "composer lint": "allow",
+      "composer lint:fix": "allow",
+      "npm run build": "allow",
+      "npm run dev": "allow",
+      "git status": "allow",
+      "git diff": "allow",
+      "git log *": "allow",
+      "git add *": "allow",
+      "git commit *": "allow",
+      "mkdir *": "allow",
+      "*": "ask"
+    },
+    "external_directory": {
+      "*": "deny"
+    }
+  },
+  "mcp": {
+    "codegraph": {
+      "type": "local",
+      "command": [
+        "codegraph",
+        "serve",
+        "--mcp"
+      ],
+      "enabled": true
+    }
+  }
+}

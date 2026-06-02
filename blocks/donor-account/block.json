@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/donor-account",
+	"version": "1.0.0",
+	"title": "Donor Account",
+	"category": "giftflow",
+	"icon": "admin-users",
+	"description": "Displays the donor account interface with Dashboard, My Donations, and Account Settings tabs.",
+	"keywords": ["account", "donor", "dashboard", "history", "profile"],
+	"supports": {
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"align": ["wide", "full"],
+		"html": false
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-donor-account",
+	"style": "file:./style.css"
+}
