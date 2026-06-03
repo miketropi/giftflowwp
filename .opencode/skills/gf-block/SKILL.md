@@ -1,84 +1,224 @@
 ---
 name: gf-block
-description: Use ONLY when creating or modifying a Gutenberg block in the GiftFlow plugin. Follows the block.php registration + React component pattern. Trigger keywords: "add block", "create block", "new block", "Gutenberg block", "register block type", "block render".
+description: Use ONLY when creating or modifying a Gutenberg block in the GiftFlow plugin. Follows the block.json + render.php + block.js + style.css pattern with BEM class sync. Trigger keywords: "add block", "create block", "new block", "Gutenberg block", "register block type", "block render", "block UI", "block editor", "editor skeleton", "block placeholder".
 ---
 
 # GiftFlow Gutenberg Block
 
-## Pattern Overview
+## Architecture
 
-Each block lives in `blocks/{block-name}/` and is auto-loaded by `GiftFlow_Block_Loader` via `blocks/index.php`. The PHP `block.php` registers the block type with `render_callback`. The JS lives in `blocks/{block-name}/index.js` (or `edit.js`, `save.js`) and is compiled into `blocks-build/index.js`.
+Blocks live in `blocks/{block-name}/`. Each contains:
 
-## Steps
+```
+blocks/{block-name}/
+├── block.json      # Registration + block supports + attribute schema
+├── render.php      # Frontend render callback (server-side)
+├── block.js        # Editor entry (edit() function only — no save() for dynamic blocks)
+└── style.css       # Block styles (loaded on frontend AND in editor)
+```
 
-1. **Create directory**: `blocks/{block-name}/`
+Blocks are auto-discovered by `BlockRegistry` (src/Blocks/BlockRegistry.php) which scans for `block.json` files and calls `register_block_type_from_metadata()`. The legacy `block.php` files are kept for backward-compat helper functions but their `register_block_type` calls are unhooked.
 
-2. **Create `blocks/{block-name}/block.php`**:
+Editor JS is built via `wp-scripts build` (webpack.config.js) → `build/blocks/{block-name}.js`. `AssetLoader` registers the scripts with handle `giftflow-block-{block-name}` exactly matching `editorScript` in block.json.
 
-```php
-<?php
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
+## block.json — Rules
 
-function giftflow_{block_name}_block() {
-    register_block_type(
-        'giftflow/{block-name}',
-        array(
-            'api_version'     => 3,
-            'render_callback' => 'giftflow_{block_name}_block_render',
-            'attributes'      => array(
-                // Define block attributes that match the JS side.
-                'myAttribute' => array(
-                    'type'    => 'string',
-                    'default' => '',
-                ),
-            ),
-        )
-    );
-}
-add_action( 'init', 'giftflow_{block_name}_block' );
+### Block supports — use aggressively, avoid custom attributes
 
-function giftflow_{block_name}_block_render( $attributes, $content, $block ) {
-    unset( $content );
-    unset( $block );
+Leverage WordPress native block supports for **standard design properties**. The editor provides free controls (the Settings sidebar) for all of these:
 
-    // Prepare data for the template.
-    $template_data = array(
-        'attributes' => $attributes,
-    );
-
-    // Load template using the plugin's template loader.
-    ob_start();
-    giftflow_load_template( 'block/{block-name}.php', $template_data );
-    return ob_get_clean();
+```json
+"supports": {
+    "color": { "background": true, "text": true, "gradients": true },
+    "typography": { "fontSize": true, "fontWeight": true, "letterSpacing": true, "textTransform": true, "lineHeight": true },
+    "border": { "radius": true, "width": true, "color": true },
+    "spacing": { "padding": true, "margin": true },
+    "shadow": true,
+    "align": ["left", "center", "right", "wide", "full"],
+    "html": false
 }
 ```
 
-3. **Create template**: `templates/block/{block-name}.php` — The PHP template that renders the block output.
+**NEVER** add custom attributes for: `backgroundColor`, `textColor`, `fontSize`, `fontWeight`, `letterSpacing`, `textTransform`, `borderRadius`, `borderWidth`, `paddingX`, `paddingY`, `shadow`. Let block supports handle them.
 
-4. **Create JS component** (optional for dynamic blocks): `blocks/{block-name}/index.js`
+### Custom attributes — business logic only
 
-The JS source is compiled via Laravel Mix into `blocks-build/index.js`. Elements use `@wordpress/element` (React 19). Assets are auto-extracted by `@wordpress/dependency-extraction-webpack-plugin`.
+Only define attributes that are **unique to the block's purpose** (not standard design):
 
-5. **No manual loading needed** — `blocks/index.php`::`GiftFlow_Block_Loader::load_blocks()` auto-loads all `blocks/*/block.php` files.
+```json
+"attributes": {
+    "campaignId":    { "type": "number", "default": 0 },
+    "buttonText":    { "type": "string", "default": "Donate Now" },
+    "buttonStyle":   { "type": "string", "default": "filled" },
+    "hoverEffect":   { "type": "string", "default": "lift" },
+    "icon":          { "type": "string", "default": "none" },
+    "fullWidth":     { "type": "boolean", "default": false }
+}
+```
 
-## Key Rules
-- Block slug: `giftflow/{block-name}`, use kebab-case
-- Block category: `giftflow` (auto-registered by Loader)
-- Use `api_version: 3` for modern block API
-- Use `giftflow_load_template()` inside render callbacks
-- Template files go in `templates/block/` directory
-- Handle `wp_is_serving_rest_request()` for Gutenberg editor SSR context
-- For editor-only post ID context: use `__editorPostId` attribute pattern
-- Use `giftflow_prepare_campaign_status_bar_data()` or similar helpers
-- Register block on `init` hook
+### Other block.json rules
 
-## Existing Blocks for Reference
-- `blocks/campaign-status-bar/block.php` — simple dynamic block with REST detection
-- `blocks/campaign-single-content/block.php` — content rendering block
-- `blocks/campaigns-grid/block.php` — query loop block
-- `blocks/donation-button/block.php` — interactive block
-- `blocks/donor-account/block.php` — account page block
-- `blocks/share/block.php` — social sharing
-- `blocks/thank-donor/block.php` — thank you page block
+- `"apiVersion": 3` always
+- `"usesContext": ["postId", "postType"]` when block needs the current post
+- `"render": "file:./render.php"` for dynamic blocks
+- `"editorScript": "giftflow-block-{block-name}"` — must match the handle AssetLoader registers
+- `"style": "file:./style.css"` — loaded in BOTH editor and frontend
+
+## block.js — Rules
+
+### Editor only — no save()
+
+Dynamic blocks (all GiftFlow blocks) use `render.php` for frontend output. `block.js` defines `edit()` only:
+
+```js
+registerBlockType('giftflow/{block-name}', {
+    apiVersion: 3,
+    title: __('Block Title', 'giftflow'),
+    icon: '...',
+    category: 'giftflow',
+    attributes: { /* mirror block.json */ },
+    edit: (props) => {
+        const blockProps = useBlockProps({ className: 'giftflow-{block-class}' });
+        // ...
+    },
+});
+```
+
+### Editor skeleton MUST use the same BEM class names as render.php
+
+The `style.css` is loaded in the editor. If the editor JS uses the same CSS classes as the frontend markup, the skeleton preview looks identical to the rendered output:
+
+```jsx
+// render.php outputs:
+// <div class="giftflow-campaign-status-bar__progress">...</div>
+// So the editor skeleton uses:
+<div className="giftflow-campaign-status-bar__progress">
+    <div className="giftflow-campaign-status-bar__progress-fill" style={{ width: '42%' }}></div>
+</div>
+```
+
+**Rule**: Use `<div className="...">` (not `<div style={{...}}>`) wherever `style.css` already defines the styles. Only use inline `style={{}}` for truly dynamic values (e.g., progress percentage, custom colors from attributes).
+
+### Show skeleton at all times
+
+The editor skeleton must always render, even without post context. **No** conditional `Placeholder` fallbacks. The user must see a visual preview of how the block looks at all times.
+
+### InspectorControls — custom options only
+
+Do **NOT** add controls for color, typography, border, spacing — those are handled by block supports and appear automatically in the Settings sidebar. Only add panels for business-logic options:
+
+```jsx
+<InspectorControls>
+    <PanelBody title={__('Campaign', 'giftflow')}>
+        <SelectControl ... />
+    </PanelBody>
+    <PanelBody title={__('Content', 'giftflow')}>
+        <TextControl ... />
+        <ToggleGroupControl ... />
+    </PanelBody>
+    <PanelBody title={__('Style', 'giftflow')} initialOpen={false}>
+        <ToggleGroupControl ... />
+    </PanelBody>
+</InspectorControls>
+```
+
+### Use proper Gutenberg components
+
+- `ToggleGroupControl` + `ToggleGroupControlOption` for mutually exclusive options (button style, hover effect, icon)
+- `SelectControl` for dropdowns
+- `TextControl` for text inputs
+- `ToggleControl` for booleans
+- `RangeControl` for numeric sliders
+- **NOT** raw HTML buttons/inputs/dropdowns
+
+### Read block support values at runtime
+
+When the skeleton needs to reflect block support values (colors etc.), read from `attributes.style`:
+
+```js
+const s = attributes.style || {};
+const color = s.color || {};
+const bg = color.background || '#1e1e1e';
+const fg = color.text || '#ffffff';
+```
+
+### Context-dependent blocks
+
+Use `usesContext: ['postId']` and read `props.context.postId` (not `attributes.__editorPostId` — that pattern is deprecated). The skeleton should still render without a postId — just without real data.
+
+## render.php — Rules
+
+### Read block support values from $attributes['style']
+
+```php
+$gf_style  = $attributes['style'] ?? array();
+$gf_color  = $gf_style['color'] ?? array();
+$gf_bg     = $gf_color['background'] ?? '#1e1e1e';
+$gf_fg     = $gf_color['text'] ?? '#ffffff';
+```
+
+### Use get_block_wrapper_attributes()
+
+Always wrap the output in a div with block wrapper attributes:
+
+```php
+$block_wrapper_attrs = get_block_wrapper_attributes(
+    array( 'class' => 'giftflow-my-block' )
+);
+?>
+<div <?php echo $block_wrapper_attrs; // phpcs:ignore ?>>
+    ...
+</div>
+```
+
+### Access context
+
+```php
+$gf_post_id = isset( $block->context['postId'] )
+    ? (int) $block->context['postId']
+    : get_the_ID();
+```
+
+### BEM class naming
+
+All block-level classes use BEM naming: `.giftflow-{block}__{element}` and `.giftflow-{block}__{element}--{modifier}`. Match exactly between render.php and style.css.
+
+## style.css — Rules
+
+- Loaded on frontend AND in the editor (editor skeleton uses same classes)
+- Base styles: display, position, transitions, cursor, focus-visible
+- **Do NOT** hardcode colors, font sizes, padding, border radius — those come from block supports (WordPress applies them as inline styles or CSS custom properties)
+- Use CSS custom property fallbacks: `var(--wp--preset--color--base, #e0e0e0)`
+- Include `:focus-visible` for accessibility
+- Handle `.is-active`, `[hidden]`, `--disabled` modifier states
+
+## Shared utilities
+
+`blocks/_editor-utils.js` provides:
+- `ShimmerBar({ height, width })` — animated shimmer line
+- `ShimmerBox({ height, width })` — animated shimmer rectangle
+- `ShimmerCircle({ size })` — animated shimmer circle
+- `ensureShimmerStyles()` — injects shimmer keyframes once
+- `BlockPlaceholder({ icon, label, instructions })` — WordPress Placeholder wrapper
+
+Import: `import { ShimmerBar, ensureShimmerStyles } from '../_editor-utils';`
+
+## Build & Registration
+
+1. Add entry to `webpack.config.js` under `entry`:
+   ```js
+   'blocks/my-block': path.resolve(process.cwd(), 'blocks/my-block/block.js'),
+   ```
+
+2. Add block name to `AssetLoader::register_block_editor_scripts()` in the `$blocks` array.
+
+3. Build: `npm run build` → output at `build/blocks/my-block.js` + `build/blocks/my-block.asset.php`.
+
+## Quick checklist
+
+- [ ] block.json: apiVersion 3, uses block supports, only custom attributes for business logic
+- [ ] block.js: same BEM classes as render.php, skeleton always visible, only custom controls in InspectorControls, use ToggleGroupControl/SelectControl not raw HTML
+- [ ] render.php: reads style from $attributes['style'], uses get_block_wrapper_attributes()
+- [ ] style.css: no hardcoded design values (colors, sizes, padding), focus-visible included
+- [ ] Added to webpack.config.js entry and AssetLoader $blocks array
+- [ ] `npm run build` passes with no errors

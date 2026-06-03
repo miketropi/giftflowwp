@@ -37,19 +37,20 @@ $gf_tabs = array(
 		'id'       => 'donations',
 		'label'    => __( 'Donations', 'giftflow' ),
 		'callback' => function ( $id ) {
-			$gf_args  = array( 'post_id' => $id );
-			$gf_paged = max( 1, (int) get_query_var( 'donation_page', 1 ) );
+			$gf_args      = array( 'post_id' => $id );
+			$gf_paged     = max( 1, (int) get_query_var( 'donation_page', 1 ) );
 			$gf_donations = giftflow_get_campaign_donations( $id, $gf_args, $gf_paged );
 
+			echo '<div class="__donations-list-by-campaign-' . (int) $id . '">';
 			giftflow_load_template(
 				'donation-list-of-campaign.php',
 				array(
-					'donations'     => $gf_donations['donations'] ?? array(),
-					'total'         => $gf_donations['total'] ?? 0,
-					'pages'         => $gf_donations['pages'] ?? 0,
-					'current_page'  => $gf_donations['current_page'] ?? 1,
+					'donations'     => $gf_donations,
+					'paged'         => $gf_paged,
+					'campaign_id'   => $id,
 				)
 			);
+			echo '</div>';
 		},
 	),
 	'comments'  => array(
@@ -63,19 +64,24 @@ $gf_tabs = array(
 
 $gf_tabs = apply_filters( 'giftflow_campaign_single_content_tabs', $gf_tabs, $gf_post_id );
 
+$gf_tab_style = $attributes['tabStyle'] ?? 'pills';
+
+$gf_tab_accent  = $attributes['tabAccentColor'] ?? '';
+$gf_tab_accent_style = $gf_tab_accent ? '--gf-tab-accent:' . esc_attr( $gf_tab_accent ) . ';' : '';
+
 $block_wrapper_attrs = get_block_wrapper_attributes(
-	array( 'class' => 'giftflow-tab-widget' )
+	array( 'class' => 'giftflow-tab-widget', 'style' => $gf_tab_accent_style )
 );
 ?>
-<div <?php echo $block_wrapper_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_block_wrapper_attributes returns safe HTML. ?> data-wp-interactive="giftflow/campaign-content">
-	<nav class="giftflow-tab-widget__tabs" role="tablist">
+<div <?php echo $block_wrapper_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_block_wrapper_attributes returns safe HTML. ?>>
+	<nav class="giftflow-tab-widget__tabs giftflow-tab-widget__tabs--<?php echo esc_attr( $gf_tab_style ); ?>" role="tablist">
 		<?php foreach ( $gf_tabs as $gf_tab ) : ?>
 			<button
 				class="giftflow-tab-widget__tab<?php echo ! empty( $gf_tab['active'] ) ? ' is-active' : ''; ?>"
 				role="tab"
 				aria-selected="<?php echo ! empty( $gf_tab['active'] ) ? 'true' : 'false'; ?>"
 				data-tab-id="<?php echo esc_attr( $gf_tab['id'] ); ?>"
-				data-wp-on--click="actions.switchTab"
+				tabindex="<?php echo ! empty( $gf_tab['active'] ) ? '0' : '-1'; ?>"
 			>
 				<?php echo esc_html( $gf_tab['label'] ); ?>
 			</button>
@@ -89,6 +95,7 @@ $block_wrapper_attrs = get_block_wrapper_attributes(
 				role="tabpanel"
 				data-tab-panel="<?php echo esc_attr( $gf_tab['id'] ); ?>"
 				<?php echo ! empty( $gf_tab['active'] ) ? '' : 'hidden'; ?>
+				aria-hidden="<?php echo ! empty( $gf_tab['active'] ) ? 'false' : 'true'; ?>"
 			>
 				<?php
 				if ( is_callable( $gf_tab['callback'] ) ) {

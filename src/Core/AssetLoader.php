@@ -163,8 +163,18 @@ class AssetLoader extends AbstractModule {
 	 * @return void
 	 */
 	public function enqueue_blocks(): void {
-		// Register block editor scripts from build/ directory.
 		$this->register_block_editor_scripts();
+
+		// Enqueue Swiper CSS for carousel block (frontend only).
+		$swiper_css = $this->plugin_dir . 'build/blocks/campaigns-carousel-view.css';
+		if ( file_exists( $swiper_css ) ) {
+			wp_enqueue_style(
+				'giftflow-block-campaigns-carousel-view',
+				$this->plugin_url . 'build/blocks/campaigns-carousel-view.css',
+				array(),
+				$this->version
+			);
+		}
 
 		wp_enqueue_style(
 			'giftflow-common',
@@ -185,7 +195,10 @@ class AssetLoader extends AbstractModule {
 			'campaign-status-bar',
 			'campaign-single-content',
 			'campaign-single-images',
+			'campaign-single-images-view',
 			'campaigns-grid',
+			'campaigns-carousel',
+			'campaigns-carousel-view',
 			'donor-account',
 			'share',
 			'thank-donor',
@@ -195,6 +208,7 @@ class AssetLoader extends AbstractModule {
 			$handle      = 'giftflow-block-' . $block_name;
 			$js_path     = $this->plugin_dir . 'build/blocks/' . $block_name . '.js';
 			$asset_path  = $this->plugin_dir . 'build/blocks/' . $block_name . '.asset.php';
+			$css_path    = $this->plugin_dir . 'build/blocks/' . $block_name . '.css';
 
 			if ( ! file_exists( $js_path ) ) {
 				continue;
@@ -209,6 +223,16 @@ class AssetLoader extends AbstractModule {
 				$asset['version'],
 				true
 			);
+
+			// Register matching CSS if webpack extracted it (e.g. Swiper styles).
+			if ( file_exists( $css_path ) ) {
+				wp_register_style(
+					$handle,
+					$this->plugin_url . 'build/blocks/' . $block_name . '.css',
+					array(),
+					$asset['version']
+				);
+			}
 		}
 	}
 

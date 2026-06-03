@@ -28,9 +28,9 @@
 			"type": "number",
 			"default": 0
 		},
-		"__editorPostId": {
-			"type": "number",
-			"default": 0
+		"progressColor": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"usesContext": ["postId", "postType"],

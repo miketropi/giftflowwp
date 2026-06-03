@@ -9,42 +9,16 @@
 	"description": "Displays social sharing buttons for a campaign with copy-link functionality.",
 	"keywords": ["share", "social", "facebook", "twitter", "linkedin", "email"],
 	"supports": {
-		"color": {
-			"text": true,
-			"background": false
-		},
-		"spacing": {
-			"margin": true,
-			"padding": true
-		},
-		"typography": {
-			"fontSize": true
-		},
 		"align": ["left", "center", "right", "wide"],
 		"html": false
 	},
 	"attributes": {
-		"title": {
-			"type": "string",
-			"default": "Share this"
-		},
-		"customUrl": {
-			"type": "string",
-			"default": ""
-		},
-		"showSocials": {
-			"type": "boolean",
-			"default": true
-		},
-		"showEmail": {
-			"type": "boolean",
-			"default": true
-		},
-		"showCopyUrl": {
-			"type": "boolean",
-			"default": true
-		}
+		"title": { "type": "string", "default": "Share this" },
+		"showSocials": { "type": "boolean", "default": true },
+		"showEmail": { "type": "boolean", "default": true },
+		"showCopyUrl": { "type": "boolean", "default": true }
 	},
+	"usesContext": ["postId", "postType"],
 	"render": "file:./render.php",
 	"editorScript": "giftflow-block-share",
 	"style": "file:./style.css"

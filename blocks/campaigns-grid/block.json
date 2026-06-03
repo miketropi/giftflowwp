@@ -9,52 +9,27 @@
 	"description": "Displays a grid of fundraising campaigns with filtering and pagination.",
 	"keywords": ["campaigns", "grid", "list", "fundraising", "all"],
 	"supports": {
-		"spacing": {
-			"margin": true,
-			"padding": true,
-			"blockGap": true
-		},
 		"align": ["wide", "full"],
 		"html": false
 	},
 	"attributes": {
-		"perPage": {
-			"type": "number",
-			"default": 9
-		},
-		"orderby": {
-			"type": "string",
-			"enum": ["date", "title", "modified", "menu_order"],
-			"default": "date"
-		},
-		"order": {
-			"type": "string",
-			"enum": ["ASC", "DESC"],
-			"default": "DESC"
-		},
-		"category": {
-			"type": "string",
-			"default": ""
-		},
-		"search": {
-			"type": "string",
-			"default": ""
-		},
-		"columns": {
-			"type": "integer",
-			"default": 3
-		},
-		"customClass": {
-			"type": "string",
-			"default": ""
-		},
-		"inheritCampaignTaxonomy": {
-			"type": "boolean",
-			"default": true
-		}
+		"perPage": { "type": "number", "default": 9 },
+		"orderby": { "type": "string", "default": "date" },
+		"order": { "type": "string", "default": "DESC" },
+		"category": { "type": "string", "default": "" },
+		"search": { "type": "string", "default": "" },
+		"columns": { "type": "integer", "default": 3 },
+		"cardStyle": { "type": "string", "default": "flat" },
+		"imageHeight": { "type": "integer", "default": 200 },
+		"showProgress": { "type": "boolean", "default": true },
+		"showMeta": { "type": "boolean", "default": true },
+		"progressColor": { "type": "string", "default": "" },
+		"customClass": { "type": "string", "default": "" },
+		"inheritCampaignTaxonomy": { "type": "boolean", "default": true }
 	},
 	"usesContext": ["query", "queryId", "postId"],
 	"render": "file:./render.php",
 	"editorScript": "giftflow-block-campaigns-grid",
 	"style": "file:./style.css"
 }
+

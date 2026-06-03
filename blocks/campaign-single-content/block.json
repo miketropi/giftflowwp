@@ -18,9 +18,13 @@
 	},
 	"usesContext": ["postId", "postType"],
 	"attributes": {
-		"__editorPostId": {
-			"type": "number",
-			"default": 0
+		"tabStyle": {
+			"type": "string",
+			"default": "pills"
+		},
+		"tabAccentColor": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"render": "file:./render.php",

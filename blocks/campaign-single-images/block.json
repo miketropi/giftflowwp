@@ -25,5 +25,6 @@
 	},
 	"render": "file:./render.php",
 	"editorScript": "giftflow-block-campaign-single-images",
+	"viewScript": "giftflow-block-campaign-single-images-view",
 	"style": "file:./style.css"
 }

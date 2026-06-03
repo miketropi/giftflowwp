@@ -1,33 +1,55 @@
 import { registerBlockType } from '@wordpress/blocks';
-import ServerSideRender from '@wordpress/server-side-render';
-import { useBlockProps } from '@wordpress/block-editor';
-import { Disabled } from '@wordpress/components';
-const { useSelect } = wp.data;
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { PanelBody } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
+import { ShimmerBox, ensureShimmerStyles } from '../_editor-utils';
 
-registerBlockType(
-	'giftflow/campaign-single-images',
-	{
-		apiVersion: 3,
-		title: 'Campaign Single Images',
-		icon: 'format-gallery',
-		category: 'giftflow',
-		usesContext: ['postId'],
-		edit: (props) => {
-			const { attributes, ...rest } = props;
-			const blockProps = useBlockProps();
+registerBlockType('giftflow/campaign-single-images', {
+    apiVersion: 3,
+    title: __('Campaign Images', 'giftflow'),
+    icon: 'format-gallery',
+    category: 'giftflow',
+    usesContext: ['postId'],
+    edit: () => {
+        const blockProps = useBlockProps({ className: 'giftflow-campaign-images' });
+        ensureShimmerStyles();
 
-			// if context.postId is 0 or empty, set attributes.__editorPostId to 0
-			attributes.__editorPostId = rest?.context?.postId ?? 0;
-
-			return (
-			<div {...blockProps}>
-				<Disabled >
-					<ServerSideRender
-						block="giftflow/campaign-single-images"
-						attributes={ attributes } />
-				</Disabled>
-			</div>
-		);
-		},
-	}
-);
+        return (
+            <>
+                <InspectorControls>
+                    <PanelBody title={__('About', 'giftflow')} initialOpen={true}>
+                        <p style={{ color: '#757575', fontSize: 13 }}>
+                            {__('Displays the featured image and gallery for a campaign. Click thumbnails to swap the main image, or click the main image to open the fullscreen lightbox viewer.', 'giftflow')}
+                        </p>
+                    </PanelBody>
+                </InspectorControls>
+                <div {...blockProps}>
+                    <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', marginBottom: '0.75rem', aspectRatio: '4 / 3', maxHeight: 480, background: '#f3f4f6' }}>
+                        <ShimmerBox height="100%" style={{ borderRadius: 0, position: 'absolute', inset: 0 }} />
+                        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(0,0,0,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
+                            </div>
+                        </div>
+                        <div style={{ position: 'absolute', bottom: 12, right: 12, background: 'rgba(0,0,0,0.5)', color: '#fff', padding: '3px 10px', borderRadius: 999, fontSize: 12, fontWeight: 500 }}>1 / 6</div>
+                    </div>
+                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                        {[0, 1, 2, 3].map(i => (
+                            <button key={i} style={{ flex: '0 0 calc(25% - 0.375rem)', border: i === 0 ? '2px solid #3b82f6' : '2px solid transparent', borderRadius: 8, overflow: 'hidden', padding: 0, background: 'none', cursor: 'pointer' }}>
+                                <div style={{ aspectRatio: '1 / 1' }}>
+                                    <ShimmerBox height="100%" style={{ borderRadius: 6 }} />
+                                </div>
+                            </button>
+                        ))}
+                        <button style={{ flex: '0 0 calc(25% - 0.375rem)', border: '2px solid transparent', borderRadius: 8, overflow: 'hidden', padding: 0, background: '#f3f4f6', cursor: 'pointer', position: 'relative' }}>
+                            <div style={{ aspectRatio: '1 / 1' }}>
+                                <ShimmerBox height="100%" style={{ borderRadius: 6 }} />
+                            </div>
+                            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 600, color: '#555' }}>+2</div>
+                        </button>
+                    </div>
+                </div>
+            </>
+        );
+    },
+});
