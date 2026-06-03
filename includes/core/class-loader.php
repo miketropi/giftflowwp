@@ -50,19 +50,48 @@ class Loader extends Base {
 	 * Enqueue scripts
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_style( 'giftflow-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version() );
+		$new_status_bar_css    = $this->get_plugin_dir() . 'build/blocks/campaign-status-bar.css';
+		$legacy_status_bar_css = $this->get_plugin_dir() . 'assets/css/block-campaign-status-bar.bundle.css';
+
+		if ( file_exists( $new_status_bar_css ) ) {
+			wp_enqueue_style( 'giftflow-block-campaign-status-bar', $this->get_plugin_url() . 'build/blocks/campaign-status-bar.css', array(), $this->get_version() );
+		} elseif ( file_exists( $legacy_status_bar_css ) ) {
+			wp_enqueue_style( 'giftflow-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version() );
+		}
 	}
 
 	/**
 	 * Enqueue blocks
 	 */
 	public function enqueue_blocks() {
-		wp_enqueue_style( 'giftflow-common', $this->get_plugin_url() . 'assets/css/common.bundle.css', array(), $this->get_version() );
+		$new_common_css    = $this->get_plugin_dir() . 'build/frontend-common.css';
+		$legacy_common_css = $this->get_plugin_dir() . 'assets/css/common.bundle.css';
+
+		if ( file_exists( $new_common_css ) ) {
+			wp_enqueue_style( 'giftflow-common', $this->get_plugin_url() . 'build/frontend-common.css', array(), $this->get_version() );
+		} elseif ( file_exists( $legacy_common_css ) ) {
+			wp_enqueue_style( 'giftflow-common', $this->get_plugin_url() . 'assets/css/common.bundle.css', array(), $this->get_version() );
+		}
 
 		$args = require $this->get_plugin_dir() . '/blocks-build/index.asset.php';
 		wp_enqueue_script( 'giftflow-blocks', $this->get_plugin_url() . '/blocks-build/index.js', $args['dependencies'], $args['version'], true );
-		wp_enqueue_style( 'giftflow-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version() );
-		wp_enqueue_style( 'giftflow-block-campaign-single-content', $this->get_plugin_url() . 'assets/css/block-campaign-single-content.bundle.css', array(), $this->get_version() );
+
+		$new_status_bar_css       = $this->get_plugin_dir() . 'build/blocks/campaign-status-bar.css';
+		$legacy_status_bar_css    = $this->get_plugin_dir() . 'assets/css/block-campaign-status-bar.bundle.css';
+		$new_single_content_css   = $this->get_plugin_dir() . 'build/blocks/campaign-single-content.css';
+		$legacy_single_content_css = $this->get_plugin_dir() . 'assets/css/block-campaign-single-content.bundle.css';
+
+		if ( file_exists( $new_status_bar_css ) ) {
+			wp_enqueue_style( 'giftflow-block-campaign-status-bar', $this->get_plugin_url() . 'build/blocks/campaign-status-bar.css', array(), $this->get_version() );
+		} elseif ( file_exists( $legacy_status_bar_css ) ) {
+			wp_enqueue_style( 'giftflow-block-campaign-status-bar', $this->get_plugin_url() . 'assets/css/block-campaign-status-bar.bundle.css', array(), $this->get_version() );
+		}
+
+		if ( file_exists( $new_single_content_css ) ) {
+			wp_enqueue_style( 'giftflow-block-campaign-single-content', $this->get_plugin_url() . 'build/blocks/campaign-single-content.css', array(), $this->get_version() );
+		} elseif ( file_exists( $legacy_single_content_css ) ) {
+			wp_enqueue_style( 'giftflow-block-campaign-single-content', $this->get_plugin_url() . 'assets/css/block-campaign-single-content.bundle.css', array(), $this->get_version() );
+		}
 
 		// load common js.
 		$args_common = require $this->get_plugin_dir() . '/assets/js/common.bundle.asset.php';
@@ -155,7 +184,6 @@ class Loader extends Base {
 	 */
 	public function init() {
 		// core.
-		new \GiftFlow\Core\Block_Template();
 		\GiftFlow\Core\Role::get_instance();
 
 		// Initialize post types.

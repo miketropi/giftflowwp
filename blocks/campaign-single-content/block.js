@@ -1,3 +1,4 @@
+import '../../assets/css/block-campaign-single-content.scss';
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, __experimentalToggleGroupControl as ToggleGroupControl, __experimentalToggleGroupControlOption as ToggleGroupControlOption, ColorPalette, BaseControl } from '@wordpress/components';

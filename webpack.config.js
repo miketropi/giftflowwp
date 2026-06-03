@@ -33,6 +33,9 @@ module.exports = {
 		'blocks/donor-account': path.resolve(process.cwd(), 'blocks/donor-account/block.js'),
 		'blocks/share': path.resolve(process.cwd(), 'blocks/share/block.js'),
 		'blocks/thank-donor': path.resolve(process.cwd(), 'blocks/thank-donor/block.js'),
+		'blocks/campaign-location': path.resolve(process.cwd(), 'blocks/campaign-location/block.js'),
+		'blocks/volunteer-cta': path.resolve(process.cwd(), 'blocks/volunteer-cta/block.js'),
+		'blocks/donation-faqs': path.resolve(process.cwd(), 'blocks/donation-faqs/block.js'),
 	},
 
 	output: {

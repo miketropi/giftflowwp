@@ -1,3 +1,4 @@
+import '../../assets/css/block-campaign-status-bar.scss';
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, SelectControl, ColorPalette, BaseControl } from '@wordpress/components';

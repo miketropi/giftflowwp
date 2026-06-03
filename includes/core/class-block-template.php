@@ -83,21 +83,20 @@ class Block_Template {
 		if ( 'wp_template' !== $template_type ) {
 			return $query_result;
 		}
-		if ( empty( $query['slug__in'] ) ) {
-			return $query_result;
-		}
 
-		$requested_slugs = $query['slug__in'];
-		$template_map    = $this->get_template_map();
+		$template_map   = $this->get_template_map();
+		$requested_slugs = isset( $query['slug__in'] ) ? $query['slug__in'] : array();
 		$is_editor       = is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST );
 
 		foreach ( $template_map as $slug => $template ) {
-			if ( ! in_array( $slug, $requested_slugs, true ) ) {
-				continue;
-			}
 			if ( ! file_exists( $template['file'] ) ) {
 				continue;
 			}
+
+			if ( ! empty( $requested_slugs ) && ! in_array( $slug, $requested_slugs, true ) ) {
+				continue;
+			}
+
 			if ( ! $is_editor && ! $template['context']() ) {
 				continue;
 			}
@@ -169,9 +168,11 @@ class Block_Template {
 		$template->origin         = 'plugin';
 		$template->type           = 'wp_template';
 		$template->title          = ucwords( str_replace( '-', ' ', $slug ) );
+		$template->description    = '';
 		$template->status         = 'publish';
 		$template->has_theme_file = false;
 		$template->is_custom      = false;
+		$template->plugin         = defined( 'GIFTFLOW_PLUGIN_BASENAME' ) ? GIFTFLOW_PLUGIN_BASENAME : 'giftflow/giftflow.php';
 
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local plugin file.
 		$content = file_get_contents( $file );

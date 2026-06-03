@@ -1,6 +1,8 @@
 /**
  * GiftFlow Common JS
  */
+import '../css/common.scss';
+import '../css/donation-form.scss';
 import './util/comment-form.js';
 import GiftFlowModal from './util/modal.js';
 import './util/campaign-single.js'; 
@@ -124,6 +126,30 @@ import './forms.js';
   document.addEventListener('DOMContentLoaded', function() {
     gfw.lightbox_initialize();
     initClickToCopyByClass({ className: 'gfw-click-to-copy' });
+    initFaqAccordion();
   });
+
+  function initFaqAccordion() {
+    const containers = document.querySelectorAll('.giftflow-donation-faqs');
+    containers.forEach(function (container) {
+      container.addEventListener('click', function (e) {
+        const btn = e.target.closest('.giftflow-donation-faqs__question');
+        if (!btn) return;
+        const item = btn.closest('.giftflow-donation-faqs__item');
+        if (!item) return;
+        const isOpen = item.classList.contains('is-open');
+        item.classList.toggle('is-open', !isOpen);
+        btn.setAttribute('aria-expanded', String(!isOpen));
+        const answer = item.querySelector('.giftflow-donation-faqs__answer');
+        if (answer) {
+          answer.setAttribute('aria-hidden', String(isOpen));
+          if (!isOpen) {
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+            setTimeout(function () { answer.style.maxHeight = ''; }, 300);
+          }
+        }
+      });
+    });
+  }
 
 })(window, jQuery)

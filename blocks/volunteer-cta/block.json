@@ -1,0 +1,60 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/volunteer-cta",
+	"version": "1.0.0",
+	"title": "Volunteer CTA",
+	"category": "giftflow",
+	"icon": "heart",
+	"description": "A call-to-action section encouraging visitors to register as volunteers, with configurable heading, description, and button.",
+	"keywords": ["volunteer", "cta", "register", "signup", "join"],
+	"supports": {
+		"color": {
+			"background": true,
+			"text": true,
+			"gradients": true
+		},
+		"typography": {
+			"fontSize": true,
+			"fontFamily": true,
+			"lineHeight": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"border": {
+			"radius": true,
+			"width": true,
+			"color": true
+		},
+		"shadow": true,
+		"align": ["wide", "full"],
+		"html": false
+	},
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": "Become a Volunteer"
+		},
+		"description": {
+			"type": "string",
+			"default": "Join our community of volunteers and make a lasting impact. Your time and skills can change lives in meaningful ways."
+		},
+		"buttonText": {
+			"type": "string",
+			"default": "Register Now"
+		},
+		"buttonUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"showIcon": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-volunteer-cta",
+	"style": "file:./style.css"
+}

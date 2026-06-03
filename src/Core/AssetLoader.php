@@ -176,12 +176,24 @@ class AssetLoader extends AbstractModule {
 			);
 		}
 
-		wp_enqueue_style(
-			'giftflow-common',
-			$this->plugin_url . 'assets/css/common.bundle.css',
-			array(),
-			$this->version
-		);
+		$new_common_css = $this->plugin_dir . 'build/frontend-common.css';
+		$legacy_common_css = $this->plugin_dir . 'assets/css/common.bundle.css';
+
+		if ( file_exists( $new_common_css ) ) {
+			wp_enqueue_style(
+				'giftflow-common',
+				$this->plugin_url . 'build/frontend-common.css',
+				array(),
+				$this->version
+			);
+		} elseif ( file_exists( $legacy_common_css ) ) {
+			wp_enqueue_style(
+				'giftflow-common',
+				$this->plugin_url . 'assets/css/common.bundle.css',
+				array(),
+				$this->version
+			);
+		}
 	}
 
 	/**
@@ -202,6 +214,9 @@ class AssetLoader extends AbstractModule {
 			'donor-account',
 			'share',
 			'thank-donor',
+			'campaign-location',
+			'volunteer-cta',
+			'donation-faqs',
 		);
 
 		foreach ( $blocks as $block_name ) {

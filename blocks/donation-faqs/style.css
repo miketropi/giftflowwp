@@ -1,0 +1,86 @@
+.giftflow-donation-faqs {
+	font-family: inherit;
+}
+
+.giftflow-donation-faqs__item {
+	border-bottom: 1px solid var(--wp--preset--color--base, #e5e7eb);
+}
+
+.giftflow-donation-faqs__item:first-child {
+	border-top: 1px solid var(--wp--preset--color--base, #e5e7eb);
+}
+
+.giftflow-donation-faqs__question {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	width: 100%;
+	padding: 1rem 0;
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 1.4;
+	text-align: left;
+	color: var(--wp--preset--color--contrast, #1f2937);
+	font-family: inherit;
+	transition: color 0.2s ease;
+}
+
+.giftflow-donation-faqs__question:hover {
+	color: var(--wp--preset--color--primary, var(--wp--preset--color--vivid-cyan-blue, #3b82f6));
+}
+
+.giftflow-donation-faqs__question:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary, #3b82f6);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+.giftflow-donation-faqs__question-text {
+	flex: 1;
+}
+
+.giftflow-donation-faqs__toggle {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	transition: transform 0.25s ease;
+	color: var(--wp--preset--color--contrast-2, #6b7280);
+}
+
+.giftflow-donation-faqs__item.is-open .giftflow-donation-faqs__toggle {
+	transform: rotate(45deg);
+}
+
+.giftflow-donation-faqs__answer {
+	overflow: hidden;
+	max-height: 0;
+	transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.giftflow-donation-faqs__item.is-open .giftflow-donation-faqs__answer {
+	max-height: 600px;
+}
+
+.giftflow-donation-faqs__answer[aria-hidden="false"] {
+	max-height: 2000px;
+}
+
+.giftflow-donation-faqs__answer-inner {
+	padding: 0 0 1rem 0;
+	line-height: 1.65;
+}
+
+.giftflow-donation-faqs__answer-inner p {
+	margin: 0;
+}
+
+.giftflow-donation-faqs__answer-inner p + p {
+	margin-top: 0.5rem;
+}

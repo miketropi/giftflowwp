@@ -633,7 +633,7 @@ import { AsyncEventHub } from './util/async-event-hub';
 	*   }
 	* }));
 	*/
-	document.addEventListener('initDonationForm', (event) => {
+	document.addEventListener('initDonationForm', (event) => { 
 		const { formSelector, options } = event.detail || {};
 		
 		if (formSelector) {
