@@ -70,7 +70,10 @@ $gf_tab_accent  = $attributes['tabAccentColor'] ?? '';
 $gf_tab_accent_style = $gf_tab_accent ? '--gf-tab-accent:' . esc_attr( $gf_tab_accent ) . ';' : '';
 
 $block_wrapper_attrs = get_block_wrapper_attributes(
-	array( 'class' => 'giftflow-tab-widget', 'style' => $gf_tab_accent_style )
+	array(
+		'class' => 'giftflow-tab-widget',
+		'style' => $gf_tab_accent_style,
+	)
 );
 ?>
 <div <?php echo $block_wrapper_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_block_wrapper_attributes returns safe HTML. ?>>

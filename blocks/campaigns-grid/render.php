@@ -10,21 +10,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$gf_per_page  = max( 1, (int) ( $attributes['perPage'] ?? 9 ) );
-$gf_orderby   = $attributes['orderby'] ?? 'date';
+$gf_per_page = max( 1, (int) ( $attributes['perPage'] ?? 9 ) );
+$gf_orderby  = $attributes['orderby'] ?? 'date';
 if ( ! in_array( $gf_orderby, array( 'date', 'title', 'modified', 'menu_order' ), true ) ) {
 	$gf_orderby = 'date';
 }
-$gf_order     = isset( $attributes['order'] ) && in_array( $attributes['order'], array( 'ASC', 'DESC' ), true ) ? $attributes['order'] : 'DESC';
-$gf_columns     = max( 1, min( 4, (int) ( $attributes['columns'] ?? 3 ) ) );
-$gf_category    = sanitize_text_field( $attributes['category'] ?? '' );
-$gf_search      = sanitize_text_field( $attributes['search'] ?? '' );
-$gf_card_style  = $attributes['cardStyle'] ?? 'shadow';
-$gf_img_height  = max( 120, min( 360, (int) ( $attributes['imageHeight'] ?? 200 ) ) );
-$gf_show_prog   = $attributes['showProgress'] ?? true;
-$gf_show_meta   = $attributes['showMeta'] ?? true;
+$gf_order          = isset( $attributes['order'] ) && in_array( $attributes['order'], array( 'ASC', 'DESC' ), true ) ? $attributes['order'] : 'DESC';
+$gf_columns        = max( 1, min( 4, (int) ( $attributes['columns'] ?? 3 ) ) );
+$gf_category       = sanitize_text_field( $attributes['category'] ?? '' );
+$gf_search         = sanitize_text_field( $attributes['search'] ?? '' );
+$gf_card_style     = $attributes['cardStyle'] ?? 'shadow';
+$gf_img_height     = max( 120, min( 360, (int) ( $attributes['imageHeight'] ?? 200 ) ) );
+$gf_show_prog      = $attributes['showProgress'] ?? true;
+$gf_show_meta      = $attributes['showMeta'] ?? true;
 $gf_progress_color = $attributes['progressColor'] ?? '';
-$gf_extra_class = sanitize_html_class( $attributes['customClass'] ?? '' );
+$gf_extra_class    = sanitize_html_class( $attributes['customClass'] ?? '' );
 $gf_progress_color = $attributes['progressColor'] ?? '';
 
 $gf_paged = max( 1, (int) get_query_var( 'paged', 1 ) );
@@ -82,16 +82,16 @@ $block_wrapper_attrs = get_block_wrapper_attributes(
 			<?php
 			while ( $gf_query->have_posts() ) :
 				$gf_query->the_post();
-		$gf_campaign_id   = get_the_ID();
-		$gf_goal          = (int) get_post_meta( $gf_campaign_id, '_goal_amount', true );
-		$gf_raised        = giftflow_get_campaign_raised_amount( $gf_campaign_id );
-		$gf_progress      = $gf_goal > 0 ? (int) round( ( $gf_raised / $gf_goal ) * 100 ) : 0;
-		$gf_location      = get_post_meta( $gf_campaign_id, '_location', true );
-		$gf_thumbnail_url = get_the_post_thumbnail_url( $gf_campaign_id, 'medium_large' );
-		$gf_excerpt       = get_the_excerpt( $gf_campaign_id );
-		$gf_categories    = get_the_terms( $gf_campaign_id, 'campaign-tax' );
-		$gf_days_left     = giftflow_get_campaign_days_left( $gf_campaign_id );
-		?>
+				$gf_campaign_id   = get_the_ID();
+				$gf_goal          = (int) get_post_meta( $gf_campaign_id, '_goal_amount', true );
+				$gf_raised        = giftflow_get_campaign_raised_amount( $gf_campaign_id );
+				$gf_progress      = $gf_goal > 0 ? (int) round( ( $gf_raised / $gf_goal ) * 100 ) : 0;
+				$gf_location      = get_post_meta( $gf_campaign_id, '_location', true );
+				$gf_thumbnail_url = get_the_post_thumbnail_url( $gf_campaign_id, 'medium_large' );
+				$gf_excerpt       = get_the_excerpt( $gf_campaign_id );
+				$gf_categories    = get_the_terms( $gf_campaign_id, 'campaign-tax' );
+				$gf_days_left     = giftflow_get_campaign_days_left( $gf_campaign_id );
+				?>
 		<article class="giftflow-campaigns-grid__item">
 			<div class="giftflow-campaigns-grid__image">
 				<a href="<?php the_permalink(); ?>">
@@ -130,11 +130,25 @@ $block_wrapper_attrs = get_block_wrapper_attributes(
 				<div class="giftflow-campaigns-grid__meta">
 					<span class="giftflow-campaigns-grid__raised"><?php echo wp_kses_post( giftflow_render_currency_formatted_amount( $gf_raised ) ); ?> <?php esc_html_e( 'raised', 'giftflow' ); ?></span>
 					<?php if ( $gf_goal > 0 ) : ?>
-						<span class="giftflow-campaigns-grid__goal"><?php printf( esc_html__( 'Goal %s', 'giftflow' ), wp_kses_post( giftflow_render_currency_formatted_amount( $gf_goal ) ) ); ?></span>
+						<span class="giftflow-campaigns-grid__goal">
+							<?php
+							printf(
+								/* translators: %s: formatted goal amount */
+								esc_html__( 'Goal %s', 'giftflow' ),
+								wp_kses_post( giftflow_render_currency_formatted_amount( $gf_goal ) )
+							);
+							?>
+						</span>
 					<?php endif; ?>
 					<?php if ( is_numeric( $gf_days_left ) && (int) $gf_days_left > 0 ) : ?>
 						<span class="giftflow-campaigns-grid__days">
-							<?php printf( esc_html( _n( '%d day left', '%d days left', (int) $gf_days_left, 'giftflow' ) ), (int) $gf_days_left ); ?>
+							<?php
+							printf(
+								/* translators: %d: number of days left */
+								esc_html( _n( '%d day left', '%d days left', (int) $gf_days_left, 'giftflow' ) ),
+								(int) $gf_days_left
+							);
+							?>
 						</span>
 					<?php endif; ?>
 					<?php if ( ! empty( $gf_location ) ) : ?>
@@ -152,7 +166,7 @@ $block_wrapper_attrs = get_block_wrapper_attributes(
 		<?php endwhile; ?>
 	</div>
 
-	<?php if ( $gf_query->max_num_pages > 1 ) : ?>
+		<?php if ( $gf_query->max_num_pages > 1 ) : ?>
 			<nav class="giftflow-campaigns-grid__pagination" aria-label="<?php esc_attr_e( 'Campaigns pagination', 'giftflow' ); ?>">
 				<?php
 				echo wp_kses_post(

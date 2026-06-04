@@ -41,8 +41,8 @@ if ( empty( $gf_all_image_ids ) ) {
 	return;
 }
 
-$gf_images        = array();
-$gf_large_size    = apply_filters( 'giftflow_campaign_single_images_size', 'large', $gf_post_id );
+$gf_images     = array();
+$gf_large_size = apply_filters( 'giftflow_campaign_single_images_size', 'large', $gf_post_id );
 
 foreach ( $gf_all_image_ids as $gf_image_id ) {
 	$gf_images[] = array(
@@ -50,14 +50,14 @@ foreach ( $gf_all_image_ids as $gf_image_id ) {
 		'full_url'  => wp_get_attachment_image_url( $gf_image_id, 'full' ),
 		'large_url' => wp_get_attachment_image_url( $gf_image_id, $gf_large_size ),
 		'thumb_url' => wp_get_attachment_image_url( $gf_image_id, 'thumbnail' ),
-		'alt'       => get_post_meta( $gf_image_id, '_wp_attachment_image_alt', true ) ?: '',
+		'alt'       => get_post_meta( $gf_image_id, '_wp_attachment_image_alt', true ) ? get_post_meta( $gf_image_id, '_wp_attachment_image_alt', true ) : '',
 	);
 }
 
-$gf_total         = count( $gf_images );
-$gf_is_single     = 1 === $gf_total;
-$gf_active_idx    = 0;
-$gf_active        = $gf_images[0];
+$gf_total      = count( $gf_images );
+$gf_is_single  = 1 === $gf_total;
+$gf_active_idx = 0;
+$gf_active     = $gf_images[0];
 // Show first 4 thumbs, hide the rest behind +N.
 $gf_visible_thumbs = min( 4, $gf_total );
 $gf_hidden_count   = max( 0, $gf_total - $gf_visible_thumbs );
@@ -97,7 +97,7 @@ $block_wrapper_attrs = get_block_wrapper_attributes(
 					class="giftflow-campaign-images__thumb<?php echo 0 === $gf_i ? ' giftflow-campaign-images__thumb--active' : ''; ?><?php echo $gf_i >= $gf_visible_thumbs ? ' giftflow-campaign-images__thumb--hidden' : ''; ?>"
 					data-image-url="<?php echo esc_url( $gf_img['large_url'] ); ?>"
 					data-image-full-url="<?php echo esc_url( $gf_img['full_url'] ); ?>"
-					aria-label="<?php echo esc_attr( sprintf( __( 'View image %d', 'giftflow' ), $gf_i + 1 ) ); ?>"
+					aria-label="<?php echo esc_attr( sprintf( /* translators: %d: image number */ __( 'View image %d', 'giftflow' ), $gf_i + 1 ) ); ?>"
 				>
 					<img src="<?php echo esc_url( $gf_img['thumb_url'] ); ?>" alt="<?php echo esc_attr( $gf_img['alt'] ); ?>" loading="lazy" />
 				</button>

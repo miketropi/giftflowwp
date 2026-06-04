@@ -42,27 +42,27 @@ $block_wrapper_attrs = get_block_wrapper_attributes(
 		$gf_raised = (float) ( $gf_data['raised_amount'] ?? 0 );
 
 		// Fallback: if raw values are 0 but formatted display shows amounts,
-		//           re-fetch directly from the campaign meta.
-		if ( $gf_goal <= 0 && ! empty( $gf_data['goal_amount_formatted'] ) ) {
-			$gf_goal = (float) get_post_meta( $gf_campaign_id, '_goal_amount', true );
-		}
-		if ( $gf_raised <= 0 && ! empty( $gf_data['raised_amount_formatted'] ) ) {
-			$gf_raised = (float) giftflow_get_campaign_raised_amount( $gf_campaign_id );
-		}
+		// re-fetch directly from the campaign meta.
+	if ( $gf_goal <= 0 && ! empty( $gf_data['goal_amount_formatted'] ) ) {
+		$gf_goal = (float) get_post_meta( $gf_campaign_id, '_goal_amount', true );
+	}
+	if ( $gf_raised <= 0 && ! empty( $gf_data['raised_amount_formatted'] ) ) {
+		$gf_raised = (float) giftflow_get_campaign_raised_amount( $gf_campaign_id );
+	}
 
-		$gf_pct = $gf_goal > 0 ? (int) round( ( $gf_raised / $gf_goal ) * 100 ) : 0;
+		$gf_pct            = $gf_goal > 0 ? (int) round( ( $gf_raised / $gf_goal ) * 100 ) : 0;
 		$gf_progress_color = $attributes['progressColor'] ?? '';
-		$gf_fill_style = 'width:' . $gf_pct . '%;';
-		if ( $gf_progress_color ) {
-			$gf_fill_style .= 'background-color:' . esc_attr( $gf_progress_color ) . ';';
-		}
+		$gf_fill_style     = 'width:' . $gf_pct . '%;';
+	if ( $gf_progress_color ) {
+		$gf_fill_style .= 'background-color:' . esc_attr( $gf_progress_color ) . ';';
+	}
 	?>
 	<div class="giftflow-campaign-status-bar__progress">
 		<div
 			class="giftflow-campaign-status-bar__progress-fill"
 			style="<?php echo esc_attr( $gf_fill_style ); ?>"
 			role="progressbar"
-			aria-valuenow="<?php echo $gf_pct; ?>"
+			aria-valuenow="<?php echo (int) $gf_pct; ?>"
 			aria-valuemin="0"
 			aria-valuemax="100"
 		></div>
@@ -92,19 +92,19 @@ $block_wrapper_attrs = get_block_wrapper_attributes(
 		<?php
 			// Fallback: compute days_left directly if helper didn't provide it.
 			$gf_days = $gf_data['days_left'] ?? '';
-			if ( '' === $gf_days ) {
-				$gf_end   = get_post_meta( $gf_campaign_id, '_end_date', true );
-				$gf_start = get_post_meta( $gf_campaign_id, '_start_date', true );
-				if ( $gf_start && $gf_end ) {
-					$gf_now   = current_time( 'timestamp' );
-					$gf_end_ts = strtotime( $gf_end );
-					if ( $gf_end_ts > $gf_now ) {
-						$gf_days = (int) ceil( ( $gf_end_ts - $gf_now ) / DAY_IN_SECONDS );
-					} elseif ( $gf_end_ts < $gf_now ) {
-						$gf_days = 0;
-					}
+		if ( '' === $gf_days ) {
+			$gf_end   = get_post_meta( $gf_campaign_id, '_end_date', true );
+			$gf_start = get_post_meta( $gf_campaign_id, '_start_date', true );
+			if ( $gf_start && $gf_end ) {
+				$gf_now    = time();
+				$gf_end_ts = strtotime( $gf_end );
+				if ( $gf_end_ts > $gf_now ) {
+					$gf_days = (int) ceil( ( $gf_end_ts - $gf_now ) / DAY_IN_SECONDS );
+				} elseif ( $gf_end_ts < $gf_now ) {
+					$gf_days = 0;
 				}
 			}
+		}
 		?>
 		<?php if ( '' !== $gf_days && false !== $gf_days ) : ?>
 			<span class="giftflow-campaign-status-bar__days">

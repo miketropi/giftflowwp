@@ -26,7 +26,7 @@ $gf_tabs         = giftflow_donor_account_tabs();
 $gf_active_tab   = get_query_var( 'tab', 'dashboard' );
 
 // Validate tab slug exists in the tabs array.
-$gf_valid_slugs  = wp_list_pluck( $gf_tabs, 'slug' );
+$gf_valid_slugs = wp_list_pluck( $gf_tabs, 'slug' );
 if ( ! in_array( $gf_active_tab, $gf_valid_slugs, true ) ) {
 	$gf_active_tab = 'dashboard';
 }

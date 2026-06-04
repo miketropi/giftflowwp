@@ -1,5 +1,13 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+/**
+ * Render callback for Similar Campaign Carousel block.
+ *
+ * @package GiftFlow
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 // Determine current campaign ID from block context or the global post.
 $gf_current_id = (int) ( isset( $block->context['postId'] ) ? $block->context['postId'] : get_the_ID() );
@@ -50,10 +58,10 @@ if ( $gf_current_id > 0 ) {
 		// phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 		$gf_args['meta_query'] = array(
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'meta_key'   => '_goal_amount',
-			'meta_type'  => 'NUMERIC',
+			'meta_key'  => '_goal_amount',
+			'meta_type' => 'NUMERIC',
 		);
-		$gf_args['orderby'] = array(
+		$gf_args['orderby']    = array(
 			'DESC' === $gf_args['order'] ? 'meta_value_num' : 'meta_value_num' => $gf_args['order'],
 		);
 	}
@@ -71,28 +79,44 @@ $gf_args = apply_filters( 'giftflow_similar_campaign_query_args', $gf_args, $gf_
 
 $gf_query = new WP_Query( $gf_args );
 
-$gf_config = wp_json_encode( array(
-	'slidesPerView'   => 1,
-	'slidesPerGroup'  => 1,
-	'spaceBetween'    => 20,
-	'loop'            => $gf_loop && $gf_query->post_count > 1,
-	'autoplay'        => $gf_autoplay ? array( 'delay' => $gf_delay, 'disableOnInteraction' => false ) : false,
-	'pagination'      => array( 'el' => '.giftflow-similar-carousel__pagination', 'clickable' => true ),
-	'navigation'      => array( 'nextEl' => '.giftflow-similar-carousel__next', 'prevEl' => '.giftflow-similar-carousel__prev' ),
-	'breakpoints'     => array(
-		640  => array( 'slidesPerView' => min( 2, $gf_columns ) ),
-		1024 => array( 'slidesPerView' => min( 3, $gf_columns ) ),
-		1280 => array( 'slidesPerView' => $gf_columns ),
-	),
-	'grabCursor'      => true,
-	'watchSlidesProgress' => true,
-) );
+$gf_config = wp_json_encode(
+	array(
+		'slidesPerView'       => 1,
+		'slidesPerGroup'      => 1,
+		'spaceBetween'        => 20,
+		'loop'                => $gf_loop && $gf_query->post_count > 1,
+		'autoplay'            => $gf_autoplay ? array(
+			'delay'                => $gf_delay,
+			'disableOnInteraction' => false,
+		) : false,
+		'pagination'          => array(
+			'el'        => '.giftflow-similar-carousel__pagination',
+			'clickable' => true,
+		),
+		'navigation'          => array(
+			'nextEl' => '.giftflow-similar-carousel__next',
+			'prevEl' => '.giftflow-similar-carousel__prev',
+		),
+		'breakpoints'         => array(
+			640  => array( 'slidesPerView' => min( 2, $gf_columns ) ),
+			1024 => array( 'slidesPerView' => min( 3, $gf_columns ) ),
+			1280 => array( 'slidesPerView' => $gf_columns ),
+		),
+		'grabCursor'          => true,
+		'watchSlidesProgress' => true,
+	)
+);
 
-$gf_accent = $gf_p_color ? '--gf-carousel-accent:' . esc_attr( $gf_p_color ) . ';' : '';
-$block_wrapper_attrs = get_block_wrapper_attributes( array( 'class' => 'giftflow-similar-carousel', 'style' => '--gf-carousel-img-height:' . $gf_img_ht . 'px;' . $gf_accent ) );
+$gf_accent           = $gf_p_color ? '--gf-carousel-accent:' . esc_attr( $gf_p_color ) . ';' : '';
+$block_wrapper_attrs = get_block_wrapper_attributes(
+	array(
+		'class' => 'giftflow-similar-carousel',
+		'style' => '--gf-carousel-img-height:' . $gf_img_ht . 'px;' . $gf_accent,
+	)
+);
 
 if ( ! $gf_query->have_posts() ) {
-	echo '<div ' . $block_wrapper_attrs . '><div class="giftflow-similar-carousel__empty">' . esc_html__( 'No similar campaigns found.', 'giftflow' ) . '</div></div>';
+	echo '<div ' . $block_wrapper_attrs . '><div class="giftflow-similar-carousel__empty">' . esc_html__( 'No similar campaigns found.', 'giftflow' ) . '</div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	return;
 }
 ?>
@@ -113,7 +137,9 @@ if ( ! $gf_query->have_posts() ) {
 
 	<div class="swiper giftflow-similar-carousel__swiper" data-carousel-config='<?php echo esc_attr( $gf_config ); ?>'>
 		<div class="swiper-wrapper">
-			<?php while ( $gf_query->have_posts() ) : $gf_query->the_post();
+			<?php
+			while ( $gf_query->have_posts() ) :
+				$gf_query->the_post();
 				$gf_id       = get_the_ID();
 				$gf_goal     = (int) get_post_meta( $gf_id, '_goal_amount', true );
 				$gf_raised   = giftflow_get_campaign_raised_amount( $gf_id );
@@ -123,7 +149,7 @@ if ( ! $gf_query->have_posts() ) {
 				$gf_cats     = get_the_terms( $gf_id, 'campaign-tax' );
 				$gf_days     = giftflow_get_campaign_days_left( $gf_id );
 				$gf_location = get_post_meta( $gf_id, '_location', true );
-			?>
+				?>
 			<div class="swiper-slide">
 				<article class="giftflow-similar-carousel__item">
 					<div class="giftflow-similar-carousel__image">
@@ -149,8 +175,8 @@ if ( ! $gf_query->have_posts() ) {
 
 						<?php if ( $gf_show_prog ) : ?>
 						<div class="giftflow-similar-carousel__progress">
-							<div class="giftflow-similar-carousel__progress-bar"><div class="giftflow-similar-carousel__progress-fill" style="width:<?php echo $gf_pct; ?>%"></div></div>
-							<span class="giftflow-similar-carousel__progress-text"><?php echo $gf_pct; ?>%</span>
+							<div class="giftflow-similar-carousel__progress-bar"><div class="giftflow-similar-carousel__progress-fill" style="width:<?php echo (int) $gf_pct; ?>%"></div></div>
+							<span class="giftflow-similar-carousel__progress-text"><?php echo (int) $gf_pct; ?>%</span>
 						</div>
 						<?php endif; ?>
 
@@ -158,10 +184,26 @@ if ( ! $gf_query->have_posts() ) {
 						<div class="giftflow-similar-carousel__meta">
 							<span class="giftflow-similar-carousel__raised"><?php echo wp_kses_post( giftflow_render_currency_formatted_amount( $gf_raised ) ); ?> <?php esc_html_e( 'raised', 'giftflow' ); ?></span>
 							<?php if ( $gf_goal > 0 ) : ?>
-								<span class="giftflow-similar-carousel__goal"><?php printf( esc_html__( 'Goal %s', 'giftflow' ), wp_kses_post( giftflow_render_currency_formatted_amount( $gf_goal ) ) ); ?></span>
+								<span class="giftflow-similar-carousel__goal">
+									<?php
+									printf(
+										/* translators: %s: formatted goal amount */
+										esc_html__( 'Goal %s', 'giftflow' ),
+										wp_kses_post( giftflow_render_currency_formatted_amount( $gf_goal ) )
+									);
+									?>
+								</span>
 							<?php endif; ?>
 							<?php if ( is_numeric( $gf_days ) && (int) $gf_days > 0 ) : ?>
-								<span class="giftflow-similar-carousel__days"><?php printf( esc_html( _n( '%d day left', '%d days left', (int) $gf_days, 'giftflow' ) ), (int) $gf_days ); ?></span>
+								<span class="giftflow-similar-carousel__days">
+									<?php
+									printf(
+										/* translators: %d: number of days left */
+										esc_html( _n( '%d day left', '%d days left', (int) $gf_days, 'giftflow' ) ),
+										(int) $gf_days
+									);
+									?>
+								</span>
 							<?php endif; ?>
 							<?php if ( ! empty( $gf_location ) ) : ?>
 								<span class="giftflow-similar-carousel__location"><?php echo esc_html( $gf_location ); ?></span>
@@ -175,7 +217,10 @@ if ( ! $gf_query->have_posts() ) {
 					</div>
 				</article>
 			</div>
-			<?php endwhile; wp_reset_postdata(); ?>
+				<?php
+			endwhile;
+			wp_reset_postdata();
+			?>
 		</div>
 
 		<?php if ( $gf_query->post_count > $gf_columns ) : ?>

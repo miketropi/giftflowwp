@@ -44,7 +44,7 @@ $block_wrapper_attrs = get_block_wrapper_attributes(
 	<?php if ( ! empty( $gf_button_text ) ) : ?>
 		<div class="giftflow-volunteer-cta__action">
 			<a
-				href="<?php echo esc_url( $gf_button_url ?: '#' ); ?>"
+				href="<?php echo esc_url( $gf_button_url ? $gf_button_url : '#' ); ?>"
 				class="giftflow-volunteer-cta__button"
 				<?php if ( ! $gf_button_url ) : ?>
 					role="button"
