@@ -25,18 +25,20 @@ $gf_current_user = wp_get_current_user();
 $gf_tabs         = giftflow_donor_account_tabs();
 $gf_active_tab   = get_query_var( 'tab', 'dashboard' );
 
-if ( ! isset( $gf_tabs[ $gf_active_tab ] ) ) {
+// Validate tab slug exists in the tabs array.
+$gf_valid_slugs  = wp_list_pluck( $gf_tabs, 'slug' );
+if ( ! in_array( $gf_active_tab, $gf_valid_slugs, true ) ) {
 	$gf_active_tab = 'dashboard';
 }
 ?>
-<div <?php echo $block_wrapper_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_block_wrapper_attributes returns safe HTML. ?> data-wp-interactive="giftflow/donor-account">
+<div <?php echo $block_wrapper_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_block_wrapper_attributes returns safe HTML. ?>>
 	<nav class="giftflow-donor-account__nav" role="tablist">
-		<?php foreach ( $gf_tabs as $gf_slug => $gf_tab ) : ?>
+		<?php foreach ( $gf_tabs as $gf_tab ) : ?>
 			<a
-				href="<?php echo esc_url( add_query_arg( 'tab', $gf_slug, get_permalink() ) ); ?>"
-				class="giftflow-donor-account__nav-item<?php echo $gf_slug === $gf_active_tab ? ' is-active' : ''; ?>"
+				href="<?php echo esc_url( add_query_arg( 'tab', $gf_tab['slug'], get_permalink() ) ); ?>"
+				class="giftflow-donor-account__nav-item<?php echo $gf_tab['slug'] === $gf_active_tab ? ' is-active' : ''; ?>"
 				role="tab"
-				aria-selected="<?php echo $gf_slug === $gf_active_tab ? 'true' : 'false'; ?>"
+				aria-selected="<?php echo $gf_tab['slug'] === $gf_active_tab ? 'true' : 'false'; ?>"
 			>
 				<?php echo esc_html( $gf_tab['label'] ); ?>
 			</a>
@@ -45,8 +47,12 @@ if ( ! isset( $gf_tabs[ $gf_active_tab ] ) ) {
 
 	<div class="giftflow-donor-account__content">
 		<?php
-		if ( isset( $gf_tabs[ $gf_active_tab ]['callback'] ) && is_callable( $gf_tabs[ $gf_active_tab ]['callback'] ) ) {
-			call_user_func( $gf_tabs[ $gf_active_tab ]['callback'], $gf_current_user );
+		// Find the active tab by slug and invoke its callback.
+		foreach ( $gf_tabs as $gf_tab ) {
+			if ( $gf_tab['slug'] === $gf_active_tab && isset( $gf_tab['callback'] ) && is_callable( $gf_tab['callback'] ) ) {
+				call_user_func( $gf_tab['callback'], $gf_current_user );
+				break;
+			}
 		}
 		?>
 	</div>

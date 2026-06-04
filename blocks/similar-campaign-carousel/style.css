@@ -1,27 +1,17 @@
-.giftflow-carousel {
+.giftflow-similar-carousel {
 	font-family: inherit;
 	position: relative;
 }
 
-.giftflow-carousel__header {
+.giftflow-similar-carousel__header {
 	text-align: center;
 	margin-bottom: 2rem;
 }
-.giftflow-carousel__header--left   { text-align: left; }
-.giftflow-carousel__header--right  { text-align: right; }
-.giftflow-carousel__header--center { text-align: center; }
+.giftflow-similar-carousel__header--left   { text-align: left; }
+.giftflow-similar-carousel__header--right  { text-align: right; }
+.giftflow-similar-carousel__header--center { text-align: center; }
 
-.giftflow-carousel__description {
-	margin: 0 auto;
-	max-width: 560px;
-	font-size: 0.9375rem;
-	line-height: 1.6;
-	color: var(--wp--preset--color--contrast-2, #6b7280);
-}
-.giftflow-carousel__header--left .giftflow-carousel__description   { margin-left: 0; margin-right: auto; }
-.giftflow-carousel__header--right .giftflow-carousel__description  { margin-left: auto; margin-right: 0; }
-
-.giftflow-carousel__eyebrow {
+.giftflow-similar-carousel__eyebrow {
 	display: inline-block;
 	padding: 4px 12px;
 	background: var(--gf-carousel-accent, var(--wp--preset--color--primary, #2563eb));
@@ -34,7 +24,7 @@
 	margin-bottom: 0.75rem;
 }
 
-.giftflow-carousel__heading {
+.giftflow-similar-carousel__heading {
 	margin: 0 0 0.5rem;
 	font-size: 1.75rem;
 	font-weight: 700;
@@ -42,56 +32,63 @@
 	color: var(--wp--preset--color--contrast, #111827);
 }
 
-.giftflow-carousel__description {
+.giftflow-similar-carousel__description {
 	margin: 0 auto;
 	max-width: 560px;
 	font-size: 0.9375rem;
 	line-height: 1.6;
 	color: var(--wp--preset--color--contrast-2, #6b7280);
 }
+.giftflow-similar-carousel__header--left .giftflow-similar-carousel__description   { margin-left: 0; margin-right: auto; }
+.giftflow-similar-carousel__header--right .giftflow-similar-carousel__description  { margin-left: auto; margin-right: 0; }
 
-.giftflow-carousel__swiper {
+.giftflow-similar-carousel__swiper {
 	overflow: hidden;
 	padding: 4px 4px 3rem;
 	margin: -4px -4px -3rem;
 }
 
 /* Equal-height cards */
-.giftflow-carousel__swiper .swiper-wrapper {
+.giftflow-similar-carousel__swiper .swiper-wrapper {
 	align-items: stretch;
 }
-.giftflow-carousel__swiper .swiper-slide {
+.giftflow-similar-carousel__swiper .swiper-slide {
 	height: auto;
 	display: flex;
 }
 
 /* ── Card ── */
-.giftflow-carousel__item {
+.giftflow-similar-carousel__item {
 	border-radius: 16px;
 	overflow: hidden;
-	transition: transform 0.25s ease, box-shadow 0.25s ease;
 	background: var(--wp--preset--color--surface, #fff);
 	border: 1px solid var(--wp--preset--color--base, #e5e7eb);
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.giftflow-similar-carousel__item.is-visible {
+	opacity: 1;
+	transform: translateY(0);
 }
 
 /* ── Image ── */
-.giftflow-carousel__image {
+.giftflow-similar-carousel__image {
 	position: relative;
 	overflow: hidden;
 	padding: 1.25rem 1.25rem 0;
 }
-.giftflow-carousel__image img {
+.giftflow-similar-carousel__image img {
 	display: block;
 	width: 100%;
 	height: var(--gf-carousel-img-height, 240px);
 	object-fit: cover;
-	transition: transform 0.5s ease;
 	border-radius: 10px;
 }
-.giftflow-carousel__placeholder {
+.giftflow-similar-carousel__placeholder {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -101,7 +98,7 @@
 	border-radius: 10px;
 	color: var(--wp--preset--color--contrast-2, #9ca3af);
 }
-.giftflow-carousel__category {
+.giftflow-similar-carousel__category {
 	position: absolute;
 	top: 1.625rem;
 	left: 1.625rem;
@@ -117,28 +114,28 @@
 }
 
 /* ── Body ── */
-.giftflow-carousel__body {
+.giftflow-similar-carousel__body {
 	display: flex;
 	flex-direction: column;
 	flex: 1 1 auto;
 	padding: 1.25rem;
 }
-.giftflow-carousel__title {
+.giftflow-similar-carousel__title {
 	margin: 0 0 0.375rem;
 	font-size: 1.0625rem;
 	font-weight: 650;
 	line-height: 1.35;
 }
-.giftflow-carousel__title a {
+.giftflow-similar-carousel__title a {
 	text-decoration: none;
 	color: var(--wp--preset--color--contrast, #111827);
 	transition: color 0.2s ease;
 }
-.giftflow-carousel__title a:hover {
+.giftflow-similar-carousel__title a:hover {
 	color: var(--gf-carousel-accent, var(--wp--preset--color--primary, #2563eb));
 }
 
-.giftflow-carousel__excerpt {
+.giftflow-similar-carousel__excerpt {
 	margin: 0 0 0.875rem;
 	font-size: 0.875rem;
 	line-height: 1.55;
@@ -149,31 +146,31 @@
 }
 
 /* ── Progress ── */
-.giftflow-carousel__progress {
+.giftflow-similar-carousel__progress {
 	margin-bottom: 0.625rem;
 	margin-top: 0.825rem;
 }
-.giftflow-carousel__progress-bar {
+.giftflow-similar-carousel__progress-bar {
 	height: 8px;
 	background: color-mix(in srgb, var(--wp--preset--color--base, #e5e7eb) 85%, #000 15%);
 	border-radius: 99px;
 	overflow: hidden;
 	margin-bottom: 0.375rem;
 }
-.giftflow-carousel__progress-fill {
+.giftflow-similar-carousel__progress-fill {
 	height: 100%;
 	background: var(--gf-carousel-accent, var(--wp--preset--color--primary, #2563eb));
 	border-radius: 99px;
 	transition: width 0.6s ease;
 }
-.giftflow-carousel__progress-text {
+.giftflow-similar-carousel__progress-text {
 	font-size: 0.8125rem;
 	font-weight: 600;
 	color: var(--gf-carousel-accent, var(--wp--preset--color--primary, #2563eb));
 }
 
 /* ── Meta ── */
-.giftflow-carousel__meta {
+.giftflow-similar-carousel__meta {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: baseline;
@@ -181,21 +178,21 @@
 	margin-bottom: 0.825rem;
 	font-size: 0.875rem;
 }
-.giftflow-carousel__raised {
+.giftflow-similar-carousel__raised {
 	font-weight: 650;
 	color: var(--wp--preset--color--contrast, #1f2937);
 }
-.giftflow-carousel__goal,
-.giftflow-carousel__days,
-.giftflow-carousel__location {
+.giftflow-similar-carousel__goal,
+.giftflow-similar-carousel__days,
+.giftflow-similar-carousel__location {
 	font-size: 0.8125rem;
 }
-.giftflow-carousel__location {
+.giftflow-similar-carousel__location {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.25rem;
 }
-.giftflow-carousel__location::before {
+.giftflow-similar-carousel__location::before {
 	content: "";
 	display: inline-block;
 	width: 4px;
@@ -205,7 +202,7 @@
 }
 
 /* ── Read More ── */
-.giftflow-carousel__read-more {
+.giftflow-similar-carousel__read-more {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -221,7 +218,7 @@
 	text-decoration: none;
 	transition: gap 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
 }
-.giftflow-carousel__read-more:hover {
+.giftflow-similar-carousel__read-more:hover {
 	gap: 0.625rem;
 	opacity: 0.92;
 	transform: translateY(-1px);
@@ -229,10 +226,10 @@
 }
 
 /* ── Nav arrows ── */
-.giftflow-carousel__prev,
-.giftflow-carousel__next {
+.giftflow-similar-carousel__prev,
+.giftflow-similar-carousel__next {
 	position: absolute;
-	top: calc(var(--gf-carousel-img-height, 240px) / 2);
+	top: calc(var(--gf-carousel-img-height, 240px) / 1.6);
 	transform: translateY(-50%);
 	z-index: 5;
 	width: 40px;
@@ -247,44 +244,46 @@
 	cursor: pointer;
 	box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 	transition: all 0.2s ease;
+	opacity: .3;
 }
-.giftflow-carousel__prev:hover,
-.giftflow-carousel__next:hover {
+.giftflow-similar-carousel__prev:hover,
+.giftflow-similar-carousel__next:hover {
 	background: var(--gf-carousel-accent, var(--wp--preset--color--primary, #2563eb));
 	color: #fff;
 	border-color: transparent;
+	opacity: 1;
 }
-.giftflow-carousel__prev { left: -16px; }
-.giftflow-carousel__next { right: -16px; }
+.giftflow-similar-carousel__prev { left: 1rem; }
+.giftflow-similar-carousel__next { right: 1rem; }
 @media (max-width: 680px) {
-	.giftflow-carousel__prev { left: 0; }
-	.giftflow-carousel__next { right: 0; }
+	.giftflow-similar-carousel__prev { left: .3rem; }
+	.giftflow-similar-carousel__next { right: .3rem; }
 }
 
 /* ── Pagination dots ── */
-.giftflow-carousel__pagination {
+.giftflow-similar-carousel__pagination {
 	display: flex;
 	justify-content: center;
 	gap: 8px;
 	margin-top: 1.25rem;
 }
-.giftflow-carousel__pagination .swiper-pagination-bullet {
+.giftflow-similar-carousel__pagination .swiper-pagination-bullet {
 	width: 8px;
 	height: 8px;
 	border-radius: 50%;
-	background: var(--wp--preset--color--base, #d1d5db);
+	background: color-mix(in srgb, var(--wp--preset--color--base, #d1d5db) 80%, #000 20%);
 	border: none;
 	opacity: 1;
 	transition: all 0.3s ease;
 	cursor: pointer;
 }
-.giftflow-carousel__pagination .swiper-pagination-bullet-active {
+.giftflow-similar-carousel__pagination .swiper-pagination-bullet-active {
 	width: 24px;
 	border-radius: 4px;
 	background: var(--gf-carousel-accent, var(--wp--preset--color--primary, #2563eb));
 }
 
-.giftflow-carousel__empty {
+.giftflow-similar-carousel__empty {
 	padding: 4rem 2rem;
 	text-align: center;
 	color: var(--wp--preset--color--contrast-2, #6b7280);

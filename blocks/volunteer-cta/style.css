@@ -30,7 +30,6 @@
 
 .giftflow-volunteer-cta__description {
 	max-width: 580px;
-	font-size: 0.95rem;
 	line-height: 1.65;
 	color: var(--wp--preset--color--contrast-2, #6b7280);
 }

@@ -1,21 +1,16 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, RangeControl, ToggleControl, ColorPalette, BaseControl, TextControl, TextareaControl, __experimentalToggleGroupControl as ToggleGroupControl, __experimentalToggleGroupControlOption as ToggleGroupControlOption } from '@wordpress/components';
+import { PanelBody, RangeControl, ToggleControl, ColorPalette, BaseControl, TextControl, TextareaControl, __experimentalToggleGroupControl as ToggleGroupControl, __experimentalToggleGroupControlOption as ToggleGroupControlOption } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { useEffect, useState } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
 import { ShimmerBox, ShimmerBar, ensureShimmerStyles } from '../_editor-utils';
 
-registerBlockType('giftflow/campaigns-carousel', {
+registerBlockType('giftflow/similar-campaign-carousel', {
     apiVersion: 3,
-    title: __('Campaigns Carousel', 'giftflow'),
+    title: __('Similar Campaign Carousel', 'giftflow'),
     icon: 'slides',
     category: 'giftflow',
     attributes: {
         perPage: { type: 'number', default: 9 },
-        orderby: { type: 'string', default: 'date' },
-        order: { type: 'string', default: 'DESC' },
-        category: { type: 'string', default: '' },
         columns: { type: 'integer', default: 3 },
         imageHeight: { type: 'integer', default: 240 },
         showProgress: { type: 'boolean', default: true },
@@ -25,20 +20,18 @@ registerBlockType('giftflow/campaigns-carousel', {
         loop: { type: 'boolean', default: true },
         progressColor: { type: 'string', default: '' },
         eyebrow: { type: 'string', default: '' },
-        heading: { type: 'string', default: '' },
+        heading: { type: 'string', default: 'Similar Campaigns' },
         description: { type: 'string', default: '' },
         headerAlign: { type: 'string', default: 'center' },
+        excludeCurrent: { type: 'boolean', default: true },
     },
     edit: (props) => {
         const { attributes, setAttributes } = props;
         const a = attributes;
         const fillColor = a.progressColor || '#2563eb';
         const imgH = a.imageHeight || 240;
-        const blockProps = useBlockProps({ className: 'giftflow-carousel', style: { '--gf-carousel-img-height': imgH + 'px' } });
+        const blockProps = useBlockProps({ className: 'giftflow-similar-carousel', style: { '--gf-carousel-img-height': imgH + 'px' } });
         ensureShimmerStyles();
-
-        const [catOpts, setCatOpts] = useState([{ label: __('All categories', 'giftflow'), value: '' }]);
-        useEffect(() => { apiFetch({ path: '/wp/v2/campaign-tax?per_page=100' }).then(t => { if (Array.isArray(t)) setCatOpts([{ label: __('All categories', 'giftflow'), value: '' }, ...t.map(c => ({ label: c.name, value: String(c.id) }))]); }).catch(() => {}); }, []);
 
         const lb = { marginBottom: 6, fontSize: 11, fontWeight: 500, textTransform: 'uppercase', color: '#757575' };
 
@@ -46,10 +39,7 @@ registerBlockType('giftflow/campaigns-carousel', {
             <>
                 <InspectorControls>
                     <PanelBody title={__('Query', 'giftflow')} initialOpen={true}>
-                        <RangeControl label={__('Total campaigns', 'giftflow')} value={a.perPage} onChange={v => setAttributes({ perPage: v || 9 })} min={1} max={24} />
-                        <SelectControl label={__('Order by', 'giftflow')} value={a.orderby} options={[{ label: __('Date', 'giftflow'), value: 'date' }, { label: __('Title', 'giftflow'), value: 'title' }]} onChange={v => setAttributes({ orderby: v })} />
-                        <SelectControl label={__('Order', 'giftflow')} value={a.order} options={[{ label: __('Newest first', 'giftflow'), value: 'DESC' }, { label: __('Oldest first', 'giftflow'), value: 'ASC' }]} onChange={v => setAttributes({ order: v })} />
-                        <SelectControl label={__('Filter by category', 'giftflow')} value={a.category} options={catOpts} onChange={v => setAttributes({ category: v })} />
+                        <RangeControl label={__('Total campaigns', 'giftflow')} value={a.perPage} onChange={v => setAttributes({ perPage: v || 9 })} min={1} max={24} help={__('Campaigns are matched by shared categories with the current campaign. Falls back to recent campaigns if no categories match.', 'giftflow')} />
                     </PanelBody>
                     <PanelBody title={__('Header', 'giftflow')} initialOpen={false}>
                         <TextControl label={__('Eyebrow', 'giftflow')} value={a.eyebrow} onChange={v => setAttributes({ eyebrow: v })} help={__('Small badge text above heading.', 'giftflow')} />

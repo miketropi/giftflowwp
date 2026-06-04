@@ -1,8 +1,11 @@
 /**
- * GiftFlow — Help center (modern admin layout)
+ * GiftFlow — Help center (WP 2026 admin style)
  */
 
 .giftflow-dashboard-helps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   --gfh-bg: #fff;
   --gfh-bg-soft: #f6f7f7;
   --gfh-bg-muted: #f0f0f1;
@@ -14,21 +17,18 @@
   --gfh-theme: var(--wp-admin-theme-color, #2271b1);
   --gfh-theme-2: var(--wp-admin-theme-color-darker-10, #135e96);
   --gfh-theme-3: var(--wp-admin-theme-color-darker-20, #0a4b78);
-  --gfh-radius: 8px;
-  --gfh-radius-sm: 6px;
+  --gfh-radius: 4px;
+  --gfh-radius-lg: 8px;
   --gfh-ease: cubic-bezier(0.4, 0, 0.2, 1);
   --gfh-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --gfh-dur: 0.2s;
-  --gfh-dur-slow: 0.32s;
-  --gfh-shade: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --gfh-shade-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --gfh-dur: 0.15s;
+  --gfh-dur-slow: 0.25s;
+  --gfh-shade: 0 1px 3px rgba(0, 0, 0, 0.08);
 
-  // max-width: 1160px;
-  margin: 2rem 0 32px; 
   padding: 0;
-  font-size: 14px;
-  font-family: Arial, sans-serif;
-  line-height: 1.55;
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  line-height: 1.5;
   color: var(--gfh-text-secondary);
   -webkit-font-smoothing: antialiased;
 
@@ -38,208 +38,22 @@
     box-sizing: border-box;
   }
 
-  // -------------------------------------------------------------------------
-  // Shell
-  // -------------------------------------------------------------------------
-  &__shell {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  // -------------------------------------------------------------------------
-  // Masthead
-  // -------------------------------------------------------------------------
-  &__masthead {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-    overflow: hidden;
-    background: var(--gfh-bg);
-    border: 1px solid var(--gfh-line);
-    border-radius: var(--gfh-radius);
-    // box-shadow: var(--gfh-shade);
-
-    @media (min-width: 782px) {
-      grid-template-columns: minmax(0, 1.15fr) minmax(200px, 1fr);
-      min-height: 220px;
-    }
-  }
-
-  &__masthead-main {
-    position: relative;
-    z-index: 2;
-    padding: 24px 22px 22px;
-
-    @media (min-width: 782px) {
-      padding: 28px 28px 26px;
-    }
-  }
-
-  &__masthead-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-    padding: 4px 10px 4px 6px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--gfh-text-muted);
-    background: var(--gfh-bg-soft);
-    border: 1px solid var(--gfh-line);
-    border-radius: 999px;
-  }
-
-  &__masthead-badge-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--gfh-theme);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--gfh-theme) 22%, transparent);
-  }
-
-  &__masthead-title {
-    margin: 0 0 10px;
-    padding: 0;
-    font-size: clamp(1.5rem, 2.5vw, 1.85rem);
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-    color: var(--gfh-text);
-  }
-
-  &__masthead-lead {
-    margin: 0 0 20px;
-    max-width: 36rem;
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--gfh-text-secondary);
-  }
-
-  &__masthead-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 18px;
-
-    .button {
-      display: inline-flex !important;
-      align-items: center;
-      gap: 6px;
-      transition: transform var(--gfh-dur) var(--gfh-ease);
-      padding: .5rem 1rem !important;
-      font-weight: bold;
-
-      @media (max-width: 519px) {
-        padding: .2rem .5rem !important;
-      }
-    }
-
-    .button .dashicons {
-      width: 18px;
-      height: 18px;
-      font-size: 18px;
-      line-height: 1;
-    }
-
-    .button:active {
-      transform: scale(0.98);
-    }
-  }
-
-  &__masthead-meta {
-    margin: 0;
-    font-size: 12px;
-    color: var(--gfh-text-muted);
-
-    a {
-      color: var(--gfh-theme);
-      font-weight: 600;
-      text-decoration: none;
-      transition: color var(--gfh-dur) var(--gfh-ease);
-
-      &:hover {
-        color: var(--gfh-theme-2);
-        text-decoration: underline;
-      }
-    }
-  }
-
-  &__masthead-meta-label {
-    margin-right: 6px;
-    font-weight: 600;
-    color: var(--gfh-text-secondary);
-  }
-
-  &__masthead-deco {
-    position: relative;
-    min-height: 120px;
-    background: linear-gradient(
-      145deg,
-      color-mix(in srgb, var(--gfh-theme) 9%, var(--gfh-bg-soft)) 0%,
-      var(--gfh-bg-soft) 55%,
-      var(--gfh-bg-muted) 100%
-    );
-    border-top: 1px solid var(--gfh-line);
-
-    @media (min-width: 782px) {
-      border-top: none;
-      border-left: 1px solid var(--gfh-line);
-      min-height: auto;
-    }
-  }
-
-  &__masthead-deco-grid {
-    position: absolute;
-    inset: 0;
-    opacity: 0.45;
-    background-image: radial-gradient(var(--gfh-line-strong) 1px, transparent 1px);
-    background-size: 14px 14px;
-    mask-image: linear-gradient(135deg, #000 20%, transparent 75%);
-  }
-
-  &__masthead-deco-glow {
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    right: -40px;
-    top: 50%;
-    transform: translateY(-50%);
-    border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      color-mix(in srgb, var(--gfh-theme) 28%, transparent) 0%,
-      transparent 70%
-    );
-    pointer-events: none;
-    transition: opacity var(--gfh-dur-slow) var(--gfh-ease);
-  }
-
-  &__masthead:hover &__masthead-deco-glow {
-    opacity: 0.85;
-  }
-
-  // -------------------------------------------------------------------------
-  // Jump links
-  // -------------------------------------------------------------------------
+  // ---- Jump links ----
   &__jump {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 14px 16px;
+    gap: 8px;
+    padding: 12px 14px;
     background: var(--gfh-bg);
     border: 1px solid var(--gfh-line);
-    border-radius: var(--gfh-radius);
-    // box-shadow: var(--gfh-shade);
+    border-radius: var(--gfh-radius-lg);
+    box-shadow: var(--gfh-shade);
 
     @media (min-width: 600px) {
       flex-direction: row;
       flex-wrap: wrap;
       align-items: center;
-      gap: 12px 16px;
+      gap: 10px 14px;
     }
   }
 
@@ -247,7 +61,7 @@
     flex-shrink: 0;
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--gfh-text-muted);
   }
@@ -255,7 +69,7 @@
   &__jump-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -263,9 +77,9 @@
 
   &__jump-link {
     display: inline-block;
-    padding: 6px 12px;
-    font-size: 13px;
-    font-weight: 600;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 500;
     color: var(--gfh-text-secondary);
     text-decoration: none;
     background: var(--gfh-bg-soft);
@@ -274,18 +88,12 @@
     transition:
       background var(--gfh-dur) var(--gfh-ease),
       border-color var(--gfh-dur) var(--gfh-ease),
-      color var(--gfh-dur) var(--gfh-ease),
-      transform var(--gfh-dur) var(--gfh-ease-out);
+      color var(--gfh-dur) var(--gfh-ease);
 
     &:hover {
       color: var(--gfh-theme-2);
       border-color: color-mix(in srgb, var(--gfh-theme) 35%, var(--gfh-line));
       background: color-mix(in srgb, var(--gfh-theme) 6%, var(--gfh-bg));
-      transform: translateY(-1px);
-    }
-
-    &:focus {
-      outline: none;
     }
 
     &:focus-visible {
@@ -293,73 +101,52 @@
     }
   }
 
-  // -------------------------------------------------------------------------
-  // Body: primary + rail
-  // -------------------------------------------------------------------------
+  // ---- Body ----
   &__body {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 16px;
     align-items: start;
 
     @media (min-width: 960px) {
-      grid-template-columns: 1fr 300px;
-      gap: 24px;
+      grid-template-columns: 1fr 280px;
     }
   }
 
   &__primary {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 14px;
     min-width: 0;
   }
 
-  // Featured strip
+  // ---- Featured card ----
   &__featured {
     display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 20px 20px;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
     text-decoration: none;
     color: inherit;
-    background: linear-gradient(
-      120deg,
-      color-mix(in srgb, var(--gfh-theme) 10%, var(--gfh-bg)) 0%,
-      var(--gfh-bg) 48%
-    );
+    background: var(--gfh-bg);
     border: 1px solid color-mix(in srgb, var(--gfh-theme) 22%, var(--gfh-line));
-    border-radius: var(--gfh-radius);
-    // box-shadow: var(--gfh-shade);
+    border-radius: var(--gfh-radius-lg);
+    box-shadow: var(--gfh-shade);
     transition:
       border-color var(--gfh-dur-slow) var(--gfh-ease),
-      box-shadow var(--gfh-dur-slow) var(--gfh-ease),
-      transform var(--gfh-dur-slow) var(--gfh-ease-out);
+      box-shadow var(--gfh-dur-slow) var(--gfh-ease);
 
     &:hover {
       border-color: color-mix(in srgb, var(--gfh-theme) 40%, var(--gfh-line));
-      // box-shadow: var(--gfh-shade-hover);
-      transform: translateY(-2px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
       .giftflow-dashboard-helps__featured-arrow {
         color: var(--gfh-theme);
-        transform: translateX(4px);
       }
     }
 
-    &:focus {
-      outline: none;
-    }
-
     &:focus-visible {
-      box-shadow:
-        0 0 0 2px var(--gfh-bg),
-        0 0 0 5px color-mix(in srgb, var(--gfh-theme) 35%, transparent);
-    }
-
-    @media (min-width: 600px) {
-      align-items: center;
-      padding: 22px 24px;
+      box-shadow: 0 0 0 2px var(--gfh-bg), 0 0 0 5px color-mix(in srgb, var(--gfh-theme) 35%, transparent);
     }
   }
 
@@ -368,58 +155,39 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     color: var(--gfh-theme);
-    background: var(--gfh-bg);
-    border: 1px solid var(--gfh-line);
-    border-radius: var(--gfh-radius-sm);
-    box-shadow: var(--gfh-shade);
-
-    .dashicons {
-      width: 26px;
-      height: 26px;
-      font-size: 26px;
-    }
+    background: color-mix(in srgb, var(--gfh-theme) 8%, transparent);
+    border-radius: var(--gfh-radius);
   }
 
   &__featured-text {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 3px;
     min-width: 0;
   }
 
-  &__featured-kicker {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--gfh-theme-2);
-  }
-
   &__featured-title {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 600;
     line-height: 1.3;
-    letter-spacing: -0.02em;
     color: var(--gfh-text);
   }
 
   &__featured-desc {
-    font-size: 13px;
-    line-height: 1.55;
-    color: var(--gfh-text-secondary);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--gfh-text-muted);
   }
 
   &__featured-arrow {
     flex-shrink: 0;
     display: none;
     color: var(--gfh-text-muted);
-    transition:
-      color var(--gfh-dur-slow) var(--gfh-ease),
-      transform var(--gfh-dur-slow) var(--gfh-ease-out);
+    transition: color var(--gfh-dur-slow) var(--gfh-ease);
 
     @media (min-width: 600px) {
       display: flex;
@@ -427,11 +195,11 @@
     }
   }
 
-  // Tile grid
+  // ---- Tile grid ----
   &__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 12px;
 
     @media (min-width: 520px) {
       grid-template-columns: repeat(2, 1fr);
@@ -443,31 +211,21 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
-    padding: 18px 16px 16px;
+    gap: 10px;
+    padding: 16px;
     text-decoration: none;
     color: inherit;
     background: var(--gfh-bg);
     border: 1px solid var(--gfh-line);
     border-radius: var(--gfh-radius);
-    // box-shadow: var(--gfh-shade);
+    box-shadow: var(--gfh-shade);
     transition:
       border-color var(--gfh-dur-slow) var(--gfh-ease),
-      box-shadow var(--gfh-dur-slow) var(--gfh-ease),
-      transform var(--gfh-dur-slow) var(--gfh-ease-out);
+      box-shadow var(--gfh-dur-slow) var(--gfh-ease);
 
     &:hover {
       border-color: var(--gfh-line-strong);
-      // box-shadow: var(--gfh-shade-hover);
-      transform: translateY(-3px);
-
-      .giftflow-dashboard-helps__tile-cta {
-        color: var(--gfh-theme-2);
-
-        svg {
-          transform: translateX(3px);
-        }
-      }
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
       .giftflow-dashboard-helps__tile-icon {
         color: var(--gfh-theme);
@@ -476,14 +234,8 @@
       }
     }
 
-    &:focus {
-      outline: none;
-    }
-
     &:focus-visible {
-      box-shadow:
-        0 0 0 2px var(--gfh-bg),
-        0 0 0 4px color-mix(in srgb, var(--gfh-theme) 32%, transparent);
+      box-shadow: 0 0 0 2px var(--gfh-bg), 0 0 0 4px color-mix(in srgb, var(--gfh-theme) 32%, transparent);
     }
   }
 
@@ -491,143 +243,92 @@
     position: absolute;
     top: 12px;
     right: 12px;
-    padding: 3px 7px;
+    padding: 2px 7px;
     font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-weight: 600;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
     color: var(--gfh-theme-3);
-    background: color-mix(in srgb, var(--gfh-theme) 9%, var(--gfh-bg));
-    border: 1px solid color-mix(in srgb, var(--gfh-theme) 20%, var(--gfh-line));
-    border-radius: 4px;
+    background: color-mix(in srgb, var(--gfh-theme) 8%, var(--gfh-bg));
+    border: 1px solid color-mix(in srgb, var(--gfh-theme) 16%, var(--gfh-line));
+    border-radius: 3px;
   }
 
   &__tile-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     color: #787c82;
     background: var(--gfh-bg-soft);
     border: 1px solid var(--gfh-line);
-    border-radius: var(--gfh-radius-sm);
+    border-radius: var(--gfh-radius);
     transition:
       color var(--gfh-dur-slow) var(--gfh-ease),
       border-color var(--gfh-dur-slow) var(--gfh-ease),
       background var(--gfh-dur-slow) var(--gfh-ease);
-
-    .dashicons {
-      width: 22px;
-      height: 22px;
-      font-size: 22px;
-    }
   }
 
   &__tile-body {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
     width: 100%;
     min-width: 0;
-    padding-right: 3.5rem;
+    padding-right: 48px;
   }
 
   &__tile-title {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     line-height: 1.35;
-    letter-spacing: -0.01em;
     color: var(--gfh-text);
   }
 
   &__tile-desc {
-    font-size: 13px;
-    line-height: 1.5;
+    font-size: 12px;
+    line-height: 1.45;
     color: var(--gfh-text-muted);
   }
 
-  &__tile-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: 4px;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--gfh-theme);
-    transition: color var(--gfh-dur) var(--gfh-ease);
-
-    svg {
-      transition: transform var(--gfh-dur-slow) var(--gfh-ease-out);
-    }
-  }
-
-  // -------------------------------------------------------------------------
-  // Rail
-  // -------------------------------------------------------------------------
+  // ---- Rail sidebar ----
   &__rail {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
   }
 
   &__rail-card {
-    padding: 20px 18px;
+    padding: 16px;
     background: var(--gfh-bg);
     border: 1px solid var(--gfh-line);
-    border-radius: var(--gfh-radius);
-    // box-shadow: var(--gfh-shade);
-    transition: box-shadow var(--gfh-dur-slow) var(--gfh-ease);
-
-    &:hover {
-      // box-shadow: var(--gfh-shade-hover);
-    }
-
-    &--dev {
-      background: linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--gfh-theme) 5%, var(--gfh-bg)) 0%,
-        var(--gfh-bg) 100%
-      );
-    }
-
-    &--support {
-      text-align: center;
-    }
+    border-radius: var(--gfh-radius-lg);
+    box-shadow: var(--gfh-shade);
   }
 
   &__rail-title {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin: 0 0 8px;
+    margin: 0 0 6px;
     padding: 0;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
-    letter-spacing: -0.01em;
     color: var(--gfh-text);
-
-    .giftflow-dashboard-helps__rail-card--support & {
-      justify-content: center;
-    }
   }
 
-  &__rail-title-icon.dashicons {
-    width: 20px;
-    height: 20px;
-    font-size: 20px;
+  &__rail-title-icon {
+    display: flex;
+    align-items: center;
     color: var(--gfh-theme);
   }
 
   &__rail-text {
-    margin: 0 0 14px;
-    font-size: 13px;
-    line-height: 1.55;
+    margin: 0 0 10px;
+    font-size: 12px;
+    line-height: 1.5;
     color: var(--gfh-text-muted);
-
-    .giftflow-dashboard-helps__rail-card--support & {
-      margin-bottom: 16px;
-    }
   }
 
   &__rail-links {
@@ -649,39 +350,25 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      padding: 11px 4px;
+      padding: 9px 4px;
       margin: 0 -4px;
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 500;
       color: var(--gfh-theme);
       text-decoration: none;
-      border-radius: var(--gfh-radius-sm);
+      border-radius: var(--gfh-radius);
       transition:
         background var(--gfh-dur) var(--gfh-ease),
         color var(--gfh-dur) var(--gfh-ease);
 
-      .dashicons {
-        width: 18px;
-        height: 18px;
-        font-size: 18px;
-        color: var(--gfh-text-muted);
-        transition:
-          transform var(--gfh-dur-slow) var(--gfh-ease-out),
-          color var(--gfh-dur) var(--gfh-ease);
+      &::after {
+        content: "";
+        width: 0;
       }
 
       &:hover {
         background: var(--gfh-bg-soft);
         color: var(--gfh-theme-2);
-
-        .dashicons {
-          color: var(--gfh-theme);
-          transform: translateX(2px);
-        }
-      }
-
-      &:focus {
-        outline: none;
       }
 
       &:focus-visible {
@@ -691,15 +378,19 @@
     }
   }
 
-  &__btn--block {
+  &__rail-btn {
     width: 100%;
     justify-content: center !important;
-    text-align: center;
-    padding: .5rem !important;
-    font-weight: bold;
+    min-height: 32px;
+    font-size: 13px;
+    font-weight: 500;
+  }
 
-    @media (max-width: 519px) {
-      padding: .2rem .5rem !important;
+  // ---- Reduced motion ----
+  @media (prefers-reduced-motion: reduce) {
+    &,
+    & * {
+      transition: none !important;
     }
   }
 
@@ -711,62 +402,7 @@
     &__tile-tag {
       position: static;
       align-self: flex-start;
-      order: -1;
       margin-bottom: 2px;
     }
-
-    &__tile {
-      padding-top: 16px;
-    }
-  }
-
-  // -------------------------------------------------------------------------
-  // Reduced motion & no color-mix fallbacks
-  // -------------------------------------------------------------------------
-  @media (prefers-reduced-motion: reduce) {
-    &,
-    & * {
-      transition: none !important;
-    }
-
-    &__featured:hover,
-    &__tile:hover,
-    &__jump-link:hover {
-      transform: none;
-    }
-
-    .button:active {
-      transform: none !important;
-    }
-  }
-}
-
-@supports not (color: color-mix(in srgb, #000 50%, #fff)) {
-  .giftflow-dashboard-helps__masthead-badge-dot {
-    box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.2);
-  }
-
-  .giftflow-dashboard-helps__masthead-deco {
-    background: linear-gradient(145deg, #e8f0f8 0%, #f6f7f7 55%, #f0f0f1 100%);
-  }
-
-  .giftflow-dashboard-helps__masthead-deco-glow {
-    background: radial-gradient(circle, rgba(34, 113, 177, 0.2) 0%, transparent 70%);
-  }
-
-  .giftflow-dashboard-helps__featured {
-    background: linear-gradient(120deg, #f0f6fc 0%, #fff 48%);
-    border-color: #c5d9ed;
-  }
-
-  .giftflow-dashboard-helps__tile-tag {
-    background: #f0f6fc;
-    border-color: #c5d9ed;
-    color: #0a4b78;
-  }
-
-  .giftflow-dashboard-helps__jump-link:hover {
-    background: #f0f6fc;
-    border-color: #8cc8ff;
   }
 }

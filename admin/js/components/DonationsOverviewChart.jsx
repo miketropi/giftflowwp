@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDashboardStatisticsCharts } from "../ulti/api";
 import { Line } from "react-chartjs-2";
-import { Ban, ChartColumn } from 'lucide-react'; 
+import { Ban, ChartColumn, RotateCcw } from 'lucide-react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -27,11 +27,16 @@ ChartJS.register(
   Legend
 );
 
-// Align with GiftFlow admin / WP palette (--gfh-chart-* on .giftflow-dashboard-view)
 const CHART_COLOR_DONATIONS = { fill: 'rgba(0, 112, 23, 0.55)', stroke: 'rgb(0, 112, 23)' };
 const CHART_COLOR_DONORS = { fill: 'rgba(34, 113, 177, 0.5)', stroke: 'rgb(34, 113, 177)' };
 const CHART_TEXT = '#1d2327';
 const CHART_TEXT_MUTED = '#646970';
+
+const PERIODS = [
+  { value: '7d', label: '7 days' },
+  { value: '30d', label: '30 days' },
+  { value: '6m', label: '6 months' },
+];
 
 export default function DonationsChart() {
   const [dataChart, setDataChart] = useState({
@@ -39,123 +44,129 @@ export default function DonationsChart() {
     donationsData: [],
     donorsData: [],
   });
-
-  // days
   const [period, setPeriod] = useState('7d');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const currency = typeof giftflow_admin !== 'undefined' ? giftflow_admin.currency_symbol || '$' : '$';
 
   useEffect(() => {
-    // Add 15-minute cache for chart data per period
+    let cancelled = false;
+
     const fetchChartData = async () => {
       try {
         setLoading(true);
         setError(null);
 
-        // Cache key based on period
         const cacheKey = `giftflow_chartdata_${period}`;
         const cacheRaw = localStorage.getItem(cacheKey);
         let cache = null;
         if (cacheRaw) {
-          try {
-            cache = JSON.parse(cacheRaw);
-          } catch (e) {
-            cache = null;
-          }
+          try { cache = JSON.parse(cacheRaw); } catch { cache = null; }
         }
 
         const now = Date.now();
         const FIFTEEN_MINUTES = 15 * 60 * 1000;
 
         if (cache && cache.timestamp && (now - cache.timestamp < FIFTEEN_MINUTES) && cache.data) {
-          setDataChart({
-            labels: cache.data.labels || [],
-            donationsData: cache.data.donationsData || [],
-            donorsData: cache.data.donorsData || [],
-          });
+          if (!cancelled) {
+            setDataChart({
+              labels: cache.data.labels || [],
+              donationsData: cache.data.donationsData || [],
+              donorsData: cache.data.donorsData || [],
+            });
+          }
         } else {
-          const response = await getDashboardStatisticsCharts({ period: period });
-          // Fix: API returns nested object, extract the actual chart data
+          const response = await getDashboardStatisticsCharts({ period });
           const chartData = response.donations_overview_chart_by_period || response;
-
-          setDataChart({
-            labels: chartData.labels || [],
-            donationsData: chartData.donationsData || [],
-            donorsData: chartData.donorsData || [],
-          });
-
-          // Save to cache
-          localStorage.setItem(
-            cacheKey,
-            JSON.stringify({
-              timestamp: now,
-              data: {
-                labels: chartData.labels || [],
-                donationsData: chartData.donationsData || [],
-                donorsData: chartData.donorsData || [],
-              }
-            })
-          );
+          if (!cancelled) {
+            setDataChart({
+              labels: chartData.labels || [],
+              donationsData: chartData.donationsData || [],
+              donorsData: chartData.donorsData || [],
+            });
+          }
+          localStorage.setItem(cacheKey, JSON.stringify({
+            timestamp: now,
+            data: {
+              labels: chartData.labels || [],
+              donationsData: chartData.donationsData || [],
+              donorsData: chartData.donorsData || [],
+            }
+          }));
         }
       } catch (err) {
-        console.error('Error fetching chart data:', err);
-        setError(err.message || 'Failed to load chart data');
+        if (!cancelled) {
+          console.error('Error fetching chart data:', err);
+          setError(err.message || 'Failed to load chart data');
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
 
     fetchChartData();
+    return () => { cancelled = true; };
   }, [period]);
 
-  // Show loading state
+  const clearCache = () => {
+    ['7d', '30d', '6m', '1y'].forEach(k => localStorage.removeItem(`giftflow_chartdata_${k}`));
+    window.location.reload();
+  };
+
+  // ---- Loading state ----
   if (loading) {
     return (
-      <div className="giftflow-chart-loading __monospace">
-        <div className="giftflow-chart-loading__spinner"></div>
-        <p>Loading chart data...</p>
+      <div className="giftflow-chart-container">
+        <Header period={period} setPeriod={setPeriod} />
+        <div className="giftflow-chart-loading">
+          <div className="giftflow-chart-loading__spinner" />
+          <p>Loading chart data...</p>
+        </div>
       </div>
     );
   }
 
-  // Show error state
+  // ---- Error state ----
   if (error) {
     return (
-      <div className="giftflow-chart-error __monospace">
-        <div className="giftflow-chart-error__icon">
-          <Ban size={28} strokeWidth={2} aria-hidden="true" />
+      <div className="giftflow-chart-container">
+        <Header period={period} setPeriod={setPeriod} />
+        <div className="giftflow-chart-error">
+          <div className="giftflow-chart-error__icon">
+            <Ban size={24} strokeWidth={1.75} aria-hidden="true" />
+          </div>
+          <h4>Chart Error</h4>
+          <p>{error}</p>
+          <button className="giftflow-chart-error__retry" onClick={() => window.location.reload()}>
+            Retry
+          </button>
         </div>
-        <h4>Chart Error</h4>
-        <p>{error}</p>
-        <button 
-          onClick={() => window.location.reload()} 
-          className="giftflow-chart-error__retry"
-        >
-          Retry
-        </button>
       </div>
     );
   }
 
-  // Show empty state if no data
-  if (
+  // ---- Empty state ----
+  const isEmpty =
     !dataChart.labels.length ||
-    (
-      (!dataChart.donationsData || Object.keys(dataChart.donationsData).length === 0) &&
-      (!dataChart.donorsData || Object.keys(dataChart.donorsData).length === 0)
-    )
-  ) {
+    ((!dataChart.donationsData || Object.keys(dataChart.donationsData).length === 0) &&
+     (!dataChart.donorsData || Object.keys(dataChart.donorsData).length === 0));
+
+  if (isEmpty) {
     return (
-      <div className="giftflow-chart-empty __monospace">
-        <div className="giftflow-chart-empty__icon">
-          <ChartColumn size={28} strokeWidth={2} aria-hidden="true" />
+      <div className="giftflow-chart-container">
+        <Header period={period} setPeriod={setPeriod} />
+        <div className="giftflow-chart-empty">
+          <div className="giftflow-chart-empty__icon">
+            <ChartColumn size={24} strokeWidth={1.75} aria-hidden="true" />
+          </div>
+          <h4>No Data Available</h4>
+          <p>No donation data found for the selected period. Try selecting a different time range or check back later.</p>
         </div>
-        <h4>No Data Available</h4>
-        <p>No donation data found for the selected period. Try selecting a different time range or check back later.</p>
       </div>
     );
   }
 
+  // ---- Data state ----
   const data = {
     labels: dataChart.labels,
     datasets: [
@@ -171,7 +182,7 @@ export default function DonationsChart() {
       },
       {
         type: "bar",
-        label: "Donors Registered",
+        label: "Donors",
         data: dataChart.donorsData,
         backgroundColor: CHART_COLOR_DONORS.fill,
         borderColor: CHART_COLOR_DONORS.stroke,
@@ -190,25 +201,16 @@ export default function DonationsChart() {
       intersect: false,
     },
     plugins: {
-      title: {
-        display: true,
-        text: `Donations & Donors Overview (Last ${period})`,
-        font: {
-          size: 16,
-          weight: '600'
-        },
-        color: CHART_TEXT
-      },
+      title: { display: false },
       legend: {
         display: true,
-        position: 'top',
+        position: 'bottom',
         labels: {
           usePointStyle: true,
-          padding: 20,
-          font: {
-            size: 12
-          }
-        }
+          padding: 16,
+          font: { size: 12 },
+          color: CHART_TEXT_MUTED,
+        },
       },
       tooltip: {
         backgroundColor: 'rgba(29, 35, 39, 0.92)',
@@ -216,15 +218,14 @@ export default function DonationsChart() {
         bodyColor: '#f0f0f1',
         borderColor: '#50575e',
         borderWidth: 1,
-        cornerRadius: 6,
+        cornerRadius: 4,
         displayColors: true,
         callbacks: {
           label: function(context) {
             if (context.datasetIndex === 0) {
-              return `Donations: $${context.parsed.y.toFixed(2)}`;
-            } else {
-              return `Donors: ${context.parsed.y}`;
+              return `Donations: ${currency}${context.parsed.y.toFixed(2)}`;
             }
+            return `Donors: ${context.parsed.y}`;
           }
         }
       }
@@ -232,23 +233,13 @@ export default function DonationsChart() {
     scales: {
       x: {
         display: true,
-        title: {
-          display: true,
-          text: 'Date',
-          color: CHART_TEXT_MUTED,
-          font: {
-            size: 12,
-            weight: 'bold'
-          }
-        },
-        grid: {
-          display: false
-        },
+        grid: { display: false },
         ticks: {
           color: CHART_TEXT_MUTED,
           maxRotation: 45,
-          minRotation: 0
-        }
+          minRotation: 0,
+          font: { size: 11 },
+        },
       },
       y: {
         type: "linear",
@@ -256,21 +247,19 @@ export default function DonationsChart() {
         position: "left",
         title: {
           display: true,
-          text: `Donation Amount (${ giftflow_admin.currency_symbol })`,
+          text: `Amount (${currency})`,
           color: CHART_TEXT_MUTED,
-          font: {
-            size: 12,
-            weight: 'bold'
-          }
+          font: { size: 11, weight: 'bold' },
         },
         grid: {
-          color: 'rgba(100, 105, 112, 0.2)',
-          drawBorder: false
+          color: 'rgba(100, 105, 112, 0.15)',
+          drawBorder: false,
         },
         ticks: {
           color: CHART_TEXT_MUTED,
+          font: { size: 11 },
           callback: function(value) {
-            return giftflow_admin.currency_symbol + value.toFixed(0);
+            return currency + value.toFixed(0);
           }
         }
       },
@@ -280,20 +269,18 @@ export default function DonationsChart() {
         position: "right",
         title: {
           display: true,
-          text: "Number of Donors",
+          text: "Donors",
           color: CHART_TEXT_MUTED,
-          font: {
-            size: 12,
-            weight: 'bold'
-          }
+          font: { size: 11, weight: 'bold' },
         },
         grid: {
           drawOnChartArea: false,
-          drawBorder: false
+          drawBorder: false,
         },
         ticks: {
           color: CHART_TEXT_MUTED,
-          stepSize: 1
+          font: { size: 11 },
+          stepSize: 1,
         }
       },
     },
@@ -301,49 +288,44 @@ export default function DonationsChart() {
 
   return (
     <div className="giftflow-chart-container">
+      <Header period={period} setPeriod={setPeriod} />
       <div className="giftflow-chart-wrapper">
         <Line data={data} options={options} />
       </div>
-      <div className="giftflow-chart-description ">
-        <p>
-          <strong>Chart Description:</strong> This chart shows donation activity and donor registrations over the <select
-            className="giftflow-chart-description__select"
-            value={period}
-            onChange={e => setPeriod(e.target.value)}
-          >
-            <option value="7d">last 7 days</option>
-            <option value="30d">last 30 days</option>
-            <option value="6m">last 6 months</option>
-          </select> period.
-          <br />
-          
-        </p>
-        <p>
-          <span className="giftflow-chart-description__legend giftflow-chart-description__legend--donations">Green bars</span>{' '}
-            represent total donation amounts (<b>only completed donations</b>), while the{' '}
-            <span className="giftflow-chart-description__legend giftflow-chart-description__legend--donors">blue bars</span>{' '}
-            show the number of new donors registered each day.
-        </p>
-      <div className="giftflow-chart-cache-note">
-        <span>
-          <strong>Note:</strong> Chart data is cached for 15 minutes to improve performance.
+      <div className="giftflow-chart-footer">
+        <span className="giftflow-chart-footer__legend">
+          <span className="giftflow-chart-footer__legend-swatch giftflow-chart-footer__legend-swatch--donations" aria-hidden="true" />
+          Donation amount (completed only)
         </span>
-        <button
-          type="button"
-          className="giftflow-chart-clear-cache-btn"
-          onClick={() => {
-            // Remove cache for all periods
-            ['7d', '30d', '6m', '1y'].forEach(periodKey => {
-              localStorage.removeItem(`giftflow_chartdata_${periodKey}`);
-            });
-            // Reload to fetch fresh data
-            window.location.reload();
-          }}
-          title="Clear cached chart data and reload"
-        >
-          Clear Cache &amp; Reload
-        </button>
+        <span className="giftflow-chart-footer__legend">
+          <span className="giftflow-chart-footer__legend-swatch giftflow-chart-footer__legend-swatch--donors" aria-hidden="true" />
+          New donors
+        </span>
+        <span className="giftflow-chart-footer__cache">
+          Cached for 15 min
+          <button type="button" className="giftflow-chart-footer__refresh-btn" onClick={clearCache} title="Clear cache and refresh">
+            <RotateCcw size={13} strokeWidth={2} /> Refresh
+          </button>
+        </span>
       </div>
+    </div>
+  );
+}
+
+function Header({ period, setPeriod }) {
+  return (
+    <div className="giftflow-chart-header">
+      <h3 className="giftflow-chart-header__title">Donations &amp; Donors Overview</h3>
+      <div className="giftflow-chart-header__periods">
+        {PERIODS.map(p => (
+          <button
+            key={p.value}
+            className={`giftflow-chart-header__period${period === p.value ? ' giftflow-chart-header__period--active' : ''}`}
+            onClick={() => setPeriod(p.value)}
+          >
+            {p.label}
+          </button>
+        ))}
       </div>
     </div>
   );

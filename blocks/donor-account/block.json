@@ -9,6 +9,21 @@
 	"description": "Displays the donor account interface with Dashboard, My Donations, and Account Settings tabs.",
 	"keywords": ["account", "donor", "dashboard", "history", "profile"],
 	"supports": {
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true
+		},
+		"typography": {
+			"fontSize": true,
+			"fontWeight": true,
+			"lineHeight": true
+		},
+		"border": {
+			"radius": true,
+			"width": true,
+			"color": true
+		},
 		"spacing": {
 			"margin": true,
 			"padding": true

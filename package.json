@@ -13,7 +13,7 @@
     "lint:css": "wp-scripts lint-style",
     "format": "wp-scripts format",
     "packages-update": "wp-scripts packages-update",
-    "build:package": "node ./build-package.js",
+    "build:package": "node ./scripts/build-package.js",
     "prepare": "husky install"
   },
   "dependencies": {

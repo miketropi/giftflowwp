@@ -30,6 +30,8 @@ module.exports = {
 		'blocks/campaigns-grid': path.resolve(process.cwd(), 'blocks/campaigns-grid/block.js'),
 		'blocks/campaigns-carousel': path.resolve(process.cwd(), 'blocks/campaigns-carousel/block.js'),
 		'blocks/campaigns-carousel-view': path.resolve(process.cwd(), 'blocks/campaigns-carousel/view.js'),
+		'blocks/similar-campaign-carousel': path.resolve(process.cwd(), 'blocks/similar-campaign-carousel/block.js'),
+		'blocks/similar-campaign-carousel-view': path.resolve(process.cwd(), 'blocks/similar-campaign-carousel/view.js'),
 		'blocks/donor-account': path.resolve(process.cwd(), 'blocks/donor-account/block.js'),
 		'blocks/share': path.resolve(process.cwd(), 'blocks/share/block.js'),
 		'blocks/thank-donor': path.resolve(process.cwd(), 'blocks/thank-donor/block.js'),
