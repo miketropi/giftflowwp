@@ -14,7 +14,9 @@
     "format": "wp-scripts format",
     "packages-update": "wp-scripts packages-update",
     "build:package": "node ./scripts/build-package.js",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test:wp": "bash scripts/wp-test.sh",
+    "test:wp:reset": "bash scripts/wp-test.sh --reset"
   },
   "dependencies": {
     "@stripe/stripe-js": "^7.0.0",

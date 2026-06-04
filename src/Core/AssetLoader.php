@@ -124,10 +124,12 @@ class AssetLoader extends AbstractModule {
 				true
 			);
 
+			$deps = array_merge( array( 'jquery' ), $asset['dependencies'] );
+
 			wp_enqueue_script(
 				'giftflow-common',
 				$this->plugin_url . 'build/frontend-common.js',
-				$asset['dependencies'],
+				$deps,
 				$asset['version'],
 				true
 			);
@@ -209,10 +211,10 @@ class AssetLoader extends AbstractModule {
 			'campaign-single-images',
 			'campaign-single-images-view',
 			'campaigns-grid',
-		'campaigns-carousel',
-		'campaigns-carousel-view',
-		'similar-campaign-carousel',
-		'similar-campaign-carousel-view',
+			'campaigns-carousel',
+			'campaigns-carousel-view',
+			'similar-campaign-carousel',
+			'similar-campaign-carousel-view',
 			'donor-account',
 			'share',
 			'thank-donor',
@@ -263,7 +265,10 @@ class AssetLoader extends AbstractModule {
 		if ( ! isset( $this->asset_cache[ $path ] ) ) {
 			$this->asset_cache[ $path ] = file_exists( $path )
 				? require $path
-				: array( 'dependencies' => array(), 'version' => $this->version );
+				: array(
+					'dependencies' => array(),
+					'version' => $this->version,
+				);
 		}
 
 		return $this->asset_cache[ $path ];

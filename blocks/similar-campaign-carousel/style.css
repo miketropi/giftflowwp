@@ -61,7 +61,7 @@
 .giftflow-similar-carousel__item {
 	border-radius: 16px;
 	overflow: hidden;
-	background: var(--wp--preset--color--surface, #fff);
+	background: var(--wp--preset--color--surface, #fafafa);
 	border: 1px solid var(--wp--preset--color--base, #e5e7eb);
 	width: 100%;
 	display: flex;
@@ -94,7 +94,7 @@
 	justify-content: center;
 	width: 100%;
 	height: var(--gf-carousel-img-height, 240px);
-	background: var(--wp--preset--color--base, #f3f4f6);
+	background: color-mix(in srgb, var(--wp--preset--color--base, #f3f4f6) 25%, #000 5%);
 	border-radius: 10px;
 	color: var(--wp--preset--color--contrast-2, #9ca3af);
 }

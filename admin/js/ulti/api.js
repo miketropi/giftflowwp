@@ -14,29 +14,44 @@
  * @returns {Promise<object>} The response from the API.
  */
 export const __request = async (url, data = {}, method = 'GET') => {
-  // set nonce.
   data.nonce = data.nonce || giftflow_admin.nonce;
 
-  // Make the request.
-  const rest = await jQuery.ajax({
-    method,
-    url,
-    data,
-    headers: {
-      'Content-Type': 'application/json',
-      "X-WP-Nonce": giftflow_admin.rest_nonce
-    },
-    error: (error) => {
-      console.error('Error:', error);
-    }
-  })
+  let jqXHR;
+  try {
+    jqXHR = await jQuery.ajax({
+      method,
+      url,
+      data,
+      dataType: 'json',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': giftflow_admin.rest_nonce,
+      },
+    });
+  } catch (error) {
+    const jq = error && error.responseJSON !== undefined ? error : null;
+    const status = jq ? jq.status : 'unknown';
+    const statusText = jq ? jq.statusText : '';
+    const responseText = jq ? jq.responseText : '';
 
-  if (rest && rest.error) {
-    // If the response contains an error property, throw it as an exception.
-    throw new Error(rest.error || 'Request error');
+    console.error(
+      'GiftFlow API request failed:',
+      { url, method, status, statusText, responseText }
+    );
+
+    if (jq && jq.responseJSON && (jq.responseJSON.error || jq.responseJSON.code)) {
+      throw new Error(
+        jq.responseJSON.error || jq.responseJSON.message || 'Request error'
+      );
+    }
+    throw error;
   }
 
-  return rest;
+  if (jqXHR && (jqXHR.error || jqXHR.code)) {
+    throw new Error(jqXHR.error || jqXHR.message || 'Request error');
+  }
+
+  return jqXHR;
 }
 
 /**

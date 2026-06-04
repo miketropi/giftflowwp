@@ -11,6 +11,11 @@ const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 module.exports = {
 	...defaultConfig,
 
+	externals: {
+		...defaultConfig.externals,
+		jquery: 'jQuery',
+	},
+
 	entry: {
 		// Admin bundle
 		'admin': path.resolve(process.cwd(), 'admin/js/admin.js'),

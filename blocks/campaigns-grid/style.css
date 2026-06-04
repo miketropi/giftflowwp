@@ -19,7 +19,7 @@
 	border-radius: 16px;
 	overflow: hidden;
 	transition: transform 0.25s ease, box-shadow 0.25s ease;
-	background: var(--wp--preset--color--surface, #fff);
+	background: var(--wp--preset--color--surface, #fafafa);
 	border: 1px solid var(--wp--preset--color--base, #e5e7eb);
 	display: flex;
 	flex-direction: column;
@@ -75,7 +75,7 @@
 	justify-content: center;
 	width: 100%;
 	height: var(--gf-grid-img-height, 200px);
-	background: var(--wp--preset--color--base, #f3f4f6);
+	background: color-mix(in srgb, var(--wp--preset--color--base, #f3f4f6) 25%, #000 5%);
 	border-radius: 10px;
 	color: var(--wp--preset--color--contrast-2, #9ca3af);
 }
