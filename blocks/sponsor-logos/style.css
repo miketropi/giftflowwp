@@ -1,0 +1,57 @@
+.giftflow-sponsor-logos {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+}
+
+.giftflow-sponsor-logos__track {
+	display: flex;
+	align-items: center;
+	gap: var(--gf-sponsor-gap, 48px);
+	width: max-content;
+	animation: gf-sponsor-scroll var(--gf-sponsor-speed, 20s) linear infinite;
+}
+
+.giftflow-sponsor-logos--dir-right .giftflow-sponsor-logos__track {
+	animation-direction: reverse;
+}
+
+.giftflow-sponsor-logos__track:hover {
+	animation-play-state: paused;
+}
+
+.giftflow-sponsor-logos__item {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.giftflow-sponsor-logos__item img {
+	display: block;
+	max-height: var(--gf-sponsor-height, 60px);
+	width: auto;
+	object-fit: contain;
+}
+
+@keyframes gf-sponsor-scroll {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
+}
+
+.giftflow-sponsor-logos--empty {
+	padding: 1.5rem;
+	text-align: center;
+	color: var(--wp--preset--color--contrast-2, #9ca3af);
+	font-style: italic;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.giftflow-sponsor-logos__track {
+		animation: none;
+	}
+}

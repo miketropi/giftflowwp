@@ -221,6 +221,9 @@ class AssetLoader extends AbstractModule {
 			'campaign-location',
 			'volunteer-cta',
 			'donation-faqs',
+			'featured-campaign',
+			'featured-campaign-view',
+			'sponsor-logos',
 		);
 
 		foreach ( $blocks as $block_name ) {

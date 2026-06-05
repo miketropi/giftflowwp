@@ -40,7 +40,7 @@ $no_payment_methods = count( $gateways ) === 0;
 				<?php echo get_the_post_thumbnail( $campaign_id, 'thumbnail' ); ?>
 			</div>
 			<div class="donation-form__campaign-info">
-				<h2 class="donation-form__campaign-title"><?php esc_html_e( 'Donate to', 'giftflow' ); ?>: <?php echo esc_html( $campaign_title ); ?></h2>
+				<h3 class="donation-form__campaign-title"><?php esc_html_e( 'Donate to', 'giftflow' ); ?>: <?php echo esc_html( $campaign_title ); ?></h3>
 				<div class="donation-form__campaign-progress">
 					<?php
 					// Translators: %1$s is the amount raised, %2$s is the goal amount.

@@ -28,6 +28,11 @@
   <rule ref="Squiz.Commenting.FunctionComment.SpacingAfterParamType">
     <severity>0</severity>
   </rule>
+
+  <!-- Disable WordPress filename rules — project uses PSR-4 autoloading -->
+  <rule ref="WordPress.Files.FileName">
+    <severity>0</severity>
+  </rule>
   
   <!-- Include main plugin file -->
   <file>giftflow.php</file>

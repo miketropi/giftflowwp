@@ -1,0 +1,44 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/sponsor-logos",
+	"version": "1.0.0",
+	"title": "Sponsor Logos",
+	"category": "giftflow",
+	"icon": "slides",
+	"description": "Display sponsor or partner logos in a smooth, auto-scrolling marquee. Add images, set speed and direction — perfect for campaign landing pages.",
+	"keywords": ["sponsor", "logos", "marquee", "scrolling", "partner", "brands"],
+	"supports": {
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"align": ["wide", "full"],
+		"html": false
+	},
+	"attributes": {
+		"logos": {
+			"type": "array",
+			"default": []
+		},
+		"scrollSpeed": {
+			"type": "number",
+			"default": 20
+		},
+		"gap": {
+			"type": "number",
+			"default": 48
+		},
+		"logoHeight": {
+			"type": "number",
+			"default": 60
+		},
+		"direction": {
+			"type": "string",
+			"default": "left"
+		}
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-sponsor-logos",
+	"style": "file:./style.css"
+}
