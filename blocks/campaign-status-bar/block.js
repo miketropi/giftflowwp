@@ -1,10 +1,9 @@
 import '../../assets/css/block-campaign-status-bar.scss';
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, ColorPalette, BaseControl } from '@wordpress/components';
+import { PanelBody, ColorPalette, BaseControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { ensureShimmerStyles } from '../_editor-utils';
-const { useSelect } = wp.data;
+import { ensureShimmerStyles, useCampaignSelector } from '../_editor-utils';
 
 registerBlockType('giftflow/campaign-status-bar', {
     apiVersion: 3,
@@ -21,18 +20,22 @@ registerBlockType('giftflow/campaign-status-bar', {
         const blockProps = useBlockProps({ className: 'giftflow-campaign-status-bar' });
         ensureShimmerStyles();
 
-        const campaigns = useSelect((s) => s('core').getEntityRecords('postType', 'campaign', { per_page: -1, status: 'publish' }), []);
-        const campaignOptions = campaigns
-            ? [{ label: __('Auto-detect from current post', 'giftflow'), value: 0 }, ...campaigns.map(c => ({ label: c.title.rendered, value: c.id }))]
-            : [{ label: __('Loading...', 'giftflow'), value: 0 }];
-        const selected = campaigns && attributes.campaignId > 0 ? campaigns.find(c => c.id === attributes.campaignId) : null;
+        const { selectedCampaign: selected, CampaignSelector } = useCampaignSelector({
+            defaultLabel: __('Auto-detect from current post', 'giftflow'),
+            showSelected: true,
+            selectedId: attributes.campaignId || 0,
+        });
         const fillColor = attributes.progressColor || '';
 
         return (
             <>
                 <InspectorControls>
                     <PanelBody title={__('Campaign Settings', 'giftflow')} initialOpen={true}>
-                        <SelectControl label={__('Campaign', 'giftflow')} value={attributes.campaignId || 0} options={campaignOptions} onChange={v => setAttributes({ campaignId: parseInt(v) })} help={__('Select a campaign or use auto-detect.', 'giftflow')} />
+                        <CampaignSelector
+                            value={attributes.campaignId || 0}
+                            onChange={(v) => setAttributes({ campaignId: v })}
+                            help={__('Select a campaign or use auto-detect.', 'giftflow')}
+                        />
                     </PanelBody>
                     <PanelBody title={__('Style', 'giftflow')} initialOpen={false}>
                         <BaseControl label={__('Progress bar color', 'giftflow')}>

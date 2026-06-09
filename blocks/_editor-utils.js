@@ -1,5 +1,8 @@
 import { Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { SelectControl } from '@wordpress/components';
+
+const { useSelect } = wp.data;
 
 const shimmerKeyframes = `
 @keyframes gf-shimmer {
@@ -80,4 +83,52 @@ export function BlockPlaceholder({ icon = 'megaphone', label = '', instructions 
 			)}
 		</Placeholder>
 	);
+}
+
+/**
+ * Shared hook: fetch published campaigns and build SelectControl options.
+ *
+ * @param {Object}  opts
+ * @param {string}  [opts.defaultLabel]  Label for the "no selection" option (e.g., "Select a campaign…").
+ * @param {number}  [opts.defaultValue]  Value for the "no selection" option (default 0).
+ * @param {boolean} [opts.showSelected]  Whether to return the selected campaign object.
+ * @param {number}  [opts.selectedId]    Current campaign ID to look up.
+ * @return {{ campaigns: Array|null, campaignOptions: Array, selectedCampaign: Object|null, CampaignSelector: JSX.Element }}
+ */
+export function useCampaignSelector(opts = {}) {
+	const { defaultLabel, defaultValue = 0, showSelected = false, selectedId = 0 } = opts;
+
+	const campaigns = useSelect(
+		(select) => select('core').getEntityRecords('postType', 'campaign', { per_page: -1, status: 'publish' }),
+		[]
+	);
+
+	const campaignOptions = campaigns
+		? [{ label: defaultLabel || __('Select a campaign…', 'giftflow'), value: defaultValue }, ...campaigns.map((c) => ({ label: c.title.rendered, value: c.id }))]
+		: [{ label: __('Loading…', 'giftflow'), value: defaultValue }];
+
+	const selectedCampaign = showSelected && campaigns && selectedId > 0
+		? campaigns.find((c) => c.id === selectedId) || null
+		: null;
+
+	/**
+	 * Pre-built SelectControl for the campaign chooser.
+	 * @param {Object}   props
+	 * @param {number}   props.value    Current campaignId attribute value.
+	 * @param {Function} props.onChange Called with the new numeric campaign ID.
+	 * @param {string}   [props.label]  SelectControl label text.
+	 * @param {string}   [props.help]   SelectControl help text.
+	 */
+	const CampaignSelector = ({ value, onChange, label, help }) => (
+		<SelectControl
+			label={label || __('Campaign', 'giftflow')}
+			value={value}
+			options={campaignOptions}
+			onChange={(v) => onChange(parseInt(v, 10))}
+			help={help || ''}
+			__nextHasNoMarginBottom
+		/>
+	);
+
+	return { campaigns, campaignOptions, selectedCampaign, CampaignSelector };
 }

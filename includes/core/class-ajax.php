@@ -135,7 +135,17 @@ class GiftFlow_Ajax {
 		}
 
 		try {
-			$content = do_shortcode( '[giftflow_donation_form campaign_id="' . $campaign_id . '"]' );
+			$shortcode = '[giftflow_donation_form campaign_id="' . $campaign_id . '"';
+
+			// Pass a pre-selected amount when provided (e.g., from a preset amount pill).
+			$preset_amount = isset( $_GET['amount'] ) ? floatval( wp_unslash( $_GET['amount'] ) ) : 0;
+			if ( $preset_amount > 0 ) {
+				$shortcode .= ' default_amount="' . $preset_amount . '"';
+			}
+
+			$shortcode .= ']';
+
+			$content = do_shortcode( $shortcode );
 			echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Shortcode output is already escaped by templates.
 		} catch ( \Throwable $e ) {
 			wp_send_json_error( $e->getMessage() );

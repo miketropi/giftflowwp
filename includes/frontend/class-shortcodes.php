@@ -45,7 +45,8 @@ class Shortcodes extends Base {
 	public function render_donation_form( $atts ) {
 		$atts = shortcode_atts(
 			array(
-				'campaign_id' => 0,
+				'campaign_id'   => 0,
+				'default_amount' => 0,
 			),
 			$atts
 		);
@@ -70,8 +71,10 @@ class Shortcodes extends Base {
 		// goal amount.
 		$goal_amount = giftflow_get_campaign_goal_amount( $campaign_id );
 
-		// Get default donation amount (first preset amount or 10).
-		$default_amount = ! empty( $preset_donation_amounts ) ? $preset_donation_amounts[0]['amount'] : 10;
+		// Get default donation amount — use explicit shortcode attr if given, otherwise first preset or 10.
+		$default_amount = ! empty( $atts['default_amount'] ) && $atts['default_amount'] > 0
+			? (float) $atts['default_amount']
+			: ( ! empty( $preset_donation_amounts ) ? $preset_donation_amounts[0]['amount'] : 10 );
 
 		// Get campaign title.
 		$campaign_title = get_the_title( $campaign_id );

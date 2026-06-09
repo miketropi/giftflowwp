@@ -1,8 +1,8 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, TextControl, ToggleControl, __experimentalToggleGroupControl as ToggleGroupControl, __experimentalToggleGroupControlOption as ToggleGroupControlOption, ColorPalette, BaseControl, RangeControl } from '@wordpress/components';
+import { PanelBody, TextControl, ToggleControl, __experimentalToggleGroupControl as ToggleGroupControl, __experimentalToggleGroupControlOption as ToggleGroupControlOption, ColorPalette, BaseControl, RangeControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-const { useSelect } = wp.data;
+import { useCampaignSelector } from '../_editor-utils';
 
 const ICONS = {
     none: null,
@@ -64,11 +64,11 @@ registerBlockType('giftflow/donation-button', {
 
         const blockProps = useBlockProps({ className: 'giftflow-donation-button' });
 
-        const campaigns = useSelect((s) => s('core').getEntityRecords('postType', 'campaign', { per_page: -1, status: 'publish' }), []);
-        const campaignOptions = campaigns
-            ? [{ label: __('Use Current Post', 'giftflow'), value: 0 }, ...campaigns.map(c => ({ label: c.title.rendered, value: c.id }))]
-            : [{ label: __('Loading…', 'giftflow'), value: 0 }];
-        const selected = campaigns && a.campaignId > 0 ? campaigns.find(c => c.id === a.campaignId) : null;
+        const { selectedCampaign: selected, CampaignSelector } = useCampaignSelector({
+            defaultLabel: __('Use Current Post', 'giftflow'),
+            showSelected: true,
+            selectedId: a.campaignId || 0,
+        });
 
         const vars = resolveVars(a);
         const IconCmp = ICONS[a.icon] || null;
@@ -95,7 +95,11 @@ registerBlockType('giftflow/donation-button', {
 
                 <InspectorControls>
                     <PanelBody title={__('Campaign', 'giftflow')}>
-                        <SelectControl label={__('Target campaign', 'giftflow')} value={a.campaignId} options={campaignOptions} onChange={v => setAttributes({ campaignId: parseInt(v) })} __nextHasNoMarginBottom />
+                        <CampaignSelector
+                            value={a.campaignId}
+                            onChange={(v) => setAttributes({ campaignId: v })}
+                            label={__('Target campaign', 'giftflow')}
+                        />
                     </PanelBody>
 
                     <PanelBody title={__('Content', 'giftflow')}>

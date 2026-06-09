@@ -1,9 +1,8 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls, InnerBlocks, MediaUpload } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, ToggleControl, TextControl, Button, ColorPalette, BaseControl, RangeControl, __experimentalToggleGroupControl as ToggleGroupControl, __experimentalToggleGroupControlOption as ToggleGroupControlOption } from '@wordpress/components';
+import { PanelBody, ToggleControl, TextControl, Button, ColorPalette, BaseControl, RangeControl, __experimentalToggleGroupControl as ToggleGroupControl, __experimentalToggleGroupControlOption as ToggleGroupControlOption } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { ShimmerBox, ensureShimmerStyles } from '../_editor-utils';
-const { useSelect } = wp.data;
+import { ShimmerBox, ensureShimmerStyles, useCampaignSelector } from '../_editor-utils';
 
 const BLOCK_TEMPLATE = [
     ['core/group', { style: { spacing: { blockGap: '0.5rem' } }, layout: { type: 'constrained' } }, [
@@ -48,20 +47,15 @@ registerBlockType('giftflow/featured-campaign', {
         });
         ensureShimmerStyles();
 
-        const campaigns = useSelect((s) => s('core').getEntityRecords('postType', 'campaign', { per_page: -1, status: 'publish' }), []);
-        const campaignOptions = campaigns
-            ? [{ label: __('Select a campaign…', 'giftflow'), value: 0 }, ...campaigns.map(c => ({ label: c.title.rendered, value: c.id }))]
-            : [{ label: __('Loading…', 'giftflow'), value: 0 }];
+        const { CampaignSelector } = useCampaignSelector({ defaultLabel: __('Select a campaign…', 'giftflow') });
 
         return (
             <>
                 <InspectorControls>
                     <PanelBody title={__('Campaign', 'giftflow')} initialOpen={true}>
-                        <SelectControl
-                            label={__('Featured Campaign', 'giftflow')}
+                        <CampaignSelector
                             value={a.campaignId || 0}
-                            options={campaignOptions}
-                            onChange={v => setAttributes({ campaignId: parseInt(v) })}
+                            onChange={(v) => setAttributes({ campaignId: v })}
                             help={__('Inner blocks receive this campaign as context.', 'giftflow')}
                         />
                     </PanelBody>

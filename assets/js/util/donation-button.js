@@ -1,11 +1,16 @@
 const { ajax_url, nonce } = giftflow_common;
 
 export default async function donationButton_Handle(el) {
-  const { campaignId, campaignTitle } = el.dataset;
+  const { campaignId, campaignTitle, presetAmount } = el.dataset;
   const modalWidth = window?._giftflow_common?.modalWidth || '720px';
-  
+
+  let url = `${ajax_url}?action=giftflow_get_campaign_donation_form&campaign_id=${campaignId}&nonce=${nonce}`;
+  if (presetAmount && parseFloat(presetAmount) > 0) {
+    url += `&amount=${presetAmount}`;
+  }
+
   try {
-    const response = await fetch(`${ajax_url}?action=giftflow_get_campaign_donation_form&campaign_id=${campaignId}&nonce=${nonce}`);
+    const response = await fetch(url);
     
     if (!response.ok) {
       alert(giftflow_common?.ajax_error || 'Failed to load donation form. Please refresh the page and try again.');

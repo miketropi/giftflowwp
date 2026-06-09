@@ -224,6 +224,7 @@ class AssetLoader extends AbstractModule {
 			'featured-campaign',
 			'featured-campaign-view',
 			'sponsor-logos',
+			'campaign-card',
 		);
 
 		foreach ( $blocks as $block_name ) {
