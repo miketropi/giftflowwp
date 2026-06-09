@@ -1,5 +1,12 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "bash": "ask",
+    "edit": "allow",
+    "external_directory": {
+      "/Users/mike/Local Sites/beplus-adons-dev/app/public/wp-content/plugins/giftflow-pro/**": "allow"
+    }
+  },
   "plugin": [
     ["file:///Volumes/Mike/tools/opencode-qdrant-plugin", {
         "qdrantUrl": "http://localhost:6333",

@@ -429,11 +429,7 @@ class GiftFlow_Field {
 	 * @return bool
 	 */
 	private function is_pro_only() {
-		// Check if GiftflowPro\License class exists and has is_license_valid method before calling it.
-		return true === $this->pro_only && (
-			! defined( 'GIFTFLOW_PRO_VERSION' )
-			|| ! ( class_exists( 'GiftflowPro\\License' ) && method_exists( 'GiftflowPro\\License', 'is_license_valid' ) && GiftflowPro\License::is_license_valid() )
-		);
+		return true === $this->pro_only && ! defined( 'GIFTFLOW_PRO_VERSION' );
 	}
 
 	/**
