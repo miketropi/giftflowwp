@@ -16,40 +16,43 @@ function initSwiper( el ) {
 	} catch ( e ) {
 		return;
 	}
+	console.log(cfg)
 	new Swiper( el, {
 		modules: [ Navigation, Pagination, Autoplay ],
 		...cfg,
 		pagination: cfg.pagination
-			? { ...cfg.pagination, el: el.querySelector( '.giftflow-carousel__pagination' ) }
+			? { ...cfg.pagination, el: el.querySelector( '.giftflow-st-carousel__pagination' ) }
 			: false,
 		navigation: cfg.navigation
 			? {
-					nextEl: el.querySelector( '.giftflow-carousel__next' ),
-					prevEl: el.querySelector( '.giftflow-carousel__prev' ),
+					nextEl: el.querySelector( '.giftflow-st-carousel__next' ),
+					prevEl: el.querySelector( '.giftflow-st-carousel__prev' ),
 			  }
 			: false,
 	} );
 }
 
 function initAll() {
-	document.querySelectorAll( '.giftflow-carousel__swiper' ).forEach( initSwiper );
+	document.querySelectorAll( '.giftflow-st-carousel__swiper' ).forEach( initSwiper );
 }
 
+// Fire immediately if DOM is ready, otherwise wait.
 if ( document.readyState === 'loading' ) {
 	document.addEventListener( 'DOMContentLoaded', initAll );
 } else {
 	initAll();
 }
 
+// Also observe for dynamically inserted blocks (e.g. AJAX, page builders).
 if ( window.MutationObserver ) {
 	const observer = new MutationObserver( ( mutations ) => {
 		for ( const m of mutations ) {
 			for ( const node of m.addedNodes ) {
 				if ( node.nodeType === 1 ) {
-					if ( node.classList && node.classList.contains( 'giftflow-carousel__swiper' ) ) {
+					if ( node.classList && node.classList.contains( 'giftflow-st-carousel__swiper' ) ) {
 						initSwiper( node );
 					} else if ( node.querySelectorAll ) {
-						node.querySelectorAll( '.giftflow-carousel__swiper' ).forEach( initSwiper );
+						node.querySelectorAll( '.giftflow-st-carousel__swiper' ).forEach( initSwiper );
 					}
 				}
 			}

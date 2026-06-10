@@ -178,6 +178,17 @@ class AssetLoader extends AbstractModule {
 			);
 		}
 
+		// Enqueue Swiper CSS for sponsors testimonials carousel block (frontend only).
+		$st_swiper_css = $this->plugin_dir . 'build/blocks/sponsors-testimonials-carousel-view.css';
+		if ( file_exists( $st_swiper_css ) ) {
+			wp_enqueue_style(
+				'giftflow-block-sponsors-testimonials-carousel-view',
+				$this->plugin_url . 'build/blocks/sponsors-testimonials-carousel-view.css',
+				array(),
+				$this->version
+			);
+		}
+
 		$new_common_css = $this->plugin_dir . 'build/frontend-common.css';
 		$legacy_common_css = $this->plugin_dir . 'assets/css/common.bundle.css';
 
@@ -225,6 +236,8 @@ class AssetLoader extends AbstractModule {
 			'featured-campaign-view',
 			'sponsor-logos',
 			'campaign-card',
+			'sponsors-testimonials-carousel',
+			'sponsors-testimonials-carousel-view',
 		);
 
 		foreach ( $blocks as $block_name ) {

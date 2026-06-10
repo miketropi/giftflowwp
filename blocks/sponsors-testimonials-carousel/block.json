@@ -1,0 +1,78 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/sponsors-testimonials-carousel",
+	"version": "1.0.0",
+	"title": "Sponsors Testimonials Carousel",
+	"category": "giftflow",
+	"icon": "star-filled",
+	"description": "A carousel showcasing sponsor and partner testimonials with impact metrics, star ratings, and author details. Powered by Swiper.js.",
+	"keywords": ["testimonials", "sponsors", "carousel", "reviews", "partners", "social proof", "swiper"],
+	"supports": {
+		"color": {
+			"background": true,
+			"text": true,
+			"gradients": true
+		},
+		"typography": {
+			"fontSize": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"shadow": true,
+		"align": ["wide", "full"],
+		"html": false
+	},
+	"attributes": {
+		"eyebrowText": {
+			"type": "string",
+			"default": "Trusted Partners"
+		},
+		"heading": {
+			"type": "string",
+			"default": "Real stories from real partners"
+		},
+		"subheading": {
+			"type": "string",
+			"default": "See why leading organizations choose GiftFlow to power their giving programs."
+		},
+		"showStats": {
+			"type": "boolean",
+			"default": true
+		},
+		"stats": {
+			"type": "array",
+			"default": [
+				{ "value": "$4.2M+", "label": "Donations" },
+				{ "value": "180+", "label": "Partners" },
+				{ "value": "98%", "label": "Satisfaction" }
+			]
+		},
+		"testimonials": {
+			"type": "array",
+			"default": []
+		},
+		"autoplay": {
+			"type": "boolean",
+			"default": true
+		},
+		"autoplayDelay": {
+			"type": "number",
+			"default": 4000
+		},
+		"loop": {
+			"type": "boolean",
+			"default": true
+		},
+		"columns": {
+			"type": "integer",
+			"default": 3
+		}
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-sponsors-testimonials-carousel",
+	"viewScript": "giftflow-block-sponsors-testimonials-carousel-view",
+	"style": "file:./style.css"
+}

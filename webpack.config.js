@@ -47,6 +47,8 @@ module.exports = {
 		'blocks/featured-campaign-view': path.resolve(process.cwd(), 'blocks/featured-campaign/view.js'),
 		'blocks/sponsor-logos': path.resolve(process.cwd(), 'blocks/sponsor-logos/block.js'),
 		'blocks/campaign-card': path.resolve(process.cwd(), 'blocks/campaign-card/block.js'),
+		'blocks/sponsors-testimonials-carousel': path.resolve(process.cwd(), 'blocks/sponsors-testimonials-carousel/block.js'),
+		'blocks/sponsors-testimonials-carousel-view': path.resolve(process.cwd(), 'blocks/sponsors-testimonials-carousel/view.js'),
 	},
 
 	output: {

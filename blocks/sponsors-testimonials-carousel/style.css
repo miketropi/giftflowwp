@@ -1,0 +1,448 @@
+/* ===================================================================
+   Sponsors Testimonials Carousel — Swiper-powered
+   =================================================================== */
+
+/* ---------- Swiper core structural rules (fallback if swiper/css not loaded) ---------- */
+
+.giftflow-sponsors-testimonials-carousel .swiper {
+	overflow: hidden;
+	list-style: none;
+	position: relative;
+}
+
+.giftflow-sponsors-testimonials-carousel .swiper-wrapper {
+	display: flex;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	box-sizing: content-box;
+	transition-property: transform;
+	transition-timing-function: ease;
+}
+
+.giftflow-sponsors-testimonials-carousel .swiper-slide {
+	flex-shrink: 0;
+	width: 100%;
+	height: 100%;
+	position: relative;
+	transition-property: transform;
+}
+
+.giftflow-sponsors-testimonials-carousel {
+	--gf-st-accent: var(--wp--preset--color--primary, #2563eb);
+	--gf-st-accent-light: color-mix(in srgb, var(--gf-st-accent, #2563eb) 12%, transparent);
+	--gf-st-text: var(--wp--preset--color--contrast, #1d1d1f);
+	--gf-st-text-secondary: var(--wp--preset--color--contrast-2, #6e6e73);
+	--gf-st-text-tertiary: #94a3b8;
+	--gf-st-border: var(--wp--preset--color--base, #e2e8f0);
+	--gf-st-border-soft: color-mix(in srgb, var(--gf-st-border, #e2e8f0) 60%, transparent);
+	--gf-st-surface: var(--wp--preset--color--surface, #ffffff);
+	--gf-st-card-radius: 16px;
+	--gf-st-radius-md: 12px;
+	--gf-st-radius-pill: 9999px;
+	--gf-st-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	font-family: inherit;
+	position: relative;
+}
+
+/* ---------- Header ---------- */
+
+.giftflow-st-carousel__header {
+	text-align: center;
+	margin-bottom: 2.5rem;
+}
+
+.giftflow-st-carousel__eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.25rem 1rem;
+	background: var(--gf-st-accent-light);
+	color: var(--gf-st-accent);
+	border-radius: var(--gf-st-radius-pill);
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	margin-bottom: 1rem;
+}
+
+.giftflow-st-carousel__title {
+	margin: 0 0 0.75rem;
+	font-size: clamp(1.75rem, 4vw, 2.5rem);
+	font-weight: 650;
+	letter-spacing: -0.03em;
+	color: var(--gf-st-text);
+	line-height: 1.15;
+}
+
+.giftflow-st-carousel__subtitle {
+	margin: 0 auto;
+	max-width: 540px;
+	color: var(--gf-st-text-secondary);
+	line-height: 1.6;
+}
+
+/* ---------- Stats row ---------- */
+
+.giftflow-st-carousel__stats {
+	display: flex;
+	justify-content: center;
+	gap: 2.5rem;
+	margin-top: 2rem;
+	flex-wrap: wrap;
+}
+
+.giftflow-st-carousel__stat {
+	text-align: center;
+}
+
+.giftflow-st-carousel__stat-value {
+	display: block;
+	font-size: 1.75rem;
+	font-weight: 700;
+	color: var(--gf-st-text);
+	letter-spacing: -0.02em;
+}
+
+.giftflow-st-carousel__stat-label {
+	display: block;
+	font-size: 0.925rem;
+	margin-top: 2px;
+}
+
+/* ---------- Swiper root ---------- */
+
+.giftflow-st-carousel__swiper {
+	overflow: hidden;
+	padding: 4px 4px 3.5rem;
+	margin: -4px -4px -3.5rem;
+}
+
+/* Equal-height slides */
+.giftflow-st-carousel__swiper .swiper-wrapper {
+	align-items: stretch;
+}
+
+.giftflow-st-carousel__swiper .swiper-slide {
+	display: flex;
+	padding: 0 0.5rem;
+	box-sizing: border-box;
+}
+
+/* ---------- Card ---------- */
+
+.giftflow-st-carousel__card {
+	background: var(--gf-st-surface);
+	border: 1px solid var(--gf-st-border);
+	border-radius: var(--gf-st-card-radius);
+	padding: 1.5rem;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+/* ---------- Card header ---------- */
+
+.giftflow-st-carousel__card-header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	margin-bottom: 1.25rem;
+}
+
+/* ---------- Sponsor ---------- */
+
+.giftflow-st-carousel__sponsor {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.giftflow-st-carousel__sponsor-icon {
+	width: 44px;
+	height: 44px;
+	border-radius: var(--gf-st-radius-md);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 700;
+	font-size: 1.125rem;
+	color: #ffffff;
+	background: var(--gf-st-sponsor-bg, var(--gf-st-accent));
+	flex-shrink: 0;
+	overflow: hidden;
+}
+
+.giftflow-st-carousel__sponsor-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.giftflow-st-carousel__sponsor-info {
+	display: flex;
+	flex-direction: column;
+}
+
+.giftflow-st-carousel__sponsor-name {
+	font-weight: 600;
+	/* font-size: 0.875rem; */
+	color: var(--gf-st-text);
+}
+
+.giftflow-st-carousel__sponsor-type {
+	font-size: 0.85rem;
+	opacity: .8;
+}
+
+/* ---------- Impact badge ---------- */
+
+.giftflow-st-carousel__badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	padding: 0.25rem 0.75rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	border-radius: var(--gf-st-radius-pill);
+	white-space: nowrap;
+	background: var(--gf-st-accent-light);
+	color: var(--gf-st-accent);
+	flex-shrink: 0;
+	margin-left: 0.5rem;
+}
+
+/* ---------- Quote ---------- */
+
+.giftflow-st-carousel__quote {
+	flex: 1;
+	margin: 0 0 1.25rem;
+	padding-left: 1.25rem;
+	position: relative;
+}
+
+.giftflow-st-carousel__quote p {
+	margin: 0;
+}
+
+.giftflow-st-carousel__quote::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 3px;
+	background: var(--gf-st-accent);
+	border-radius: 2px;
+}
+
+/* ---------- Metrics bar ---------- */
+
+.giftflow-st-carousel__metrics {
+	display: flex;
+	gap: 0.75rem;
+	padding: 1rem;
+	background: var(--gf-st-border-soft);
+	border-radius: var(--gf-st-radius-md);
+	margin-bottom: 1.25rem;
+}
+
+.giftflow-st-carousel__metric {
+	flex: 1;
+	text-align: center;
+}
+
+.giftflow-st-carousel__metric-value {
+	display: block;
+	font-size: 1.125rem;
+	font-weight: 700;
+	color: var(--gf-st-text);
+	letter-spacing: -0.01em;
+}
+
+.giftflow-st-carousel__metric-label {
+	display: block;
+	font-size: 0.85rem;
+	opacity: .8;
+	margin-top: 1px;
+}
+
+/* ---------- Author row ---------- */
+
+.giftflow-st-carousel__author {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--gf-st-border-soft);
+}
+
+.giftflow-st-carousel__author-avatar {
+	width: 36px;
+	height: 36px;
+	border-radius: var(--gf-st-radius-pill);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+	font-size: 0.75rem;
+	color: #ffffff;
+	background: var(--gf-st-author-bg, var(--gf-st-accent));
+	flex-shrink: 0;
+	overflow: hidden;
+}
+
+.giftflow-st-carousel__author-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.giftflow-st-carousel__author-info {
+	flex: 1;
+	min-width: 0;
+}
+
+.giftflow-st-carousel__author-name {
+	display: block;
+	font-weight: 600;
+	/* font-size: 0.875rem; */
+	/* color: var(--gf-st-text); */
+}
+
+.giftflow-st-carousel__author-role {
+	display: block;
+	font-size: 0.85rem;
+	opacity: .8;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.giftflow-st-carousel__stars {
+	display: flex;
+	gap: 2px;
+	color: #f59e0b;
+	flex-shrink: 0;
+}
+
+/* ---------- Swiper nav buttons ---------- */
+
+.giftflow-st-carousel__prev,
+.giftflow-st-carousel__next {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 5;
+	width: 40px;
+	height: 40px;
+	border-radius: var(--gf-st-radius-pill);
+	border: 1px solid var(--gf-st-border);
+	background: var(--gf-st-surface);
+	color: var(--gf-st-text);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+	transition: all 0.2s ease;
+	padding: 0;
+}
+
+.giftflow-st-carousel__prev {
+	left: -12px;
+}
+
+.giftflow-st-carousel__next {
+	right: -12px;
+}
+
+.giftflow-st-carousel__prev:hover,
+.giftflow-st-carousel__next:hover {
+	background: var(--gf-st-accent);
+	color: #ffffff;
+	border-color: transparent;
+}
+
+.giftflow-st-carousel__prev:focus-visible,
+.giftflow-st-carousel__next:focus-visible {
+	outline: 2px solid var(--gf-st-accent);
+	outline-offset: 2px;
+}
+
+.giftflow-st-carousel__prev.swiper-button-disabled,
+.giftflow-st-carousel__next.swiper-button-disabled {
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* ---------- Swiper pagination ---------- */
+
+.giftflow-st-carousel__pagination {
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+	margin-top: 1.25rem;
+}
+
+.giftflow-st-carousel__pagination .swiper-pagination-bullet {
+	width: 8px;
+	height: 8px;
+	border-radius: var(--gf-st-radius-pill);
+	background: var(--gf-st-border);
+	border: none;
+	opacity: 1;
+	transition: all 0.3s ease;
+	cursor: pointer;
+	margin: 0 !important;
+}
+
+.giftflow-st-carousel__pagination .swiper-pagination-bullet:hover {
+	background: var(--gf-st-text-tertiary);
+}
+
+.giftflow-st-carousel__pagination .swiper-pagination-bullet-active {
+	width: 24px;
+	background: var(--gf-st-accent);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 639px) {
+	.giftflow-st-carousel__title {
+		font-size: clamp(1.5rem, 6vw, 1.875rem);
+	}
+
+	.giftflow-st-carousel__stats {
+		gap: 1.5rem;
+	}
+
+	.giftflow-st-carousel__header {
+		margin-bottom: 2rem;
+	}
+
+	.giftflow-st-carousel__card {
+		padding: 1.25rem;
+	}
+
+	.giftflow-st-carousel__metrics {
+		gap: 0.5rem;
+		padding: 0.75rem;
+	}
+
+	.giftflow-st-carousel__metric-value {
+		font-size: 1rem;
+	}
+
+	.giftflow-st-carousel__prev {
+		left: 0;
+	}
+
+	.giftflow-st-carousel__next {
+		right: 0;
+	}
+}
