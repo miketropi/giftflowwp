@@ -36,7 +36,7 @@
 		},
 		"subheading": {
 			"type": "string",
-			"default": "See why leading organizations choose GiftFlow to power their giving programs."
+			"default": ""
 		},
 		"showStats": {
 			"type": "boolean",

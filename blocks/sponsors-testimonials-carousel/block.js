@@ -229,7 +229,7 @@ registerBlockType( 'giftflow/sponsors-testimonials-carousel', {
 													<span className="giftflow-st-carousel__sponsor-name">{ isEmpty ? __( 'Sponsor', 'giftflow' ) : ( item.sponsorName || __( 'Untitled', 'giftflow' ) ) }</span>
 												</div>
 											</div>
-											<div className="giftflow-st-carousel__badge">
+											<div className="giftflow-st-carousel__badge" style={ { '--gf-st-item-color': itemColor } }>
 												<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
 												{ isEmpty ? '+65%' : ( item.impactBadge || '--' ) }
 											</div>
@@ -237,7 +237,7 @@ registerBlockType( 'giftflow/sponsors-testimonials-carousel', {
 										<blockquote className="giftflow-st-carousel__quote" style={ { paddingLeft: '1.25rem' } }>
 											<p>{ isEmpty ? __( 'Testimonial quote appears here...', 'giftflow' ) : ( item.quote || __( 'No quote provided.', 'giftflow' ) ) }</p>
 										</blockquote>
-										<div className="giftflow-st-carousel__metrics">
+										<div className="giftflow-st-carousel__metrics" style={ { '--gf-st-item-color': itemColor } }>
 											{ itemMetrics.map( ( m, j ) => (
 												<div className="giftflow-st-carousel__metric" key={ j }>
 													<span className="giftflow-st-carousel__metric-value">{ isEmpty ? [ '$380K', '2,400', '45' ][ j ] : ( m.value || '--' ) }</span>

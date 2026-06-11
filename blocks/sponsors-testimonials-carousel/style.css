@@ -127,7 +127,7 @@
 
 .giftflow-st-carousel__swiper .swiper-slide {
 	display: flex;
-	padding: 0 0.5rem;
+	/* padding: 0 0.5rem; */
 	box-sizing: border-box;
 }
 
@@ -209,8 +209,8 @@
 	font-weight: 600;
 	border-radius: var(--gf-st-radius-pill);
 	white-space: nowrap;
-	background: var(--gf-st-accent-light);
-	color: var(--gf-st-accent);
+	background: color-mix(in srgb, var(--gf-st-item-color, var(--gf-st-accent)) 12%, transparent);
+	color: var(--gf-st-item-color, var(--gf-st-accent));
 	flex-shrink: 0;
 	margin-left: 0.5rem;
 }
@@ -245,7 +245,7 @@
 	display: flex;
 	gap: 0.75rem;
 	padding: 1rem;
-	background: var(--gf-st-border-soft);
+	background: color-mix(in srgb, var(--gf-st-item-color, var(--gf-st-accent)) 8%, transparent);
 	border-radius: var(--gf-st-radius-md);
 	margin-bottom: 1.25rem;
 }
@@ -259,7 +259,7 @@
 	display: block;
 	font-size: 1.125rem;
 	font-weight: 700;
-	color: var(--gf-st-text);
+	color: var(--gf-st-item-color, var(--gf-st-text));
 	letter-spacing: -0.01em;
 }
 
@@ -310,6 +310,7 @@
 .giftflow-st-carousel__author-name {
 	display: block;
 	font-weight: 600;
+	line-height: normal;
 	/* font-size: 0.875rem; */
 	/* color: var(--gf-st-text); */
 }
@@ -341,24 +342,24 @@
 	width: 40px;
 	height: 40px;
 	border-radius: var(--gf-st-radius-pill);
-	border: 1px solid var(--gf-st-border);
+	border: none;
 	background: var(--gf-st-surface);
 	color: var(--gf-st-text);
 	cursor: pointer;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+	box-shadow: none;
 	transition: all 0.2s ease;
 	padding: 0;
 }
 
 .giftflow-st-carousel__prev {
-	left: -12px;
+	left: .3rem;
 }
 
 .giftflow-st-carousel__next {
-	right: -12px;
+	right: .3rem;
 }
 
 .giftflow-st-carousel__prev:hover,
@@ -393,7 +394,7 @@
 	width: 8px;
 	height: 8px;
 	border-radius: var(--gf-st-radius-pill);
-	background: var(--gf-st-border);
+	background: color-mix(in srgb, var(--gf-st-border), #000 20%);
 	border: none;
 	opacity: 1;
 	transition: all 0.3s ease;

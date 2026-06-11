@@ -218,8 +218,8 @@ $gf_config = wp_json_encode(
 	)
 );
 
-$gf_star_svg       = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
-$gf_check_svg       = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+$gf_star_svg       = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+$gf_check_svg       = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>';
 $gf_eye_sparkle_svg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>';
 
 $block_wrapper_attrs = get_block_wrapper_attributes(
@@ -281,7 +281,7 @@ $block_wrapper_attrs = get_block_wrapper_attributes(
 								</div>
 							</div>
 							<?php if ( ! empty( $gf_t['impactBadge'] ) ) : ?>
-								<span class="giftflow-st-carousel__badge">
+								<span class="giftflow-st-carousel__badge" style="--gf-st-item-color:<?php echo esc_attr( $gf_t['color'] ?? '#2563eb' ); ?>">
 									<?php echo $gf_check_svg; // phpcs:ignore ?>
 									<?php echo esc_html( $gf_t['impactBadge'] ); ?>
 								</span>
@@ -298,7 +298,7 @@ $block_wrapper_attrs = get_block_wrapper_attributes(
 						$gf_metrics = $gf_t['metrics'] ?? array();
 						if ( ! empty( $gf_metrics ) ) :
 							?>
-							<div class="giftflow-st-carousel__metrics">
+							<div class="giftflow-st-carousel__metrics" style="--gf-st-item-color:<?php echo esc_attr( $gf_t['color'] ?? '#2563eb' ); ?>">
 								<?php foreach ( $gf_metrics as $gf_m ) : ?>
 									<div class="giftflow-st-carousel__metric">
 										<span class="giftflow-st-carousel__metric-value"><?php echo esc_html( $gf_m['value'] ?? '' ); ?></span>
