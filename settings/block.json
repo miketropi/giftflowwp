@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/settings-page",
+	"title": "GiftFlow Settings",
+	"category": "giftflow",
+	"icon": "admin-settings",
+	"description": "Internal: Renders the GiftFlow settings page in the WordPress admin.",
+	"supports": {
+		"html": false,
+		"inserter": false,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./index.js"
+}

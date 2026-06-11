@@ -16,39 +16,93 @@
  * @package GiftFlow
  */
 
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
-// Define plugin constants.
+/**
+ * Plugin version and path constants.
+ */
 define( 'GIFTFLOW_VERSION', '1.0.16' );
 define( 'GIFTFLOW_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GIFTFLOW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'GIFTFLOW_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
-// Include Composer autoloader.
-if ( file_exists( GIFTFLOW_PLUGIN_DIR . 'vendor-prefixed/autoload.php' ) ) {
-	require_once GIFTFLOW_PLUGIN_DIR . 'vendor-prefixed/autoload.php';
+/*
+ * Load Composer autoloaders.
+ *
+ * 1. vendor/autoload.php — PSR-4 for src/ classes (development).
+ * 2. vendor-prefixed/autoload.php — Strauss-prefixed Stripe SDK (production).
+ *
+ * In production builds, vendor/ is excluded. A fallback autoloader
+ * mirrors the PSR-4 mapping from composer.json for the src/ directory.
+ */
+$vendor_autoload = GIFTFLOW_PLUGIN_DIR . 'vendor/autoload.php';
+if ( file_exists( $vendor_autoload ) ) {
+	require_once $vendor_autoload;
 } else {
+	spl_autoload_register(
+		function ( string $class_name ) {
+			$prefix    = 'GiftFlow\\';
+			$prefix_len = strlen( $prefix );
+			if ( strncmp( $class_name, $prefix, $prefix_len ) !== 0 ) {
+				return;
+			}
+
+			$relative = substr( $class_name, $prefix_len );
+			$file     = GIFTFLOW_PLUGIN_DIR . 'src/' . str_replace( '\\', '/', $relative ) . '.php';
+
+			if ( file_exists( $file ) ) {
+				require_once $file;
+			}
+		}
+	);
+}
+
+$prefixed_autoload = GIFTFLOW_PLUGIN_DIR . 'vendor-prefixed/autoload.php';
+if ( ! file_exists( $prefixed_autoload ) ) {
 	add_action(
 		'admin_notices',
 		function () {
-			?>
-		<div class="notice notice-error">
-			<p><?php esc_html_e( 'GiftFlow requires Composer dependencies to be installed. Please run "composer run build" in the plugin directory.', 'giftflow' ); ?></p>
-		</div>
-			<?php
+			printf(
+				'<div class="notice notice-error"><p>%s</p></div>',
+				esc_html__( 'GiftFlow requires Composer dependencies to be installed. Please run "composer run build" in the plugin directory.', 'giftflow' )
+			);
 		}
 	);
 	return;
 }
+require_once $prefixed_autoload;
 
 /**
- * Load plugin files
+ * Remove legacy block registration actions to prevent duplicate
+ * "Block type is already registered" notices. BlockRegistry in
+ * src/Blocks/BlockRegistry.php handles actual registration at priority 9.
  *
- * A safer approach to loading plugin files using direct includes
- * rather than relying on autoloading which can be error-prone
+ * @return void
+ */
+function giftflow_unhook_legacy_block_registrations(): void {
+	$legacy_block_funcs = array(
+		'giftflow_donation_button_block',
+		'giftflow_campaign_status_bar_block',
+		'giftflow_campaign_single_content_block',
+		'giftflow_campaign_single_images_block',
+		'giftflow_campaigns_grid_block',
+		'giftflow_donor_account_block',
+		'giftflow_share_block',
+		'giftflow_thank_donor_block',
+	);
+
+	foreach ( $legacy_block_funcs as $func ) {
+		remove_action( 'init', $func );
+	}
+}
+
+/**
+ * Legacy file loader (backward compatibility).
+ *
+ * Loads all classes under includes/ and admin/ that have not yet been
+ * migrated to src/ PSR-4 autoloading.
  */
 function giftflow_load_files() {
 	// Core files.
@@ -63,7 +117,13 @@ function giftflow_load_files() {
 	require_once GIFTFLOW_PLUGIN_DIR . 'includes/core/class-logger.php';
 	require_once GIFTFLOW_PLUGIN_DIR . 'includes/core/class-donation-event-history.php';
 	require_once GIFTFLOW_PLUGIN_DIR . 'includes/core/class-wp-block-custom-hooks.php';
+
+	// Blocks are now registered via GiftFlow\Blocks\BlockRegistry (src/Blocks/BlockRegistry.php)
+	// which auto-discovers blocks/*/block.json. The legacy block loader is kept for
+	// helper functions defined in block.php files (templates depend on these).
+	// Block registration from legacy files is removed to prevent duplicates.
 	require_once GIFTFLOW_PLUGIN_DIR . 'blocks/index.php';
+	giftflow_unhook_legacy_block_registrations();
 	require_once GIFTFLOW_PLUGIN_DIR . 'includes/common.php';
 	require_once GIFTFLOW_PLUGIN_DIR . 'includes/hooks.php';
 	require_once GIFTFLOW_PLUGIN_DIR . 'includes/mail.php';
@@ -99,9 +159,6 @@ function giftflow_load_files() {
 	require_once GIFTFLOW_PLUGIN_DIR . 'includes/frontend/campaign-taxonomy-archive-template-hooks.php';
 	require_once GIFTFLOW_PLUGIN_DIR . 'includes/frontend/campaigns-page-template-hooks.php';
 
-	// Blocks.
-
-	// Apply filters to allow extensions to load additional files.
 	$additional_files = apply_filters( 'giftflow_load_files', array() );
 
 	if ( ! empty( $additional_files ) && is_array( $additional_files ) ) {
@@ -113,28 +170,50 @@ function giftflow_load_files() {
 	}
 }
 
-// Load all required files.
+// Preload legacy files so classes are available for activation/deactivation.
 giftflow_load_files();
 
-// Initialize plugin.
+/**
+ * Boot the plugin via the new container-based architecture.
+ *
+ * The Plugin class internally calls giftflow_load_files() for
+ * backward compatibility.
+ *
+ * @return \GiftFlow\Core\Plugin
+ */
+function giftflow_boot() {
+	static $plugin = null;
+
+	if ( null === $plugin ) {
+		$plugin = new \GiftFlow\Core\Plugin();
+		$plugin->boot();
+	}
+
+	return $plugin;
+}
+
+/**
+ * Initialize the plugin on plugins_loaded.
+ *
+ * @return void
+ */
+function giftflow_init() {
+	giftflow_boot();
+}
+
 add_action( 'plugins_loaded', 'giftflow_init' );
 
 /**
- * Initialize the plugin.
+ * Activation / Deactivation hooks.
  */
-function giftflow_init() {
-	// Initialize plugin.
-	$plugin = new \GiftFlow\Core\Loader();
-}
-
-// Activation hook.
 register_activation_hook( __FILE__, 'giftflow_activate' );
 
 /**
- * Plugin activation
+ * Plugin activation handler.
+ *
+ * @return void
  */
 function giftflow_activate() {
-	// Check PHP version.
 	if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 		wp_die(
@@ -144,36 +223,22 @@ function giftflow_activate() {
 		);
 	}
 
-	// Check if Composer dependencies are installed.
-	if ( ! file_exists( GIFTFLOW_PLUGIN_DIR . 'vendor-prefixed/autoload.php' ) ) {
-		deactivate_plugins( plugin_basename( __FILE__ ) );
-		wp_die(
-			esc_html__( 'GiftFlow requires Composer dependencies to be installed. Please run "composer run build" in the plugin directory.', 'giftflow' ),
-			'Plugin Activation Error',
-			array( 'back_link' => true )
-		);
-	}
-
-	// Initialize plugin.
-	$plugin = new \GiftFlow\Core\Loader();
+	$plugin = new \GiftFlow\Core\Plugin();
 	$plugin->activate();
 }
 
-// Deactivation hook.
 register_deactivation_hook( __FILE__, 'giftflow_deactivate' );
 
 /**
- * Plugin deactivation
+ * Plugin deactivation handler.
+ *
+ * @return void
  */
 function giftflow_deactivate() {
-	// giftflow_first_activation_notice_dismissed.
 	delete_option( 'giftflow_first_activation_notice_dismissed' );
-
-	// Flush rewrite rules.
 	flush_rewrite_rules();
 
-	// Deactivate plugin.
-	$plugin = new \GiftFlow\Core\Loader();
+	$plugin = new \GiftFlow\Core\Plugin();
 	$plugin->deactivate();
 }
 

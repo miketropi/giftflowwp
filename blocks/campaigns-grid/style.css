@@ -1,0 +1,257 @@
+.giftflow-campaigns-grid {
+	font-family: inherit;
+}
+
+.giftflow-campaigns-grid__items {
+	display: grid;
+	grid-template-columns: repeat(var(--giftflow-grid-columns, 3), 1fr);
+	gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+	.giftflow-campaigns-grid__items {
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	}
+}
+
+/* ── Card ── */
+.giftflow-campaigns-grid__item {
+	border-radius: 16px;
+	overflow: hidden;
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	background: var(--wp--preset--color--surface, #fafafa);
+	border: 1px solid var(--wp--preset--color--base, #e5e7eb);
+	display: flex;
+	flex-direction: column;
+}
+.giftflow-campaigns-grid__item:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 12px 32px rgba(0, 0, 0, 0.07);
+}
+
+.giftflow-campaigns-grid--flat .giftflow-campaigns-grid__item {
+	border-color: var(--wp--preset--color--base, #e5e7eb);
+	box-shadow: none;
+}
+.giftflow-campaigns-grid--flat .giftflow-campaigns-grid__item:hover {
+	border-color: var(--wp--preset--color--base, #d1d5db);
+}
+
+.giftflow-campaigns-grid--minimal .giftflow-campaigns-grid__item {
+	border: none;
+	border-radius: 12px;
+	box-shadow: none;
+	background: transparent;
+}
+.giftflow-campaigns-grid--minimal .giftflow-campaigns-grid__item:hover {
+	transform: translateY(-2px);
+}
+.giftflow-campaigns-grid--minimal .giftflow-campaigns-grid__body {
+	padding: 0.875rem 0 0;
+}
+
+.giftflow-campaigns-grid--minimal .giftflow-campaigns-grid__image {
+	padding: 0;
+}
+
+/* ── Image ── */
+.giftflow-campaigns-grid__image {
+	position: relative;
+	overflow: hidden;
+	padding: 1.25rem 1.25rem 0;
+}
+.giftflow-campaigns-grid__image img {
+	display: block;
+	width: 100%;
+	height: var(--gf-grid-img-height, 200px);
+	object-fit: cover;
+	transition: transform 0.5s ease;
+	border-radius: 10px;
+}
+
+.giftflow-campaigns-grid__placeholder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: var(--gf-grid-img-height, 200px);
+	background: color-mix(in srgb, var(--wp--preset--color--base, #f3f4f6) 25%, #000 5%);
+	border-radius: 10px;
+	color: var(--wp--preset--color--contrast-2, #9ca3af);
+}
+
+.giftflow-campaigns-grid__category {
+	position: absolute;
+	top: 1.625rem;
+	left: 1.625rem;
+	padding: 4px 10px;
+	background: rgba(255, 255, 255, 0.94);
+	backdrop-filter: blur(8px);
+	border-radius: 6px;
+	font-size: 0.6875rem;
+	font-weight: 600;
+	color: var(--gf-grid-accent, var(--wp--preset--color--primary, #2563eb));
+	letter-spacing: 0.02em;
+	z-index: 1;
+}
+
+/* ── Body ── */
+.giftflow-campaigns-grid__body {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	padding: 1.25rem;
+	gap: 0;
+}
+
+.giftflow-campaigns-grid__title {
+	margin: 0 0 0.375rem;
+	font-size: 1.0625rem;
+	font-weight: 650;
+	line-height: 1.35;
+}
+.giftflow-campaigns-grid__title a {
+	text-decoration: none;
+	color: var(--wp--preset--color--contrast, #111827);
+	transition: color 0.2s ease;
+}
+.giftflow-campaigns-grid__title a:hover {
+	color: var(--gf-grid-accent, var(--wp--preset--color--primary, #2563eb));
+}
+
+.giftflow-campaigns-grid__excerpt {
+	margin: 0 0 0.875rem;
+	font-size: 0.875rem;
+	line-height: 1.55;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+/* ── Progress ── */
+.giftflow-campaigns-grid__progress {
+	margin-bottom: 0.625rem;
+	margin-top: 0.825rem;
+}
+.giftflow-campaigns-grid__progress-bar {
+	height: 8px;
+	background: color-mix(in srgb, var(--wp--preset--color--base, #e5e7eb) 85%, #000 15%);
+	border-radius: 99px;
+	overflow: hidden;
+	margin-bottom: 0.375rem;
+}
+.giftflow-campaigns-grid__progress-fill {
+	height: 100%;
+	background: var(--gf-grid-accent, var(--wp--preset--color--primary, #2563eb));
+	border-radius: 99px;
+	transition: width 0.6s ease;
+}
+.giftflow-campaigns-grid__progress-text {
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--gf-grid-accent, var(--wp--preset--color--primary, #2563eb));
+}
+
+/* ── Meta ── */
+.giftflow-campaigns-grid__meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.25rem 0.75rem;
+	margin-bottom: 0.825rem;
+	font-size: 0.875rem;
+}
+.giftflow-campaigns-grid__raised {
+	font-weight: 650;
+	color: var(--wp--preset--color--contrast, #1f2937);
+}
+.giftflow-campaigns-grid__goal,
+.giftflow-campaigns-grid__days,
+.giftflow-campaigns-grid__location {
+	font-size: 0.8125rem;
+}
+.giftflow-campaigns-grid__location {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+.giftflow-campaigns-grid__location::before {
+	content: "";
+	display: inline-block;
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	background: var(--wp--preset--color--contrast-2, #d1d5db);
+}
+
+/* ── Read More ── */
+.giftflow-campaigns-grid__read-more {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.375rem;
+	padding: 0.625rem 1rem;
+	margin-top: auto;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	line-height: 1.5;
+	color: #fff;
+	background: var(--gf-grid-accent, var(--wp--preset--color--primary, #2563eb));
+	border-radius: 10px;
+	text-decoration: none;
+	transition: gap 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
+}
+.giftflow-campaigns-grid__read-more:hover {
+	gap: 0.625rem;
+	opacity: 0.92;
+	transform: translateY(-1px);
+	color: #fff;
+}
+
+/* ── Pagination ── */
+.giftflow-campaigns-grid__pagination {
+	margin-top: 2.5rem;
+	text-align: center;
+}
+.giftflow-campaigns-grid__pagination .page-numbers {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 2.5rem;
+	height: 2.5rem;
+	padding: 0 0.625rem;
+	margin: 0 0.2rem;
+	border-radius: 10px;
+	text-decoration: none;
+	color: var(--wp--preset--color--contrast, #374151);
+	font-size: 0.875rem;
+	font-weight: 500;
+	border: 1px solid var(--wp--preset--color--base, #e5e7eb);
+	background: var(--wp--preset--color--surface, #fff);
+	transition: all 0.2s ease;
+}
+.giftflow-campaigns-grid__pagination .page-numbers:hover {
+	background: var(--wp--preset--color--base, #f9fafb);
+	border-color: var(--wp--preset--color--base, #d1d5db);
+}
+.giftflow-campaigns-grid__pagination .page-numbers.current {
+	background: var(--gf-grid-accent, var(--wp--preset--color--primary, #2563eb));
+	color: #fff;
+	font-weight: 600;
+	border-color: var(--gf-grid-accent, var(--wp--preset--color--primary, #2563eb));
+}
+.giftflow-campaigns-grid__pagination .page-numbers.dots {
+	border-color: transparent;
+	background: transparent;
+	color: var(--wp--preset--color--contrast-2, #6b7280);
+}
+
+.giftflow-campaigns-grid__empty {
+	padding: 4rem 2rem;
+	text-align: center;
+	color: var(--wp--preset--color--contrast-2, #6b7280);
+	font-size: 0.9375rem;
+	background: var(--wp--preset--color--base, #f9fafb);
+	border-radius: 16px;
+}

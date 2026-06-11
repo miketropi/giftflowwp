@@ -1,0 +1,93 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/featured-campaign",
+	"version": "1.0.0",
+	"title": "Featured Campaign",
+	"category": "giftflow",
+	"icon": "star-filled",
+	"description": "Hero section for showcasing a priority campaign. Select a campaign, then build the content area with any blocks (headings, paragraphs, progress bars, donate buttons, etc.).",
+	"keywords": ["featured", "campaign", "hero", "spotlight", "priority"],
+	"supports": {
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"border": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
+		},
+		"shadow": true,
+		"align": ["wide", "full"],
+		"html": false
+	},
+	"attributes": {
+		"campaignId": {
+			"type": "number",
+			"default": 0
+		},
+		"imageOnLeft": {
+			"type": "boolean",
+			"default": false
+		},
+		"showFeaturedBadge": {
+			"type": "boolean",
+			"default": true
+		},
+		"accentColor": {
+			"type": "string",
+			"default": ""
+		},
+		"imageHeight": {
+			"type": "integer",
+			"default": 400
+		},
+		"mediaType": {
+			"type": "string",
+			"default": "image"
+		},
+		"videoUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"videoId": {
+			"type": "number",
+			"default": 0
+		},
+		"videoPoster": {
+			"type": "string",
+			"default": ""
+		},
+		"borderRadius": {
+			"type": "number",
+			"default": 0
+		},
+		"isFeatured": {
+			"type": "boolean",
+			"default": true
+		},
+		"style": {
+			"type": "object",
+			"default": {}
+		}
+	},
+	"providesContext": {
+		"postId": "campaignId",
+		"giftflow/featuredCampaign": "isFeatured",
+		"giftflow/accentColor": "accentColor"
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-featured-campaign",
+	"viewScript": "giftflow-block-featured-campaign-view",
+	"style": "file:./style.css"
+}

@@ -452,22 +452,22 @@ $gfw-md-radius-sm: 3px;
   padding: clamp(1.75rem, 4vw, 2.25rem) 1.25rem;
   text-align: center;
   background: $gfw-md-surface-subtle;
-  border: 1px dashed $gfw-md-border;
+  border: 1px solid $gfw-md-border;
   border-radius: $gfw-md-radius;
 }
 
 .gfw-no-donations__title {
   margin: 0 0 0.35rem;
-  font-size: 0.9375rem;
+  // font-size: 0.9375rem;
   font-weight: 600;
   color: $gfw-md-text;
 }
 
 .gfw-no-donations__hint {
   margin: 0;
-  font-size: 0.8125rem;
+  // font-size: 0.8125rem;
   color: $gfw-md-text-muted;
-  max-width: 22rem;
+  // max-width: 22rem;
   margin-left: auto;
   margin-right: auto;
   line-height: 1.5;

@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/donation-faqs",
+	"version": "1.0.0",
+	"title": "Donation FAQs",
+	"category": "giftflow",
+	"icon": "editor-help",
+	"description": "Displays frequently asked questions about donations in an accordion layout.",
+	"keywords": ["faq", "questions", "accordion", "help"],
+	"supports": {
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"border": {
+			"radius": true,
+			"width": true,
+			"color": true
+		},
+		"align": ["wide", "full"],
+		"html": false
+	},
+	"attributes": {
+		"faqsJson": {
+			"type": "string",
+			"default": "[{\"question\":\"How do I make a donation?\",\"answer\":\"Select a campaign, choose an amount, and complete the secure payment form. You can pay via credit card, PayPal, or bank transfer.\"},{\"question\":\"Is my donation tax-deductible?\",\"answer\":\"Yes, all donations are tax-deductible. You will receive a receipt via email for your records.\"},{\"question\":\"Can I set up a recurring donation?\",\"answer\":\"Absolutely. Choose the recurring option when making your donation to contribute monthly, quarterly, or yearly.\"},{\"question\":\"How do I track my donations?\",\"answer\":\"Create an account or log in to view your complete donation history, download receipts, and manage recurring contributions.\"}]"
+		},
+		"openFirst": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-donation-faqs",
+	"style": "file:./style.css"
+}

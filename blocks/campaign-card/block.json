@@ -1,0 +1,91 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/campaign-card",
+	"version": "1.0.0",
+	"title": "Campaign Card",
+	"category": "giftflow",
+	"icon": "star-filled",
+	"description": "A rich, clean campaign card with iOS-inspired design. Features hero progress display, glass overlay mode, and quick-donate presets.",
+	"keywords": ["campaign", "card", "donate", "fundraising", "landing", "hero", "featured"],
+	"supports": {
+		"color": {
+			"background": true,
+			"text": true,
+			"gradients": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		},
+		"border": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
+		},
+		"shadow": true,
+		"align": ["left", "center", "right", "wide", "full"],
+		"html": false
+	},
+	"attributes": {
+		"campaignId": {
+			"type": "number",
+			"default": 0
+		},
+		"cardStyle": {
+			"type": "string",
+			"default": "classic"
+		},
+		"showImage": {
+			"type": "boolean",
+			"default": true
+		},
+		"showExcerpt": {
+			"type": "boolean",
+			"default": true
+		},
+		"showProgress": {
+			"type": "boolean",
+			"default": true
+		},
+		"showPresetAmounts": {
+			"type": "boolean",
+			"default": false
+		},
+		"showButton": {
+			"type": "boolean",
+			"default": true
+		},
+		"buttonText": {
+			"type": "string",
+			"default": "Donate Now"
+		},
+		"buttonStyle": {
+			"type": "string",
+			"default": "filled"
+		},
+		"buttonFullWidth": {
+			"type": "boolean",
+			"default": false
+		},
+		"accentColor": {
+			"type": "string",
+			"default": ""
+		},
+		"overlayOpacity": {
+			"type": "integer",
+			"default": 60
+		},
+		"style": {
+			"type": "object",
+			"default": {}
+		}
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-campaign-card",
+	"style": "file:./style.css"
+}

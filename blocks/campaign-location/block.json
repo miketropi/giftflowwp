@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/campaign-location",
+	"version": "1.0.0",
+	"title": "Campaign Location",
+	"category": "giftflow",
+	"icon": "location",
+	"description": "Displays the location of a campaign on single campaign pages.",
+	"keywords": ["campaign", "location", "address", "map"],
+	"supports": {
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"align": ["left", "center", "right", "wide", "full"],
+		"html": false
+	},
+	"usesContext": ["postId", "postType"],
+	"attributes": {
+		"showMap": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-campaign-location",
+	"style": "file:./style.css"
+}

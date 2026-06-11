@@ -1,0 +1,41 @@
+.giftflow-campaign-status-bar__progress {
+	width: 100%;
+	height: 12px;
+	background-color: color-mix(in srgb, var(--wp--preset--color--base, #f0f0f0) 35%, #000 5%);
+	border-radius: 6px;
+	overflow: hidden;
+	margin-bottom: 0.75rem;
+}
+
+.giftflow-campaign-status-bar__progress-fill {
+	height: 100%;
+	background-color: var(--giftflow--progress-bar-color, var(--wp--preset--color--vivid-cyan-blue, #005ae0));
+	border-radius: 6px;
+	transition: width 0.3s ease;
+}
+
+.giftflow-campaign-status-bar__stats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	align-items: center;
+	font-size: 0.875rem;
+	font-family: inherit;
+	color: var(--wp--preset--color--contrast, #333);
+}
+
+.giftflow-campaign-status-bar__raised {
+	font-weight: 600;
+}
+
+.giftflow-campaign-status-bar__donors,
+.giftflow-campaign-status-bar__days {
+	color: var(--wp--preset--color--contrast-2, #666);
+}
+
+.giftflow-campaign-status-bar--empty {
+	padding: 1rem;
+	text-align: center;
+	color: var(--wp--preset--color--contrast-2, #666);
+	font-style: italic;
+}

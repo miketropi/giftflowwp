@@ -61,7 +61,7 @@ export default function useCampaign(args = {}) {
       })
       .then((data) => {
         if (isMounted) {
-          setCampaigns(data);
+          setCampaigns(Array.isArray(data) ? data : []);
           setLoading(false);
         }
       })

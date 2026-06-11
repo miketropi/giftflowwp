@@ -1,0 +1,28 @@
+.giftflow-campaign-location {
+	font-family: inherit;
+}
+
+.giftflow-campaign-location__inner {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.giftflow-campaign-location__icon {
+	width: 1.25rem;
+	height: 1.25rem;
+	flex-shrink: 0;
+	color: var(--wp--preset--color--primary, var(--wp--preset--color--vivid-cyan-blue, #3b82f6));
+}
+
+.giftflow-campaign-location__text {
+	font-size: 0.9375rem;
+	line-height: 1.5;
+	color: var(--wp--preset--color--contrast, #1f2937);
+}
+
+.giftflow-campaign-location__inner:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary, #3b82f6);
+	outline-offset: 2px;
+	border-radius: 4px;
+}

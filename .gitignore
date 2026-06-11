@@ -5,5 +5,10 @@ node_modules
 .env.local
 .env.development.local
 .env.test.local
+build/
 /vendor/
 !vendor-prefixed/
+giftflow.zip
+.design-drafts/*
+!.design-drafts/.gitkeep
+!.design-drafts/DESIGN.md

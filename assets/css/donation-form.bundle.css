@@ -326,7 +326,7 @@
   flex-shrink: 0;
 }
 .donation-form__radio-option-description {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--giftflow-text-light);
   line-height: 1.4;
   max-width: 85%;
@@ -1156,7 +1156,7 @@
   border-radius: var(--giftflow-border-radius);
   display: flex;
   gap: 0.7rem;
-  font-size: 0.8em;
+  font-size: 0.9rem;
   line-height: 1.5em;
   border: 1px solid var(--giftflow-border-color);
   color: #313131;

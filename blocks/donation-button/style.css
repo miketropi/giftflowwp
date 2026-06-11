@@ -1,0 +1,99 @@
+.giftflow-donation-button {
+	background: transparent !important;
+	border: none !important;
+	padding: 0 !important;
+	color: inherit !important;
+}
+
+.giftflow-donation-button__btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	cursor: pointer;
+	transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+	text-decoration: none;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+	position: relative;
+	overflow: hidden;
+	box-sizing: border-box;
+	font-family: inherit;
+	line-height: 1.5rem;
+	font-size: .9rem;
+	
+	background-color: var(--gf-btn-bg, #1e1e1e);
+	color: var(--gf-btn-fg, #ffffff);
+	border: var(--gf-btn-border, none);
+	border-radius: var(--gf-btn-radius, 8px);
+	padding: var(--gf-btn-padding, 14px 32px);
+	background-image: var(--gf-btn-bg-image, none);
+}
+
+.giftflow-donation-button__btn::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 60%);
+	pointer-events: none;
+}
+
+.giftflow-donation-button__btn:hover {
+	opacity: 1;
+}
+
+/* ── Hover colors (only when configured) ── */
+.giftflow-donation-button__btn--has-hover-color:hover {
+	background-color: var(--gf-hover-bg);
+	color: var(--gf-hover-fg);
+	border-color: var(--gf-hover-bg);
+	background-image: none;
+}
+
+/* ── Hover motion effects ── */
+.giftflow-donation-button__btn--hover-lift:hover {
+	transform: translateY(-2px);
+}
+
+.giftflow-donation-button__btn--hover-scale:hover {
+	transform: scale(1.03);
+}
+
+.giftflow-donation-button__btn--hover-glow:hover {
+	box-shadow: 0 8px 25px var(--gf-btn-bg, #1e1e1e) 55;
+}
+
+.giftflow-donation-button__btn:active {
+	transform: translateY(0);
+}
+
+.giftflow-donation-button__btn:focus-visible {
+	outline: 3px solid rgba(59, 130, 246, 0.5);
+	outline-offset: 3px;
+}
+
+/* ── Modifiers ── */
+.giftflow-donation-button__btn--full-width {
+	display: flex;
+	width: 100%;
+}
+
+.giftflow-donation-button__btn--disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.giftflow-donation-button__btn--disabled:hover {
+	transform: none;
+}
+
+.giftflow-donation-button__icon,
+.giftflow-donation-button__label {
+	display: inline-flex;
+	align-items: center;
+}
+
+.giftflow-donation-button__icon {
+	line-height: 0;
+}

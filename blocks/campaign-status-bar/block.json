@@ -1,0 +1,40 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/campaign-status-bar",
+	"version": "1.0.0",
+	"title": "Campaign Status Bar",
+	"category": "giftflow",
+	"icon": "chart-bar",
+	"description": "Displays a campaign's fundraising progress bar with raised amount, goal, donor count, and days remaining.",
+	"keywords": ["progress", "goal", "fundraising", "bar"],
+	"supports": {
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		},
+		"align": ["wide", "full"],
+		"html": false
+	},
+	"attributes": {
+		"campaignId": {
+			"type": "number",
+			"default": 0
+		},
+		"progressColor": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"usesContext": ["postId", "postType"],
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-campaign-status-bar",
+	"style": "file:./style.css"
+}

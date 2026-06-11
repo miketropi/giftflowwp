@@ -240,7 +240,7 @@ function giftflow_get_campaign_progress_percentage( $campaign_id ) {
 	$percentage = ( $raised_amount / floatval( $goal_amount ) ) * 100;
 
 	// Ensure percentage is between 0 and 100.
-	return min( 100, max( 0, round( $percentage, 2 ) ) );
+	return min( 100, max( 0, (int) round( $percentage ) ) );
 }
 
 /**
@@ -470,37 +470,34 @@ function giftflow_get_preset_donation_amounts_by_campaign( $campaign_id ) {
  */
 function giftflow_get_campaign_days_left( $campaign_id ) {
 	$start_date = get_post_meta( $campaign_id, '_start_date', true );
-	$end_date = get_post_meta( $campaign_id, '_end_date', true );
+	$end_date   = get_post_meta( $campaign_id, '_end_date', true );
 
 	if ( ! $start_date ) {
-		return 0;
+		return '';
 	}
 
-	// current date.
 	// phpcs:ignore WordPress.DateTime.CurrentTimeTimestamp.Requested
 	$current_date = current_time( 'timestamp' );
-	$start_date = strtotime( $start_date );
-	$end_date = strtotime( $end_date );
+	$start_timestamp = strtotime( $start_date );
+	$end_timestamp   = strtotime( $end_date );
 
-	// if start date is in the future, return false.
-	if ( $start_date > $current_date ) {
-		return false;
+	// Campaign hasn't started yet.
+	if ( $start_timestamp > $current_date ) {
+		return '';
 	}
 
-	// if end date empty, return ''.
+	// No end date set — open-ended campaign.
 	if ( ! $end_date ) {
 		return '';
 	}
 
-	// if end date is in the past, return true.
-	if ( $end_date < $current_date ) {
-		return true;
+	// Campaign has ended.
+	if ( $end_timestamp < $current_date ) {
+		return 0;
 	}
 
-	$days_left = ceil( ( $end_date - $current_date ) / 86400 );
-
-	// apply filter.
-	$days_left = apply_filters( 'giftflow_get_campaign_days_left', $days_left, $campaign_id );
+	// Calculate remaining days.
+	$days_left = (int) ceil( ( $end_timestamp - $current_date ) / DAY_IN_SECONDS );
 
 	return $days_left;
 }
@@ -1307,9 +1304,16 @@ function giftflow_donation_form_validate_recaptcha( $fields ) {
 function giftflow_prepare_campaign_status_bar_data( $post_id ) {
 	$post_id = intval( $post_id );
 
-	// Prepare template data.
+	// Prepare template data with defaults to prevent undefined key warnings.
 	$template_data = array(
-		'post_id' => $post_id,
+		'post_id'                => $post_id,
+		'goal_amount'            => 0,
+		'raised_amount'          => 0,
+		'progress_percentage'    => 0,
+		'days_left'              => '',
+		'donation_count'         => 0,
+		'raised_amount_formatted' => '',
+		'goal_amount_formatted'  => '',
 	);
 
 	// If post_id is valid, get campaign data.
@@ -1319,34 +1323,26 @@ function giftflow_prepare_campaign_status_bar_data( $post_id ) {
 		$progress_percentage = giftflow_get_campaign_progress_percentage( $post_id );
 		$days_left = giftflow_get_campaign_days_left( $post_id );
 
-		// Get donation count.
-		$donations = get_posts(
-			array(
-				'post_type' => 'donation',
-				'posts_per_page' => -1,
-				'fields' => 'ids',
-				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-				'meta_query' => array(
-					array(
-						'key' => '_campaign_id',
-						'value' => $post_id,
-						'compare' => '=',
-					),
-					array(
-						'key' => '_status',
-						'value' => 'completed',
-						'compare' => '=',
-					),
-				),
+		// Get unique donor count (not donation count).
+		global $wpdb;
+		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$donor_count = (int) $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(DISTINCT donor_pm.meta_value)
+				FROM {$wpdb->postmeta} campaign_pm
+				INNER JOIN {$wpdb->postmeta} status_pm ON campaign_pm.post_id = status_pm.post_id
+					AND status_pm.meta_key = '_status'
+					AND status_pm.meta_value = 'completed'
+				INNER JOIN {$wpdb->postmeta} donor_pm ON campaign_pm.post_id = donor_pm.post_id
+					AND donor_pm.meta_key = '_donor_id'
+					AND donor_pm.meta_value != ''
+				WHERE campaign_pm.meta_key = '_campaign_id'
+				AND campaign_pm.meta_value = %d",
+				$post_id
 			)
 		);
-		$donation_count = count( $donations );
-
-		$template_data['goal_amount'] = $goal_amount;
-		$template_data['raised_amount'] = $raised_amount;
-		$template_data['progress_percentage'] = $progress_percentage;
-		$template_data['days_left'] = $days_left;
-		$template_data['donation_count'] = $donation_count;
+		// phpcs:enable
+		$template_data['donation_count'] = $donor_count;
 		$template_data['raised_amount_formatted'] = giftflow_render_currency_formatted_amount( $raised_amount );
 		$template_data['goal_amount_formatted'] = giftflow_render_currency_formatted_amount( $goal_amount );
 	}

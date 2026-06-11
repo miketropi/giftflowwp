@@ -5,8 +5,13 @@
 			"dealerdirect/phpcodesniffer-composer-installer": true
 		},
 		"platform": {
-    	"php": "8.2.0"
-  	}
+			"php": "8.2.0"
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"GiftFlow\\": "src/"
+		}
 	},
 	"require": {
 		"stripe/stripe-php": "^19.3"
@@ -19,21 +24,22 @@
 		"brianhenryie/strauss": "^0.26.5"
 	},
 	"extra": {
-    "strauss": {
-      "namespace_prefix": "GiftFlow\\Vendor\\",
-      "classmap_prefix": "GiftFlow_Vendor_",
-      "targets": [
-        "stripe/stripe-php"
-      ]
-    }
-  },
+		"strauss": {
+			"namespace_prefix": "GiftFlow\\Vendor\\",
+			"classmap_prefix": "GiftFlow_Vendor_",
+			"targets": [
+				"stripe/stripe-php"
+			]
+		}
+	},
 	"scripts": {
 		"lint": "phpcs",
 		"lint:fix": "phpcbf",
+		"autoload-optimize": "@composer dump-autoload -o",
 		"build": [
-      "@composer install",
-      "vendor/bin/strauss",
+			"@composer install",
+			"vendor/bin/strauss",
 			"find vendor-prefixed -name \".git\" -type d -exec rm -rf {} +"
-    ]
+		]
 	}
 }

@@ -23,8 +23,11 @@ const blacklistRoots = [
   ".env.test.local",
   ".husky",
   "package-lock.json",
-  "phpcs.xml.dist",
-  "vendor",          
+  "vendor",
+  "scripts",
+  ".opencode",
+  ".design-drafts",
+  "AGENTS.md",
   "giftflow.zip",
 ];
 
@@ -34,6 +37,20 @@ const blacklistRoots = [
 const blacklistExtensions = [
   ".sh",
   ".DS_Store",
+  ".map",
+  ".md",
+];
+
+/**
+ * Blacklist individual files (not directories)
+ */
+const blacklistFiles = [
+  "package.json",
+  "composer.json",
+  "composer.lock",
+  "phpcs.xml.dist",
+  "webpack.config.js",
+  ".editorconfig",
 ];
 
 /**
@@ -77,6 +94,11 @@ function isBlacklisted(relativePath) {
 
   // Extension blacklist
   if (blacklistExtensions.includes(path.extname(p))) {
+    return true;
+  }
+
+  // File blacklist
+  if (blacklistFiles.some(f => p === f || p.startsWith(f + "/"))) {
     return true;
   }
 

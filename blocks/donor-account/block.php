@@ -1,6 +1,8 @@
 <?php
 /**
- * Donor Account Block.
+ * Donor Account Block — business logic & helpers.
+ *
+ * Block registration is handled by block.json (BlockRegistry).
  *
  * @package GiftFlow
  */
@@ -8,27 +10,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-/**
- * Register donor account block.
- *
- * @return void
- */
-function giftflow_donor_account_block() {
-	register_block_type(
-		'giftflow/donor-account',
-		array(
-			'api_version'     => 3,
-			'render_callback' => 'giftflow_donor_account_block_render',
-			'attributes'      => array(),
-		)
-	);
-}
-
-/**
- * Add action to register donor account block.
- */
-add_action( 'init', 'giftflow_donor_account_block' );
 
 /**
  * Render donor account UI (tabs + tab panel) or login form.
@@ -73,22 +54,6 @@ function giftflow_render_donor_account_interface( $root_page_id = 0, $attributes
 			)
 		);
 	}
-}
-
-/**
- * Render donor account block.
- *
- * @param array    $attributes Block attributes.
- * @param string   $content Block content.
- * @param WP_Block $block Block object.
- * @return string Block output.
- */
-function giftflow_donor_account_block_render( $attributes, $content, $block ) {
-	unset( $content, $block );
-
-	ob_start();
-	giftflow_render_donor_account_interface( 0, is_array( $attributes ) ? $attributes : array() );
-	return ob_get_clean();
 }
 
 /**
@@ -143,8 +108,6 @@ add_action(
 			'index.php?pagename=' . $slug . '&tab=$matches[1]',
 			'top'
 		);
-
-		flush_rewrite_rules();
 	}
 );
 
@@ -201,7 +164,7 @@ function giftflow_donor_account_dashboard_callback() {
 		'block/donor-account--dashboard.php',
 		array(
 			'current_user_id' => $current_user->ID,
-			'donor' => $donor,
+			'donor'           => $donor,
 		)
 	);
 }
@@ -284,10 +247,10 @@ function giftflow_donor_account_my_donations_callback() {
 
 	// Filter params from GET (donations filter form).
 	$filters = array(
-		'date_from'       => $filters_raw['_filter_date_from'] ?? '',
-		'date_to'         => $filters_raw['_filter_date_to'] ?? '',
-		'status'          => $filters_raw['_filter_status'] ?? '',
-		'payment_method'  => $filters_raw['_filter_payment_method'] ?? '',
+		'date_from'      => $filters_raw['_filter_date_from'] ?? '',
+		'date_to'        => $filters_raw['_filter_date_to'] ?? '',
+		'status'         => $filters_raw['_filter_status'] ?? '',
+		'payment_method' => $filters_raw['_filter_payment_method'] ?? '',
 	);
 
 	// Query donations by donor id (with optional filters).
@@ -388,15 +351,15 @@ function giftflow_donor_account_my_account_callback() {
 /**
  * Process account information form submission.
  *
- * @param int $user_id The user ID.
+ * @param int   $user_id The user ID.
  * @param array $post_data The post data.
  * @return array The result of the form submission.
  */
 function giftflow_process_account_form( $user_id, $post_data ) {
 	$user_email = get_user_by( 'id', $user_id )->user_email;
 	$donor_id   = giftflow_get_donor_id_by_email( $user_email );
-	$form_data = giftflow_sanitize_account_form_data( $post_data );
-	$errors    = giftflow_validate_account_form_data( $form_data );
+	$form_data  = giftflow_sanitize_account_form_data( $post_data );
+	$errors     = giftflow_validate_account_form_data( $form_data );
 
 	if ( empty( $errors ) ) {
 		$result = giftflow_update_donor_account( $user_id, $form_data, $donor_id );
@@ -423,7 +386,7 @@ function giftflow_process_account_form( $user_id, $post_data ) {
  * Process password change form submission
  *
  * @param WP_User $current_user The current user.
- * @param array $post_data The post data.
+ * @param array   $post_data The post data.
  * @return array The result of the form submission.
  */
 function giftflow_process_password_form( $current_user, $post_data = array() ) {
@@ -523,7 +486,7 @@ function giftflow_validate_account_form_data( $data ) {
 /**
  * Validate password form data
  *
- * @param array $data The form data.
+ * @param array   $data The form data.
  * @param WP_User $current_user The current user.
  * @return array The errors.
  */
@@ -550,9 +513,9 @@ function giftflow_validate_password_form_data( $data, $current_user ) {
 /**
  * Update donor account information
  *
- * @param int $user_id The user ID.
+ * @param int   $user_id The user ID.
  * @param array $data The form data.
- * @param int $donor_id The donor ID.
+ * @param int   $donor_id The donor ID.
  * @return array The result of the update.
  */
 function giftflow_update_donor_account( $user_id, $data, $donor_id ) {
@@ -606,7 +569,7 @@ function giftflow_update_donor_account( $user_id, $data, $donor_id ) {
 /**
  * Update user password
  *
- * @param int $user_id The user ID.
+ * @param int    $user_id The user ID.
  * @param string $new_password The new password.
  * @return bool The result of the update.
  */

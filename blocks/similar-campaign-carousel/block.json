@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/similar-campaign-carousel",
+	"version": "1.0.0",
+	"title": "Similar Campaign Carousel",
+	"category": "giftflow",
+	"icon": "slides",
+	"description": "Displays campaigns similar to the current campaign in a responsive carousel slider. Automatically matches campaigns by shared taxonomy terms.",
+	"keywords": ["similar", "related", "carousel", "slider", "campaigns"],
+	"supports": {
+		"align": ["wide", "full"],
+		"html": false
+	},
+	"usesContext": ["postId", "postType"],
+	"attributes": {
+		"perPage": { "type": "number", "default": 9 },
+		"columns": { "type": "integer", "default": 3 },
+		"imageHeight": { "type": "integer", "default": 240 },
+		"showProgress": { "type": "boolean", "default": true },
+		"showMeta": { "type": "boolean", "default": true },
+		"autoplay": { "type": "boolean", "default": false },
+		"autoplayDelay": { "type": "number", "default": 4000 },
+		"loop": { "type": "boolean", "default": true },
+		"progressColor": { "type": "string", "default": "" },
+		"eyebrow": { "type": "string", "default": "" },
+		"heading": { "type": "string", "default": "Similar Campaigns" },
+		"description": { "type": "string", "default": "" },
+		"headerAlign": { "type": "string", "default": "center" },
+		"excludeCurrent": { "type": "boolean", "default": true }
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-similar-campaign-carousel",
+	"viewScript": "giftflow-block-similar-campaign-carousel-view",
+	"style": "file:./style.css"
+}

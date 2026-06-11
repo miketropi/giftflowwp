@@ -1,8 +1,10 @@
 /**
  * GiftFlow Common JS
  */
+import '../css/common.scss';
+import '../css/donation-form.scss';
 import './util/comment-form.js';
-import './util/modal.js';
+import GiftFlowModal from './util/modal.js';
 import './util/campaign-single.js'; 
 import './util/share-block.js';
 import './util/campaign-images-gallery.js';
@@ -11,9 +13,14 @@ import { replaceContentBySelector, initClickToCopyByClass } from './util/helpers
 import donationButton_Handle from './util/donation-button.js';
 import { createGiftflowLightbox } from './util/gfw-image-lightbox.js';
 
+// Donation form — defines window.donationForm_Class
+import './forms.js';
+
 ((w, $) => { 
   "use strict"
   const { ajax_url, nonce } = giftflow_common;
+
+  w.GiftFlowModal = GiftFlowModal;
 
   w.giftflow = w.giftflow || {}
   const gfw = w.giftflow 
@@ -62,6 +69,31 @@ import { createGiftflowLightbox } from './util/gfw-image-lightbox.js';
 
   gfw.donationButton_Handle = donationButton_Handle;
 
+  gfw.copyShareUrl = function (btn) {
+    const url = btn.dataset.url;
+    if (!url) return;
+
+    navigator.clipboard.writeText(url).then(() => {
+      const copied = btn.parentElement.querySelector('.giftflow-share__copied');
+      if (copied) {
+        copied.hidden = false;
+        setTimeout(() => { copied.hidden = true; }, 2000);
+      }
+    }).catch(() => {
+      const input = document.createElement('input');
+      input.value = url;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      const copied = btn.parentElement.querySelector('.giftflow-share__copied');
+      if (copied) {
+        copied.hidden = false;
+        setTimeout(() => { copied.hidden = true; }, 2000);
+      }
+    });
+  };
+
   // lightbox (vanilla overlay — avoids PhotoSwipe globals / `.pswp` clashes with other plugins)
   gfw.lightbox_initialize = function() {
     const galleryElements = document.querySelector('.giftflow-campaign-single-images:not(.giftflow-campaign-single-images--placeholder)');
@@ -94,6 +126,30 @@ import { createGiftflowLightbox } from './util/gfw-image-lightbox.js';
   document.addEventListener('DOMContentLoaded', function() {
     gfw.lightbox_initialize();
     initClickToCopyByClass({ className: 'gfw-click-to-copy' });
+    initFaqAccordion();
   });
+
+  function initFaqAccordion() {
+    const containers = document.querySelectorAll('.giftflow-donation-faqs');
+    containers.forEach(function (container) {
+      container.addEventListener('click', function (e) {
+        const btn = e.target.closest('.giftflow-donation-faqs__question');
+        if (!btn) return;
+        const item = btn.closest('.giftflow-donation-faqs__item');
+        if (!item) return;
+        const isOpen = item.classList.contains('is-open');
+        item.classList.toggle('is-open', !isOpen);
+        btn.setAttribute('aria-expanded', String(!isOpen));
+        const answer = item.querySelector('.giftflow-donation-faqs__answer');
+        if (answer) {
+          answer.setAttribute('aria-hidden', String(isOpen));
+          if (!isOpen) {
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+            setTimeout(function () { answer.style.maxHeight = ''; }, 300);
+          }
+        }
+      });
+    });
+  }
 
 })(window, jQuery)

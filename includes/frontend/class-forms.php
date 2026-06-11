@@ -40,8 +40,14 @@ class Forms extends Base {
 	 * Enqueue required scripts and styles
 	 */
 	public function enqueue_scripts() {
-		// donation-form.bundle.css.
-		wp_enqueue_style( 'giftflow-donation-form', $this->get_plugin_url() . 'assets/css/donation-form.bundle.css', array(), $this->get_version() );
+		$new_css    = $this->get_plugin_dir() . 'build/frontend-common.css';
+		$legacy_css = $this->get_plugin_dir() . 'assets/css/donation-form.bundle.css';
+
+		if ( file_exists( $new_css ) ) {
+			wp_enqueue_style( 'giftflow-donation-form', $this->get_plugin_url() . 'build/frontend-common.css', array(), $this->get_version() );
+		} elseif ( file_exists( $legacy_css ) ) {
+			wp_enqueue_style( 'giftflow-donation-form', $this->get_plugin_url() . 'assets/css/donation-form.bundle.css', array(), $this->get_version() );
+		}
 
 		// forms.bundle.js.
 		wp_enqueue_script( 'giftflow-donation-forms', $this->get_plugin_url() . 'assets/js/forms.bundle.js', array( 'jquery' ), $this->get_version(), true );

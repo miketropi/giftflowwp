@@ -1,0 +1,48 @@
+.giftflow-share {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0.625rem;
+	font-family: inherit;
+}
+
+.giftflow-share__title {
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--wp--preset--color--contrast, #333);
+	margin: 0;
+}
+
+.giftflow-share__btns {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: .5rem 1rem;
+}
+
+.giftflow-share__btn {
+	display: inline-flex;
+	align-items: center;
+	padding: 0;
+	border: none;
+	background: transparent;
+	color: var(--wp--preset--color--contrast-2, #666);
+	font-size: 0.8125rem;
+	font-weight: 500;
+	cursor: pointer;
+	text-decoration: none;
+	transition: color 0.2s ease, background 0.2s ease;
+}
+
+.giftflow-share__btn:hover {
+	color: var(--wp--preset--color--contrast, #111);
+	background: var(--wp--preset--color--base, #f3f4f6);
+}
+
+.giftflow-share__copied {
+	font-size: 0.75rem;
+	color: var(--wp--preset--color--vivid-cyan-blue, #005ae0);
+	font-weight: 500;
+	margin-left: 0.25rem;
+}
+

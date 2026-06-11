@@ -1,38 +1,65 @@
+import '../../assets/css/block-campaign-status-bar.scss';
 import { registerBlockType } from '@wordpress/blocks';
-import ServerSideRender from '@wordpress/server-side-render';
-import { useBlockProps } from '@wordpress/block-editor';
-import { Disabled } from '@wordpress/components';
-const { useSelect } = wp.data;
-
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { PanelBody, ColorPalette, BaseControl } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
+import { ensureShimmerStyles, useCampaignSelector } from '../_editor-utils';
 
 registerBlockType('giftflow/campaign-status-bar', {
     apiVersion: 3,
-    title: 'Campaign Status Bar',
-    icon: 'block-default',
+    title: __('Campaign Status Bar', 'giftflow'),
+    icon: 'chart-bar',
     category: 'giftflow',
     attributes: {
-        __editorPostId: {
-            type: 'number',
-            default: 0,
-        },
+        campaignId: { type: 'number', default: 0 },
+        progressColor: { type: 'string', default: '' },
     },
-    usesContext: ['postId'],
+    usesContext: ['postId', 'postType'],
     edit: (props) => {
-        const { attributes, ...rest } = props;
-        const blockProps = useBlockProps();
+        const { attributes, setAttributes } = props;
+        const blockProps = useBlockProps({ className: 'giftflow-campaign-status-bar' });
+        ensureShimmerStyles();
 
-        // if context.postId is 0 or empty, set attributes.__editorPostId to 0
-        attributes.__editorPostId = rest?.context?.postId ?? 0;
-        
+        const { selectedCampaign: selected, CampaignSelector } = useCampaignSelector({
+            defaultLabel: __('Auto-detect from current post', 'giftflow'),
+            showSelected: true,
+            selectedId: attributes.campaignId || 0,
+        });
+        const fillColor = attributes.progressColor || '';
 
         return (
-            <div {...blockProps}>
-                <Disabled>
-                    <ServerSideRender 
-                        block="giftflow/campaign-status-bar" 
-                        attributes={ attributes } />
-                </Disabled>
-            </div>
+            <>
+                <InspectorControls>
+                    <PanelBody title={__('Campaign Settings', 'giftflow')} initialOpen={true}>
+                        <CampaignSelector
+                            value={attributes.campaignId || 0}
+                            onChange={(v) => setAttributes({ campaignId: v })}
+                            help={__('Select a campaign or use auto-detect.', 'giftflow')}
+                        />
+                    </PanelBody>
+                    <PanelBody title={__('Style', 'giftflow')} initialOpen={false}>
+                        <BaseControl label={__('Progress bar color', 'giftflow')}>
+                            <ColorPalette value={attributes.progressColor} onChange={v => setAttributes({ progressColor: v || '' })} disableCustomColors={false} clearable={true} />
+                        </BaseControl>
+                    </PanelBody>
+                </InspectorControls>
+                <div {...blockProps}>
+                    {selected && (
+                        <div style={{ fontSize: 11, fontWeight: 500, color: '#3b82f6', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12" /></svg>
+                            {selected.title.rendered}
+                        </div>
+                    )}
+                    <div className="giftflow-campaign-status-bar__progress">
+                        <div className="giftflow-campaign-status-bar__progress-fill" style={{ width: '42%', ...(fillColor ? { backgroundColor: fillColor } : {}) }}></div>
+                    </div>
+                    <div className="giftflow-campaign-status-bar__stats">
+                        <span className="giftflow-campaign-status-bar__raised">$4,200 {__('raised of', 'giftflow')} $10,000</span>
+                        <span className="giftflow-campaign-status-bar__donors">12 {__('donors', 'giftflow')}</span>
+                        <span className="giftflow-campaign-status-bar__days">18 {__('days left', 'giftflow')}</span>
+                    </div>
+                </div>
+            </>
         );
     },
 });

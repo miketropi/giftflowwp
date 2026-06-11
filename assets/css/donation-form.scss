@@ -417,9 +417,9 @@ $mobile: 480px;
   }
 
   &__radio-option-description {
-    font-size: 0.875rem;
+    font-size: 1rem;
     color: $text-light;
-    line-height: 1.4;
+    // line-height: 1.4;
     max-width: 85%;
     text-transform: none;
     letter-spacing: 0;
@@ -709,6 +709,8 @@ $mobile: 480px;
       align-items: center;
       gap: 0.5rem;
       color: $text-color;
+      line-height: normal;
+      font-weight: bold;
 
       svg {
         stroke: $text-color;
@@ -906,7 +908,7 @@ $mobile: 480px;
     
     p {
       margin: 0;
-      font-size: 0.9rem;
+      // font-size: 0.9rem;
       // color: $text-light;
       display: flex;
       align-items: center;
@@ -1093,10 +1095,16 @@ $mobile: 480px;
 .donation-form {
   &__payment-method-description {
     // margin-top: 0.75rem;
-    padding: 1rem;
+    padding: 0 1rem;
     background-color: #f9f9f9;
     border-radius: $border-radius;
     font-size: 0.875rem;
+
+    &::after, &::before {
+      content: "";
+      display: inline-block;
+      width: 100%;
+    }
 
     // display: none;
     // color: $text-light;
@@ -1222,9 +1230,9 @@ $mobile: 480px;
     
     p {
       margin: 0;
-      font-size: 0.8125rem;
-      color: #313131;
-      line-height: 1.4;
+      // font-size: 0.8125rem;
+      // color: #313131;
+      // line-height: 1.4;
     }
 
     &--warning {
@@ -1374,7 +1382,7 @@ $mobile: 480px;
     border-radius: $border-radius;
     display: flex;
     gap: .7rem;
-    font-size: 0.8em;
+    font-size: 1rem;
     line-height: 1.5em;
     border: 1px solid $border-color;
     color: #313131;

@@ -1,0 +1,62 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/thank-donor",
+	"version": "1.0.0",
+	"title": "Thank Donor",
+	"category": "giftflow",
+	"icon": "yes-alt",
+	"description": "Displays a thank-you message after a donor completes a donation, with configurable heading, message, and CTA button.",
+	"keywords": ["thank you", "confirmation", "donor", "success"],
+	"supports": {
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		},
+		"border": {
+			"radius": true
+		},
+		"align": ["wide", "full"],
+		"html": false
+	},
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": "Thank You!"
+		},
+		"message": {
+			"type": "string",
+			"default": "Your donation has been received and will make a real difference. You'll receive a confirmation email shortly."
+		},
+		"accountNotice": {
+			"type": "string",
+			"default": "We've created an account for you. Check your email for login details to track your donations and manage your account."
+		},
+		"showAccountNotice": {
+			"type": "boolean",
+			"default": true
+		},
+		"buttonText": {
+			"type": "string",
+			"default": "View My Donations"
+		},
+		"buttonUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"showButton": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-thank-donor",
+	"style": "file:./style.css"
+}
