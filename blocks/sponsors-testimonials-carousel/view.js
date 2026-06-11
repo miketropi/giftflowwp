@@ -2,6 +2,38 @@ import Swiper from 'swiper';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 
+function revealCards( el, delay = 0 ) {
+	const cards = el.querySelectorAll( '.giftflow-st-carousel__card:not(.is-visible)' );
+	if ( ! cards.length ) {
+		return;
+	}
+	cards.forEach( ( card, i ) => {
+		setTimeout( () => {
+			card.classList.add( 'is-visible' );
+		}, delay + i * 100 );
+	} );
+}
+
+function observeScroll( el ) {
+	if ( el.dataset.gfStObserved ) {
+		return;
+	}
+	el.dataset.gfStObserved = '1';
+
+	const observer = new IntersectionObserver(
+		( entries ) => {
+			entries.forEach( ( entry ) => {
+				if ( entry.isIntersecting ) {
+					revealCards( entry.target, 200 );
+					observer.unobserve( entry.target );
+				}
+			} );
+		},
+		{ threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+	);
+	observer.observe( el );
+}
+
 function initSwiper( el ) {
 	if ( el.classList.contains( 'swiper-initialized' ) ) {
 		return;
@@ -16,7 +48,6 @@ function initSwiper( el ) {
 	} catch ( e ) {
 		return;
 	}
-	console.log(cfg)
 	new Swiper( el, {
 		modules: [ Navigation, Pagination, Autoplay ],
 		...cfg,
@@ -30,20 +61,21 @@ function initSwiper( el ) {
 			  }
 			: false,
 	} );
+
+	// Start scroll-triggered entrance animation.
+	observeScroll( el );
 }
 
 function initAll() {
 	document.querySelectorAll( '.giftflow-st-carousel__swiper' ).forEach( initSwiper );
 }
 
-// Fire immediately if DOM is ready, otherwise wait.
 if ( document.readyState === 'loading' ) {
 	document.addEventListener( 'DOMContentLoaded', initAll );
 } else {
 	initAll();
 }
 
-// Also observe for dynamically inserted blocks (e.g. AJAX, page builders).
 if ( window.MutationObserver ) {
 	const observer = new MutationObserver( ( mutations ) => {
 		for ( const m of mutations ) {
