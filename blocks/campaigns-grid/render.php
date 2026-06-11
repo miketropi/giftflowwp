@@ -27,7 +27,17 @@ $gf_progress_color = $attributes['progressColor'] ?? '';
 $gf_extra_class    = sanitize_html_class( $attributes['customClass'] ?? '' );
 $gf_progress_color = $attributes['progressColor'] ?? '';
 
-$gf_paged = max( 1, (int) get_query_var( 'paged', 1 ) );
+$gf_paged        = max( 1, (int) get_query_var( 'paged', 1 ) );
+$gf_inherit_tax  = (bool) ( $attributes['inheritCampaignTaxonomy'] ?? true );
+
+// On campaign-tax term archives, auto-filter by the viewed term slug
+// when no explicit category is set in the block.
+if ( '' === $gf_category && $gf_inherit_tax && is_tax( 'campaign-tax' ) ) {
+	$gf_term = get_queried_object();
+	if ( $gf_term instanceof \WP_Term && 'campaign-tax' === $gf_term->taxonomy ) {
+		$gf_category = $gf_term->slug;
+	}
+}
 
 $gf_query_args = array(
 	'post_type'      => 'campaign',
@@ -39,13 +49,23 @@ $gf_query_args = array(
 );
 
 if ( ! empty( $gf_category ) ) {
-	$gf_query_args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
-		array(
-			'taxonomy' => 'campaign-tax',
-			'field'    => 'term_id',
-			'terms'    => absint( $gf_category ),
-		),
-	);
+	if ( is_numeric( $gf_category ) ) {
+		$gf_query_args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+			array(
+				'taxonomy' => 'campaign-tax',
+				'field'    => 'term_id',
+				'terms'    => absint( $gf_category ),
+			),
+		);
+	} else {
+		$gf_query_args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+			array(
+				'taxonomy' => 'campaign-tax',
+				'field'    => 'slug',
+				'terms'    => sanitize_text_field( $gf_category ),
+			),
+		);
+	}
 }
 
 if ( ! empty( $gf_search ) ) {
