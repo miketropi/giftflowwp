@@ -27,6 +27,8 @@ const blacklistRoots = [
   "scripts",
   ".opencode",
   ".design-drafts",
+  ".codegraph",
+  ".cursor",
   "AGENTS.md",
   "giftflow.zip",
 ];

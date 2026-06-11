@@ -4,7 +4,7 @@
     'name' => '__root__',
     'pretty_version' => 'dev-develop',
     'version' => 'dev-develop',
-    'reference' => '33fbd0e47bea4dab7bf6fb78230820fa028acd83',
+    'reference' => '59bf67f091a70464d8f5db51da2649275afd8819',
     'type' => 'library',
     'install_path' => __DIR__ . '/../',
     'aliases' => 
