@@ -68,7 +68,7 @@
 
 .giftflow-campaign-card__image {
 	width: 100%;
-	height: 100%;
+	height: 100% !important;
 	object-fit: cover;
 	display: block;
 }
@@ -122,7 +122,7 @@
 	padding: 1.5rem;
 	display: flex;
 	flex-direction: column;
-	gap: 1.25rem;
+	/* gap: 1.25rem; */
 }
 
 /* ---------- Category ---------- */
@@ -138,6 +138,7 @@
 	border-radius: 99px;
 	background: var(--gf-cc-accent-soft, rgba(37,99,235,0.08));
 	color: var(--gf-cc-accent, #2563eb);
+	margin-block-end: clamp(0.85rem, 2.2vw, 1.2rem);
 }
 
 .giftflow-campaign-card--overlay .giftflow-campaign-card__category {
@@ -322,6 +323,7 @@
 	background: var(--gf-cc-fill-track, #e5e5ea);
 	margin: 0.15rem 0;
 	border: none;
+	margin-block: 1rem !important;
 }
 
 .giftflow-campaign-card--overlay .giftflow-campaign-card__divider {

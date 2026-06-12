@@ -18,6 +18,7 @@ registerBlockType('giftflow/campaigns-carousel', {
         category: { type: 'string', default: '' },
         columns: { type: 'integer', default: 3 },
         imageHeight: { type: 'integer', default: 240 },
+        imageRatio: { type: 'string', default: 'auto' },
         showProgress: { type: 'boolean', default: true },
         showMeta: { type: 'boolean', default: true },
         autoplay: { type: 'boolean', default: false },
@@ -34,7 +35,15 @@ registerBlockType('giftflow/campaigns-carousel', {
         const a = attributes;
         const fillColor = a.progressColor || '#2563eb';
         const imgH = a.imageHeight || 240;
-        const blockProps = useBlockProps({ className: 'giftflow-carousel', style: { '--gf-carousel-img-height': imgH + 'px' } });
+        const imgRatio = a.imageRatio || 'auto';
+        const useRatio = imgRatio && imgRatio !== 'auto';
+        const imgStyle = useRatio
+            ? { height: 'auto', aspectRatio: imgRatio }
+            : { height: imgH };
+        const blockProps = useBlockProps({
+            className: 'giftflow-carousel' + (useRatio ? ' giftflow-carousel--has-ratio' : ''),
+            style: { '--gf-carousel-img-height': useRatio ? 'auto' : imgH + 'px', '--gf-carousel-img-ratio': useRatio ? imgRatio : 'auto' },
+        });
         ensureShimmerStyles();
 
         const [catOpts, setCatOpts] = useState([{ label: __('All categories', 'giftflow'), value: '' }]);
@@ -66,7 +75,20 @@ registerBlockType('giftflow/campaigns-carousel', {
                     </PanelBody>
                     <PanelBody title={__('Layout', 'giftflow')} initialOpen={false}>
                         <RangeControl label={__('Columns (desktop)', 'giftflow')} value={a.columns} onChange={v => setAttributes({ columns: v })} min={1} max={5} />
-                        <RangeControl label={__('Image height', 'giftflow')} value={imgH} onChange={v => setAttributes({ imageHeight: v })} min={150} max={400} step={10} />
+                        <SelectControl
+                            label={__('Image ratio', 'giftflow')}
+                            value={imgRatio}
+                            options={[
+                                { label: __('Auto (fixed height)', 'giftflow'), value: 'auto' },
+                                { label: __('Square 1:1', 'giftflow'), value: '1/1' },
+                                { label: __('Standard 4:3', 'giftflow'), value: '4/3' },
+                                { label: __('Widescreen 16:9', 'giftflow'), value: '16/9' },
+                                { label: __('Classic 3:2', 'giftflow'), value: '3/2' },
+                                { label: __('Portrait 2:3', 'giftflow'), value: '2/3' },
+                            ]}
+                            onChange={v => setAttributes({ imageRatio: v })}
+                        />
+                        {!useRatio && <RangeControl label={__('Image height', 'giftflow')} value={imgH} onChange={v => setAttributes({ imageHeight: v })} min={150} max={400} step={10} />}
                     </PanelBody>
                     <PanelBody title={__('Content', 'giftflow')} initialOpen={false}>
                         <ToggleControl label={__('Show progress', 'giftflow')} checked={a.showProgress} onChange={v => setAttributes({ showProgress: v })} />
@@ -95,7 +117,7 @@ registerBlockType('giftflow/campaigns-carousel', {
                         {[0, 1, 2].map(i => (
                             <div key={i} style={{ flex: '0 0 calc(33.333% - 14px)', borderRadius: 16, overflow: 'hidden', border: '1px solid #e5e7eb', background: '#fff' }}>
                                 <div style={{ position: 'relative' }}>
-                                    <ShimmerBox height={imgH} style={{ borderRadius: 0 }} />
+                                    <ShimmerBox height={useRatio ? undefined : imgH} style={{ borderRadius: 0, ...(useRatio ? { aspectRatio: imgRatio, height: 'auto' } : {}) }} />
                                     <div style={{ position: 'absolute', top: 12, left: 12, padding: '4px 10px', background: 'rgba(255,255,255,0.9)', borderRadius: 6, fontSize: 11, fontWeight: 600, color: fillColor }}>{__('Category', 'giftflow')}</div>
                                 </div>
                                 <div style={{ padding: '18px 20px 20px' }}>

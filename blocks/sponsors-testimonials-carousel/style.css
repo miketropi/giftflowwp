@@ -26,6 +26,12 @@
 	transform: translateY(0);
 }
 
+html:not(.js) .giftflow-st-carousel__card {
+	opacity: 1;
+	transform: none;
+	transition: none;
+}
+
 /* ---------- Swiper core structural rules (fallback if swiper/css not loaded) ---------- */
 
 .giftflow-sponsors-testimonials-carousel .swiper {
@@ -141,7 +147,7 @@
 .giftflow-st-carousel__swiper {
 	overflow: hidden;
 	padding: 4px 4px 3.5rem;
-	margin: -4px -4px -3.5rem;
+	/* margin: -4px -4px -3.5rem; */
 }
 
 /* Equal-height slides */
@@ -150,8 +156,8 @@
 }
 
 .giftflow-st-carousel__swiper .swiper-slide {
-	display: flex;
-	/* padding: 0 0.5rem; */
+	/* display: flex;
+	padding: 0 0.5rem; */
 	box-sizing: border-box;
 }
 
@@ -252,7 +258,7 @@
 	margin: 0;
 }
 
-.giftflow-st-carousel__quote::before {
+/* .giftflow-st-carousel__quote::before {
 	content: '';
 	position: absolute;
 	left: 0;
@@ -261,7 +267,7 @@
 	width: 3px;
 	background: var(--gf-st-accent);
 	border-radius: 2px;
-}
+} */
 
 /* ---------- Metrics bar ---------- */
 

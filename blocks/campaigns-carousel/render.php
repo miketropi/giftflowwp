@@ -15,6 +15,8 @@ $gf_order     = in_array( $attributes['order'] ?? 'DESC', array( 'ASC', 'DESC' )
 $gf_columns   = max( 1, min( 5, (int) ( $attributes['columns'] ?? 3 ) ) );
 $gf_category  = sanitize_text_field( $attributes['category'] ?? '' );
 $gf_img_ht    = max( 150, min( 400, (int) ( $attributes['imageHeight'] ?? 240 ) ) );
+$gf_img_ratio  = $attributes['imageRatio'] ?? 'auto';
+$gf_use_ratio  = $gf_img_ratio && 'auto' !== $gf_img_ratio;
 $gf_show_prog = $attributes['showProgress'] ?? true;
 $gf_show_meta = $attributes['showMeta'] ?? true;
 $gf_autoplay  = $attributes['autoplay'] ?? false;
@@ -75,10 +77,14 @@ $gf_config = wp_json_encode(
 );
 
 $gf_accent           = $gf_p_color ? '--gf-carousel-accent:' . esc_attr( $gf_p_color ) . ';' : '';
+$gf_img_style         = '--gf-carousel-img-height:' . ( $gf_use_ratio ? 'auto' : ( $gf_img_ht . 'px' ) ) . ';';
+$gf_img_style        .= '--gf-carousel-img-ratio:' . esc_attr( $gf_use_ratio ? $gf_img_ratio : 'auto' ) . ';';
+$gf_modifier          = $gf_use_ratio ? ' giftflow-carousel--has-ratio' : '';
+
 $block_wrapper_attrs = get_block_wrapper_attributes(
 	array(
-		'class' => 'giftflow-carousel',
-		'style' => '--gf-carousel-img-height:' . $gf_img_ht . 'px;' . $gf_accent,
+		'class' => 'giftflow-carousel' . $gf_modifier,
+		'style' => $gf_img_style . $gf_accent,
 	)
 );
 

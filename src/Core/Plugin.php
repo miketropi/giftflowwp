@@ -162,6 +162,9 @@ class Plugin {
 				\GiftFlow\Gateways\GatewayRegistry::class      => function ( Container $c ) {
 					return new \GiftFlow\Gateways\GatewayRegistry( $c );
 				},
+				\GiftFlow\Patterns\PatternRegistry::class    => function ( Container $c ) {
+					return new \GiftFlow\Patterns\PatternRegistry( $c );
+				},
 			)
 		);
 
@@ -213,6 +216,7 @@ class Plugin {
 			\GiftFlow\Blocks\BlockRegistry::class,
 			\GiftFlow\Settings\SettingsRegistry::class,
 			\GiftFlow\Gateways\GatewayRegistry::class,
+			\GiftFlow\Patterns\PatternRegistry::class,
 		);
 
 		foreach ( $modules as $class ) {

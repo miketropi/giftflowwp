@@ -19,6 +19,7 @@
 		"category": { "type": "string", "default": "" },
 		"columns": { "type": "integer", "default": 3 },
 		"imageHeight": { "type": "integer", "default": 240 },
+		"imageRatio": { "type": "string", "default": "auto" },
 		"showProgress": { "type": "boolean", "default": true },
 		"showMeta": { "type": "boolean", "default": true },
 		"autoplay": { "type": "boolean", "default": false },

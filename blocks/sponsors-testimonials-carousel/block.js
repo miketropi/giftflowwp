@@ -97,8 +97,12 @@ registerBlockType( 'giftflow/sponsors-testimonials-carousel', {
 		const rowStyle = { display: 'flex', alignItems: 'flex-start', gap: 6, marginBottom: 4 };
 		const rowInputStyle = { flex: 1 };
 
-		const displayItems = testimonials.length > 0 ? testimonials : [ { _id: 'empty' } ];
-		const cardW = columns > 1 ? `calc(${ 100 / columns }% - ${ ( ( columns - 1 ) * 16 ) / columns }px)` : '100%';
+		const displayItems = testimonials.length > 0
+			? testimonials
+			: Array.from( { length: columns }, ( _, i ) => ( { _id: 'empty-' + i } ) );
+		const cardPct = Math.round( ( 100 / columns ) * 100 ) / 100;
+		const cardGap = Math.round( ( ( columns - 1 ) * 16 ) / columns * 100 ) / 100;
+		const cardW = columns > 1 ? `calc(${ cardPct }% - ${ cardGap }px)` : '100%';
 
 		return (
 			<>

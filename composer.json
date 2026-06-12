@@ -10,7 +10,8 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"GiftFlow\\": "src/"
+			"GiftFlow\\": "src/",
+			"GiftFlow\\Patterns\\": "includes/patterns/"
 		}
 	},
 	"require": {

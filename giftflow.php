@@ -43,17 +43,24 @@ if ( file_exists( $vendor_autoload ) ) {
 } else {
 	spl_autoload_register(
 		function ( string $class_name ) {
-			$prefix    = 'GiftFlow\\';
-			$prefix_len = strlen( $prefix );
-			if ( strncmp( $class_name, $prefix, $prefix_len ) !== 0 ) {
-				return;
-			}
+			$mappings = array(
+				'GiftFlow\\Patterns\\' => 'includes/patterns/',
+				'GiftFlow\\' => 'src/',
+			);
 
-			$relative = substr( $class_name, $prefix_len );
-			$file     = GIFTFLOW_PLUGIN_DIR . 'src/' . str_replace( '\\', '/', $relative ) . '.php';
+			foreach ( $mappings as $prefix => $dir ) {
+				$prefix_len = strlen( $prefix );
+				if ( strncmp( $class_name, $prefix, $prefix_len ) !== 0 ) {
+					continue;
+				}
 
-			if ( file_exists( $file ) ) {
-				require_once $file;
+				$relative = substr( $class_name, $prefix_len );
+				$file     = GIFTFLOW_PLUGIN_DIR . $dir . str_replace( '\\', '/', $relative ) . '.php';
+
+				if ( file_exists( $file ) ) {
+					require_once $file;
+					return;
+				}
 			}
 		}
 	);
