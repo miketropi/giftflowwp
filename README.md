@@ -1,516 +1,406 @@
-# GiftFlow
+=== GiftFlow – Donation & Fundraising ===
+Contributors: bearsthemes
+Author: Beplus
+Author URI: https://beplusthemes.com
+Tags: donations, fundraising, campaigns, charity, nonprofit
+Requires at least: 6.0
+Tested up to: 7.1
+Requires PHP: 7.4
+Stable tag: 1.1.2
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 A comprehensive WordPress plugin for managing donations, donors, and campaigns with modern features and extensible architecture.
 
-## Description
+== Description ==
+
+[Landing Page](https://giftflow.beplus-agency.cloud/) | [Live Demo](https://giftflow.beplusthemes.com/)
 
 GiftFlow is a powerful WordPress plugin designed to help organizations manage donations, donors, and fundraising campaigns efficiently. Built with modern WordPress standards and an extensible architecture, GiftFlow provides everything you need to accept donations, track campaigns, and manage donor relationships.
 
-## Features
+= Key Features =
 
-### Donation Management
-- Custom post types for donations, donors, and campaigns
-- Comprehensive donor profiles with contact information
-- Donation history tracking
-- Transaction details and status management
-- Support for one-time and recurring donations
-- Centralized donation CRUD operations via `Donations` class
-- Donation status management (pending, completed, failed, refunded)
+* **Donation Management**
+  * Custom post types for donations, donors, and campaigns
+  * Comprehensive donor profiles with contact information
+  * Donation history tracking
+  * Transaction details and status management
+  * Support for one-time and recurring donations
 
-### Payment Processing
-- **Stripe** - Direct integration using Stripe PHP SDK
-  - Secure credit/debit card processing
-  - PCI compliant
-  - Payment Intent API support
-  - Webhook integration for real-time status updates
-- **PayPal** - Direct integration using PayPal JS SDK v6
-  - PayPal Orders API v2 integration
-  - Smart Buttons for seamless payment experience
-  - On-site payment processing (no redirect)
-  - Access token caching for improved performance
-  - Webhook integration for payment notifications
-- **Direct Bank Transfer** - Manual payment option
-  - Bank transfer instructions
-  - Manual payment verification
-- Secure payment processing with PCI compliance
-- Real-time payment status updates
-- Webhook integration for all payment gateways
+* **Payment Processing**
+  * Multiple payment gateway support (Stripe, PayPal)
+  * Secure payment processing with PCI compliance
+  * Direct bank transfer option
+  * Real-time payment status updates
+  * Webhook integration for payment notifications
 
-### Campaign Management
-- Create and manage unlimited donation campaigns
-- Set campaign goals and track progress in real-time
-- Campaign-specific donation forms
-- Campaign analytics and reporting
-- Visual progress indicators
-- Campaign images and galleries
-- Campaign location support
+* **Campaign Management**
+  * Create and manage unlimited donation campaigns
+  * Set campaign goals and track progress in real-time
+  * Campaign-specific donation forms
+  * Campaign analytics and reporting
+  * Visual progress indicators
 
-### Form Builder
-- Flexible donation form system
-- Multiple form templates
-- Custom field support
-- Anonymous donation option
-- Donor message support
-- Preset donation amounts
-- Custom donation amount support
-- Recurring donation options
+* **Form Builder**
+  * coming soon 
 
-### Gutenberg Blocks
-- **Donation Button** - Customizable donation button with campaign integration
-- **Campaign Single Content** - Display campaign content and details
-- **Campaign Single Images** - Display campaign images with gallery support
-- **Campaign Status Bar** - Visual progress indicator for campaigns
-- **Donor Account** - Donor account management and dashboard
-- **Share** - Social media sharing block for campaigns
+* **Reporting & Analytics**
+  * Admin dashboard with statistics
+  * Export functionality
 
-### Reporting & Analytics
-- Admin dashboard with statistics
-- Custom reports
-- Export functionality
-- Donation trends and insights
-- Campaign performance metrics
+* **Gutenberg Blocks**
+  * Campaign display blocks
+  * Donation form blocks
+  * Campaign content blocks
+  * Full block editor support
 
-## Requirements
+= Payment Gateways =
 
-- **WordPress**: 6.0 or higher
-- **PHP**: 8.2 or higher
-- **MySQL**: 5.6 or higher
-- **Composer**: For dependency management
-- **Node.js**: v24 (for building assets — `npm run dev` / `npm run build`)
-- **SSL Certificate**: Required for secure payment processing
+GiftFlow supports multiple payment gateways through official SDKs:
 
-## Installation
+* **Stripe** - Direct integration using Stripe PHP SDK for secure credit/debit card processing
+* **PayPal** - Direct integration using PayPal JS SDK v6 and REST API v2 with Smart Buttons for seamless payment experience
+* **Direct Bank Transfer** - Manual payment option for bank transfers
 
-### From WordPress Admin
+Additional payment gateways can be added through the plugin's extensible gateway architecture.
+
+== Installation ==
+
+= Installation from WordPress Admin =
 
 1. Visit **Plugins > Add New**
 2. Search for **GiftFlow**
 3. Click **Install Now** and then **Activate**
 
-### Manual Installation
+= Manual Installation =
 
 1. Upload the `giftflow` folder to the `/wp-content/plugins/` directory
-2. Install dependencies (use **Node v24** for `npm` steps — e.g. `nvm use 24`):
-   ```bash
-   cd wp-content/plugins/giftflow
-   composer install
-   npm install
-   npm run build
-   ```
-3. Activate the plugin through the **Plugins** menu in WordPress
-4. Navigate to **GiftFlow > Settings** to configure the plugin
+2. Activate the plugin through the **Plugins** menu in WordPress
+3. Navigate to **GiftFlow > Settings** to configure the plugin
 
-### After Installation
+= After Installation =
 
 1. Go to **GiftFlow > Settings** to configure your payment gateways
 2. Set up Stripe or PayPal credentials in the Payment Methods section
-   - See [PayPal Setup Guide](docs/paypal-method-setup.md) for detailed PayPal configuration
 3. Configure your preferred currency and email settings
 4. Create your first campaign under **Campaigns > Add New**
-5. Use Gutenberg blocks or shortcodes to display donation forms
 
-## Payment Gateway Setup
+== Development ==
 
-### Stripe
+This plugin uses Laravel Mix (a wrapper around Webpack) to compile and bundle JavaScript and CSS files for production.
 
-1. Get your Stripe API keys from [Stripe Dashboard](https://dashboard.stripe.com/apikeys)
-2. Navigate to **GiftFlow > Settings > Payment Methods**
-3. Enable Stripe and enter your API keys
-4. Configure webhook endpoint in Stripe Dashboard
-5. Add webhook events: `payment_intent.succeeded`, `payment_intent.payment_failed`, `charge.refunded`
-
-### PayPal
-
-1. Create a PayPal app in [PayPal Developer Dashboard](https://developer.paypal.com/)
-2. Get your Client ID and Secret
-3. Navigate to **GiftFlow > Settings > Payment Methods**
-4. Enable PayPal and enter your credentials
-5. Configure webhook URL in PayPal Dashboard
-6. Add recommended webhook events (see [PayPal Setup Guide](docs/paypal-method-setup.md))
-
-### Direct Bank Transfer
-
-1. Navigate to **GiftFlow > Settings > Payment Methods**
-2. Enable Direct Bank Transfer
-3. Configure bank account details that will be shown to donors
-
-## Usage
-
-### Gutenberg Blocks
-
-GiftFlow includes several Gutenberg blocks for building donation campaigns:
-
-- **Donation Button** - `giftflow/donation-button`
-  - Add donation buttons with customizable styling
-  - Campaign integration with auto-detect support
-  - Full-width option and custom colors
-
-- **Campaign Single Content** - `giftflow/campaign-single-content`
-  - Display campaign content and details
-  - Automatically uses current post context
-
-- **Campaign Single Images** - `giftflow/campaign-single-images`
-  - Display campaign images with gallery support
-  - Lightbox integration
-  - Thumbnail navigation with expandable view
-
-- **Campaign Status Bar** - `giftflow/campaign-status-bar`
-  - Visual progress indicator for campaigns
-  - Goal tracking display
-
-- **Donor Account** - `giftflow/donor-account`
-  - Donor account dashboard
-  - Donation history and account management
-
-- **Share** - `giftflow/share`
-  - Social media sharing (Facebook, X/Twitter, LinkedIn)
-  - Email sharing and copy URL functionality
-
-### Shortcodes
-
-#### Donation Form
-
-Display a donation form for a specific campaign:
-
-```
-[giftflow_donation_form campaign_id="123"]
-```
-
-**Parameters:**
-- `campaign_id` (required) - The ID of the campaign for which to display the donation form
-
-**Example:**
-```php
-echo do_shortcode('[giftflow_donation_form campaign_id="123"]');
-```
-
-### Custom Post Types
-
-#### Donations
-- Transaction details meta box
-- Recurring settings meta box
-- Payment status tracking
-- Donor and campaign relationships
-
-#### Donors
-- Contact information meta box
-- Donation history meta box
-- Preferences meta box
-- Tax information storage
-
-#### Campaigns
-- Campaign details meta box
-- Campaign settings meta box
-- Goal tracking
-- Progress monitoring
-- Image galleries
-- Location support
-
-### Templates
-
-The plugin includes the following templates that can be overridden in your theme:
-
-- `single-donation.php` - Single donation view
-- `single-donor.php` - Single donor view
-- `single-campaign.php` - Single campaign view
-- `archive-donation.php` - Donation archive
-- `donation-form.php` - Donation form template
-
-## Development
-
-**Node.js v24** is required for local asset builds and `npm run dev` (watch). Use the same major version as CI/production to avoid mismatches with Laravel Mix / Webpack and native dependencies.
-
-```bash
-# Example with nvm — use Node 24 before install/dev/build
-nvm install 24
-nvm use 24
-node -v   # should show v24.x.x
-```
-
-This plugin uses [Laravel Mix](https://laravel-mix.com/) (a wrapper around Webpack) to compile and bundle JavaScript and CSS files for production.
-
-### Source Code
+= Source Code =
 
 The original source code for all compiled JavaScript and CSS files can be found at:
 [https://github.com/miketropi/giftflow](https://github.com/miketropi/giftflow)
 
-### JavaScript File Structure
+= File Structure =
 
 In the `assets/js/` directory, the plugin follows this naming convention:
 
-| File Type | Description |
-|-----------|-------------|
-| `*.js` | Original, uncompiled source files (human-readable) |
-| `*.bundle.js` | Compiled/minified production files (generated by build process) |
+* `*.js` - Original, uncompiled source files (human-readable)
+* `*.bundle.js` - Compiled/minified production files (generated by build process)
 
-**Example:**
-- `forms.js` → Source file
-- `forms.bundle.js` → Compiled production file
+For example:
 
-**All JavaScript file pairs:**
+* `forms.js` → Source file
+* `forms.bundle.js` → Compiled production file
 
-| Source File | Compiled File |
-|-------------|---------------|
-| `forms.js` | `forms.bundle.js` |
-| `common.js` | `common.bundle.js` |
-| `stripe-donation.js` | `stripe-donation.bundle.js` |
-| `paypal-donation.js` | `paypal-donation.bundle.js` |
-| `grecaptcha.js` | `grecaptcha.bundle.js` |
+The same pattern applies to all JavaScript files:
 
-> **Note:** Only the `*.bundle.js` files are enqueued in production. The source `*.js` files are included in the repository for transparency and to comply with WordPress.org guidelines requiring human-readable source code.
+* `common.js` / `common.bundle.js`
+* `stripe-donation.js` / `stripe-donation.bundle.js`
+* `paypal-donation.js` / `paypal-donation.bundle.js`
+* `grecaptcha.js` / `grecaptcha.bundle.js`
 
-### Build Commands
+Only the `*.bundle.js` files are enqueued in production. The source `*.js` files are included in the repository for transparency and to comply with WordPress.org guidelines requiring human-readable source code.
 
-To rebuild assets locally, **use Node v24** (see above), then:
+= Build Commands =
 
-```bash
-# Install dependencies
-npm install
+To rebuild assets locally:
 
-# Watch for changes and rebuild automatically during development (Node v24)
-npm run dev
+`npm install` - Install dependencies
+`npm run dev` - Watch for changes and rebuild automatically during development
+`npm run build` - Build for production (minified)
 
-# Build for production (minified)
-npm run build
-```
+== Frequently Asked Questions ==
 
-### Directory Structure
+= Does GiftFlow support recurring donations? =
 
-```
-giftflow/
-├── admin/                      # Admin interface
-│   ├── assets/                # Admin assets (CSS, JS, images)
-│   ├── includes/              # Admin classes
-│   │   ├── post-types/       # Custom post type classes
-│   │   ├── meta-boxes/       # Meta box classes
-│   │   └── settings.php      # Settings page
-│   └── css/                   # Admin styles
-├── assets/                     # Frontend assets
-│   ├── css/                   # Frontend styles
-│   └── js/                    # Frontend scripts
-├── blocks/                     # Gutenberg blocks
-│   ├── campaign-single-content/
-│   ├── campaign-single-images/
-│   ├── campaign-status-bar/
-│   ├── donation-button/
-│   ├── donor-account/
-│   ├── share/
-│   └── index.php              # Block loader
-├── docs/                       # Documentation
-├── includes/                   # Core plugin files
-│   ├── core/                  # Core classes
-│   │   ├── class-donations.php
-│   │   ├── class-ajax.php
-│   │   └── ...
-│   ├── gateways/              # Payment gateway classes
-│   │   ├── class-stripe.php
-│   │   ├── class-paypal.php
-│   │   └── class-direct-bank-transfer.php
-│   ├── frontend/              # Frontend classes
-│   │   ├── class-shortcodes.php
-│   │   ├── class-forms.php
-│   │   └── class-template.php
-│   └── common.php             # Common functions
-├── templates/                  # PHP templates
-│   ├── donation-form.php
-│   └── admin/                 # Admin templates
-├── languages/                  # Translation files
-└── giftflow.php               # Main plugin file
-```
+Yes, GiftFlow supports both one-time and recurring (coming soon) donations through Stripe and PayPal.
 
-### Hooks
+= Which payment gateways are supported? =
 
-GiftFlow provides extensive hooks for customization and extension.
+GiftFlow currently supports Stripe, PayPal, and Direct Bank Transfer. Additional payment gateways can be added through the extensible gateway system.
 
-#### Action Hooks
+= Can I customize the donation form? =
 
-```php
-// Donation lifecycle
-do_action('giftflow_donation_created', $donation_id, $data);
-do_action('giftflow_donation_updated', $donation_id, $data);
-do_action('giftflow_donation_before_create', $data);
-do_action('giftflow_donation_create_failed', $error, $data);
+Yes, form customization is possible via hooks and custom fields, but currently requires developer implementation. We plan to release a visual form builder for custom fields in a future update.
 
-// Payment processing
-do_action('giftflow_payment_success', $donation_id, $transaction_id);
-do_action('giftflow_payment_failed', $donation_id, $error);
+= Is GiftFlow compatible with page builders? =
 
-// Campaign events
-do_action('giftflow_campaign_created', $campaign_id);
-do_action('giftflow_campaign_updated', $campaign_id);
-```
+Yes, GiftFlow includes Gutenberg blocks and shortcodes that work with most page builders.
 
-#### Filter Hooks
+= Can I export donation data? =
 
-```php
-// Donation data
-apply_filters('giftflow_donation_before_create', $data);
-apply_filters('giftflow_donation_post_data', $post_data, $data);
+Yes, GiftFlow includes export functionality in the admin dashboard to export donation data in various formats.
 
-// Payment gateways
-apply_filters('giftflow_payment_gateways', $gateways);
+= Does GiftFlow send email notifications? =
 
-// Form customization
-apply_filters('giftflow_form_donation_types', $donation_types, $campaign_id);
-apply_filters('giftflow_form_donation_form_atts', $atts, $campaign_id);
-```
+Yes, GiftFlow can send email notifications for donations, campaign updates, and other events. Email templates can be customized.
 
-### Extending GiftFlow
+= What are the system requirements? =
 
-#### Adding a Custom Payment Gateway
+GiftFlow requires WordPress 6.0 or higher, PHP 8.2 or higher, and an SSL certificate for secure payment processing.
 
-1. Create a new gateway class extending `Gateway_Base`:
+== Screenshots ==
 
-```php
-class My_Custom_Gateway extends \GiftFlow\Gateways\Gateway_Base {
-    // Implement required methods
-}
-```
+1. Admin Dashboard - Overview of donations, campaigns, and statistics
+2. Campaign Management - Create and manage fundraising campaigns
+3. Donation Form - Customizable donation forms with multiple payment options
+4. Payment Settings - Configure Stripe, PayPal, and other payment gateways
+5. Donor Management - Comprehensive donor profiles and donation history
+6. Reports & Analytics - Track donations and campaign performance
 
-2. Register your gateway:
-
-```php
-add_filter('giftflow_payment_gateways', function($gateways) {
-    $gateways[] = new My_Custom_Gateway();
-    return $gateways;
-});
-```
-
-See the [Register New Payment Method](docs/register-new-paymen-method.md) guide for detailed instructions.
-
-## External Services
+== External Services ==
 
 This plugin relies on the following third-party services to provide its functionality. These services are only used when explicitly enabled by the site administrator. By using these features, data may be transmitted to external servers. Please review the terms and privacy policies of each service before enabling them.
 
-### Stripe (stripe.com)
+= Stripe (stripe.com) =
 
 This plugin uses the Stripe payment gateway to process credit and debit card donations securely.
 
-**Service Provider:** Stripe, Inc.  
+**Service Provider:** Stripe, Inc.
 **Service URL:** [https://stripe.com](https://stripe.com)
 
 **Data Transmitted:**
-- Payment card information (processed directly by Stripe, not stored on your server)
-- Donation amount and currency
-- Donor name and email address
-- Billing address (if collected)
-- Transaction metadata (donation ID, campaign ID)
+
+* Payment card information (processed directly by Stripe, not stored on your server)
+* Donation amount and currency
+* Donor name and email address
+* Billing address (if collected)
+* Transaction metadata (donation ID, campaign ID)
 
 **When Data is Sent:**
-- When a donor submits a donation form using Stripe as the payment method
-- When processing refunds through the admin dashboard
-- When verifying webhook signatures for payment status updates
+
+* When a donor submits a donation form using Stripe as the payment method
+* When processing refunds through the admin dashboard
+* When verifying webhook signatures for payment status updates
 
 **Legal:**
-- [Terms of Service](https://stripe.com/legal)
-- [Privacy Policy](https://stripe.com/privacy)
 
----
+* Terms of Service: [https://stripe.com/legal](https://stripe.com/legal)
+* Privacy Policy: [https://stripe.com/privacy](https://stripe.com/privacy)
 
-### PayPal (paypal.com)
+= PayPal (paypal.com) =
 
-This plugin uses PayPal to process donations through PayPal accounts and PayPal Smart Payment Buttons.
+This plugin uses PayPal to process donations through PayPal accounts and PayPal Smart Payment Buttons. The plugin communicates with PayPal's REST API using the following base URLs:
 
-**Service Provider:** PayPal Holdings, Inc.  
+* **Production:** [https://api.paypal.com](https://api.paypal.com)
+* **Sandbox (testing):** [https://api.sandbox.paypal.com](https://api.sandbox.paypal.com)
+
+**Service Provider:** PayPal Holdings, Inc.
 **Service URL:** [https://www.paypal.com](https://www.paypal.com)
 
 **Data Transmitted:**
-- Donation amount and currency
-- Donor name and email address
-- Order description and transaction metadata
-- Return URLs for payment completion
+
+* Donation amount and currency
+* Donor name and email address
+* Order description and transaction metadata
+* Return URLs for payment completion
 
 **When Data is Sent:**
-- When a donor initiates a donation using PayPal as the payment method
-- When creating and capturing PayPal orders via the REST API
-- When processing refunds through the admin dashboard
+
+* When a donor initiates a donation using PayPal as the payment method
+* When creating and capturing PayPal orders via the REST API
+* When processing refunds through the admin dashboard
 
 **Legal:**
-- [Terms of Service](https://www.paypal.com/webapps/mpp/ua/useragreement-full)
-- [Privacy Policy](https://www.paypal.com/webapps/mpp/ua/privacy-full)
 
----
+* Terms of Service: [https://www.paypal.com/webapps/mpp/ua/useragreement-full](https://www.paypal.com/webapps/mpp/ua/useragreement-full)
+* Privacy Policy: [https://www.paypal.com/webapps/mpp/ua/privacy-full](https://www.paypal.com/webapps/mpp/ua/privacy-full)
 
-### Google reCAPTCHA (google.com/recaptcha)
+= Google reCAPTCHA (google.com/recaptcha) =
 
 This plugin optionally uses Google reCAPTCHA to protect donation forms from spam submissions and automated abuse.
 
-**Service Provider:** Google LLC  
+**Service Provider:** Google LLC
 **Service URL:** [https://www.google.com/recaptcha](https://www.google.com/recaptcha)
 
 **Data Transmitted:**
-- User's IP address
-- Browser user agent and plugins
-- Mouse movements and keystrokes on the page
-- JavaScript environment information
-- reCAPTCHA site key
+
+* User's IP address
+* Browser user agent and plugins
+* Mouse movements and keystrokes on the page
+* JavaScript environment information
+* reCAPTCHA site key
 
 **When Data is Sent:**
-- When a donation form with reCAPTCHA protection is loaded
-- When a donor interacts with or submits a protected donation form
+
+* When a donation form with reCAPTCHA protection is loaded
+* When a donor interacts with or submits a protected donation form
 
 **Legal:**
-- [Terms of Service](https://policies.google.com/terms)
-- [Privacy Policy](https://policies.google.com/privacy)
 
----
+* Terms of Service: [https://policies.google.com/terms](https://policies.google.com/terms)
+* Privacy Policy: [https://policies.google.com/privacy](https://policies.google.com/privacy)
 
-### Google Maps Platform (developers.google.com/maps)
+= Social sharing (Share block) =
+
+The GiftFlow Share block allows visitors to share campaign or page content to social networks. When share buttons are used, the browser may open or redirect to the following third-party URLs. No data is sent from your server to these services; the user's browser loads the share URL with the page title and URL that the user chooses to share.
+
+**Services and URLs used:**
+
+* **Facebook** – [https://www.facebook.com/sharer/sharer.php](https://www.facebook.com/sharer/sharer.php) (with `u` = shared URL)
+* **X (Twitter)** – [https://twitter.com/intent/tweet](https://twitter.com/intent/tweet) (with `url` and `text`)
+* **LinkedIn** – [https://www.linkedin.com/sharing/share-offsite/](https://www.linkedin.com/sharing/share-offsite/) (with `url`)
+* **WhatsApp** – [https://api.whatsapp.com/send](https://api.whatsapp.com/send) (with `text` containing title and URL)
+* **Pinterest** – [https://pinterest.com/pin/create/button/](https://pinterest.com/pin/create/button/) (with `url` and `description`)
+* **Reddit** – [https://reddit.com/submit](https://reddit.com/submit) (with `url` and `title`)
+* **Telegram** – [https://t.me/share/url](https://t.me/share/url) (with `url` and `text`)
+
+**Data transmitted:** Only the page URL and title (or description) that the user is sharing, passed as query parameters in the share link. No data is sent to these services until the user clicks a share button.
+
+**When data is sent:** When a visitor clicks a social share button in the Share block.
+
+**Legal (WhatsApp):**
+
+This plugin includes a sharing feature that allows users to share content via WhatsApp.
+
+When the user clicks the WhatsApp share button, the plugin opens the WhatsApp sharing URL and sends the following data:
+- The page title
+- The page URL
+
+This request is sent only when the user actively clicks the share button.
+
+This service is provided by WhatsApp.
+
+* Terms of Service: [https://www.whatsapp.com/legal/terms-of-service](https://www.whatsapp.com/legal/terms-of-service)
+* Privacy Policy: [https://www.whatsapp.com/legal/privacy-policy](https://www.whatsapp.com/legal/privacy-policy)
+
+= Google Maps Platform (developers.google.com/maps) =
 
 This plugin optionally uses Google Maps to display campaign locations and geographic information.
 
-**Service Provider:** Google LLC  
+**Service Provider:** Google LLC
 **Service URL:** [https://developers.google.com/maps](https://developers.google.com/maps)
 
 **Data Transmitted:**
-- Map coordinates and location queries
-- User's IP address (by Google when loading map tiles)
-- Google Maps API key
+
+* Map coordinates and location queries
+* User's IP address (by Google when loading map tiles)
+* Google Maps API key
 
 **When Data is Sent:**
-- When a page containing a Google Maps embed is loaded
-- When geocoding addresses for campaign locations
+
+* When a page containing a Google Maps embed is loaded
+* When geocoding addresses for campaign locations
 
 **Legal:**
-- [Terms of Service](https://cloud.google.com/maps-platform/terms)
-- [Privacy Policy](https://policies.google.com/privacy)
 
----
+* Terms of Service: [https://cloud.google.com/maps-platform/terms](https://cloud.google.com/maps-platform/terms)
+* Privacy Policy: [https://policies.google.com/privacy](https://policies.google.com/privacy)
 
-### Important Privacy Notice
+= Important Privacy Notice =
 
 Site administrators are responsible for ensuring compliance with applicable privacy laws (such as GDPR) when using these third-party services. We recommend:
 
-- Disclosing the use of these services in your site's privacy policy
-- Obtaining appropriate consent from users before processing their data
-- Reviewing each service's data processing agreements
+* Disclosing the use of these services in your site's privacy policy
+* Obtaining appropriate consent from users before processing their data
+* Reviewing each service's data processing agreements
 
-## Support
+== Changelog ==
 
-For support, please visit our [support forum](https://giftflow.com/support) or email support@giftflow.com.
+= 1.0.16 =
+* Fix: Resolved JavaScript conflicts between PhotoSwipe library and WooCommerce by removing PhotoSwipe from the plugin.
+* Improvement: Developed and integrated a custom lightbox library for handling image galleries and campaign media.
+* Dev: Migrated all image/lightbox display functionality to the new GiftFlow lightbox implementation for maximum compatibility and smoother user experience.
 
-## Changelog
+= 1.0.15 =
+* Fix: Resolved an issue with the redirect function that could prevent correct navigation when using donation-related pages or custom redirects.
 
-### 1.0.1
-- Initial public release
-- Core donation management features
-- Stripe and PayPal payment gateway integration
-- PayPal JS SDK v6 integration with Orders API v2
-- Gutenberg blocks support (6 blocks)
-- Campaign management system
-- Admin dashboard with statistics
-- Export functionality
-- Email notification system
-- Custom post types and taxonomies
-- Comprehensive hooks and filters for extensibility
-- Centralized donation management via Donations class
-- Access token caching for PayPal
-- Direct bank transfer gateway
+= 1.0.14 =
+* New: Native support for block themes – automatically registers block-based templates for campaigns, donor accounts, and thank-you pages.
+* New: Added "Thank Donor" page template and corresponding block for post-donation messaging.
+* Improvement: Enhanced admin dashboard UX with improved onboarding notice and help page links.
+* Improvement: Updated translation strings for greater internationalization coverage.
+* Fix: Improved compatibility with WordPress 6.9 and third-party caching plugins.
+* Fix: Resolved potential PHP notices/warnings in admin and AJAX handlers.
+* Dev: Streamlined main plugin loader for reliability and forward compatibility.
 
-## License
+= 1.0.12 =
+* Feature: Added field type "Pro Only" handling in admin and form builder.
+* Feature: Enhanced campaign analytics and reporting summary.
+* Improvement: Improved block registration for custom donation and campaign forms.
+* Improvement: Refined Stripe and PayPal gateway integrations, handling additional currencies and edge-cases.
+* Improvement: Streamlined admin UI styles for campaign and donor management screens.
+* Security: Hardened nonce validation and capability checks in AJAX/REST endpoints.
+* Fix: Resolved issues with date/time fields and timezone alignment.
+* Fix: Fixed compatibility issues with major caching plugins and optimized asset loading.
+* Fix: Minor bugfixes and translation corrections throughout the plugin.
 
-GPL v2 or later. See [LICENSE](https://www.gnu.org/licenses/gpl-2.0.html) for details.
+= 1.0.9 =
+* Release: Finalize/stabilize release for development and production sites.
+* Docs: Added developer-focused release documentation.
+* Update: Overhauled and updated content on the admin help page for better clarity and onboarding.
+* Improvement: Minor performance, translation, and code quality refinements.
 
----
+= 1.0.8 =
+* Update: Refined and upgraded the payment gateway package for smoother transactions.
+* Fix: Enhanced modal donation experience for better user flow and responsiveness.
+* Improvement: Further improved UI/UX on tablet & mobile, ensuring consistent and intuitive interactions.
+* Security: Addressed additional backend vulnerabilities for stronger protection.
+* Docs: Updated and extended documentation to reflect new changes and usage recommendations.
 
-**Developed by BePlus**
+= 1.0.7 =
+* Update: Improved UI designs and fixed several minor bugs in the admin backend.
+* Fix: Resolved an issue causing modal donation to not behave properly under certain conditions.
+* Improvement: Adjusted tablet/mobile layouts for campaign and donation forms for greater accessibility.
+* Security: Patched an issue related to data sanitization and access control in admin screens.
+* Docs: Added detailed setup and usage instructions for new features.
+
+= 1.0.6 =
+* Update: Upgraded payment gateway libraries to latest stable releases.
+* Improvement: Optimized modal donation speed; donations now process with less delay.
+* Improvement: Enhanced mobile navigation menus and fixed UI glitches on iOS devices.
+* Fix: Prevented unauthorized data exposure by strengthening security checks in backend logic.
+* Docs: Clarified payment setup and mobile customization steps in documentation.
+
+= 1.0.5 =
+* Update: Refactored gateway integration package for better reliability.
+* Improvement: Polished modal donation interface for improved clarity and conversion rates.
+* Improvement: Improved responsive design for donor listing and campaign edit screens.
+* Fix: Hardened code to resolve vulnerabilities uncovered in plugin audits.
+* Docs: Cleaned up outdated tips and added FAQ section.
+
+= 1.0.4 =
+* Update: Added support for custom payment gateway extensions.
+* Improvement: Slight modal donation improvements (rendering and error handling).
+* Improvement: Initial major UI update for tablet and mobile screens.
+* Security: Fixed several XSS and CSRF vulnerabilities in admin area.
+* Docs: Documented new UI changes and gateway extension methods.
+
+= 1.0.3 =
+* Added support for Classic (non-block) WordPress themes
+* Fixed several security issues for improved safety and compliance
+
+= 1.0.2 =
+* Upgraded payment gateway integration for improved reliability
+* Added support for common shortcodes (for embedding donation forms and campaign features)
+
+= 1.0.1 =
+* Initial public release
+* Core donation management features
+* Stripe and PayPal payment gateway integration
+* Campaign management system
+* Gutenberg blocks support
+* Admin dashboard with statistics
+* Export functionality
+* Email notification system
+* Custom post types and taxonomies
+* Comprehensive hooks and filters for extensibility
+
+== Upgrade Notice ==
+
+= 1.0.1 =
+Initial release of GiftFlow. Please configure your payment gateway settings after installation.
