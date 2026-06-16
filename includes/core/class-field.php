@@ -429,7 +429,8 @@ class GiftFlow_Field {
 	 * @return bool
 	 */
 	private function is_pro_only() {
-		return true === $this->pro_only && ! defined( 'GIFTFLOW_PRO_VERSION' );
+		$is_pro_activated = ( function_exists( 'giftflow_pro_is_license_active' ) && giftflow_pro_is_license_active() === true );
+		return ( ( true === $this->pro_only ) && ! $is_pro_activated );
 	}
 
 	/**
