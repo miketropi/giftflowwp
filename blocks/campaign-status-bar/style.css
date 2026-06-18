@@ -21,7 +21,7 @@
 	align-items: center;
 	font-size: 0.875rem;
 	font-family: inherit;
-	color: var(--wp--preset--color--contrast, #333);
+	/* color: var(--wp--preset--color--contrast, #333); */
 }
 
 .giftflow-campaign-status-bar__raised {
@@ -30,7 +30,7 @@
 
 .giftflow-campaign-status-bar__donors,
 .giftflow-campaign-status-bar__days {
-	color: var(--wp--preset--color--contrast-2, #666);
+	opacity: .8;
 }
 
 .giftflow-campaign-status-bar--empty {
