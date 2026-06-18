@@ -45,7 +45,8 @@ jobs:
           COMPOSER_AUTH: ""
         run: |
           unset COMPOSER_AUTH
-          composer run build
+          # composer run build
+          php vendor/bin/strauss -vvv
 
       - name: Build package
         run: npm run build:package
@@ -73,16 +74,16 @@ jobs:
             exit 1
           fi
 
-          unzip giftflow.zip -d build
+          unzip giftflow.zip -d __build
 
           # check plugin file
-          if [ ! -f "build/giftflow/giftflow.php" ]; then
+          if [ ! -f "__build/giftflow/giftflow.php" ]; then
             echo "❌ Plugin main file not found!"
             exit 1
           fi
 
           # check plugin version
-          FILE_VERSION=$(grep -i "Version:" build/giftflow/giftflow.php | head -1 | awk -F': ' '{print $2}' | tr -d '\r')
+          FILE_VERSION=$(grep -i "Version:" __build/giftflow/giftflow.php | head -1 | awk -F': ' '{print $2}' | tr -d '\r')
           echo "Plugin version: $FILE_VERSION"
 
           if [ "$FILE_VERSION" != "$VERSION" ]; then
@@ -93,8 +94,8 @@ jobs:
           fi
 
           # check readme stable tag (optional but recommended)
-          if [ -f "build/giftflow/readme.txt" ]; then
-            README_VERSION=$(grep -i "Stable tag:" build/giftflow/readme.txt | awk -F': ' '{print $2}' | tr -d '\r')
+          if [ -f "__build/giftflow/readme.txt" ]; then
+            README_VERSION=$(grep -i "Stable tag:" __build/giftflow/readme.txt | awk -F': ' '{print $2}' | tr -d '\r')
             echo "Readme stable tag: $README_VERSION"
 
             if [ "$README_VERSION" != "$VERSION" ]; then
@@ -118,6 +119,6 @@ jobs:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SLUG: giftflow
-          BUILD_DIR: build/giftflow
+          BUILD_DIR: __build/giftflow
 
       
