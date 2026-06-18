@@ -155,23 +155,16 @@ function giftflow_share_block_render( $attributes, $content, $block ) {
 			<?php endif; ?>
 
 			<?php if ( $show_copy_url ) : ?>
-				<a href="#"
+				<button
+					type="button"
 					class="giftflow-share__button giftflow-share__button--copy-url"
 					data-url="<?php echo esc_attr( $share_url ); ?>"
-					title="<?php esc_attr_e( 'Copy URL to clipboard', 'giftflow' ); ?>" >
+					onclick="var b=this,u=b.dataset.url;if(!u)return;var s=b.querySelector('.giftflow-share__text');var t=s?s:b;var o=t.textContent;navigator.clipboard.writeText(u).then(function(){t.textContent='<?php echo esc_js( __( 'Copied', 'giftflow' ) ); ?>';setTimeout(function(){t.textContent=o},1000)}).catch(function(){t.textContent='<?php echo esc_js( __( 'Error', 'giftflow' ) ); ?>';setTimeout(function(){t.textContent=o},600)});"
+					title="<?php esc_attr_e( 'Copy URL to clipboard', 'giftflow' ); ?>">
 					<span class="giftflow-share__text"><?php esc_html_e( 'Copy Link', 'giftflow' ); ?></span>
-				</a>
+				</button>
 			<?php endif; ?>
 		</div>
-
-		<?php if ( $show_copy_url ) : ?>
-			<div class="giftflow-share__copy-feedback" style="display: none;">
-				<span class="giftflow-share__copy-message">
-					<?php echo wp_kses( giftflow_svg_icon( 'checkmark-circle' ), giftflow_allowed_svg_tags() ); ?>
-					<?php esc_html_e( 'URL copied to clipboard!', 'giftflow' ); ?>
-				</span>
-			</div>
-		<?php endif; ?>
 	</div>
 	<?php
 	return ob_get_clean();

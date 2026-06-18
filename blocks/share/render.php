@@ -62,10 +62,12 @@ $block_wrapper_attrs = get_block_wrapper_attributes(
 			<?php foreach ( $gf_social_links as $gf_platform => $gf_link ) : ?>
 				<a
 					href="<?php echo esc_url( $gf_link['url'] ); ?>"
-					class="giftflow-share__btn"
+					class="giftflow-share__btn giftflow-share__button"
 					target="_blank"
 					rel="noopener noreferrer"
 					title="<?php echo esc_attr( $gf_link['label'] ); ?>"
+					data-network="<?php echo esc_attr( $gf_platform ); ?>"
+					data-url="<?php echo esc_url( $gf_share_url ); ?>"
 				>
 					<?php echo esc_html( $gf_link['label'] ); ?>
 				</a>
@@ -73,22 +75,21 @@ $block_wrapper_attrs = get_block_wrapper_attributes(
 		<?php endif; ?>
 
 		<?php if ( $gf_show_email ) : ?>
-			<a href="<?php echo esc_url( $gf_email_url ); ?>" class="giftflow-share__btn" title="<?php esc_attr_e( 'Share via email', 'giftflow' ); ?>">
+			<a href="<?php echo esc_url( $gf_email_url ); ?>" class="giftflow-share__btn giftflow-share__button" title="<?php esc_attr_e( 'Share via email', 'giftflow' ); ?>" data-network="email" data-url="<?php echo esc_url( $gf_share_url ); ?>">
 				<?php esc_html_e( 'Email', 'giftflow' ); ?>
 			</a>
 		<?php endif; ?>
 
 		<?php if ( $gf_show_copy ) : ?>
-			<a
-				href="#copy"
-				class="giftflow-share__btn"
+			<button
+				type="button"
+				class="giftflow-share__btn giftflow-share__button giftflow-share__button--copy-url"
 				data-url="<?php echo esc_url( $gf_share_url ); ?>"
-				onclick="event.preventDefault();giftflow.copyShareUrl(this)"
+				onclick="var b=this,u=b.dataset.url;if(!u)return;var o=b.textContent;navigator.clipboard.writeText(u).then(function(){b.textContent='<?php echo esc_js( __( 'Copied', 'giftflow' ) ); ?>';setTimeout(function(){b.textContent=o},1000)}).catch(function(){b.textContent='<?php echo esc_js( __( 'Error', 'giftflow' ) ); ?>';setTimeout(function(){b.textContent=o},600)});"
 				title="<?php esc_attr_e( 'Copy link', 'giftflow' ); ?>"
 			>
 				<?php esc_html_e( 'Copy Link', 'giftflow' ); ?>
-			</a>
-			<span class="giftflow-share__copied" hidden><?php esc_html_e( 'Copied!', 'giftflow' ); ?></span>
+			</button>
 		<?php endif; ?>
 	</div>
 </div>
