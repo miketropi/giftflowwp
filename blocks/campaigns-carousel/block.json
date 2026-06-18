@@ -26,6 +26,7 @@
 		"autoplayDelay": { "type": "number", "default": 4000 },
 		"loop": { "type": "boolean", "default": true },
 		"progressColor": { "type": "string", "default": "" },
+		"cardBackground": { "type": "string", "default": "" },
 		"eyebrow": { "type": "string", "default": "" },
 		"heading": { "type": "string", "default": "" },
 		"description": { "type": "string", "default": "" },

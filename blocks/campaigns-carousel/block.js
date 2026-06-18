@@ -25,6 +25,7 @@ registerBlockType('giftflow/campaigns-carousel', {
         autoplayDelay: { type: 'number', default: 4000 },
         loop: { type: 'boolean', default: true },
         progressColor: { type: 'string', default: '' },
+        cardBackground: { type: 'string', default: '' },
         eyebrow: { type: 'string', default: '' },
         heading: { type: 'string', default: '' },
         description: { type: 'string', default: '' },
@@ -34,6 +35,7 @@ registerBlockType('giftflow/campaigns-carousel', {
         const { attributes, setAttributes } = props;
         const a = attributes;
         const fillColor = a.progressColor || '#2563eb';
+        const cardBg = a.cardBackground || '#fff';
         const imgH = a.imageHeight || 240;
         const imgRatio = a.imageRatio || 'auto';
         const useRatio = imgRatio && imgRatio !== 'auto';
@@ -42,7 +44,7 @@ registerBlockType('giftflow/campaigns-carousel', {
             : { height: imgH };
         const blockProps = useBlockProps({
             className: 'giftflow-carousel' + (useRatio ? ' giftflow-carousel--has-ratio' : ''),
-            style: { '--gf-carousel-img-height': useRatio ? 'auto' : imgH + 'px', '--gf-carousel-img-ratio': useRatio ? imgRatio : 'auto' },
+            style: { '--gf-carousel-img-height': useRatio ? 'auto' : imgH + 'px', '--gf-carousel-img-ratio': useRatio ? imgRatio : 'auto', '--gf-carousel-card-bg': cardBg },
         });
         ensureShimmerStyles();
 
@@ -103,6 +105,9 @@ registerBlockType('giftflow/campaigns-carousel', {
                         <BaseControl label={__('Accent color', 'giftflow')}>
                             <ColorPalette value={a.progressColor} onChange={v => setAttributes({ progressColor: v || '' })} disableCustomColors={false} clearable={true} />
                         </BaseControl>
+                        <BaseControl label={__('Card background', 'giftflow')}>
+                            <ColorPalette value={a.cardBackground} onChange={v => setAttributes({ cardBackground: v || '' })} disableCustomColors={false} clearable={true} />
+                        </BaseControl>
                     </PanelBody>
                 </InspectorControls>
                 <div {...blockProps}>
@@ -115,7 +120,7 @@ registerBlockType('giftflow/campaigns-carousel', {
                     )}
                     <div style={{ display: 'flex', gap: 20, overflow: 'hidden', paddingBottom: 40 }}>
                         {[0, 1, 2].map(i => (
-                            <div key={i} style={{ flex: '0 0 calc(33.333% - 14px)', borderRadius: 16, overflow: 'hidden', border: '1px solid #e5e7eb', background: '#fff' }}>
+                            <div key={i} style={{ flex: '0 0 calc(33.333% - 14px)', borderRadius: 16, overflow: 'hidden', border: '1px solid #e5e7eb', background: cardBg }}>
                                 <div style={{ position: 'relative' }}>
                                     <ShimmerBox height={useRatio ? undefined : imgH} style={{ borderRadius: 0, ...(useRatio ? { aspectRatio: imgRatio, height: 'auto' } : {}) }} />
                                     <div style={{ position: 'absolute', top: 12, left: 12, padding: '4px 10px', background: 'rgba(255,255,255,0.9)', borderRadius: 6, fontSize: 11, fontWeight: 600, color: fillColor }}>{__('Category', 'giftflow')}</div>

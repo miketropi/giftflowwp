@@ -23,6 +23,7 @@ $gf_autoplay  = $attributes['autoplay'] ?? false;
 $gf_delay     = max( 1000, (int) ( $attributes['autoplayDelay'] ?? 4000 ) );
 $gf_loop      = $attributes['loop'] ?? true;
 $gf_p_color   = $attributes['progressColor'] ?? '';
+$gf_c_bg      = $attributes['cardBackground'] ?? '';
 $gf_eyebrow   = $attributes['eyebrow'] ?? '';
 $gf_heading   = $attributes['heading'] ?? '';
 $gf_desc      = $attributes['description'] ?? '';
@@ -77,6 +78,7 @@ $gf_config = wp_json_encode(
 );
 
 $gf_accent           = $gf_p_color ? '--gf-carousel-accent:' . esc_attr( $gf_p_color ) . ';' : '';
+$gf_card_bg           = $gf_c_bg ? '--gf-carousel-card-bg:' . esc_attr( $gf_c_bg ) . ';' : '';
 $gf_img_style         = '--gf-carousel-img-height:' . ( $gf_use_ratio ? 'auto' : ( $gf_img_ht . 'px' ) ) . ';';
 $gf_img_style        .= '--gf-carousel-img-ratio:' . esc_attr( $gf_use_ratio ? $gf_img_ratio : 'auto' ) . ';';
 $gf_modifier          = $gf_use_ratio ? ' giftflow-carousel--has-ratio' : '';
@@ -84,7 +86,7 @@ $gf_modifier          = $gf_use_ratio ? ' giftflow-carousel--has-ratio' : '';
 $block_wrapper_attrs = get_block_wrapper_attributes(
 	array(
 		'class' => 'giftflow-carousel' . $gf_modifier,
-		'style' => $gf_img_style . $gf_accent,
+		'style' => $gf_img_style . $gf_accent . $gf_card_bg,
 	)
 );
 

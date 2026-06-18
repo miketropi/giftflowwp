@@ -70,7 +70,7 @@
 	border-radius: 16px;
 	overflow: hidden;
 	transition: transform 0.25s ease, box-shadow 0.25s ease;
-	background: var(--wp--preset--color--surface, #fff);
+	background: var(--gf-carousel-card-bg, var(--wp--preset--color--surface, #fff));
 	border: 1px solid var(--wp--preset--color--base, #e5e7eb);
 	width: 100%;
 	display: flex;
