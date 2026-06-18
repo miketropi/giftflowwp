@@ -1,15 +1,15 @@
 {
   "status": "complete",
-  "totalFiles": 839,
-  "processedFiles": 839,
-  "skippedFiles": 837,
-  "totalChunks": 4,
+  "totalFiles": 842,
+  "processedFiles": 842,
+  "skippedFiles": 838,
+  "totalChunks": 27,
   "errorCount": 0,
   "errors": [],
-  "startedAt": 1781796008657,
-  "completedAt": 1781796011130,
+  "startedAt": 1781796482101,
+  "completedAt": 1781796485436,
   "collectionName": "opencode_1775e57d44d0_384",
-  "collectionPointCount": 6127,
+  "collectionPointCount": 6152,
   "provider": "local-worker:Xenova/all-MiniLM-L6-v2",
-  "updatedAt": 1781796011130
+  "updatedAt": 1781796485436
 }

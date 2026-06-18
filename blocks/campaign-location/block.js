@@ -2,6 +2,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { useCampaignSelector } from '../_editor-utils';
 
 registerBlockType('giftflow/campaign-location', {
 	apiVersion: 3,
@@ -10,11 +11,22 @@ registerBlockType('giftflow/campaign-location', {
 	category: 'giftflow',
 	usesContext: ['postId', 'postType'],
 	attributes: {
+		campaignId: { type: 'number', default: 0 },
 		showMap: { type: 'boolean', default: false },
 	},
 	edit: (props) => {
 		const { attributes, setAttributes } = props;
 		const blockProps = useBlockProps({ className: 'giftflow-campaign-location' });
+
+		const { selectedCampaign: selected, CampaignSelector } = useCampaignSelector({
+			defaultLabel: __('Use Current Post', 'giftflow'),
+			showSelected: true,
+			selectedId: attributes.campaignId || 0,
+		});
+
+		const style = attributes.style || {};
+		const color = style.color || {};
+		const textColor = color.text;
 
 		const locationPin = (
 			<svg
@@ -36,6 +48,13 @@ registerBlockType('giftflow/campaign-location', {
 		return (
 			<>
 				<InspectorControls>
+					<PanelBody title={__('Campaign', 'giftflow')}>
+						<CampaignSelector
+							value={attributes.campaignId}
+							onChange={(v) => setAttributes({ campaignId: v })}
+							label={__('Target campaign', 'giftflow')}
+						/>
+					</PanelBody>
 					<PanelBody title={__('Settings', 'giftflow')} initialOpen={true}>
 						<ToggleControl
 							label={__('Show map', 'giftflow')}
@@ -46,14 +65,20 @@ registerBlockType('giftflow/campaign-location', {
 					</PanelBody>
 					<PanelBody title={__('About', 'giftflow')} initialOpen={false}>
 						<p style={{ color: '#757575', fontSize: 13 }}>
-							{__('Displays the location set in the campaign details. The location metadata is read from the current campaign page.', 'giftflow')}
+							{__('Displays the location set in the campaign details. Choose a target campaign or leave empty to use the current page.', 'giftflow')}
 						</p>
 					</PanelBody>
 				</InspectorControls>
 				<div {...blockProps}>
+					{selected && (
+						<div style={{ fontSize: 11.5, fontWeight: 500, color: '#3b82f6', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 5 }}>
+							<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12" /></svg>
+							{selected.title.rendered}
+						</div>
+					)}
 					<div className="giftflow-campaign-location__inner">
 						{locationPin}
-						<span className="giftflow-campaign-location__text">
+						<span className="giftflow-campaign-location__text" style={textColor ? { color: textColor } : undefined}>
 							{__('New York, United States', 'giftflow')}
 						</span>
 					</div>

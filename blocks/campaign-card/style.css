@@ -17,7 +17,7 @@
 /* ---------- Card ---------- */
 
 .giftflow-campaign-card {
-	--gf-cc-accent: #2563eb;
+	--gf-cc-accent: var(--wp--preset--color--primary);
 	--gf-cc-accent-glow: rgba(37,99,235,0.14);
 	--gf-cc-accent-soft: rgba(37,99,235,0.08);
 	--gf-cc-overlay-opacity: 0.6;
@@ -436,7 +436,7 @@
 }
 
 .giftflow-campaign-card__button--filled {
-	background: var(--gf-cc-accent, #2563eb);
+	background: var(--gf-cc-accent, var(--wp--preset--color--primary));
 	color: #ffffff;
 	animation: gf-cc-btn-pulse 3s ease-in-out infinite;
 	box-sizing: border-box;

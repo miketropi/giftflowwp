@@ -10,11 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$gf_post_id = isset( $block->context['postId'] )
-	? (int) $block->context['postId']
-	: get_the_ID();
+$gf_campaign_id = (int) ( $attributes['campaignId'] ?? 0 );
 
-if ( ! $gf_post_id ) {
+if ( 0 === $gf_campaign_id && isset( $block->context['postId'] ) ) {
+	$gf_campaign_id = (int) $block->context['postId'];
+}
+
+if ( 0 === $gf_campaign_id ) {
+	$gf_campaign_id = get_the_ID();
+}
+
+if ( ! $gf_campaign_id ) {
 	$block_wrapper_attrs = get_block_wrapper_attributes();
 	echo '<div ' . $block_wrapper_attrs . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	esc_html_e( 'No campaign found.', 'giftflow' );
@@ -22,7 +28,7 @@ if ( ! $gf_post_id ) {
 	return;
 }
 
-$gf_location = get_post_meta( $gf_post_id, '_location', true );
+$gf_location = get_post_meta( $gf_campaign_id, '_location', true );
 
 if ( empty( $gf_location ) ) {
 	return;
