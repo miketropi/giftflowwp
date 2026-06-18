@@ -21,10 +21,11 @@
 		"columns": { "type": "integer", "default": 3 },
 		"cardStyle": { "type": "string", "default": "flat" },
 		"imageHeight": { "type": "integer", "default": 200 },
+		"imageRatio": { "type": "string", "default": "auto" },
 		"showProgress": { "type": "boolean", "default": true },
 		"showMeta": { "type": "boolean", "default": true },
 		"progressColor": { "type": "string", "default": "" },
-		"customClass": { "type": "string", "default": "" },
+		"cardBackground": { "type": "string", "default": "" },
 		"inheritCampaignTaxonomy": { "type": "boolean", "default": true }
 	},
 	"usesContext": ["query", "queryId", "postId"],

@@ -20,10 +20,11 @@ registerBlockType('giftflow/campaigns-grid', {
         columns: { type: 'integer', default: 3 },
         cardStyle: { type: 'string', default: 'flat' },
         imageHeight: { type: 'integer', default: 200 },
+        imageRatio: { type: 'string', default: 'auto' },
         showProgress: { type: 'boolean', default: true },
         showMeta: { type: 'boolean', default: true },
         progressColor: { type: 'string', default: '' },
-        customClass: { type: 'string', default: '' },
+        cardBackground: { type: 'string', default: '' },
         inheritCampaignTaxonomy: { type: 'boolean', default: true },
     },
     edit: (props) => {
@@ -33,10 +34,18 @@ registerBlockType('giftflow/campaigns-grid', {
         const perPage = a.perPage || 9;
         const skeletonCards = Math.min(3, perPage);
         const fillColor = a.progressColor || '#2563eb';
+        const cardBg = a.cardBackground || '#fff';
         const imgH = a.imageHeight || 200;
+        const imgRatio = a.imageRatio || 'auto';
+        const useRatio = imgRatio && imgRatio !== 'auto';
         const blockProps = useBlockProps({
-            className: `giftflow-campaigns-grid giftflow-campaigns-grid--cols-${cols} giftflow-campaigns-grid--${a.cardStyle || 'shadow'}`,
-            style: { '--giftflow-grid-columns': cols, '--gf-grid-img-height': imgH + 'px' },
+            className: `giftflow-campaigns-grid giftflow-campaigns-grid--cols-${cols} giftflow-campaigns-grid--${a.cardStyle || 'shadow'}` + (useRatio ? ' giftflow-campaigns-grid--has-ratio' : ''),
+            style: {
+                '--giftflow-grid-columns': cols,
+                '--gf-grid-img-height': useRatio ? 'auto' : imgH + 'px',
+                '--gf-grid-img-ratio': useRatio ? imgRatio : 'auto',
+                '--gf-grid-card-bg': cardBg,
+            },
         });
         ensureShimmerStyles();
 
@@ -60,7 +69,20 @@ registerBlockType('giftflow/campaigns-grid', {
                     </PanelBody>
                     <PanelBody title={__('Layout', 'giftflow')} initialOpen={false}>
                         <RangeControl label={__('Columns', 'giftflow')} value={cols} onChange={v => setAttributes({ columns: v })} min={1} max={4} />
-                        <RangeControl label={__('Image height', 'giftflow')} value={imgH} onChange={v => setAttributes({ imageHeight: v })} min={120} max={360} step={10} />
+                        <SelectControl
+                            label={__('Image ratio', 'giftflow')}
+                            value={imgRatio}
+                            options={[
+                                { label: __('Auto (fixed height)', 'giftflow'), value: 'auto' },
+                                { label: __('Square 1:1', 'giftflow'), value: '1/1' },
+                                { label: __('Standard 4:3', 'giftflow'), value: '4/3' },
+                                { label: __('Widescreen 16:9', 'giftflow'), value: '16/9' },
+                                { label: __('Classic 3:2', 'giftflow'), value: '3/2' },
+                                { label: __('Portrait 2:3', 'giftflow'), value: '2/3' },
+                            ]}
+                            onChange={v => setAttributes({ imageRatio: v })}
+                        />
+                        {!useRatio && <RangeControl label={__('Image height', 'giftflow')} value={imgH} onChange={v => setAttributes({ imageHeight: v })} min={120} max={360} step={10} />}
                         <div style={{ marginBottom: 20 }}>
                             <div style={lb}>{__('Card style', 'giftflow')}</div>
                             <ToggleGroupControl value={a.cardStyle || 'flat'} onChange={v => setAttributes({ cardStyle: v })} isBlock __nextHasNoMarginBottom>
@@ -77,9 +99,9 @@ registerBlockType('giftflow/campaigns-grid', {
                         <BaseControl label={__('Accent color', 'giftflow')}>
                             <ColorPalette value={a.progressColor} onChange={v => setAttributes({ progressColor: v || '' })} disableCustomColors={false} clearable={true} />
                         </BaseControl>
-                    </PanelBody>
-                    <PanelBody title={__('Advanced', 'giftflow')} initialOpen={false}>
-                        <TextControl label={__('Extra CSS class', 'giftflow')} value={a.customClass || ''} onChange={v => setAttributes({ customClass: v })} />
+                        <BaseControl label={__('Card background', 'giftflow')}>
+                            <ColorPalette value={a.cardBackground} onChange={v => setAttributes({ cardBackground: v || '' })} disableCustomColors={false} clearable={true} />
+                        </BaseControl>
                     </PanelBody>
                 </InspectorControls>
                 <div {...blockProps}>
@@ -92,9 +114,9 @@ registerBlockType('giftflow/campaigns-grid', {
                     )}
                     <div className="giftflow-campaigns-grid__items">
                         {Array.from({ length: skeletonCards }).map((_, i) => (
-                            <article key={i} className="giftflow-campaigns-grid__item" style={a.cardStyle === 'minimal' ? { border: 'none', boxShadow: 'none', background: 'transparent' } : { border: '1px solid #e5e7eb', boxShadow: 'none' }}>
+                            <article key={i} className="giftflow-campaigns-grid__item" style={a.cardStyle === 'minimal' ? { border: 'none', boxShadow: 'none', background: 'transparent' } : { border: '1px solid #e5e7eb', boxShadow: 'none', background: cardBg }}>
                                 <div className="giftflow-campaigns-grid__image" style={{ position: 'relative' }}>
-                                    <ShimmerBox height={imgH} style={{ borderRadius: 0 }} />
+                                    <ShimmerBox height={useRatio ? undefined : imgH} style={{ borderRadius: 0, ...(useRatio ? { aspectRatio: imgRatio, height: 'auto' } : {}) }} />
                                     <div style={{ position: 'absolute', top: 12, left: 12, padding: '4px 10px', background: 'rgba(255,255,255,0.9)', borderRadius: 6, fontSize: 11, fontWeight: 600, color: fillColor }}>{__('Category', 'giftflow')}</div>
                                 </div>
                                 <div className="giftflow-campaigns-grid__body" style={{ display: 'flex', flexDirection: 'column', ...(a.cardStyle === 'minimal' ? { padding: '14px 0 0' } : {}) }}>

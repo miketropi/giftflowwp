@@ -42,7 +42,31 @@ function giftflow_campaigns_grid_block() {
 					'type'    => 'string',
 					'default' => '',
 				),
-				'customClass' => array(
+				'cardStyle'  => array(
+					'type'    => 'string',
+					'default' => 'flat',
+				),
+				'imageHeight' => array(
+					'type'    => 'integer',
+					'default' => 200,
+				),
+				'imageRatio' => array(
+					'type'    => 'string',
+					'default' => 'auto',
+				),
+				'showProgress' => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
+				'showMeta' => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
+				'progressColor' => array(
+					'type'    => 'string',
+					'default' => '',
+				),
+				'cardBackground' => array(
 					'type'    => 'string',
 					'default' => '',
 				),
@@ -82,8 +106,6 @@ function giftflow_campaigns_grid_block_render( $attributes, $content, $block ) {
 	$inherit_tax = (bool) ( $attributes['inheritCampaignTaxonomy'] ?? true );
 	$category    = isset( $attributes['category'] ) ? sanitize_text_field( (string) $attributes['category'] ) : '';
 	$search      = isset( $attributes['search'] ) ? sanitize_text_field( $attributes['search'] ) : '';
-	$custom_raw   = isset( $attributes['customClass'] ) ? $attributes['customClass'] : '';
-	$custom_class = is_string( $custom_raw ) ? sanitize_html_class( $custom_raw ) : '';
 
 	// On campaign-tax term archives, use the viewed term when no category is set in the block.
 	if ( '' === $category && $inherit_tax && ! wp_is_serving_rest_request() && is_tax( 'campaign-tax' ) ) {
@@ -122,7 +144,6 @@ function giftflow_campaigns_grid_block_render( $attributes, $content, $block ) {
 		'search'       => $search,
 		'paged'        => 1,
 		'post_type'    => 'campaign',
-		'custom_class' => $custom_class,
 	);
 
 	if ( ! wp_is_serving_rest_request() ) {

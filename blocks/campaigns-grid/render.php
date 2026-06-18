@@ -21,11 +21,12 @@ $gf_category       = sanitize_text_field( $attributes['category'] ?? '' );
 $gf_search         = sanitize_text_field( $attributes['search'] ?? '' );
 $gf_card_style     = $attributes['cardStyle'] ?? 'shadow';
 $gf_img_height     = max( 120, min( 360, (int) ( $attributes['imageHeight'] ?? 200 ) ) );
+$gf_img_ratio      = $attributes['imageRatio'] ?? 'auto';
+$gf_use_ratio      = $gf_img_ratio && 'auto' !== $gf_img_ratio;
 $gf_show_prog      = $attributes['showProgress'] ?? true;
 $gf_show_meta      = $attributes['showMeta'] ?? true;
 $gf_progress_color = $attributes['progressColor'] ?? '';
-$gf_extra_class    = sanitize_html_class( $attributes['customClass'] ?? '' );
-$gf_progress_color = $attributes['progressColor'] ?? '';
+$gf_card_bg        = $attributes['cardBackground'] ?? '';
 
 $gf_paged        = max( 1, (int) get_query_var( 'paged', 1 ) );
 $gf_inherit_tax  = (bool) ( $attributes['inheritCampaignTaxonomy'] ?? true );
@@ -78,11 +79,16 @@ $gf_query = new \WP_Query( $gf_query_args );
 
 $gf_classes = 'giftflow-campaigns-grid giftflow-campaigns-grid--cols-' . $gf_columns
 	. ' giftflow-campaigns-grid--' . esc_attr( $gf_card_style )
-	. ( $gf_extra_class ? ' ' . $gf_extra_class : '' );
+	. ( $gf_use_ratio ? ' giftflow-campaigns-grid--has-ratio' : '' );
 
-$gf_style_attr = '--giftflow-grid-columns:' . $gf_columns . ';--gf-grid-img-height:' . $gf_img_height . 'px;';
+$gf_style_attr = '--giftflow-grid-columns:' . $gf_columns . ';';
+$gf_style_attr .= '--gf-grid-img-height:' . ( $gf_use_ratio ? 'auto' : ( $gf_img_height . 'px' ) ) . ';';
+$gf_style_attr .= '--gf-grid-img-ratio:' . esc_attr( $gf_use_ratio ? $gf_img_ratio : 'auto' ) . ';';
 if ( $gf_progress_color ) {
 	$gf_style_attr .= '--gf-grid-accent:' . esc_attr( $gf_progress_color ) . ';';
+}
+if ( $gf_card_bg ) {
+	$gf_style_attr .= '--gf-grid-card-bg:' . esc_attr( $gf_card_bg ) . ';';
 }
 
 $block_wrapper_attrs = get_block_wrapper_attributes(
