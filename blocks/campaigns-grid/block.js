@@ -120,7 +120,7 @@ registerBlockType('giftflow/campaigns-grid', {
                                     <div style={{ position: 'absolute', top: 12, left: 12, padding: '4px 10px', background: 'rgba(255,255,255,0.9)', borderRadius: 6, fontSize: 11, fontWeight: 600, color: fillColor }}>{__('Category', 'giftflow')}</div>
                                 </div>
                                 <div className="giftflow-campaigns-grid__body" style={{ display: 'flex', flexDirection: 'column', ...(a.cardStyle === 'minimal' ? { padding: '14px 0 0' } : {}) }}>
-                                    <h3 className="giftflow-campaigns-grid__title"><ShimmerBar height={16} width="80%" /></h3>
+                                    <h4 className="giftflow-campaigns-grid__title"><ShimmerBar height={16} width="80%" /></h4>
                                     <div style={{ margin: '0 0 12px' }}><ShimmerBar height={12} width="95%" /><ShimmerBar height={12} width="65%" style={{ marginTop: 6 }} /></div>
                                     {a.showProgress && (
                                         <div className="giftflow-campaigns-grid__progress">

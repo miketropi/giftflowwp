@@ -126,10 +126,7 @@
 	padding: 1.25rem;
 }
 .giftflow-carousel__title {
-	/* margin: 0 0 0.375rem; */
-	font-size: 1.0625rem;
-	font-weight: 650;
-	line-height: 1.35;
+	
 }
 .giftflow-carousel__title a {
 	text-decoration: none;
@@ -193,8 +190,9 @@
 }
 .giftflow-carousel__location {
 	display: inline-flex;
-	align-items: center;
+	align-items: baseline; 
 	gap: 0.25rem;
+	width: 100%;
 }
 .giftflow-carousel__location::before {
 	content: "";

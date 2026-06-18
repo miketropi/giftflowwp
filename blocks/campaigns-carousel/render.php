@@ -142,7 +142,7 @@ if ( ! $gf_query->have_posts() ) {
 						<?php endif; ?>
 					</div>
 					<div class="giftflow-carousel__body">
-						<h3 class="giftflow-carousel__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+						<h4 class="giftflow-carousel__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
 
 						<?php if ( $gf_excerpt ) : ?>
 							<p class="giftflow-carousel__excerpt"><?php echo esc_html( wp_trim_words( $gf_excerpt, 12 ) ); ?></p>

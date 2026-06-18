@@ -9,8 +9,6 @@
 
 .giftflow-thank-donor__heading {
 	margin: 0 0 1rem;
-	font-size: var(--wp--preset--font-size--x-large, 1.75rem);
-	line-height: 1.3;
 }
 
 .giftflow-thank-donor__message {
@@ -25,12 +23,8 @@
 
 .giftflow-thank-donor__notice {
 	margin-bottom: 1.5rem;
-	padding: 1rem;
-	background: var(--wp--preset--color--base, #f0f7ff);
-	border-radius: 8px;
-	font-size: 0.875rem;
-	color: var(--wp--preset--color--contrast-2, #555);
-	line-height: 1.5;
+	text-decoration: underline;
+	text-underline-offset: .3rem;
 }
 
 .giftflow-thank-donor__notice p {
@@ -44,15 +38,19 @@
 .giftflow-thank-donor__btn {
 	display: inline-block;
 	padding: 0.75rem 2rem;
-	background: var(--wp--preset--color--vivid-cyan-blue, #005ae0);
-	color: #fff;
-	border-radius: 8px;
+	background: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+	border-radius: 30px;
 	text-decoration: none;
-	font-weight: 600;
-	transition: opacity 0.2s ease, transform 0.2s ease;
+	/* font-weight: 600; */
+	transition: 0.2s ease, transform 0.2s ease;
 }
 
 .giftflow-thank-donor__btn:hover {
 	opacity: 0.9;
 	transform: translateY(-1px);
+	text-decoration: none;
+
+	background-color: var(--wp--preset--color--secondary);
+	color: var(--wp--preset--color--base);
 }

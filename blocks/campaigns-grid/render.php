@@ -135,9 +135,9 @@ $block_wrapper_attrs = get_block_wrapper_attributes(
 			</div>
 
 			<div class="giftflow-campaigns-grid__body">
-				<h3 class="giftflow-campaigns-grid__title">
+				<h4 class="giftflow-campaigns-grid__title">
 					<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-				</h3>
+				</h4>
 
 				<?php if ( $gf_excerpt ) : ?>
 					<p class="giftflow-campaigns-grid__excerpt"><?php echo esc_html( wp_trim_words( $gf_excerpt, 15 ) ); ?></p>
