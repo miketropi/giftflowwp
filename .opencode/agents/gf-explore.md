@@ -1,7 +1,6 @@
 ---
 description: Deep exploration agent specialized in the GiftFlow WordPress plugin codebase. Use to find code patterns, trace flows, understand architecture, or discover how features work. Trigger when asking "how does X work", "where is Y implemented", or when tracing payment/donation/block flows.
 mode: subagent
-model: anthropic/claude-sonnet-4-6
 permission:
   edit: deny
   bash:

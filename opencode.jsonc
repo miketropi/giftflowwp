@@ -5,15 +5,37 @@
     "paths": [".opencode/skills"]
   },
   "agent": {
+    "gf-planner": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "mode": "subagent",
+      "description": "Pipeline Stage 1 — Analyzes tasks against the GiftFlow codebase and produces a detailed implementation plan (files, classes, conventions, risks, build order). Call first when running the gf-pipeline."
+    },
+    "gf-builder": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "mode": "subagent",
+      "description": "Pipeline Stage 2 — Implements code changes following the planner's blueprint. Writes PHP/JS/CSS per GiftFlow conventions. Call after gf-planner."
+    },
     "gf-review": {
       "model": "anthropic/claude-sonnet-4-6",
       "mode": "subagent",
-      "description": "Reviews PHP & JS changes for WordPress plugin standards, security, i18n, and GiftFlow conventions."
+      "description": "Pipeline Stage 3 — Reviews PHP & JS changes for WordPress plugin standards, security, i18n, GiftFlow conventions, and architecture consistency. Call after gf-builder."
+    },
+    "gf-qa": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "mode": "subagent",
+      "description": "Pipeline Stage 4 — Runs linters, audits file registration, validates conventions, cross-references the plan, and confirms nothing is broken. Call after gf-review."
     },
     "gf-explore": {
       "model": "anthropic/claude-sonnet-4-6",
       "mode": "subagent",
       "description": "Deep exploration agent for the GiftFlow plugin codebase — traces flows, finds patterns, explains architecture."
+    }
+  },
+  "command": {
+    "implement": {
+      "description": "Run the full GiftFlow agent pipeline: Planner → Builder → Review → QA",
+      "template": "Run the full GiftFlow agent pipeline (Planner → Builder → Review → QA) on the following task:\n\n$ARGUMENTS\n\nExecute in this exact order using the Task tool:\n1. **gf-planner** — Give it the task description above. Wait for the plan output.\n2. **gf-builder** — Give it the plan output from step 1. Wait for implementation complete.\n3. **gf-review** — Give it the diff/changes from step 2. Wait for review results.\n4. **gf-qa** — Give it the plan (step 1), the changes (step 2), and the review (step 3). Wait for QA report.\n\nAfter all 4 stages complete, summarize the results: what was built, review findings, QA verdict, and any remaining issues.\n\nDo NOT skip stages, do NOT combine stages. Each stage must complete before starting the next.",
+      "agent": "general"
     }
   },
   "permission": {

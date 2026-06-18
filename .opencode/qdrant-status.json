@@ -2,14 +2,14 @@
   "status": "complete",
   "totalFiles": 839,
   "processedFiles": 839,
-  "skippedFiles": 717,
-  "totalChunks": 759,
+  "skippedFiles": 837,
+  "totalChunks": 4,
   "errorCount": 0,
   "errors": [],
-  "startedAt": 1781790555564,
-  "completedAt": 1781790625463,
+  "startedAt": 1781796008657,
+  "completedAt": 1781796011130,
   "collectionName": "opencode_1775e57d44d0_384",
-  "collectionPointCount": 6126,
+  "collectionPointCount": 6127,
   "provider": "local-worker:Xenova/all-MiniLM-L6-v2",
-  "updatedAt": 1781790625463
+  "updatedAt": 1781796011130
 }
