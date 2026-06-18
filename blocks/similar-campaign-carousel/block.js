@@ -2,7 +2,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, RangeControl, ToggleControl, ColorPalette, BaseControl, TextControl, TextareaControl, __experimentalToggleGroupControl as ToggleGroupControl, __experimentalToggleGroupControlOption as ToggleGroupControlOption } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { ShimmerBox, ShimmerBar, ensureShimmerStyles } from '../_editor-utils';
+import { ShimmerBox, ShimmerBar, ensureShimmerStyles, useCampaignSelector } from '../_editor-utils';
 
 registerBlockType('giftflow/similar-campaign-carousel', {
     apiVersion: 3,
@@ -24,6 +24,7 @@ registerBlockType('giftflow/similar-campaign-carousel', {
         description: { type: 'string', default: '' },
         headerAlign: { type: 'string', default: 'center' },
         excludeCurrent: { type: 'boolean', default: true },
+        sourceCampaignId: { type: 'number', default: 0 },
     },
     edit: (props) => {
         const { attributes, setAttributes } = props;
@@ -33,13 +34,23 @@ registerBlockType('giftflow/similar-campaign-carousel', {
         const blockProps = useBlockProps({ className: 'giftflow-similar-carousel', style: { '--gf-carousel-img-height': imgH + 'px' } });
         ensureShimmerStyles();
 
+        const { CampaignSelector } = useCampaignSelector({
+            defaultLabel: __('Use current page', 'giftflow'),
+            defaultValue: 0,
+        });
+
         const lb = { marginBottom: 6, fontSize: 11, fontWeight: 500, textTransform: 'uppercase', color: '#757575' };
 
         return (
             <>
                 <InspectorControls>
                     <PanelBody title={__('Query', 'giftflow')} initialOpen={true}>
-                        <RangeControl label={__('Total campaigns', 'giftflow')} value={a.perPage} onChange={v => setAttributes({ perPage: v || 9 })} min={1} max={24} help={__('Campaigns are matched by shared categories with the current campaign. Falls back to recent campaigns if no categories match.', 'giftflow')} />
+                        <CampaignSelector
+                            value={a.sourceCampaignId}
+                            onChange={(v) => setAttributes({ sourceCampaignId: v })}
+                            help={__('Select a reference campaign or leave empty to use the current page.', 'giftflow')}
+                        />
+                        <RangeControl label={__('Total campaigns', 'giftflow')} value={a.perPage} onChange={v => setAttributes({ perPage: v || 9 })} min={1} max={24} help={__('Campaigns are matched by shared categories with the reference campaign. Falls back to recent campaigns if no categories match.', 'giftflow')} />
                     </PanelBody>
                     <PanelBody title={__('Header', 'giftflow')} initialOpen={false}>
                         <TextControl label={__('Eyebrow', 'giftflow')} value={a.eyebrow} onChange={v => setAttributes({ eyebrow: v })} help={__('Small badge text above heading.', 'giftflow')} />

@@ -9,8 +9,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Determine current campaign ID from block context or the global post.
-$gf_current_id = (int) ( isset( $block->context['postId'] ) ? $block->context['postId'] : get_the_ID() );
+// Determine current campaign ID from attribute, block context, or the global post.
+$gf_source_id = (int) ( $attributes['sourceCampaignId'] ?? 0 );
+$gf_current_id = $gf_source_id > 0
+	? $gf_source_id
+	: (int) ( isset( $block->context['postId'] ) ? $block->context['postId'] : get_the_ID() );
 
 $gf_per_page  = max( 1, (int) ( $attributes['perPage'] ?? 9 ) );
 $gf_columns   = max( 1, min( 5, (int) ( $attributes['columns'] ?? 3 ) ) );

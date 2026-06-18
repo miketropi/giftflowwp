@@ -45,7 +45,7 @@
 .giftflow-similar-carousel__swiper {
 	overflow: hidden;
 	padding: 4px 4px 3rem;
-	margin: -4px -4px -3rem;
+	/* margin: -4px -4px -3rem; */
 }
 
 /* Equal-height cards */
