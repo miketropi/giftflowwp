@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - "*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to deploy (e.g. 1.0.17)'
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -35,6 +41,8 @@ jobs:
         run: npm run build
 
       - name: Build vendor dependencies
+        env:
+          COMPOSER_AUTH: ""
         run: composer run build
 
       - name: Build package
@@ -43,7 +51,12 @@ jobs:
       # 🔥 Extract version (support v1.0.0 or 1.0.0)
       - name: Extract version
         id: version
-        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            echo "VERSION=${{ inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+          fi
 
       # 🔥 Validate version + structure
       - name: Validate version
