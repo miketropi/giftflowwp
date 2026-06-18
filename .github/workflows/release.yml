@@ -43,7 +43,9 @@ jobs:
       - name: Build vendor dependencies
         env:
           COMPOSER_AUTH: ""
-        run: composer run build
+        run: |
+          unset COMPOSER_AUTH
+          composer run build
 
       - name: Build package
         run: npm run build:package
