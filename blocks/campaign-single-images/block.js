@@ -2,22 +2,37 @@ import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { ShimmerBox, ensureShimmerStyles } from '../_editor-utils';
+import { ShimmerBox, ensureShimmerStyles, useCampaignSelector } from '../_editor-utils';
 
 registerBlockType('giftflow/campaign-single-images', {
     apiVersion: 3,
     title: __('Campaign Images', 'giftflow'),
     icon: 'format-gallery',
     category: 'giftflow',
-    usesContext: ['postId'],
-    edit: () => {
+    usesContext: ['postId', 'postType'],
+    attributes: {
+        campaignId: { type: 'number', default: 0 },
+    },
+    edit: ({ attributes, setAttributes }) => {
+        const { campaignId } = attributes;
+        const { CampaignSelector } = useCampaignSelector({
+            defaultLabel: __('Use current page', 'giftflow'),
+            defaultValue: 0,
+        });
         const blockProps = useBlockProps({ className: 'giftflow-campaign-images' });
         ensureShimmerStyles();
 
         return (
             <>
                 <InspectorControls>
-                    <PanelBody title={__('About', 'giftflow')} initialOpen={true}>
+                    <PanelBody title={__('Campaign', 'giftflow')} initialOpen={true}>
+                        <CampaignSelector
+                            value={campaignId}
+                            onChange={(v) => setAttributes({ campaignId: v })}
+                            help={__('Select a specific campaign or leave empty to use the current page.', 'giftflow')}
+                        />
+                    </PanelBody>
+                    <PanelBody title={__('About', 'giftflow')} initialOpen={false}>
                         <p style={{ color: '#757575', fontSize: 13 }}>
                             {__('Displays the featured image and gallery for a campaign. Click thumbnails to swap the main image, or click the main image to open the fullscreen lightbox viewer.', 'giftflow')}
                         </p>

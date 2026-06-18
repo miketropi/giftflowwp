@@ -40,7 +40,8 @@ add_action( 'init', 'giftflow_campaign_single_images_block' );
 function giftflow_campaign_single_images_block_render( $attributes, $content, $block ) {
 	unset( $content );
 	unset( $block );
-	$post_id = get_the_ID();
+	$campaign_id = (int) ( $attributes['campaignId'] ?? 0 );
+	$post_id = $campaign_id > 0 ? $campaign_id : get_the_ID();
 
 	// Check if it is a WP json api request.
 	if ( wp_is_serving_rest_request() ) {

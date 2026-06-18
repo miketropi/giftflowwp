@@ -10,9 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$gf_post_id = isset( $block->context['postId'] )
-	? (int) $block->context['postId']
-	: get_the_ID();
+$gf_campaign_id = (int) ( $attributes['campaignId'] ?? 0 );
+
+$gf_post_id = $gf_campaign_id > 0
+	? $gf_campaign_id
+	: ( isset( $block->context['postId'] ) ? (int) $block->context['postId'] : get_the_ID() );
 
 if ( ! $gf_post_id ) {
 	return;

@@ -18,6 +18,10 @@
 	},
 	"usesContext": ["postId", "postType"],
 	"attributes": {
+		"campaignId": {
+			"type": "number",
+			"default": 0
+		},
 		"__editorPostId": {
 			"type": "number",
 			"default": 0
