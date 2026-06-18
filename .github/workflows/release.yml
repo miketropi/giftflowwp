@@ -40,13 +40,12 @@ jobs:
       - name: Build assets
         run: npm run build
 
-      - name: Build vendor dependencies
-        env:
-          COMPOSER_AUTH: ""
-        run: |
-          unset COMPOSER_AUTH
-          # composer run build
-          php vendor/bin/strauss -vvv
+      # - name: Build vendor dependencies
+      #   env:
+      #     COMPOSER_AUTH: ""
+      #   run: |
+      #     unset COMPOSER_AUTH
+      #     composer run build
 
       - name: Build package
         run: npm run build:package
