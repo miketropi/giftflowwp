@@ -254,8 +254,7 @@ do_action( 'giftflow_my_donations_list_columns_resolved', $table_columns );
 	<?php endif; ?>
 <?php else : ?>
 	<div class="gfw-no-donations" role="status">
-		<p class="gfw-no-donations__title"><?php esc_html_e( 'No donations yet', 'giftflow' ); ?></p>
-		<p class="gfw-no-donations__hint"><?php esc_html_e( 'When you support a campaign, your receipts and history will appear here.', 'giftflow' ); ?></p>
+		<p class="gfw-no-donations__hint"><?php esc_html_e( 'No donations yet', 'giftflow' ); ?>, <?php esc_html_e( 'When you support a campaign, your receipts and history will appear here.', 'giftflow' ); ?></p>
 	</div>
 <?php endif; ?>
 </div>

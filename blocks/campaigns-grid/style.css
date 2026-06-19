@@ -1,5 +1,6 @@
 .giftflow-campaigns-grid {
 	font-family: inherit;
+	--gf-grid-accent: var(--wp--preset--color--contrast);
 }
 
 .giftflow-campaigns-grid__items {
@@ -92,7 +93,7 @@
 	border-radius: 6px;
 	font-size: 0.6875rem;
 	font-weight: 600;
-	color: var(--gf-grid-accent, var(--wp--preset--color--primary, #2563eb));
+	/* color: var(--gf-grid-accent, var(--wp--preset--color--primary, #2563eb)); */
 	letter-spacing: 0.02em;
 	z-index: 1;
 }
@@ -115,7 +116,7 @@
 	transition: color 0.2s ease;
 }
 .giftflow-campaigns-grid__title a:hover {
-	color: var(--gf-grid-accent, var(--wp--preset--color--primary, #2563eb));
+	/* color: var(--gf-grid-accent, var(--wp--preset--color--primary, #2563eb)); */
 }
 
 .giftflow-campaigns-grid__excerpt {

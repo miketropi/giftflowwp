@@ -54,6 +54,10 @@
 	min-height: 300px;
 }
 
+.giftflow-donor-account__content p {
+	margin-bottom: 1.5rem;
+}
+
 /* ── Dashboard ── */
 .giftflow-donor-account__dashboard {
 	max-width: 680px;

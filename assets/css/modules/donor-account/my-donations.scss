@@ -449,11 +449,11 @@ $gfw-md-radius-sm: 3px;
 // Empty state
 // -----------------------------------------------------------------------------
 .gfw-no-donations {
-  padding: clamp(1.75rem, 4vw, 2.25rem) 1.25rem;
-  text-align: center;
-  background: $gfw-md-surface-subtle;
-  border: 1px solid $gfw-md-border;
-  border-radius: $gfw-md-radius;
+  // padding: clamp(1.75rem, 4vw, 2.25rem) 1.25rem;
+  // text-align: center;
+  // background: $gfw-md-surface-subtle;
+  // border: 1px solid $gfw-md-border;
+  // border-radius: $gfw-md-radius;
 }
 
 .gfw-no-donations__title {
@@ -466,9 +466,13 @@ $gfw-md-radius-sm: 3px;
 .gfw-no-donations__hint {
   margin: 0;
   // font-size: 0.8125rem;
-  color: $gfw-md-text-muted;
+  // color: $gfw-md-text-muted;
   // max-width: 22rem;
   margin-left: auto;
   margin-right: auto;
   line-height: 1.5;
+  text-decoration: underline;
+  text-underline-offset: .3rem;
+  opacity: .8;
+  font-size: .85rem;
 }

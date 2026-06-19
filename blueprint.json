@@ -1,6 +1,28 @@
 {
 	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"login": true,
 	"siteOptions": {
-		"blogname": "Giftflow"
-	}
+		"blogname": "Giftflow",
+		"permalink_structure": "/%postname%/"
+	},
+	"steps": [
+		{
+			"step": "installTheme",
+			"themeData": {
+				"resource": "url",
+				"url": "https://pub-9b3396bbb4d146d7b6e83052e2b6cee1.r2.dev/miketropi/nextora/v0.0.7.zip"
+			}
+		},
+		{
+			"step": "activatePlugin",
+			"pluginPath": "giftflow/giftflow.php"
+		},
+		{
+			"step": "importWxr",
+			"file": {
+				"resource": "url",
+				"url": "https://pub-0645c3b9d3674132af6b362484df0f3c.r2.dev/giftflow-media/CampaignsDemo.xml"
+			}
+		}
+	]
 }

@@ -30,7 +30,8 @@
 }
 
 .giftflow-donation-faqs__question:hover {
-	color: var(--wp--preset--color--primary, var(--wp--preset--color--vivid-cyan-blue, #3b82f6));
+	/* color: var(--wp--preset--color--primary, var(--wp--preset--color--vivid-cyan-blue, #3b82f6)); */
+	opacity: .7;
 }
 
 .giftflow-donation-faqs__question:focus-visible {

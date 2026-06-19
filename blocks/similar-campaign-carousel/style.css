@@ -1,6 +1,7 @@
 .giftflow-similar-carousel {
 	font-family: inherit;
 	position: relative;
+	--gf-carousel-accent: var(--wp--preset--color--contrast);
 }
 
 .giftflow-similar-carousel__header {

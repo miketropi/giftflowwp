@@ -23,5 +23,9 @@ PLUGIN="$(grep -rls "Plugin Name:" . --include=*.php | head -n1 || true)"
 [[ -z "$PLUGIN" ]] && { echo "No PHP file with 'Plugin Name:' header found."; exit 1; }
 cd "$(dirname "$PLUGIN")"
 
+BLUEPRINT="${BLUEPRINT:-blueprint.json}"
+BLUEPRINT_FLAG=""
+[[ -f "$BLUEPRINT" ]] && BLUEPRINT_FLAG="--blueprint=$BLUEPRINT"
+
 echo "→ http://localhost:$PORT  (admin / password)"
-exec npx --yes @wp-now/wp-now start --php="$PHP" --wp="$WP" --port="$PORT" "$@"
+exec npx --yes @wp-playground/cli@latest start --php="$PHP" --wp="$WP" --port="$PORT" $BLUEPRINT_FLAG "$@"
