@@ -1,0 +1,6 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"siteOptions": {
+		"blogname": "Giftflow"
+	}
+}

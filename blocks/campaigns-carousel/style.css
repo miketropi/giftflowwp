@@ -138,7 +138,7 @@
 }
 
 .giftflow-carousel__excerpt {
-	margin: 0 0 0.875rem;
+	margin: 0 0 0.875rem !important;
 	font-size: 1rem;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
@@ -231,7 +231,7 @@
 .giftflow-carousel__prev,
 .giftflow-carousel__next {
 	position: absolute;
-	top: calc(var(--gf-carousel-img-height, 240px) / 2);
+	top: 50%;
 	transform: translateY(-50%);
 	z-index: 5;
 	width: 40px;
@@ -260,7 +260,7 @@
 
 .giftflow-carousel--has-ratio .giftflow-carousel__prev,
 .giftflow-carousel--has-ratio .giftflow-carousel__next {
-	top: 50%;
+	/* top: 50%; */
 }
 @media (max-width: 680px) {
 	.giftflow-carousel__prev { left: 0; }
