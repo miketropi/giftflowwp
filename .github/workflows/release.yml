@@ -120,4 +120,14 @@ jobs:
           SLUG: giftflow
           BUILD_DIR: __build/giftflow
 
-      
+      - name: Notify deploy success
+        if: success()
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+          REPO="${{ github.repository }}"
+          curl -sS -X POST https://post-message-cms.beplus-agency.cloud/api/v1/messages \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.BP_NOTI_TOKEN }}" \
+            -d "{\"text\": \"🚀 **GiftFlow v${VERSION}** — New Release Published\n\n📦 WordPress.org → https://wordpress.org/plugins/giftflow/\n🐙 GitHub Release → https://github.com/${REPO}/releases/tag/v${VERSION}\n🔖 Tag → v${VERSION}\n🟢 Status → Deployed Successfully\n📅 Date → $(date -u +'%Y-%m-%d %H:%M UTC')\", \"branch\": \"alert-beplus-services-noti\"}"
+
+       
