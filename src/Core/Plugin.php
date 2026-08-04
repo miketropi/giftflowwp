@@ -72,6 +72,7 @@ class Plugin {
 		$this->init_gateways();
 		$this->init_frontend();
 		$this->init_block_templates();
+		$this->register_campaign_meta_for_rest();
 
 		add_filter( 'display_post_states', array( $this, 'display_post_states' ), 10, 2 );
 
@@ -79,6 +80,97 @@ class Plugin {
 			$this->init_block_theme();
 		} else {
 			$this->init_classic_theme();
+		}
+	}
+
+	/**
+	 * Register campaign post meta for REST API exposure.
+	 *
+	 * Makes all campaign meta fields available via the WordPress
+	 * REST API so the block editor can fetch real campaign data.
+	 *
+	 * @return void
+	 */
+	public function register_campaign_meta_for_rest(): void {
+		$campaign_meta_fields = array(
+			'_goal_amount'                  => array(
+				'type' => 'number',
+				'description' => 'Fundraising goal amount.',
+			),
+			'_start_date'                   => array(
+				'type' => 'string',
+				'description' => 'Campaign start date.',
+			),
+			'_end_date'                     => array(
+				'type' => 'string',
+				'description' => 'Campaign end date.',
+			),
+			'_status'                       => array(
+				'type' => 'string',
+				'description' => 'Campaign custom status.',
+			),
+			'_one_time'                     => array(
+				'type' => 'boolean',
+				'description' => 'Allow one-time donations.',
+			),
+			'_recurring'                    => array(
+				'type' => 'boolean',
+				'description' => 'Allow recurring donations.',
+			),
+			'_recurring_interval'           => array(
+				'type' => 'string',
+				'description' => 'Recurring donation interval.',
+			),
+			'_recurring_number_of_times'    => array(
+				'type' => 'number',
+				'description' => 'Max recurring donation cycles.',
+			),
+			'_preset_donation_amounts'      => array(
+				'type'        => 'array',
+				'description' => 'Preset donation amount choices.',
+				'single'      => true,
+			),
+			'_allow_custom_donation_amounts' => array(
+				'type' => 'boolean',
+				'description' => 'Allow custom donation amounts.',
+			),
+			'_location'                     => array(
+				'type' => 'string',
+				'description' => 'Campaign physical location.',
+			),
+			'_gallery'                      => array(
+				'type'        => 'array',
+				'description' => 'Campaign gallery image IDs.',
+				'single'      => true,
+			),
+		);
+
+		foreach ( $campaign_meta_fields as $meta_key => $config ) {
+			$type        = $config['type'];
+			$description = $config['description'];
+			$single      = $config['single'] ?? true;
+
+			$args = array(
+				'type'         => $type,
+				'description'  => $description,
+				'single'       => $single,
+				'show_in_rest' => true,
+				'auth_callback' => function () {
+					return current_user_can( 'edit_posts' );
+				},
+			);
+
+			// For array types, add schema for sanitisation.
+			if ( 'array' === $type ) {
+				$args['sanitize_callback'] = function ( $value ) {
+					if ( ! is_array( $value ) ) {
+						return array();
+					}
+					return array_map( 'sanitize_text_field', $value );
+				};
+			}
+
+			register_post_meta( 'campaign', $meta_key, $args );
 		}
 	}
 
@@ -169,18 +261,21 @@ class Plugin {
 		);
 
 		// Register REST controllers.
-		add_action( 'rest_api_init', function () {
-			$settings_ctrl = new \GiftFlow\REST\SettingsController(
-				$this->container->get( \GiftFlow\Settings\SettingsRegistry::class )
-			);
-			$settings_ctrl->register_routes();
+		add_action(
+			'rest_api_init',
+			function () {
+				$settings_ctrl = new \GiftFlow\REST\SettingsController(
+					$this->container->get( \GiftFlow\Settings\SettingsRegistry::class )
+				);
+				$settings_ctrl->register_routes();
 
-			$dashboard_ctrl = new \GiftFlow\REST\DashboardController();
-			$dashboard_ctrl->register_routes();
+				$dashboard_ctrl = new \GiftFlow\REST\DashboardController();
+				$dashboard_ctrl->register_routes();
 
-			$campaign_ctrl = new \GiftFlow\REST\CampaignController();
-			$campaign_ctrl->register_routes();
-		} );
+				$campaign_ctrl = new \GiftFlow\REST\CampaignController();
+				$campaign_ctrl->register_routes();
+			}
+		);
 
 		// Register currency service.
 		$this->container->set(
@@ -561,7 +656,7 @@ class Plugin {
 				if ( in_array( $slug, array( 'donation-privacy-policy', 'donation-terms-conditions' ), true ) ) {
 					$file_path = GIFTFLOW_PLUGIN_DIR . 'block-templates/page-content/' . $slug . '.html';
 					if ( file_exists( $file_path ) ) {
-						$content = file_get_contents( $file_path );
+						$content = file_get_contents( $file_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local file read, not remote
 					}
 				}
 

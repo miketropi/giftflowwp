@@ -11,12 +11,13 @@
 .giftflow-carousel__header--right  { text-align: right; }
 .giftflow-carousel__header--center { text-align: center; }
 
+/* Section description (header area) — uses --gf-carousel-desc-color */
 .giftflow-carousel__description {
 	margin: 0 auto;
 	max-width: 560px;
 	font-size: 0.9375rem;
 	line-height: 1.6;
-	color: var(--wp--preset--color--contrast-2, #6b7280);
+	color: var(--gf-carousel-desc-color, var(--wp--preset--color--contrast-2, #6b7280));
 }
 .giftflow-carousel__header--left .giftflow-carousel__description   { margin-left: 0; margin-right: auto; }
 .giftflow-carousel__header--right .giftflow-carousel__description  { margin-left: auto; margin-right: 0; }
@@ -24,8 +25,8 @@
 .giftflow-carousel__eyebrow {
 	display: inline-block;
 	padding: 4px 12px;
-	background: var(--gf-carousel-accent, var(--wp--preset--color--primary, #2563eb));
-	color: #fff;
+	background: var(--gf-carousel-eyebrow-bg, var(--gf-carousel-accent, var(--wp--preset--color--primary, #2563eb)));
+	color: var(--gf-carousel-eyebrow-text, #fff);
 	border-radius: 99px;
 	font-size: 0.75rem;
 	font-weight: 600;
@@ -39,21 +40,12 @@
 	font-size: 1.75rem;
 	font-weight: 700;
 	line-height: 1.25;
-	color: var(--wp--preset--color--contrast, #111827);
-}
-
-.giftflow-carousel__description {
-	margin: 0 auto;
-	max-width: 560px;
-	font-size: 0.9375rem;
-	line-height: 1.6;
-	color: var(--wp--preset--color--contrast-2, #6b7280);
+	color: var(--gf-carousel-heading-color, var(--wp--preset--color--contrast, #111827));
 }
 
 .giftflow-carousel__swiper {
 	overflow: hidden;
 	padding: 4px 4px 3rem;
-	/* margin: -4px -4px -3rem; */
 }
 
 /* Equal-height cards */
@@ -126,11 +118,11 @@
 	padding: 1.25rem;
 }
 .giftflow-carousel__title {
-	
+
 }
 .giftflow-carousel__title a {
 	text-decoration: none;
-	color: var(--wp--preset--color--contrast, #111827);
+	color: var(--gf-carousel-title-color, var(--wp--preset--color--contrast, #111827));
 	transition: color 0.2s ease;
 }
 .giftflow-carousel__title a:hover {
@@ -144,12 +136,12 @@
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
+	color: var(--gf-carousel-desc-color, inherit);
 }
 
 /* ── Progress ── */
 .giftflow-carousel__progress {
 	margin-bottom: 0.625rem;
-	/* margin-top: 0.825rem; */
 }
 .giftflow-carousel__progress-bar {
 	height: 8px;
@@ -178,19 +170,21 @@
 	gap: 0.25rem 0.75rem;
 	margin-bottom: 0.825rem;
 	font-size: 0.875rem;
+	color: var(--gf-carousel-meta-color, inherit);
 }
 .giftflow-carousel__raised {
 	font-weight: 650;
-	color: var(--wp--preset--color--contrast, #1f2937);
+	color: var(--gf-carousel-meta-color, var(--wp--preset--color--contrast, #1f2937));
 }
 .giftflow-carousel__goal,
 .giftflow-carousel__days,
 .giftflow-carousel__location {
 	font-size: 0.8125rem;
+	color: var(--gf-carousel-meta-color, inherit);
 }
 .giftflow-carousel__location {
 	display: inline-flex;
-	align-items: baseline; 
+	align-items: baseline;
 	gap: 0.25rem;
 	width: 100%;
 }
@@ -214,17 +208,26 @@
 	font-size: 0.8125rem;
 	font-weight: 600;
 	line-height: 1.5;
-	color: #fff;
+	color: var(--gf-carousel-button-text, #fff);
 	background: var(--gf-carousel-accent, var(--wp--preset--color--primary, #2563eb));
 	border-radius: 10px;
 	text-decoration: none;
-	transition: gap 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 .giftflow-carousel__read-more:hover {
 	gap: 0.625rem;
-	opacity: 0.92;
-	transform: translateY(-1px);
-	color: #fff;
+	transform: scale(1.03);
+	color: var(--gf-carousel-button-text, #fff);
+	box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+	filter: brightness(1.08);
+}
+
+.giftflow-carousel__read-more-icon {
+	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.giftflow-carousel__read-more:hover .giftflow-carousel__read-more-icon {
+	transform: translateX(3px);
 }
 
 /* ── Nav arrows ── */

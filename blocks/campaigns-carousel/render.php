@@ -22,12 +22,19 @@ $gf_show_meta = $attributes['showMeta'] ?? true;
 $gf_autoplay  = $attributes['autoplay'] ?? false;
 $gf_delay     = max( 1000, (int) ( $attributes['autoplayDelay'] ?? 4000 ) );
 $gf_loop      = $attributes['loop'] ?? true;
-$gf_p_color   = $attributes['progressColor'] ?? '';
-$gf_c_bg      = $attributes['cardBackground'] ?? '';
-$gf_eyebrow   = $attributes['eyebrow'] ?? '';
-$gf_heading   = $attributes['heading'] ?? '';
-$gf_desc      = $attributes['description'] ?? '';
-$gf_align     = in_array( $attributes['headerAlign'] ?? 'center', array( 'left', 'center', 'right' ), true ) ? $attributes['headerAlign'] : 'center';
+$gf_p_color       = $attributes['progressColor'] ?? '';
+$gf_c_bg          = $attributes['cardBackground'] ?? '';
+$gf_title_color   = $attributes['titleColor'] ?? '';
+$gf_meta_color    = $attributes['metaColor'] ?? '';
+$gf_desc_color    = $attributes['descriptionColor'] ?? '';
+$gf_eyebrow_text  = $attributes['eyebrowTextColor'] ?? '';
+$gf_eyebrow_bg    = $attributes['eyebrowBgColor'] ?? '';
+$gf_heading_color = $attributes['headingTextColor'] ?? '';
+$gf_button_text   = $attributes['buttonTextColor'] ?? '';
+$gf_eyebrow       = $attributes['eyebrow'] ?? '';
+$gf_heading       = $attributes['heading'] ?? '';
+$gf_desc          = $attributes['description'] ?? '';
+$gf_align         = in_array( $attributes['headerAlign'] ?? 'center', array( 'left', 'center', 'right' ), true ) ? $attributes['headerAlign'] : 'center';
 
 $gf_args = array(
 	'post_type'      => 'campaign',
@@ -77,16 +84,25 @@ $gf_config = wp_json_encode(
 	)
 );
 
-$gf_accent           = $gf_p_color ? '--gf-carousel-accent:' . esc_attr( $gf_p_color ) . ';' : '';
-$gf_card_bg           = $gf_c_bg ? '--gf-carousel-card-bg:' . esc_attr( $gf_c_bg ) . ';' : '';
+$gf_accent            = $gf_p_color ? '--gf-carousel-accent:' . esc_attr( $gf_p_color ) . ';' : '';
+$gf_card_bg_var       = $gf_c_bg ? '--gf-carousel-card-bg:' . esc_attr( $gf_c_bg ) . ';' : '';
+$gf_title_color_var   = $gf_title_color ? '--gf-carousel-title-color:' . esc_attr( $gf_title_color ) . ';' : '';
+$gf_meta_color_var    = $gf_meta_color ? '--gf-carousel-meta-color:' . esc_attr( $gf_meta_color ) . ';' : '';
+$gf_desc_color_var    = $gf_desc_color ? '--gf-carousel-desc-color:' . esc_attr( $gf_desc_color ) . ';' : '';
+$gf_eyebrow_text_var  = $gf_eyebrow_text ? '--gf-carousel-eyebrow-text:' . esc_attr( $gf_eyebrow_text ) . ';' : '';
+$gf_eyebrow_bg_var    = $gf_eyebrow_bg ? '--gf-carousel-eyebrow-bg:' . esc_attr( $gf_eyebrow_bg ) . ';' : '';
+$gf_heading_color_var = $gf_heading_color ? '--gf-carousel-heading-color:' . esc_attr( $gf_heading_color ) . ';' : '';
+$gf_button_text_var   = $gf_button_text ? '--gf-carousel-button-text:' . esc_attr( $gf_button_text ) . ';' : '';
 $gf_img_style         = '--gf-carousel-img-height:' . ( $gf_use_ratio ? 'auto' : ( $gf_img_ht . 'px' ) ) . ';';
 $gf_img_style        .= '--gf-carousel-img-ratio:' . esc_attr( $gf_use_ratio ? $gf_img_ratio : 'auto' ) . ';';
 $gf_modifier          = $gf_use_ratio ? ' giftflow-carousel--has-ratio' : '';
 
+$gf_inline_style = $gf_img_style . $gf_accent . $gf_card_bg_var . $gf_title_color_var . $gf_meta_color_var . $gf_desc_color_var . $gf_eyebrow_text_var . $gf_eyebrow_bg_var . $gf_heading_color_var . $gf_button_text_var;
+
 $block_wrapper_attrs = get_block_wrapper_attributes(
 	array(
 		'class' => 'giftflow-carousel' . $gf_modifier,
-		'style' => $gf_img_style . $gf_accent . $gf_card_bg,
+		'style' => $gf_inline_style,
 	)
 );
 
@@ -187,7 +203,7 @@ if ( ! $gf_query->have_posts() ) {
 						<?php endif; ?>
 
 						<a href="<?php the_permalink(); ?>" class="giftflow-carousel__read-more">
-							<?php esc_html_e( 'Read more', 'giftflow' ); ?> →
+							<?php esc_html_e( 'Read more', 'giftflow' ); ?> <svg class="giftflow-carousel__read-more-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:4px;flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
 						</a>
 					</div>
 				</article>
