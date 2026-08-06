@@ -9,9 +9,50 @@ import {
 	RangeControl,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
+	Spinner,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { useEffect, useState } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
 import { ShimmerBox, ShimmerBar, ensureShimmerStyles, useCampaignSelector } from '../_editor-utils';
+
+/**
+ * Strip HTML tags and decode HTML entities.
+ */
+function stripHtml(str) {
+	if (!str || typeof str !== 'string') return '';
+	const stripped = str.replace(/<[^>]*>/g, '');
+	const textarea = document.createElement('textarea');
+	textarea.innerHTML = stripped;
+	return textarea.value;
+}
+
+/**
+ * Limit a string to N words.
+ */
+function limitWords(str, limit) {
+	if (!str) return '';
+	const words = str.split(/\s+/);
+	if (words.length <= limit) return str;
+	return words.slice(0, limit).join(' ') + '…';
+}
+
+/**
+ * Placeholder SVG for campaigns without featured images.
+ */
+const ImagePlaceholder = ({ height }) => (
+	<div style={{
+		display: 'flex', alignItems: 'center', justifyContent: 'center',
+		height, width: '100%',
+		background: '#f3f4f6', borderRadius: 14, color: '#9ca3af',
+	}}>
+		<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+			<rect width="18" height="18" x="3" y="3" rx="2" />
+			<circle cx="8.5" cy="8.5" r="1.5" />
+			<path d="m21 15-5-5L5 21" />
+		</svg>
+	</div>
+);
 
 registerBlockType('giftflow/campaign-card', {
 	apiVersion: 3,
@@ -21,6 +62,7 @@ registerBlockType('giftflow/campaign-card', {
 	edit: (props) => {
 		const { attributes, setAttributes } = props;
 		const a = attributes;
+		const campaignId = a.campaignId || 0;
 		const accent = a.accentColor || '#2563eb';
 		const cardStyle = a.cardStyle || 'classic';
 		const showImage = a.showImage !== false;
@@ -49,7 +91,108 @@ registerBlockType('giftflow/campaign-card', {
 
 		const { CampaignSelector } = useCampaignSelector({ defaultLabel: __('Select a campaign…', 'giftflow') });
 
+		// ── Fetch real campaign data when campaignId > 0 ──
+		const [campaign, setCampaign] = useState(null);
+		const [isLoading, setIsLoading] = useState(false);
+		const [categoryName, setCategoryName] = useState('');
+
+		useEffect(() => {
+			if (!campaignId || campaignId === 0) {
+				setCampaign(null);
+				setCategoryName('');
+				return;
+			}
+
+			let cancelled = false;
+			setIsLoading(true);
+
+			// Fetch enriched campaign data from custom endpoint.
+			apiFetch({ path: `/giftflow/v2/campaigns?include=${campaignId}&per_page=1` })
+				.then((data) => {
+					if (cancelled) return;
+					const item = Array.isArray(data) && data.length > 0 ? data[0] : null;
+					setCampaign(item);
+					setIsLoading(false);
+				})
+				.catch(() => {
+					if (cancelled) return;
+					setCampaign(null);
+					setIsLoading(false);
+				});
+
+			// Fetch category from WP REST API with embedded terms.
+			apiFetch({ path: `/wp/v2/campaign/${campaignId}?_embed` })
+				.then((post) => {
+					if (cancelled) return;
+					const terms = post._embedded?.['wp:term']?.[0];
+					if (terms && terms.length > 0) {
+						setCategoryName(terms[0].name);
+					}
+				})
+				.catch(() => {});
+
+			return () => { cancelled = true; };
+		}, [campaignId]);
+
+		// Show shimmer when no campaign selected or still loading.
+		const showShimmer = !campaignId || isLoading || !campaign;
+
+		// Derive computed values from campaign (when loaded).
+		const campaignPct = campaign ? (campaign.percentage || 0) : 42;
+		const circumference = 2 * Math.PI * 36;
+		const dashOffset = showShimmer
+			? circumference * 0.58
+			: circumference * (1 - campaignPct / 100);
+		const hasThumb = campaign && campaign.thumbnail && campaign.thumbnail.length > 0;
+		const campaignTitle = campaign ? (campaign.title || '') : '';
+		const campaignLink = campaign ? (campaign.link || '#') : '#';
+		const campaignLocation = campaign ? (campaign.location || '') : '';
+		const campaignExcerpt = campaign ? stripHtml(campaign.excerpt || '') : '';
+		const excerptDisplay = limitWords(campaignExcerpt, 20);
+		const raisedText = campaign ? (campaign.raised_formatted || '') : '';
+		const goalText = campaign ? (campaign.goal_formatted || '') : '';
+
+		// Compute days left.
+		let daysLeft = '';
+		if (campaign && campaign.end_date) {
+			const now = new Date();
+			const end = new Date(campaign.end_date);
+			const diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24));
+			if (diff > 0) daysLeft = String(diff);
+			else if (diff === 0) daysLeft = '0';
+		}
+
 		const labelStyle = { marginBottom: 6, fontSize: 11, fontWeight: 500, textTransform: 'uppercase', color: '#757575' };
+
+		// ── Stat rendering helpers ──
+		const renderStatBox = (value, label) => (
+			<div key={`${value}-${label}`} style={{
+				display: 'flex', flexDirection: 'row', alignItems: 'baseline',
+				justifyContent: 'center', gap: 5,
+				padding: '7px 8px', borderRadius: 10,
+				background: isOverlay ? 'rgba(255,255,255,0.1)' : '#f2f2f7',
+			}}>
+				<span style={{ fontSize: 15, fontWeight: 700, color: isOverlay ? '#fff' : '#1d1d1f', lineHeight: 1.3 }}>
+					{value}
+				</span>
+				<span style={{ fontSize: 12, fontWeight: 500, color: isOverlay ? 'rgba(255,255,255,0.7)' : '#6e6e73', lineHeight: 1.3 }}>
+					{label}
+				</span>
+			</div>
+		);
+
+		// Stat boxes: either real data or shimmers.
+		const statBoxes = showShimmer
+			? ['$4,200', 'raised', '$10,000', 'goal', '12', 'donors', '18', 'days'].reduce((rows, _, i, arr) => {
+					if (i % 2 === 0) {
+						rows.push(renderStatBox(arr[i], arr[i + 1]));
+					}
+					return rows;
+				}, [])
+			: [
+					renderStatBox(raisedText, __('raised', 'giftflow')),
+					renderStatBox(goalText, __('goal', 'giftflow')),
+			  ];
 
 		return (
 			<>
@@ -129,7 +272,22 @@ registerBlockType('giftflow/campaign-card', {
 									: { aspectRatio: '16/10', margin: '1.25rem 1.25rem 0 1.25rem', borderRadius: 14 }
 							}
 						>
-							<ShimmerBox height="100%" style={{ position: 'absolute', inset: 0, borderRadius: 0 }} />
+							{showShimmer ? (
+								<ShimmerBox height="100%" style={{ position: 'absolute', inset: 0, borderRadius: 0 }} />
+							) : hasThumb ? (
+								<img
+									src={campaign.thumbnail}
+									alt={campaignTitle}
+									style={{
+										position: 'absolute', inset: 0,
+										width: '100%', height: '100%',
+										objectFit: 'cover',
+										borderRadius: isOverlay ? 0 : 14,
+									}}
+								/>
+							) : (
+								<ImagePlaceholder height="100%" />
+							)}
 							{isOverlay && (
 								<div
 									className="giftflow-campaign-card__overlay"
@@ -177,26 +335,75 @@ registerBlockType('giftflow/campaign-card', {
 								color: isOverlay ? 'rgba(255,255,255,0.9)' : accent,
 							}}
 						>
-							<ShimmerBar height={10} width={70} />
+							{showShimmer ? (
+								<ShimmerBar height={10} width={70} />
+							) : (
+								categoryName || __('Campaign', 'giftflow')
+							)}
 						</span>
 
 						{/* Title */}
 						<h3 className="giftflow-campaign-card__title">
-							<ShimmerBar height={22} width="65%" />
+							{showShimmer ? (
+								<ShimmerBar height={22} width="65%" />
+							) : (
+								<a
+									href={campaignLink}
+									style={{
+										textDecoration: 'none',
+										color: isOverlay ? '#fff' : '#1d1d1f',
+										fontSize: '1.25rem',
+										fontWeight: 700,
+										lineHeight: 1.3,
+									}}
+								>
+									{campaignTitle}
+								</a>
+							)}
 						</h3>
 
 						{/* Location */}
-						<span className="giftflow-campaign-card__location" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 12, fontWeight: 500, color: isOverlay ? 'rgba(255,255,255,0.7)' : '#6e6e73', marginTop: -2 }}>
+						<span
+							className="giftflow-campaign-card__location"
+							style={{
+								display: 'inline-flex', alignItems: 'center', gap: 5,
+								fontSize: 12, fontWeight: 500,
+								color: isOverlay ? 'rgba(255,255,255,0.7)' : '#6e6e73',
+								marginTop: -2,
+							}}
+						>
 							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-							<ShimmerBar height={12} width={100} />
+							{showShimmer ? (
+								<ShimmerBar height={12} width={100} />
+							) : (
+								campaignLocation || ''
+							)}
 						</span>
 
 						{/* Excerpt */}
 						{showExcerpt && (
-							<>
-								<ShimmerBar height={13} width="95%" />
-								<ShimmerBar height={13} width="70%" style={{ marginBottom: 12 }} />
-							</>
+							showShimmer ? (
+								<>
+									<ShimmerBar height={13} width="95%" />
+									<ShimmerBar height={13} width="70%" style={{ marginBottom: 12 }} />
+								</>
+							) : excerptDisplay ? (
+								<p
+									className="giftflow-campaign-card__excerpt"
+									style={{
+										margin: '8px 0 12px',
+										fontSize: 14,
+										lineHeight: 1.5,
+										color: isOverlay ? 'rgba(255,255,255,0.8)' : '#6e6e73',
+										display: '-webkit-box',
+										WebkitLineClamp: 2,
+										WebkitBoxOrient: 'vertical',
+										overflow: 'hidden',
+									}}
+								>
+									{excerptDisplay}
+								</p>
+							) : null
 						)}
 
 						{/* Progress ring */}
@@ -217,29 +424,25 @@ registerBlockType('giftflow/campaign-card', {
 											stroke="url(#gf-cc-ring-grad)"
 											strokeWidth="5"
 											strokeLinecap="round"
-											strokeDasharray={2 * Math.PI * 36}
-											strokeDashoffset={2 * Math.PI * 36 * 0.58}
-											style={{ transform: 'rotate(-90deg)', transformOrigin: '42px 42px' }}
+											strokeDasharray={circumference}
+											strokeDashoffset={dashOffset}
+											style={{
+												transform: 'rotate(-90deg)',
+												transformOrigin: '42px 42px',
+												transition: 'stroke-dashoffset 0.6s ease',
+											}}
 										/>
 									</svg>
 									<div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', lineHeight: 1.1 }}>
-										<span style={{ fontSize: 18, fontWeight: 700, color: isOverlay ? '#fff' : '#1d1d1f', letterSpacing: '-0.02em' }}>42%</span>
+										<span style={{ fontSize: 18, fontWeight: 700, color: isOverlay ? '#fff' : '#1d1d1f', letterSpacing: '-0.02em' }}>
+											{showShimmer ? '42%' : campaignPct + '%'}
+										</span>
 										<span style={{ fontSize: 9, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: isOverlay ? 'rgba(255,255,255,0.7)' : '#8e8e93' }}>{__('funded', 'giftflow')}</span>
 									</div>
 								</div>
 
 								<div className="giftflow-campaign-card__progress-stats" style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, minWidth: 0 }}>
-									{['$4,200', 'raised', '$10,000', 'goal', '12', 'donors', '18', 'days'].reduce((rows, _, i, arr) => {
-										if (i % 2 === 0) {
-											rows.push(
-												<div key={i} style={{ display: 'flex', flexDirection: 'row', alignItems: 'baseline', justifyContent: 'center', gap: 5, padding: '7px 8px', borderRadius: 10, background: isOverlay ? 'rgba(255,255,255,0.1)' : '#f2f2f7' }}>
-													<span style={{ fontSize: 15, fontWeight: 700, color: isOverlay ? '#fff' : '#1d1d1f', lineHeight: 1.3 }}>{arr[i]}</span>
-													<span style={{ fontSize: 12, fontWeight: 500, color: isOverlay ? 'rgba(255,255,255,0.7)' : '#6e6e73', lineHeight: 1.3 }}>{arr[i + 1]}</span>
-												</div>
-											);
-										}
-										return rows;
-									}, [])}
+									{statBoxes}
 								</div>
 							</div>
 						)}

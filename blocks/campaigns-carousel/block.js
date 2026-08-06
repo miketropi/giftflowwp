@@ -7,19 +7,6 @@ import apiFetch from '@wordpress/api-fetch';
 import { ShimmerBox, ShimmerBar, ensureShimmerStyles } from '../_editor-utils';
 
 /**
- * Strip HTML tags and decode HTML entities from a string.
- * Uses the browser's built-in HTML parser for reliable entity decoding.
- */
-function stripHtml(str) {
-    if (!str || typeof str !== 'string') return '';
-    // Strip HTML tags first, then decode remaining entities via DOM.
-    const stripped = str.replace(/<[^>]*>/g, '');
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = stripped;
-    return textarea.value;
-}
-
-/**
  * Format a number as currency (simple fallback — server provides formatted strings).
  */
 function formatAmount(n) {
@@ -351,11 +338,11 @@ registerBlockType('giftflow/campaigns-carousel', {
                                     marginBottom: 12, fontSize: 13, color: metaClr,
                                 }}>
                                     <span style={{ fontWeight: 650, color: metaClr === '#6b7280' ? '#1f2937' : metaClr }}>
-                                        {stripHtml(campaign.raised_formatted) || formatAmount(campaign.raised_amount)} {__('raised', 'giftflow')}
+                                        {campaign.raised_formatted || formatAmount(campaign.raised_amount)} {__('raised', 'giftflow')}
                                     </span>
                                     {campaign.goal_amount > 0 && (
                                         <span>
-                                            {__('Goal', 'giftflow')} {stripHtml(campaign.goal_formatted) || formatAmount(campaign.goal_amount)}
+                                            {__('Goal', 'giftflow')} {campaign.goal_formatted || formatAmount(campaign.goal_amount)}
                                         </span>
                                     )}
                                     {daysLeft !== '' && daysLeft > 0 && (

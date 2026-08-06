@@ -349,13 +349,14 @@ function giftflow_get_currency_name( $currency ) {
 /**
  * Render currency formatted amount
  *
- * @param float $amount Amount.
- * @param float $decimals Decimals.
+ * @param float  $amount   Amount.
+ * @param int    $decimals Decimals.
  * @param string $currency Currency code.
  * @param string $template Template, default: {{currency_symbol}} {{amount}}.
+ * @param bool   $wrap     Whether to wrap in <span> HTML. Default true. Pass false for API/JSON contexts.
  * @return string
  */
-function giftflow_render_currency_formatted_amount( $amount, $decimals = 2, $currency = null, $template = '' ) {
+function giftflow_render_currency_formatted_amount( $amount, $decimals = 2, $currency = null, $template = '', $wrap = true ) {
 	if ( ! $currency ) {
 		$currency = giftflow_get_current_currency();
 	}
@@ -379,9 +380,18 @@ function giftflow_render_currency_formatted_amount( $amount, $decimals = 2, $cur
 		$template = giftflow_get_currency_template();
 	}
 
-	$amount = '<span class="giftflow-currency-formatted-amount gfw-monofont">' . str_replace( array_keys( $replace ), array_values( $replace ), $template ) . '</span>';
-	$amount = apply_filters( 'giftflow_render_currency_formatted_amount', $amount, $currency, $decimals );
-	return $amount;
+	$formatted = str_replace( array_keys( $replace ), array_values( $replace ), $template );
+
+	if ( ! $wrap ) {
+		$formatted = html_entity_decode( $formatted, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+	}
+
+	if ( $wrap ) {
+		$formatted = '<span class="giftflow-currency-formatted-amount gfw-monofont">' . $formatted . '</span>';
+	}
+
+	$formatted = apply_filters( 'giftflow_render_currency_formatted_amount', $formatted, $currency, $decimals );
+	return $formatted;
 }
 
 /**
@@ -1343,8 +1353,8 @@ function giftflow_prepare_campaign_status_bar_data( $post_id ) {
 		);
 		// phpcs:enable
 		$template_data['donation_count'] = $donor_count;
-		$template_data['raised_amount_formatted'] = giftflow_render_currency_formatted_amount( $raised_amount );
-		$template_data['goal_amount_formatted'] = giftflow_render_currency_formatted_amount( $goal_amount );
+		$template_data['raised_amount_formatted'] = giftflow_render_currency_formatted_amount( $raised_amount, 2, null, '', false );
+		$template_data['goal_amount_formatted'] = giftflow_render_currency_formatted_amount( $goal_amount, 2, null, '', false );
 	}
 
 	/**

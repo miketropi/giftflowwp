@@ -155,8 +155,8 @@ function giftflow_get_campaigns( $request ) {
 			$percentage    = giftflow_get_campaign_progress_percentage( get_the_ID() );
 
 			// convert to currency.
-			$__goal_amount   = giftflow_render_currency_formatted_amount( $goal_amount );
-			$__raised_amount = giftflow_render_currency_formatted_amount( $raised_amount );
+			$__goal_amount   = giftflow_render_currency_formatted_amount( $goal_amount, 2, null, '', false );
+			$__raised_amount = giftflow_render_currency_formatted_amount( $raised_amount, 2, null, '', false );
 
 			$campaigns[] = array(
 				'id'              => strval( get_the_ID() ),
@@ -191,7 +191,7 @@ function giftflow_get_dashboard_overview() {
 	$total_raised = giftflow_get_total_donations_amount();
 	$data         = array(
 		'total_raised'           => $total_raised,
-		'__total_raised'         => giftflow_render_currency_formatted_amount( $total_raised ),
+		'__total_raised'         => giftflow_render_currency_formatted_amount( $total_raised, 2, null, '', false ),
 		'total_active_campaigns' => giftflow_get_total_campaigns_by_status( 'active' ),
 		'total_donors'           => giftflow_get_total_donors_count(),
 		'recent_donations'       => giftflow_get_recent_donations(),

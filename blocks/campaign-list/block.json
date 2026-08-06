@@ -1,0 +1,93 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/campaign-list",
+	"version": "1.3.2",
+	"title": "Campaign List",
+	"category": "giftflow",
+	"icon": "list-view",
+	"description": "A vertical list of fundraising campaigns with smooth entrance animations and clean card design.",
+	"keywords": ["campaign", "list", "donate", "fundraising", "cards"],
+	"supports": {
+		"align": ["wide", "full"],
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"attributes": {
+		"campaignId": {
+			"type": "number",
+			"default": 0
+		},
+		"perPage": {
+			"type": "number",
+			"default": 6
+		},
+		"orderby": {
+			"type": "string",
+			"default": "date"
+		},
+		"order": {
+			"type": "string",
+			"default": "DESC"
+		},
+		"category": {
+			"type": "string",
+			"default": ""
+		},
+		"imageRatio": {
+			"type": "string",
+			"default": "4/3"
+		},
+		"showImage": {
+			"type": "boolean",
+			"default": true
+		},
+		"showExcerpt": {
+			"type": "boolean",
+			"default": true
+		},
+		"showProgress": {
+			"type": "boolean",
+			"default": true
+		},
+		"showMeta": {
+			"type": "boolean",
+			"default": true
+		},
+		"showPagination": {
+			"type": "boolean",
+			"default": true
+		},
+		"accentColor": {
+			"type": "string",
+			"default": ""
+		},
+		"cardBackground": {
+			"type": "string",
+			"default": ""
+		},
+		"titleColor": {
+			"type": "string",
+			"default": ""
+		},
+		"metaColor": {
+			"type": "string",
+			"default": ""
+		},
+		"categoryColor": {
+			"type": "string",
+			"default": ""
+		},
+		"captionColor": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-campaign-list",
+	"style": "file:./style.css",
+	"editorStyle": "file:./editor.css"
+}

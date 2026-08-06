@@ -1,0 +1,296 @@
+/**
+ * GiftFlow Campaign List block — Frontend styles
+ *
+ * Flat, refined card list with image-right layout,
+ * staggered entrance animations, and thin progress bars.
+ * Never sets font-family or font-size — inherits from theme.
+ *
+ * @package GiftFlow
+ * @subpackage Blocks\CampaignList
+ */
+
+/* ── Public tokens ── */
+.gf-cl {
+	--gf-cl-accent: #2563eb;
+	--gf-cl-card-bg: #ffffff;
+	--gf-cl-title-color: #111111;
+	--gf-cl-meta-color: #535353;
+	--gf-cl-category-color: #6b7280;
+	--gf-cl-separator: #f0f0f0;
+	--gf-cl-track: #e8eaee;
+	--gf-cl-meta-sep: #d9d9d9;
+	--gf-cl-caption-color: #4b5563;
+	--gf-cl-img-ratio: 4/3;
+	--gf-cl-gap: 28px;
+	--gf-cl-pad-y: 28px;
+	--gf-cl-ease: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* ── Heading ── */
+.gf-cl-heading { margin: 0 0 8px; }
+
+/* ── List ── */
+.gf-cl-list { margin: 0; }
+
+/* ── Card ── */
+.gf-cl-card {
+	display: flex;
+	flex-direction: row-reverse;
+	gap: var(--gf-cl-gap);
+	padding: var(--gf-cl-pad-y) 0;
+	background: var(--gf-cl-card-bg);
+}
+
+.gf-cl-card + .gf-cl-card { border-top: 1px solid var(--gf-cl-separator); }
+
+/* ── Media — polaroid photo stack ── */
+.gf-cl-media {
+	position: relative;
+	flex: none;
+	align-self: flex-start;
+	width: 200px;
+	aspect-ratio: var(--gf-cl-img-ratio, 4/3);
+	transform: rotate(var(--gf-cl-tilt, 0deg));
+	transition: transform 450ms var(--gf-cl-ease);
+}
+
+/* Echo photos — same footprint, rotated/offset, darkened */
+.gf-cl-media::before,
+.gf-cl-media::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	padding: 8px 8px 12px;
+	background: var(--gf-cl-back, var(--gf-cl-track)) center / cover no-repeat;
+	filter: brightness(0.62) saturate(0.6) blur(0.4px);
+	box-shadow: 0 10px 24px -10px rgba(17, 17, 17, 0.28);
+}
+.gf-cl-media::before { transform: rotate(2.6deg) translate(-9px, -10px); }
+.gf-cl-media::after  { transform: rotate(-2.2deg) translate(11px, -9px); }
+
+/* Genuine polaroid on top */
+.gf-cl-photo {
+	position: relative;
+	z-index: 2;
+	background: var(--gf-cl-card-bg);
+	padding: 8px 8px 12px;
+	box-shadow:
+		0 1px 2px rgba(17, 17, 17, 0.07),
+		0 12px 28px -8px rgba(17, 17, 17, 0.16);
+}
+
+.gf-cl-media svg,
+.gf-cl-media img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	background: var(--gf-cl-track);
+	transition: transform 700ms var(--gf-cl-ease);
+}
+
+.gf-cl-caption {
+	display: block;
+	margin: 10px 0 2px;
+	font-size: 0.78em;
+	line-height: 1.25;
+	text-align: center;
+	color: var(--gf-cl-caption-color);
+}
+
+/* Hover: frame straightens, photo zooms */
+.gf-cl-card:hover .gf-cl-media,
+.gf-cl-card:focus-within .gf-cl-media { transform: rotate(0deg); }
+.gf-cl-card:hover .gf-cl-media svg,
+.gf-cl-card:hover .gf-cl-media img,
+.gf-cl-card:focus-within .gf-cl-media svg,
+.gf-cl-card:focus-within .gf-cl-media img { transform: scale(1.04); }
+
+/* ── Body ── */
+.gf-cl-body {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.gf-cl-category {
+	display: block;
+	margin: 0 0 6px;
+	font-size: 0.75em;
+	text-transform: uppercase;
+	color: var(--gf-cl-category-color);
+}
+
+.gf-cl-title { margin: 0 0 6px; }
+.gf-cl-title a {
+	color: inherit;
+	text-decoration: none;
+	transition: color 180ms var(--gf-cl-ease);
+}
+.gf-cl-title a:hover,
+.gf-cl-title a:focus-visible { color: var(--gf-cl-accent); }
+.gf-cl-title a:focus-visible {
+	outline: 2px solid var(--gf-cl-accent);
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
+.gf-cl-excerpt {
+	margin: 0 0 14px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: var(--gf-cl-title-color);
+	opacity: 0.82;
+}
+
+/* ── Progress ── */
+.gf-cl-progress-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 0 0 12px;
+}
+
+.gf-cl-progress {
+	position: relative;
+	flex: 1;
+	height: 3px;
+	background: var(--gf-cl-track);
+}
+
+.gf-cl-progress-fill {
+	position: absolute;
+	inset: 0 auto 0 0;
+	width: var(--gf-cl-p, 0%);
+	background: var(--gf-cl-accent);
+}
+
+.gf-cl-progress-value {
+	flex: none;
+	color: var(--gf-cl-title-color);
+	font-variant-numeric: tabular-nums;
+}
+
+/* ── Meta ── */
+.gf-cl-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	color: var(--gf-cl-meta-color);
+}
+
+.gf-cl-meta-item { display: inline-flex; align-items: baseline; }
+
+.gf-cl-meta-item + .gf-cl-meta-item::before {
+	content: "\00b7";
+	margin: 0 9px;
+	color: var(--gf-cl-meta-sep);
+}
+
+.gf-cl-map-pin {
+	flex: none;
+	width: 1.05em;
+	height: 1.05em;
+	margin-right: 0.4em;
+	vertical-align: -0.14em;
+	color: inherit;
+}
+
+/* ── Entrance animations ── */
+.gf-js .gf-cl-card { opacity: 0; transform: translateY(16px); }
+
+.gf-js .gf-cl-card.gf-cl-visible {
+	opacity: 1;
+	transform: none;
+	transition:
+		opacity 600ms var(--gf-cl-ease),
+		transform 600ms var(--gf-cl-ease);
+	transition-delay: calc(var(--gf-cl-i, 0) * 80ms);
+}
+
+.gf-js .gf-cl-card .gf-cl-progress-fill { width: 0; }
+
+.gf-js .gf-cl-card.gf-cl-visible .gf-cl-progress-fill {
+	transition: width 900ms var(--gf-cl-ease)
+	            calc(var(--gf-cl-i, 0) * 80ms + 250ms);
+	width: var(--gf-cl-p, 0%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.gf-js .gf-cl-card,
+	.gf-js .gf-cl-card.gf-cl-visible { opacity: 1; transform: none; transition: none; }
+	.gf-js .gf-cl-card .gf-cl-progress-fill,
+	.gf-js .gf-cl-card.gf-cl-visible .gf-cl-progress-fill {
+		width: var(--gf-cl-p, 0%);
+		transition: none;
+	}
+	.gf-cl-media svg { transition: none; }
+}
+
+/* ── Tablet ── */
+@media (max-width: 1024px) {
+	.gf-cl {
+		--gf-cl-gap: 20px;
+		--gf-cl-pad-y: 24px;
+	}
+	.gf-cl-media { width: 160px; }
+	.gf-cl-body { align-items: center; }
+	.gf-cl-media::before { transform: rotate(2.6deg) translate(-7px, -8px); }
+	.gf-cl-media::after  { transform: rotate(-2.2deg) translate(9px, -7px); }
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+	.gf-cl {
+		--gf-cl-gap: 16px;
+		--gf-cl-pad-y: 24px;
+	}
+	.gf-cl-card { flex-direction: column; }
+	.gf-cl-body { align-items: center; }
+	.gf-cl-media {
+		max-height: 60vh;
+		margin: 0 auto;
+	}
+	.gf-cl-media::before { transform: rotate(1.6deg) translate(-4px, -5px); }
+	.gf-cl-media::after  { transform: rotate(-1.2deg) translate(5px, -5px); }
+	.gf-cl-media::before,
+	.gf-cl-media::after { padding: 6px 6px 10px; }
+	.gf-cl-photo { padding: 6px 6px 10px; }
+
+	.gf-cl-excerpt {
+		white-space: normal;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.gf-cl-progress { height: 2px; }
+
+	.gf-cl-meta-item + .gf-cl-meta-item::before { margin: 0 6px; }
+}
+
+/* ── Small phones ── */
+@media (max-width: 480px) {
+	.gf-cl {
+		--gf-cl-gap: 12px;
+		--gf-cl-pad-y: 20px;
+	}
+	.gf-cl-media {
+		max-height: 55vh;
+		margin: 0 auto;
+	}
+	.gf-cl-media::before { transform: rotate(1deg) translate(-3px, -3px); }
+	.gf-cl-media::after  { transform: rotate(-0.8deg) translate(3px, -3px); }
+	.gf-cl-media::before,
+	.gf-cl-media::after { padding: 5px 5px 8px; }
+	.gf-cl-photo { padding: 5px 5px 8px; }
+	.gf-cl-meta-item + .gf-cl-meta-item::before { margin: 0 5px; }
+}

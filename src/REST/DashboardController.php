@@ -89,7 +89,7 @@ class DashboardController extends \WP_REST_Controller {
 
 		$data = array(
 			'total_raised'            => $total_raised,
-			'total_raised_formatted'  => giftflow_render_currency_formatted_amount( $total_raised ),
+			'total_raised_formatted'  => giftflow_render_currency_formatted_amount( $total_raised, 2, null, '', false ),
 			'total_active_campaigns'  => $total_campaigns,
 			'total_donors'            => $total_donors,
 			'recent_donations'        => $recent_donations,

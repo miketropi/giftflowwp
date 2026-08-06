@@ -236,6 +236,7 @@ class AssetLoader extends AbstractModule {
 			'featured-campaign-view',
 			'sponsor-logos',
 			'campaign-card',
+			'campaign-list',
 			'sponsors-testimonials-carousel',
 			'sponsors-testimonials-carousel-view',
 		);
