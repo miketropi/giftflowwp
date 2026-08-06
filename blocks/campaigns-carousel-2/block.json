@@ -1,0 +1,90 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "giftflow/campaigns-carousel-2",
+	"version": "1.0.0",
+	"title": "Campaign Carousel 2",
+	"category": "giftflow",
+	"icon": "slides",
+	"description": "A horizontal editorial campaign carousel with polaroid photo-stack design, scroll-snap navigation, and IntersectionObserver animations.",
+	"keywords": ["campaign", "carousel", "slider", "donate", "fundraising", "polaroid"],
+	"supports": {
+		"align": ["wide", "full"],
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"attributes": {
+		"perPage": {
+			"type": "number",
+			"default": 6
+		},
+		"orderby": {
+			"type": "string",
+			"default": "date"
+		},
+		"order": {
+			"type": "string",
+			"default": "DESC"
+		},
+		"category": {
+			"type": "string",
+			"default": ""
+		},
+		"showProgress": {
+			"type": "boolean",
+			"default": true
+		},
+		"showMeta": {
+			"type": "boolean",
+			"default": true
+		},
+		"accentColor": {
+			"type": "string",
+			"default": ""
+		},
+		"cardBackground": {
+			"type": "string",
+			"default": ""
+		},
+		"titleColor": {
+			"type": "string",
+			"default": ""
+		},
+		"metaColor": {
+			"type": "string",
+			"default": ""
+		},
+		"categoryColor": {
+			"type": "string",
+			"default": ""
+		},
+		"heading": {
+			"type": "string",
+			"default": "Featured campaigns"
+		},
+		"gap": {
+			"type": "number",
+			"default": 24
+		},
+		"slidesPerView": {
+			"type": "number",
+			"default": 3
+		},
+		"showArrows": {
+			"type": "boolean",
+			"default": true
+		},
+		"showDots": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"render": "file:./render.php",
+	"editorScript": "giftflow-block-campaigns-carousel-2",
+	"viewScript": "giftflow-block-campaigns-carousel-2-view",
+	"style": "file:./style.css",
+	"editorStyle": "file:./editor.css"
+}

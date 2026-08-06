@@ -224,6 +224,8 @@ class AssetLoader extends AbstractModule {
 			'campaigns-grid',
 			'campaigns-carousel',
 			'campaigns-carousel-view',
+			'campaigns-carousel-2',
+			'campaigns-carousel-2-view',
 			'similar-campaign-carousel',
 			'similar-campaign-carousel-view',
 			'donor-account',

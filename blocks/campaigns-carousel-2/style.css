@@ -1,0 +1,420 @@
+/**
+ * GiftFlow Campaign Carousel 2 block — Frontend styles
+ *
+ * Horizontal editorial carousel with polaroid photo-stack cards,
+ * scroll-snap navigation, and IntersectionObserver entrance animations.
+ * Never sets font-family or font-size — inherits from theme.
+ *
+ * @package GiftFlow
+ * @subpackage Blocks\CampaignsCarousel2
+ */
+
+/* ── Public tokens ── */
+.gf-cc {
+	--gf-cc-accent: #2563eb;
+	--gf-cc-card-bg: #ffffff;
+	--gf-cc-title-color: #111111;
+	--gf-cc-meta-color: #6b7280;
+	--gf-cc-category-color: #252525;
+	--gf-cc-separator: #e7e9ee;
+	--gf-cc-track-color: #e8eaee;
+	--gf-cc-caption-color: #4b5563;
+	--gf-cc-dot-idle: #9ca3af;
+	--gf-cc-ease: cubic-bezier(0.23, 1, 0.32, 1);
+	--gf-cc-tilt-sign: -1;
+	--gf-cc-tilt-mag: 0.7deg;
+}
+
+/* ── Header ── */
+.gf-cc-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin: 0 0 16px;
+	padding-bottom: 16px;
+	border-bottom: 1px solid var(--gf-cc-separator);
+}
+
+.gf-cc-heading { margin: 0; }
+
+.gf-cc-nav { display: flex; gap: 10px; }
+
+.gf-cc-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 1px solid var(--gf-cc-separator);
+	border-radius: 999px;
+	background: transparent;
+	color: var(--gf-cc-title-color);
+	cursor: pointer;
+	transition:
+		background-color 180ms var(--gf-cc-ease),
+		border-color 180ms var(--gf-cc-ease);
+}
+.gf-cc-btn svg { width: 18px; height: 18px; }
+.gf-cc-btn:hover:not(:disabled) {
+	background: color-mix(in srgb, var(--gf-cc-title-color) 6%, transparent);
+	border-color: color-mix(in srgb, var(--gf-cc-title-color) 16%, transparent);
+}
+.gf-cc-btn:focus-visible {
+	outline: 2px solid var(--gf-cc-accent);
+	outline-offset: 2px;
+}
+/* ── Viewport (Swiper container) ── */
+.gf-cc-viewport {
+	overflow: hidden;
+	padding: 1rem 1.5rem !important;
+}
+.gf-cc-viewport:focus-visible {
+	outline: 2px solid var(--gf-cc-accent);
+	outline-offset: 4px;
+	border-radius: 4px;
+}
+
+/* ── Track (Swiper wrapper) ── */
+.gf-cc-track {
+	padding: 6px 0 30px 0;
+}
+
+/* ── Card (Swiper slide) ── */
+.gf-cc-card {
+	height: auto;
+	background: var(--gf-cc-card-bg);
+}
+
+.gf-cc-link {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	color: inherit;
+	text-decoration: none;
+}
+.gf-cc-link:focus-visible {
+	outline: 2px solid var(--gf-cc-accent);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+/* ── Polaroid ── */
+.gf-cc-polaroid {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	background: var(--gf-cc-card-bg);
+	padding: 10px 10px 16px;
+	box-shadow:
+		0 1px 2px rgba(17, 17, 17, 0.07),
+		0 14px 30px -10px rgba(17, 17, 17, 0.18);
+	transform: rotate(calc(var(--gf-cc-tilt-sign) * var(--gf-cc-tilt-mag)));
+	transform-origin: 50% 100%;
+	transition: transform 500ms var(--gf-cc-ease);
+}
+
+/* Stacked echo cards behind the polaroid */
+.gf-cc-polaroid::before,
+.gf-cc-polaroid::after {
+	content: "";
+	position: absolute;
+	inset: -6px;
+	z-index: -1;
+	background: var(--gf-cc-card-bg);
+	box-shadow:
+		0 1px 2px rgba(17, 17, 17, 0.06),
+		0 8px 16px -6px rgba(17, 17, 17, 0.12);
+	transition: transform 500ms var(--gf-cc-ease);
+}
+.gf-cc-polaroid::before {
+	transform: rotate(-1.4deg) translate(3px, 4px);
+}
+.gf-cc-polaroid::after {
+	transform: rotate(1deg) translate(-2px, 3px);
+}
+
+/* Hover: echoes fan back, main card straightens */
+.gf-cc-card:hover .gf-cc-polaroid::before,
+.gf-cc-card:focus-within .gf-cc-polaroid::before {
+	transform: rotate(-2deg) translate(5px, 7px);
+}
+.gf-cc-card:hover .gf-cc-polaroid::after,
+.gf-cc-card:focus-within .gf-cc-polaroid::after {
+	transform: rotate(1.5deg) translate(-4px, 5px);
+}
+.gf-cc-card:nth-of-type(1) .gf-cc-polaroid { --gf-cc-tilt-sign: -1; --gf-cc-tilt-mag: 0.8deg; }
+.gf-cc-card:nth-of-type(2) .gf-cc-polaroid { --gf-cc-tilt-sign:  1; --gf-cc-tilt-mag: 0.7deg; }
+.gf-cc-card:nth-of-type(3) .gf-cc-polaroid { --gf-cc-tilt-sign: -1; --gf-cc-tilt-mag: 0.55deg; }
+.gf-cc-card:nth-of-type(4) .gf-cc-polaroid { --gf-cc-tilt-sign:  1; --gf-cc-tilt-mag: 0.85deg; }
+
+.gf-cc-card:hover .gf-cc-polaroid,
+.gf-cc-card:focus-within .gf-cc-polaroid { transform: rotate(0deg); }
+
+/* ── Photo ── */
+.gf-cc-photo {
+	position: relative;
+	overflow: hidden;
+}
+.gf-cc-photo img,
+.gf-cc-photo svg {
+	display: block;
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+	background: var(--gf-cc-track-color);
+	transition: transform 800ms var(--gf-cc-ease);
+}
+.gf-cc-card:hover .gf-cc-photo img,
+.gf-cc-card:hover .gf-cc-photo svg,
+.gf-cc-card:focus-within .gf-cc-photo img,
+.gf-cc-card:focus-within .gf-cc-photo svg { transform: scale(1.045); }
+
+/* ── Badge ── */
+.gf-cc-badge {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	padding: 4px 10px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.85);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+	box-shadow: 0 1px 3px rgba(17, 17, 17, 0.12);
+	font-size: 0.7em;
+	color: var(--gf-cc-category-color, #252525);
+}
+
+/* ── Caption ── */
+.gf-cc-caption {
+	display: block;
+	margin: 12px 0 0;
+	font-size: 0.78em;
+	line-height: 1.25;
+	text-align: center;
+	color: var(--gf-cc-caption-color);
+}
+
+/* ── Body ── */
+.gf-cc-body {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding-top: 14px;
+}
+
+.gf-cc-title {
+	margin: 0;
+	color: var(--gf-cc-title-color);
+	transition: color 180ms var(--gf-cc-ease);
+}
+.gf-cc-card:hover .gf-cc-title,
+.gf-cc-card:focus-within .gf-cc-title { color: var(--gf-cc-accent); }
+
+/* ── Progress ── */
+.gf-cc-progress-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+.gf-cc-progress {
+	position: relative;
+	flex: 1;
+	height: 3px;
+	border-radius: 2px;
+	background: var(--gf-cc-track-color);
+}
+.gf-cc-progress-fill {
+	position: absolute;
+	inset: 0 auto 0 0;
+	width: var(--gf-cc-p, 0%);
+	border-radius: 2px;
+	background: var(--gf-cc-accent);
+}
+.gf-cc-progress-value {
+	flex: none;
+	color: var(--gf-cc-title-color);
+	font-variant-numeric: tabular-nums;
+}
+
+/* ── Meta ── */
+.gf-cc-meta {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px 20px;
+	margin: 0;
+	margin-top: auto;
+	padding: 0;
+	list-style: none;
+}
+.gf-cc-meta-label {
+	display: block;
+	font-size: 0.62em;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--gf-cc-meta-color);
+}
+.gf-cc-meta-value {
+	display: block;
+	margin-top: 2px;
+	color: var(--gf-cc-title-color);
+	font-variant-numeric: tabular-nums;
+}
+.gf-cc-map-pin {
+	flex: none;
+	width: 1.05em;
+	height: 1.05em;
+	margin-right: 0.4em;
+	vertical-align: -0.14em;
+	color: inherit;
+}
+
+/* ── View More ── */
+.gf-cc-more {
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	width: 100%;
+	min-height: 44px;
+	margin-top: 16px;
+	padding: 0 16px;
+	border: 1px solid var(--gf-cc-separator);
+	border-radius: 999px;
+	background: transparent;
+	color: var(--gf-cc-title-color);
+	font-family: inherit;
+	font-size: 0.85em;
+	font-weight: 550;
+	letter-spacing: 0.02em;
+	text-decoration: none;
+	cursor: pointer;
+	transition:
+		background-color 180ms var(--gf-cc-ease),
+		border-color 180ms var(--gf-cc-ease),
+		color 180ms var(--gf-cc-ease);
+}
+.gf-cc-more svg {
+	flex: none;
+	width: 14px;
+	height: 14px;
+	transition: transform 180ms var(--gf-cc-ease);
+}
+.gf-cc-more:hover {
+	background: color-mix(in srgb, var(--gf-cc-accent) 6%, transparent);
+	border-color: var(--gf-cc-accent);
+	color: var(--gf-cc-accent);
+}
+.gf-cc-more:hover svg { transform: translateX(2px); }
+.gf-cc-more:focus-visible {
+	outline: 2px solid var(--gf-cc-accent);
+	outline-offset: 2px;
+}
+
+/* ── Dots (Swiper pagination) ── */
+.gf-cc-dots {
+	display: flex;
+	justify-content: center;
+	gap: 3px;
+	padding-top: 4px;
+}
+.gf-cc-dot {
+	position: relative;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+	opacity: 1;
+}
+.gf-cc-dot::before {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 8px;
+	height: 8px;
+	border-radius: 999px;
+	background: var(--gf-cc-dot-idle);
+	transform: translate(-50%, -50%);
+	transition:
+		width 260ms var(--gf-cc-ease),
+		background-color 260ms var(--gf-cc-ease);
+}
+.gf-cc-dot--active::before {
+	width: 22px;
+	background: var(--gf-cc-accent);
+}
+.gf-cc-dot:focus-visible {
+	outline: 2px solid var(--gf-cc-accent);
+	outline-offset: 2px;
+	border-radius: 999px;
+}
+
+/* ── Entrance ── */
+.gf-js .gf-cc-card { opacity: 0; transform: translateY(14px); }
+
+.gf-js .gf-cc-card.gf-cc-visible {
+	opacity: 1;
+	transform: none;
+	transition:
+		opacity 600ms var(--gf-cc-ease),
+		transform 600ms var(--gf-cc-ease);
+	transition-delay: calc(var(--gf-cc-i, 0) * 60ms);
+}
+
+.gf-js .gf-cc-card .gf-cc-progress-fill { width: 0; }
+.gf-js .gf-cc-card.gf-cc-visible .gf-cc-progress-fill {
+	transition: width 900ms var(--gf-cc-ease) calc(var(--gf-cc-i, 0) * 60ms + 250ms);
+	width: var(--gf-cc-p, 0%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.gf-js .gf-cc-card,
+	.gf-js .gf-cc-card.gf-cc-visible { opacity: 1; transform: none; transition: none; }
+	.gf-js .gf-cc-card .gf-cc-progress-fill,
+	.gf-js .gf-cc-card.gf-cc-visible .gf-cc-progress-fill {
+		width: var(--gf-cc-p, 0%);
+		transition: none;
+	}
+	.gf-cc-viewport { scroll-behavior: auto; }
+	.gf-cc-polaroid,
+	.gf-cc-polaroid::before,
+	.gf-cc-polaroid::after,
+	.gf-cc-photo img,
+	.gf-cc-photo svg,
+	.gf-cc-more,
+	.gf-cc-more svg { transition: none; }
+}
+
+/* ── Swiper nav button disabled state ── */
+.gf-cc-btn--disabled {
+	opacity: 0.32;
+	cursor: default;
+	pointer-events: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+	.gf-cc-polaroid::before {
+		transform: rotate(-0.9deg) translate(2px, 3px);
+	}
+	.gf-cc-polaroid::after {
+		transform: rotate(0.6deg) translate(-1px, 2px);
+	}
+	.gf-cc-card:hover .gf-cc-polaroid::before,
+	.gf-cc-card:focus-within .gf-cc-polaroid::before {
+		transform: rotate(-1.4deg) translate(4px, 5px);
+	}
+	.gf-cc-card:hover .gf-cc-polaroid::after,
+	.gf-cc-card:focus-within .gf-cc-polaroid::after {
+		transform: rotate(1deg) translate(-3px, 4px);
+	}
+	.gf-cc-card:nth-of-type(n) .gf-cc-polaroid { --gf-cc-tilt-mag: 0.4deg; }
+}

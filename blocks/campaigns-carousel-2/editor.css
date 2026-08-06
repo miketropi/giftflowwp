@@ -1,0 +1,18 @@
+/**
+ * Campaign Carousel 2 block — Editor styles
+ *
+ * @package GiftFlow
+ * @subpackage Blocks\CampaignsCarousel2
+ */
+
+.gf-cc .block-editor-block-list__layout {
+	display: flex;
+	flex-direction: column;
+}
+
+.gf-cc .wp-block { margin: 0; }
+
+@keyframes gf-shimmer {
+	0% { background-position: -400px 0; }
+	100% { background-position: 400px 0; }
+}
