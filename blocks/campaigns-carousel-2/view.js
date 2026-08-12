@@ -38,8 +38,6 @@ import 'swiper/css';
 			pagination: pagEl ? {
 				el: pagEl,
 				clickable: true,
-				bulletClass: 'gf-cc-dot',
-				bulletActiveClass: 'gf-cc-dot--active',
 			} : false,
 			breakpoints: slidesPerView >= 3 ? {
 				769: { slidesPerView: Math.min(slidesPerView, 4) > 2 ? 2 : 1, spaceBetween: gap },

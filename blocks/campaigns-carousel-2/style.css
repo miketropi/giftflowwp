@@ -320,41 +320,23 @@
 .gf-cc-dots {
 	display: flex;
 	justify-content: center;
-	gap: 3px;
-	padding-top: 4px;
+	gap: 8px;
+	margin-top: 1.25rem;
 }
-.gf-cc-dot {
-	position: relative;
-	width: 44px;
-	height: 44px;
-	padding: 0;
-	border: 0;
-	background: transparent;
-	cursor: pointer;
-	opacity: 1;
-}
-.gf-cc-dot::before {
-	content: "";
-	position: absolute;
-	left: 50%;
-	top: 50%;
+.gf-cc-dots .swiper-pagination-bullet {
 	width: 8px;
 	height: 8px;
-	border-radius: 999px;
+	border-radius: 50%;
 	background: var(--gf-cc-dot-idle);
-	transform: translate(-50%, -50%);
-	transition:
-		width 260ms var(--gf-cc-ease),
-		background-color 260ms var(--gf-cc-ease);
+	border: none;
+	opacity: 1;
+	transition: all 0.3s ease;
+	cursor: pointer;
 }
-.gf-cc-dot--active::before {
-	width: 22px;
+.gf-cc-dots .swiper-pagination-bullet-active {
+	width: 24px;
+	border-radius: 4px;
 	background: var(--gf-cc-accent);
-}
-.gf-cc-dot:focus-visible {
-	outline: 2px solid var(--gf-cc-accent);
-	outline-offset: 2px;
-	border-radius: 999px;
 }
 
 /* ── Entrance ── */

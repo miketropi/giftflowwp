@@ -154,7 +154,15 @@ class Plugin {
 				'type'         => $type,
 				'description'  => $description,
 				'single'       => $single,
-				'show_in_rest' => true,
+				'show_in_rest' => 'array' === $type
+					? array(
+						'schema' => array(
+							'items' => array(
+								'type' => 'string',
+							),
+						),
+					)
+					: true,
 				'auth_callback' => function () {
 					return current_user_can( 'edit_posts' );
 				},
