@@ -140,9 +140,6 @@
 
 .gf-cl-excerpt {
 	margin: 0 0 14px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
 	color: var(--gf-cl-title-color);
 	opacity: 0.82;
 }

@@ -99,7 +99,7 @@
 
   &__dropdown {
     position: fixed;
-    z-index: 100001;
+    z-index: 999999 !important;
     background: var(--gfh-bg, #fff);
     border: 1px solid var(--gfh-line, #dcdcde);
     border-radius: var(--gfh-radius-sm, 6px);

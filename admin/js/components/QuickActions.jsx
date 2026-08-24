@@ -62,19 +62,31 @@ const ExportCampaignModal = ({ isModalExportCampaignOpen, setIsModalExportCampai
           // setIsModalExportCampaignOpen(false);
           // console.log(selectedCampaign);
 
-          try {
-            // open api to download csv 
-            const response = await __request(`/wp-json/giftflow/v1/campaign/csv-export?campaign_id=${selectedCampaign}`, {}, 'GET');
+          if (!selectedCampaign) {
+            setErrorMsg('Please select a campaign to export.');
+            return;
+          }
 
-            const blob = new Blob([response], {
-              type: 'text/csv;charset=utf-8;'
+          try {
+            // Fetch CSV directly (raw text) instead of JSON
+            const res = await fetch(`/wp-json/giftflow/v1/campaign/csv-export?campaign_id=${selectedCampaign}`, {
+              method: 'GET',
+              headers: {
+                'X-WP-Nonce': giftflow_admin.rest_nonce,
+              },
             });
-            
+
+            if (!res.ok) {
+              const errorText = await res.text();
+              throw new Error(errorText || 'Failed to export campaign');
+            }
+
+            const blob = await res.blob();
             const url = window.URL.createObjectURL(blob);
             
             const a = document.createElement('a');
             a.href = url;
-            const titleCampaign = campaigns.find(campaign => campaign.id === selectedCampaign)?.title;
+            const titleCampaign = campaigns.find(campaign => String(campaign.id) === String(selectedCampaign))?.title || 'campaign';
             a.download = `${titleCampaign}_${new Date().toISOString()}.csv`;
             document.body.appendChild(a);
             a.click();
@@ -85,7 +97,7 @@ const ExportCampaignModal = ({ isModalExportCampaignOpen, setIsModalExportCampai
             setIsModalExportCampaignOpen(false);
           } catch (error) {
             console.error('Error exporting campaign:', error);
-            setErrorMsg(error?.responseJSON?.message || 'An error occurred while exporting the campaign. Please try again.');
+            setErrorMsg(error?.message || 'An error occurred while exporting the campaign. Please try again.');
           }
         }
       }, {

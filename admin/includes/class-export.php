@@ -216,7 +216,7 @@ class GiftFlow_Export {
 
 		$headers[] = 'Payment Method';
 
-		fputcsv( $output, $headers );
+		fputcsv( $output, $headers, ',', '"', '\\' );
 
 		// CSV data.
 		foreach ( $donations as $donation ) {
@@ -251,7 +251,7 @@ class GiftFlow_Export {
 
 			$row[] = get_post_meta( $donation->ID, '_payment_method', true );
 
-			fputcsv( $output, $row );
+			fputcsv( $output, $row, ',', '"', '\\' );
 		}
 
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
